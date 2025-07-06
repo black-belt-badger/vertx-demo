@@ -42,15 +42,28 @@
 
 ### Docker
 
-* Build image
+* build image
   ```shell
   docker build -t marekdudek/vertx-demo .
   ```
-* Login
+* set tag
+  ```shell
+  export tag=$(./mvnw org.apache.maven.plugins:maven-help-plugin:evaluate -Dexpression=project.version -q -DforceStdout)
+  echo ${tag}
+  ```
+* build and tag image
+  ```shell
+  docker buildx build --tag marekdudek/vertx-demo:${tag} --sbom=true --provenance=true .
+  ```
+* tag image
+  ```shell
+  docker image tag marekdudek/vertx-demo:latest marekdudek/vertx-demo:"${tag}"
+  ```
+* login
   ```shell
   docker login
   ```
-* Publish image
+* push image
   ```shell
   docker push marekdudek/vertx-demo --all-tags
   ```
@@ -59,9 +72,13 @@
 ## Deployment
 
 ### Docker
-*
+* On default HTTP port
   ```shell
   docker run --name vert-xdemo -p 80:8080 -d marekdudek/vertx-demo
+  ```
+* On other HTTP port
+  ```shell
+  docker run --name vert-xdemo -p 8080:8080 -d marekdudek/vertx-demo
   ```
 
 ### AWS
