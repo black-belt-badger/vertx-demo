@@ -16,11 +16,14 @@ public class MainVerticle extends VerticleBase {
     return
       vertx
         .createHttpServer()
-        .requestHandler(request ->
-          request
-            .response()
-            .putHeader("content-type", "text/plain")
-            .end(format("Hello from Vert.x Demo, version %s!", "1.0.3"))
+        .requestHandler(request -> {
+            if (log.isTraceEnabled())
+              log.trace("Received request: {}", request.uri());
+            request
+              .response()
+              .putHeader("content-type", "text/plain")
+              .end(format("Hello from Vert.x Demo, version %s!", "1.0.3"));
+          }
         )
         .listen(port)
         .onSuccess(http ->
