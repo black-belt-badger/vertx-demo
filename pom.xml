@@ -24,6 +24,7 @@
     <junit-jupiter.version>6.0.0-M1</junit-jupiter.version>
     <lombok.version>1.18.38</lombok.version>
     <netty-common.version>4.2.2.Final</netty-common.version>
+    <netty-tcnative.version>2.0.72.Final</netty-tcnative.version>
   </properties>
 
   <dependencyManagement>
@@ -79,31 +80,25 @@
         </exclusion>
       </exclusions>
     </dependency>
-    <!--    <dependency>-->
-    <!--      <groupId>io.netty</groupId>-->
-    <!--      <artifactId>netty-tcnative</artifactId>-->
-    <!--      <version>2.0.72.Final</version>-->
-    <!--      <systemPath>${project.basedir}/lib/netty-tcnative-2.0.72.Final.jar</systemPath>-->
-    <!--      <scope>system</scope>-->
-    <!--    </dependency>-->
-    <!--    <dependency>-->
-    <!--      <groupId>io.netty</groupId>-->
-    <!--      <artifactId>netty-tcnative-classes</artifactId>-->
-    <!--      <systemPath>${project.basedir}/lib/netty-tcnative-classes-2.0.72.Final.jar</systemPath>-->
-    <!--      <version>2.0.72.Final</version>-->
-    <!--      <scope>system</scope>-->
-    <!--    </dependency>-->
+    <dependency>
+      <groupId>io.netty</groupId>
+      <artifactId>netty-tcnative</artifactId>
+      <version>${netty-tcnative.version}</version>
+      <optional>true</optional>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.netty</groupId>
+      <artifactId>netty-tcnative-classes</artifactId>
+      <version>${netty-tcnative.version}</version>
+      <scope>compile</scope>
+      <optional>true</optional>
+    </dependency>
     <!--    <dependency>-->
     <!--      <groupId>io.netty</groupId>-->
     <!--      <artifactId>netty-handler</artifactId>-->
     <!--      <version>${netty-common.version}</version>-->
     <!--      <scope>compile</scope>-->
-    <!--      <exclusions>-->
-    <!--        <exclusion>-->
-    <!--          <groupId>io.netty</groupId>-->
-    <!--          <artifactId>netty-tcnative</artifactId>-->
-    <!--        </exclusion>-->
-    <!--      </exclusions>-->
     <!--    </dependency>-->
     <dependency>
       <groupId>io.netty</groupId>
@@ -325,7 +320,7 @@
             <requireExplicitDependencyScope>true</requireExplicitDependencyScope>
             <banTransitiveDependencies>
               <excludes>
-                <exclude>io.netty:*</exclude>
+                <exclude>io.netty:netty-handler:*</exclude>
               </excludes>
             </banTransitiveDependencies>
             <dependencyConvergence>true</dependencyConvergence>
