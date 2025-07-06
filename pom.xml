@@ -16,7 +16,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <launcher.class>io.vertx.launcher.application.VertxApplication</launcher.class>
     <main.verticle>bbb.vertx_demo.MainVerticle</main.verticle>
-    <maven-compiler-plugin.version>4.0.0-beta-2</maven-compiler-plugin.version>
+    <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
     <maven-shade-plugin.version>3.6.0</maven-shade-plugin.version>
     <maven-surefire-plugin.version>3.5.3</maven-surefire-plugin.version>
     <exec-maven-plugin.version>3.5.1</exec-maven-plugin.version>
@@ -43,6 +43,12 @@
       <groupId>io.vertx</groupId>
       <artifactId>vertx-core</artifactId>
       <scope>compile</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>com.fasterxml.jackson.core</groupId>
+          <artifactId>jackson-core</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>io.vertx</groupId>
@@ -66,13 +72,39 @@
       <artifactId>netty-transport</artifactId>
       <version>${netty-common.version}</version>
       <scope>compile</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>io.netty</groupId>
+          <artifactId>netty-tcnative</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
-    <dependency>
-      <groupId>io.netty</groupId>
-      <artifactId>netty-handler</artifactId>
-      <version>${netty-common.version}</version>
-      <scope>compile</scope>
-    </dependency>
+    <!--    <dependency>-->
+    <!--      <groupId>io.netty</groupId>-->
+    <!--      <artifactId>netty-tcnative</artifactId>-->
+    <!--      <version>2.0.72.Final</version>-->
+    <!--      <systemPath>${project.basedir}/lib/netty-tcnative-2.0.72.Final.jar</systemPath>-->
+    <!--      <scope>system</scope>-->
+    <!--    </dependency>-->
+    <!--    <dependency>-->
+    <!--      <groupId>io.netty</groupId>-->
+    <!--      <artifactId>netty-tcnative-classes</artifactId>-->
+    <!--      <systemPath>${project.basedir}/lib/netty-tcnative-classes-2.0.72.Final.jar</systemPath>-->
+    <!--      <version>2.0.72.Final</version>-->
+    <!--      <scope>system</scope>-->
+    <!--    </dependency>-->
+    <!--    <dependency>-->
+    <!--      <groupId>io.netty</groupId>-->
+    <!--      <artifactId>netty-handler</artifactId>-->
+    <!--      <version>${netty-common.version}</version>-->
+    <!--      <scope>compile</scope>-->
+    <!--      <exclusions>-->
+    <!--        <exclusion>-->
+    <!--          <groupId>io.netty</groupId>-->
+    <!--          <artifactId>netty-tcnative</artifactId>-->
+    <!--        </exclusion>-->
+    <!--      </exclusions>-->
+    <!--    </dependency>-->
     <dependency>
       <groupId>io.netty</groupId>
       <artifactId>netty-handler-proxy</artifactId>
@@ -136,18 +168,24 @@
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-core</artifactId>
-      <version>2.18.2</version>
+      <version>2.19.1</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>io.vertx</groupId>
       <artifactId>vertx-launcher-application</artifactId>
       <scope>compile</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>info.picocli</groupId>
+          <artifactId>picocli</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>info.picocli</groupId>
       <artifactId>picocli</artifactId>
-      <version>4.7.4</version>
+      <version>4.7.7</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
@@ -285,7 +323,11 @@
               <version>21</version>
             </requireJavaVersion>
             <requireExplicitDependencyScope>true</requireExplicitDependencyScope>
-            <banTransitiveDependencies>true</banTransitiveDependencies>
+            <banTransitiveDependencies>
+              <excludes>
+                <exclude>io.netty:*</exclude>
+              </excludes>
+            </banTransitiveDependencies>
             <dependencyConvergence>true</dependencyConvergence>
           </rules>
         </configuration>
