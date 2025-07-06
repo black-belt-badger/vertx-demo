@@ -7,7 +7,7 @@
 
   <groupId>bbb</groupId>
   <artifactId>vertx-demo</artifactId>
-  <version>1.0.2</version>
+  <version>1.0.3</version>
 
   <properties>
     <maven.compiler.target>21</maven.compiler.target>
@@ -347,6 +347,16 @@
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-enforcer-plugin</artifactId>
           <version>3.5.0</version>
+        </plugin>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>exec-maven-plugin</artifactId>
+          <version>3.5.1</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-shade-plugin</artifactId>
+          <version>3.6.0</version>
         </plugin>
       </plugins>
     </pluginManagement>

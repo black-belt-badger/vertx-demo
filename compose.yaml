@@ -1,6 +1,6 @@
 services:
   vertx-demo:
-    image: marekdudek/vertx-demo
+    image: marekdudek/vertx-demo:1.0.3
     container_name: vertx-demo
     ports:
       - "8080:8080"
