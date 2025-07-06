@@ -8,6 +8,7 @@
   ```shell
   ./mvnw clean install
   ```
+#### Dependency management
 * display dependency updates
   ```shell
   ./mvnw versions:display-dependency-updates
@@ -31,6 +32,11 @@
 * display property updates
   ```shell
   ./mvnw versions:display-property-updates
+  ```
+#### Enforcement
+* enforce
+  ```shell
+  ./mvnw enforcer:enforce
   ```
 
 ### Docker
