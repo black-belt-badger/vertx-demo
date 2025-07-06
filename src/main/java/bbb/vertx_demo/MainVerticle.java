@@ -4,6 +4,8 @@ import io.vertx.core.Future;
 import io.vertx.core.VerticleBase;
 import lombok.extern.slf4j.Slf4j;
 
+import static java.lang.String.format;
+
 @Slf4j
 public class MainVerticle extends VerticleBase {
 
@@ -18,7 +20,7 @@ public class MainVerticle extends VerticleBase {
           request
             .response()
             .putHeader("content-type", "text/plain")
-            .end("Hello from Vert.x!")
+            .end(format("Hello from Vert.x Demo, version %s!", "1.0.3"))
         )
         .listen(port)
         .onSuccess(http ->
