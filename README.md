@@ -52,7 +52,7 @@
   ```
 * Publish image
   ```shell
-  docker push marekdudek/vertx-demo
+  docker push marekdudek/vertx-demo --all-tags
   ```
 
 
