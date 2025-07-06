@@ -22,7 +22,7 @@ public class MainVerticle extends VerticleBase {
         )
         .listen(port)
         .onSuccess(http ->
-          log.info("HTTP server started on local port {}", port)
+          log.info("HTTP server started on internal port {}", port)
         )
         .onFailure(throwable -> {
             log.error("Could not start a HTTP server", throwable);
