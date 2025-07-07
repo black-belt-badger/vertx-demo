@@ -2,44 +2,6 @@
 
 ## Building
 
-### Maven
-
-* build
-  ```shell
-  ./mvnw clean install
-  ```
-#### Dependency management
-
-* display dependency updates
-  ```shell
-  ./mvnw versions:display-dependency-updates
-  ```
-* use latest versions
-  ```shell
-  ./mvnw versions:use-latest-versions
-  ```
-* use latest releases
-  ```shell
-  ./mvnw versions:use-latest-releases
-  ```
-* use releases
-  ```shell
-  ./mvnw versions:use-releases
-  ```
-* display plugin updates
-  ```shell
-  ./mvnw versions:display-plugin-updates
-  ```
-* display property updates
-  ```shell
-  ./mvnw versions:display-property-updates
-  ```
-#### Enforcement
-* enforce
-  ```shell
-  ./mvnw enforcer:enforce
-  ```
-
 ### Docker
 
 * build image
@@ -93,6 +55,7 @@
 * Security group
   * newly created
   * during creation allow HTTP and HTTPS
+  * during creation allow inbound on 5005 if You want remote debug
 * IMDSv2
   * make required during creation
 
@@ -116,3 +79,44 @@
   * HTTP with public IPv4 address
     * [http://16.171.238.97/](http://16.171.238.97/)
   * **TODO**: add support for HTTPS
+
+* debug
+  local and remote debug IntelliJ run configurations are stored in `./run` folder
+
+## Maven
+
+* build
+  ```shell
+  ./mvnw clean install
+  ```
+### Dependency management
+
+* display dependency updates
+  ```shell
+  ./mvnw versions:display-dependency-updates
+  ```
+* use latest versions
+  ```shell
+  ./mvnw versions:use-latest-versions
+  ```
+* use latest releases
+  ```shell
+  ./mvnw versions:use-latest-releases
+  ```
+* use releases
+  ```shell
+  ./mvnw versions:use-releases
+  ```
+* display plugin updates
+  ```shell
+  ./mvnw versions:display-plugin-updates
+  ```
+* display property updates
+  ```shell
+  ./mvnw versions:display-property-updates
+  ```
+### Enforcement
+* enforce
+  ```shell
+  ./mvnw enforcer:enforce
+  ```
