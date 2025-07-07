@@ -1,11 +1,13 @@
 services:
   vertx-demo:
-    image: marekdudek/vertx-demo:1.0.4
+    image: marekdudek/vertx-demo:1.0.5
     container_name: vertx-demo
     ports:
       - "80:8080"
+      - "5005:5005"
     environment:
       JAVA_TOOL_OPTIONS: >
+        -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005
         -Dlogback.configurationFile=/logs/logback.xml
     volumes:
       - ./logs/:/logs/:rw
