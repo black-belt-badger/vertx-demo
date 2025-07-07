@@ -47,8 +47,7 @@
 ### AWS
 
 * AMI image
-  * `(SupportedImages) - Docker - Debian 12 x86_64` -
-    * best choice for the moment, new versions released often
+  * `debian-12-amd64-20250316-2053`
 * Key pair
   * `vertx-demo`
   * (almost) never changed
@@ -75,9 +74,9 @@
   ```
 * web
   * HTTP with public DNS
-    * [http://ec2-16-171-238-97.eu-north-1.compute.amazonaws.com/](http://ec2-16-171-238-97.eu-north-1.compute.amazonaws.com/)
+    * [http://ec2-13-60-243-123.eu-north-1.compute.amazonaws.com/](http://ec2-13-60-243-123.eu-north-1.compute.amazonaws.com/)
   * HTTP with public IPv4 address
-    * [http://16.171.238.97/](http://16.171.238.97/)
+    * [http://13.60.243.123/](http://13.60.243.123/)
   * **TODO**: add support for HTTPS
 
 * debug
