@@ -22,7 +22,7 @@ public class MainVerticle extends VerticleBase {
             request
               .response()
               .putHeader("content-type", "text/plain")
-              .end(format("Hello from Vert.x Demo, version %s!", "1.0.3"));
+              .end(format("Hello from Vert.x Demo, version %s!", "1.0.4"));
           }
         )
         .listen(port)

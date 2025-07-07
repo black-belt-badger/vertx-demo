@@ -1,11 +1,11 @@
 services:
   vertx-demo:
-    image: marekdudek/vertx-demo:1.0.4-SNAPSHOT
+    image: marekdudek/vertx-demo:1.0.4
     container_name: vertx-demo
     ports:
-      - "8080:8080"
+      - "80:8080"
     environment:
       JAVA_TOOL_OPTIONS: >
         -Dlogback.configurationFile=/logs/logback.xml
     volumes:
-      - ${PWD}/src/main/resources/logback.xml:/logs/logback.xml
+      - ./logs/:/logs/:rw
