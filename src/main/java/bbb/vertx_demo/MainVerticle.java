@@ -7,7 +7,9 @@ import lombok.extern.slf4j.Slf4j;
 import static java.lang.String.format;
 
 @Slf4j
-public class MainVerticle extends VerticleBase {
+public final class MainVerticle extends VerticleBase {
+
+  private static final String VERSION = System.getenv("TAG");
 
   @Override
   public Future<?> start() {
@@ -22,7 +24,7 @@ public class MainVerticle extends VerticleBase {
             request
               .response()
               .putHeader("content-type", "text/plain")
-              .end(format("Hello from Vert.x Demo, version %s!", "1.0.5"));
+              .end(format("Hello from Vert.x Demo, version %s!", VERSION));
           }
         )
         .listen(port)

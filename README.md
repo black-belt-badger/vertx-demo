@@ -72,13 +72,14 @@
 ## Deployment
 
 ### Docker
+
 * On default HTTP port
   ```shell
   docker run --name vert-xdemo -p 80:8080 -d marekdudek/vertx-demo
   ```
-* On other HTTP port
+* With `docker compose` command
   ```shell
-  docker run --name vert-xdemo -p 8080:8080 -d marekdudek/vertx-demo
+  docker compose up -d
   ```
 
 ### AWS
