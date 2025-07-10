@@ -66,8 +66,11 @@ This key pair can be reused.
 
 * Create file `events.json`, adjusting timestamp to a relatively recent
   * [https://currentmillis.com/](https://currentmillis.com/)
+  * Example command is stored in `./bash/aws-instance-setup/cloud-watch/confirm-logs-can-be-written.sh`
   * It should emit `JSON` with `nextSequenceToken` element
 * *CloudWatch* -> *Log groups* -> **training-log-group** -> **training-log-stream**
 
-## Install AWS mobile app
+## Install and set up AWS mobile app
+
+No complications there.
 

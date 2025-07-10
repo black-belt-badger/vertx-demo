@@ -70,7 +70,7 @@
 
 * shell
   ```shell
-  ssh -i "vertx-demo.pem" admin@ec2-16-171-238-97.eu-north-1.compute.amazonaws.com
+  ssh -i "vertx-demo.pem" admin@ec2-13-60-243-123.eu-north-1.compute.amazonaws.com
   ```
 * web
   * HTTP with public DNS
