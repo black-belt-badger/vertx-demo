@@ -59,6 +59,7 @@
   * **TODO**: add support for HTTPS
 
 * debug
+
   local and remote debug IntelliJ run configurations are stored in `./run` folder
 
 * Vert.x. Shell
