@@ -17,8 +17,8 @@
   * SSH, open by default
   * HTTP, suggested by launcher
   * HTTPS, suggested by launcher
-  * JDWP - 5005
-  * Vert.x Shell - 5000
+  * JDWP, 5005
+  * Vert.x Shell, 5000
 
 ## Startup
 

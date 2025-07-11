@@ -13,7 +13,7 @@ services:
       TAG: ${tag}
     command: >-
       -conf='{
-        "name": "value"
+        "name": "dev value"
       }'
     volumes:
       - ./logs/:/logs/:rw
