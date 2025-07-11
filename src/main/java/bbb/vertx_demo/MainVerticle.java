@@ -1,7 +1,12 @@
 package bbb.vertx_demo;
 
+import io.vertx.core.DeploymentOptions;
 import io.vertx.core.Future;
 import io.vertx.core.VerticleBase;
+import io.vertx.core.json.JsonObject;
+import io.vertx.ext.shell.ShellVerticle;
+import io.vertx.ext.shell.command.CommandBuilder;
+import io.vertx.ext.shell.command.CommandRegistry;
 import lombok.extern.slf4j.Slf4j;
 
 import static java.lang.String.format;
@@ -14,7 +19,9 @@ public final class MainVerticle extends VerticleBase {
   @Override
   public Future<?> start() {
     log.info("config: {}", config().encodePrettily());
-    int port = config().getInteger("http.port", 8080);
+    int httpPort = config().getInteger("http.port", 8080);
+    var telnetHost = config().getString("telnet.host", "0.0.0.0");
+    int telnetPort = config().getInteger("telnet.port", 5000);
     return
       vertx
         .createHttpServer()
@@ -27,13 +34,42 @@ public final class MainVerticle extends VerticleBase {
               .end(format("Hello from Vert.x Demo, version %s!", VERSION));
           }
         )
-        .listen(port)
-        .onSuccess(http ->
-          log.info("HTTP server started on internal port {}", port)
+        .listen(httpPort)
+        .onSuccess(httpServer -> log.info("HTTP server started on internal port {}", httpPort))
+        .onFailure(throwable -> log.error("Could not start a HTTP server", throwable))
+        .flatMap(ignored ->
+          vertx.deployVerticle(
+            ShellVerticle.class,
+            new DeploymentOptions()
+              .setConfig(
+                new JsonObject()
+                  .put("telnetOptions",
+                    new JsonObject()
+                      .put("host", telnetHost)
+                      .put("port", telnetPort)
+                  )
+              )
+          )
         )
-        .onFailure(throwable -> {
-            log.error("Could not start a HTTP server", throwable);
-          }
-        );
+        .onSuccess(id -> log.info("Shell Verticle deployed on internal {}:{} with id {}", telnetHost, telnetPort, id))
+        .onFailure(throwable -> log.error("Could not deploy Shell Verticle", throwable))
+        .flatMap(ignored ->
+          CommandRegistry
+            .getShared(vertx)
+            .registerCommand(
+              CommandBuilder
+                .command("print-config")
+                .processHandler(process ->
+                  process
+                    .write("config: ")
+                    .write(config().encodePrettily())
+                    .write("\n")
+                    .end()
+                )
+                .build(vertx)
+            )
+        )
+        .onSuccess(command -> log.info("Registered command {}", command.name()))
+        .onFailure(throwable -> log.error("Could not register command", throwable));
   }
 }

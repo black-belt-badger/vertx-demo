@@ -5,11 +5,16 @@ services:
     ports:
       - "80:8080"
       - "5005:5005"
+      - "5000:5000"
     environment:
       JAVA_TOOL_OPTIONS: >
         -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005
         -Dlogback.configurationFile=/logs/logback.xml
       TAG: ${tag}
+    command: >-
+      -conf='{
+        "name": "dev value"
+      }'
     volumes:
       - ./logs/:/logs/:rw
       - ./log-data/:/log-data/:rw
