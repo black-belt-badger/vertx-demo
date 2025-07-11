@@ -30,7 +30,6 @@
   docker push marekdudek/vertx-demo --all-tags
   ```
 
-
 ## Deployment
 
 ### Docker
@@ -39,9 +38,13 @@
   ```shell
   docker run --name vert-xdemo -p 80:8080 -d marekdudek/vertx-demo
   ```
-* With `docker compose` command
+* Run with `docker compose` command
   ```shell
   docker compose up -d
+  ```
+* Stop with `docker compose` command
+  ```shell
+  docker compose down
   ```
 
 ### AWS
@@ -59,6 +62,7 @@
   * make required during creation
 
 #### Startup
+
 * with `docker run` command
   ```shell
   docker run --name vert-xdemo -p 80:8080 -d marekdudek/vertx-demo
@@ -88,6 +92,7 @@
   ```shell
   ./mvnw clean install
   ```
+
 ### Dependency management
 
 * display dependency updates
@@ -114,7 +119,9 @@
   ```shell
   ./mvnw versions:display-property-updates
   ```
+
 ### Enforcement
+
 * enforce
   ```shell
   ./mvnw enforcer:enforce
