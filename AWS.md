@@ -22,12 +22,12 @@ This key pair can be reused.
 ## Create IAM role
 
 * *IAM* → *Roles* → *Create role*
-  * *Trusted entity type*: AWS service
-  * *Use case*: EC2
-  * *Permissions policies*:
-    * *AmazonSSMManagedInstanceCore*
-    * *CloudWatchAgentServerPolicy*
-  * *Name*: **newly-created-role**
+    * *Trusted entity type*: AWS service
+    * *Use case*: EC2
+    * *Permissions policies*:
+        * *AmazonSSMManagedInstanceCore*
+        * *CloudWatchAgentServerPolicy*
+    * *Name*: **newly-created-role**
 
 ## Assign a newly created role to an instance
 
@@ -55,20 +55,34 @@ This key pair can be reused.
 ## Configure Cloud Watch
 
 * *CloudWatch* → *Log groups* → *Create log group*
-  * *Log group name*: **training-log-group**
-  * *Create*
+    * *Log group name*: **training-log-group**
+    * *Create*
 * Go to the newly created log group details page
-  * *Create log stream*
-  * *Log stream name*: **training-log-stream**
-  * *Create*
+    * *Create log stream*
+    * *Log stream name*: **training-log-stream**
+    * *Create*
 
 ## Confirm that logs can be written
 
 * Create file `events.json`, adjusting timestamp to a relatively recent
-  * [https://currentmillis.com/](https://currentmillis.com/)
-  * Example command is stored in `./bash/aws-instance-setup/cloud-watch/confirm-logs-can-be-written.sh`
-  * It should emit `JSON` with `nextSequenceToken` element
+    * [https://currentmillis.com/](https://currentmillis.com/)
+    * Example command is stored in `./bash/aws-instance-setup/cloud-watch/confirm-logs-can-be-written.sh`
+    * It should emit `JSON` with `nextSequenceToken` element
 * *CloudWatch* -> *Log groups* -> **training-log-group** -> **training-log-stream**
+
+## Configure Cloud Watch to collect data from file
+
+* Create configuration
+
+  `./bash/aws-instance-setup/cloud-watch/config.json`
+
+* Append
+
+  `sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a append-config -m ec2 -c file:/opt/aws/amazon-cloudwatch-agent/bin/config.json -s`
+
+* Remove
+
+  `sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a remove-config -m ec2 -c file:/opt/aws/amazon-cloudwatch-agent/bin/config.json -s`
 
 ## Install and set up AWS mobile app
 

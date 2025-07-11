@@ -12,3 +12,4 @@ services:
       TAG: ${tag}
     volumes:
       - ./logs/:/logs/:rw
+      - ./log-data/:/log-data/:rw

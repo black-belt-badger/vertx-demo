@@ -1,0 +1,29 @@
+{
+  "agent": {
+    "run_as_user": "cwagent"
+  },
+  "logs": {
+    "logs_collected": {
+      "files": {
+        "collect_list": [
+          {
+            "file_path": "/home/admin/log-data/file.log",
+            "log_group_class": "STANDARD",
+            "log_group_name": "vertx-demo-log-group",
+            "log_stream_name": "some-name",
+            "retention_in_days": 3
+          }
+        ]
+      }
+    }
+  },
+  "metrics": {
+    "metrics_collected": {
+      "statsd": {
+        "metrics_aggregation_interval": 60,
+        "metrics_collection_interval": 10,
+        "service_address": ":8125"
+      }
+    }
+  }
+}

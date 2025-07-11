@@ -185,3 +185,4 @@ nbdist/
 !.vscode/extensions.json
 /.idea/
 /vertx-demo.pem
+/log-data/
