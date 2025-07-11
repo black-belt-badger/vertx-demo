@@ -7,7 +7,7 @@
 
   <groupId>bbb</groupId>
   <artifactId>vertx-demo</artifactId>
-  <version>1.0.7</version>
+  <version>1.0.8-SNAPSHOT</version>
 
   <properties>
     <maven.compiler.target>21</maven.compiler.target>
@@ -20,13 +20,13 @@
     <netty-tcnative.version>2.0.72.Final</netty-tcnative.version>
     <logback.version>1.5.18</logback.version>
     <junit-jupiter.version>6.0.0-M1</junit-jupiter.version>
+    <jackson.version>2.19.1</jackson.version>
   </properties>
 
   <dependencies>
     <dependency>
       <groupId>io.vertx</groupId>
       <artifactId>vertx-core</artifactId>
-      <scope>compile</scope>
       <exclusions>
         <exclusion>
           <groupId>com.fasterxml.jackson.core</groupId>
@@ -35,126 +35,30 @@
       </exclusions>
     </dependency>
     <dependency>
-      <groupId>com.fasterxml.jackson.core</groupId>
-      <artifactId>jackson-core</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
       <groupId>io.vertx</groupId>
-      <artifactId>vertx-core-logging</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>io.netty</groupId>
-      <artifactId>netty-common</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>io.netty</groupId>
-      <artifactId>netty-buffer</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>io.netty</groupId>
-      <artifactId>netty-transport</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>io.netty</groupId>
-      <artifactId>netty-tcnative</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>io.netty</groupId>
-      <artifactId>netty-tcnative-classes</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    <!--    <dependency>-->
-    <!--      <groupId>io.netty</groupId>-->
-    <!--      <artifactId>netty-handler</artifactId>-->
-    <!--      <version>${netty-common.version}</version>-->
-    <!--      <scope>compile</scope>-->
-    <!--    </dependency>-->
-    <dependency>
-      <groupId>io.netty</groupId>
-      <artifactId>netty-handler-proxy</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>io.netty</groupId>
-      <artifactId>netty-codec-http</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>io.netty</groupId>
-      <artifactId>netty-codec-http2</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>io.netty</groupId>
-      <artifactId>netty-resolver</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>io.netty</groupId>
-      <artifactId>netty-resolver-dns</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>io.netty</groupId>
-      <artifactId>netty-transport-native-unix-common</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>io.netty</groupId>
-      <artifactId>netty-codec-socks</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>io.netty</groupId>
-      <artifactId>netty-codec-dns</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>io.netty</groupId>
-      <artifactId>netty-codec-compression</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>io.netty</groupId>
-      <artifactId>netty-codec-base</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>io.vertx</groupId>
-      <artifactId>vertx-launcher-application</artifactId>
-      <scope>compile</scope>
+      <artifactId>vertx-shell</artifactId>
       <exclusions>
         <exclusion>
-          <groupId>info.picocli</groupId>
-          <artifactId>picocli</artifactId>
+          <groupId>com.fasterxml.jackson.core</groupId>
+          <artifactId>jackson-databind</artifactId>
         </exclusion>
       </exclusions>
     </dependency>
     <dependency>
-      <groupId>info.picocli</groupId>
-      <artifactId>picocli</artifactId>
-      <scope>compile</scope>
+      <groupId>io.vertx</groupId>
+      <artifactId>vertx-web</artifactId>
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
-      <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-core</artifactId>
-      <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-classic</artifactId>
-      <scope>compile</scope>
       <exclusions>
         <exclusion>
           <groupId>org.slf4j</groupId>
@@ -180,7 +84,6 @@
           <artifactId>apache-client</artifactId>
         </exclusion>
       </exclusions>
-      <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>io.vertx</groupId>
@@ -284,11 +187,11 @@
             <requireJavaVersion>
               <version>21</version>
             </requireJavaVersion>
-            <requireExplicitDependencyScope>true</requireExplicitDependencyScope>
             <banTransitiveDependencies>
               <excludes>
-                <exclude>io.netty:netty-handler:*</exclude>
+                <exclude>io.vertx:*</exclude>
                 <exclude>software.amazon.awssdk:s3:*</exclude>
+                <exclude>org.apache.sshd:*</exclude>
               </excludes>
             </banTransitiveDependencies>
             <dependencyConvergence>true</dependencyConvergence>
@@ -390,7 +293,12 @@
       <dependency>
         <groupId>com.fasterxml.jackson.core</groupId>
         <artifactId>jackson-core</artifactId>
-        <version>2.19.1</version>
+        <version>${jackson.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-databind</artifactId>
+        <version>${jackson.version}</version>
       </dependency>
       <dependency>
         <groupId>io.netty</groupId>
