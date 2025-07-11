@@ -13,6 +13,12 @@
   * during creation allow inbound on 5005 if You want remote debug
 * IMDSv2
   * make required during creation
+* Ports to open:
+  * SSH, open by default
+  * HTTP, suggested by launcher
+  * HTTPS, suggested by launcher
+  * JDWP - 5005
+  * Vert.x Shell - 5000
 
 ## Startup
 

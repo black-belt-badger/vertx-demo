@@ -60,3 +60,13 @@
 
 * debug
   local and remote debug IntelliJ run configurations are stored in `./run` folder
+
+* Vert.x. Shell
+  * dev
+    ```shell
+    telnet -d localhost 5000
+    ```
+  * prod
+    ```shell
+    telnet -d 13.60.243.123 5000
+    ```
