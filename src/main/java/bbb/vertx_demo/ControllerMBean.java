@@ -1,6 +1,6 @@
 package bbb.vertx_demo;
 
-public interface ExampleMBean {
+public interface ControllerMBean {
 
   void performOperation(String param);
 

@@ -77,3 +77,7 @@
   ```shell
   jconsole localhost:1099 &
   ```
+  * VisualVM
+  ```shell
+  visualvm --nosplash --openjmx localhost:1099 &
+  ```
