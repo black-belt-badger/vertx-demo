@@ -9,6 +9,9 @@ import io.vertx.ext.shell.command.CommandBuilder;
 import io.vertx.ext.shell.command.CommandRegistry;
 import lombok.extern.slf4j.Slf4j;
 
+import javax.management.*;
+import java.lang.management.ManagementFactory;
+
 import static java.lang.String.format;
 
 @Slf4j
@@ -70,6 +73,24 @@ public final class MainVerticle extends VerticleBase {
             )
         )
         .onSuccess(command -> log.info("Registered command {}", command.name()))
-        .onFailure(throwable -> log.error("Could not register command", throwable));
+        .onFailure(throwable -> log.error("Could not register command", throwable))
+        .flatMap(ignored -> {
+            var mbean = new Example();
+            var name = "bbb.vertx_in_docker:type=basic,name=vertx-in-docker";
+            log.info("Registering MBean {}", name);
+            try {
+              var objectName = new ObjectName(name);
+              ManagementFactory
+                .getPlatformMBeanServer()
+                .registerMBean(mbean, objectName);
+            } catch (MalformedObjectNameException |
+                     InstanceAlreadyExistsException |
+                     MBeanRegistrationException |
+                     NotCompliantMBeanException e) {
+              return Future.failedFuture(e);
+            }
+            return Future.succeededFuture();
+          }
+        );
   }
 }

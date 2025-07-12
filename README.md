@@ -71,3 +71,9 @@
     ```shell
     telnet -d 13.60.243.123 5000
     ```
+
+* JMX
+  * jconsole
+  ```shell
+  jconsole localhost:1099 &
+  ```
