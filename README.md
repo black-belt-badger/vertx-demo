@@ -74,10 +74,20 @@
 
 * JMX
   * jconsole
-  ```shell
-  jconsole localhost:1099 &
-  ```
+    * dev
+     ```shell
+     jconsole localhost:1099 &
+     ```
+    * prod
+     ```shell
+     jconsole ec2-13-60-243-123.eu-north-1.compute.amazonaws.com:1099 &
+     ```
   * VisualVM
-  ```shell
-  visualvm --nosplash --openjmx localhost:1099 &
-  ```
+    * dev
+    ```shell
+    visualvm --nosplash --openjmx localhost:1099 &
+    ```
+    * prod
+    ```shell
+    visualvm --nosplash --openjmx ec2-13-60-243-123.eu-north-1.compute.amazonaws.com:1099 &
+    ```
