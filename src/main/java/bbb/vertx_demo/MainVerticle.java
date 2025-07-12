@@ -88,7 +88,7 @@ public final class MainVerticle extends VerticleBase {
             .listen(change -> {
                 var previous = change.getPreviousConfiguration();
                 var next = change.getNewConfiguration();
-                log.info("Config changed from {} to {}", previous, next);
+                log.info("Config changed from {} to {}", previous.encodePrettily(), next.encodePrettily());
                 var newConfigServerVersion = next.getString("config-server.version");
                 if (newConfigServerVersion != null)
                   configServerVersionRef.set(newConfigServerVersion);
