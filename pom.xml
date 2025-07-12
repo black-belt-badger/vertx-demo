@@ -7,7 +7,7 @@
 
   <groupId>bbb</groupId>
   <artifactId>vertx-demo</artifactId>
-  <version>1.0.9</version>
+  <version>1.0.10-SNAPSHOT-2</version>
 
   <properties>
     <maven.compiler.target>21</maven.compiler.target>
@@ -58,6 +58,10 @@
           <artifactId>jackson-databind</artifactId>
         </exclusion>
       </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>io.vertx</groupId>
+      <artifactId>vertx-config</artifactId>
     </dependency>
     <dependency>
       <groupId>io.vertx</groupId>

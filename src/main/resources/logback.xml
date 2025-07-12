@@ -2,7 +2,7 @@
 
 <!DOCTYPE configuration>
 
-<configuration debug="true" scan="true" scanPeriod="30 seconds">
+<configuration debug="true" scan="true" scanPeriod="5 seconds">
 
   <import class="ch.qos.logback.classic.encoder.PatternLayoutEncoder"/>
   <import class="ch.qos.logback.core.ConsoleAppender"/>
@@ -14,9 +14,9 @@
   </appender>
 
   <appender name="FILE" class="ch.qos.logback.core.FileAppender">
-    <file>/log-data/file.log</file>
+    <file>./log-data/file.log</file>
     <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-      <fileNamePattern>/log-data/file-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+      <fileNamePattern>./log-data/file-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
       <maxFileSize>100MB</maxFileSize>
       <maxHistory>100</maxHistory>
       <totalSizeCap>100GB</totalSizeCap>

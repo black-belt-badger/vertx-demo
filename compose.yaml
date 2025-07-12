@@ -1,11 +1,12 @@
 services:
+
   vertx-demo:
     image: marekdudek/vertx-demo:${tag}
     container_name: vertx-demo
     ports:
-      - "80:8080"
+      - "8081:8081"
       - "5005:5005"
-      - "5000:5000"
+      - "5001:5001"
       - "1099:1099"
     environment:
       JAVA_TOOL_OPTIONS: >
@@ -17,11 +18,21 @@ services:
         -Dcom.sun.management.jmxremote.port=1099
         -Dcom.sun.management.jmxremote.rmi.port=1099
         -Djava.rmi.server.hostname=0.0.0.0
-      TAG: ${tag}
+      VERSION: ${tag}
     command: >-
       -conf='{
-        "name": "dev value"
+        "configured-name": "dev docker inline value",
+        "http.port": 8081,
+        "telnet.port": 5001
       }'
     volumes:
       - ./logs/:/logs/:rw
       - ./log-data/:/log-data/:rw
+
+  config-server-nginx:
+    image: nginx
+    container_name: config-server-nginx
+    ports:
+      - "8887:8887"
+    volumes:
+      - ./configs:/usr/share/nginx/html
