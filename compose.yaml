@@ -21,7 +21,7 @@ services:
       VERSION: ${tag}
     command: >-
       -conf='{
-        "configured-name": "dev docker inline value",
+        "config-server.http.host": "host.docker.internal",
         "http.port": 8081,
         "telnet.port": 5001
       }'
@@ -33,6 +33,6 @@ services:
     image: nginx
     container_name: config-server-nginx
     ports:
-      - "8887:8887"
+      - "8887:80"
     volumes:
-      - ./configs:/usr/share/nginx/html
+      - ./configs:/usr/share/nginx/html:rw

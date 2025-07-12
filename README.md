@@ -91,3 +91,7 @@
     ```shell
     visualvm --nosplash --openjmx ec2-13-60-243-123.eu-north-1.compute.amazonaws.com:1099 &
     ```
+* Docker
+  ```shell
+  docker exec -it vertx-demo bash
+  ```

@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import javax.management.*;
 import java.time.Duration;
+import java.util.concurrent.atomic.AtomicReference;
 
 import static io.vertx.core.Future.failedFuture;
 import static io.vertx.core.Future.succeededFuture;
@@ -29,14 +30,14 @@ public final class MainVerticle extends VerticleBase {
 
   @Override
   public Future<?> start() {
-    var config = config();
-    log.info("Start config: {}", config.encodePrettily());
-    var configServerHttpHost = config.getString("config-server.http.host", "localhost");
-    var configServerHttpPort = config.getInteger("config-server.http.port", 8887);
-    var configServerHttpPath = config.getString("config-server.http.path", "/conf.json");
-    var configServerHttpScanPeriodString = config.getString("config-server.scan-period", "PT5S");
+    var starting = config();
+    log.info("Start config: {}", starting.encodePrettily());
+    var configServerHttpHost = starting.getString("config-server.http.host", "localhost");
+    var configServerHttpPort = starting.getInteger("config-server.http.port", 8887);
+    var configServerHttpPath = starting.getString("config-server.http.path", "/conf.json");
+    var configServerHttpScanPeriodString = starting.getString("config-server.scan-period", "PT5S");
     var configServerHttpScanPeriod = Duration.parse(configServerHttpScanPeriodString);
-    ConfigRetriever retriever =
+    var retriever =
       ConfigRetriever.create(vertx,
         new ConfigRetrieverOptions()
           .setScanPeriod(configServerHttpScanPeriod.toMillis())
@@ -52,74 +53,91 @@ public final class MainVerticle extends VerticleBase {
               )
           )
       );
-    var httpHost = config.getString("http.host", "0.0.0.0");
-    int httpPort = config.getInteger("http.port", 8080);
-    var telnetHost = config.getString("telnet.host", "0.0.0.0");
-    int telnetPort = config.getInteger("telnet.port", 5000);
-    return
-      vertx
-        .createHttpServer()
-        .requestHandler(request -> {
-            if (log.isTraceEnabled())
-              log.trace("Received request: {}", request.uri());
-            request
-              .response()
-              .putHeader("content-type", "text/plain")
-              .end(format("Hello from Vert.x Demo, version %s!", VERSION));
-          }
-        )
-        .listen(httpPort, httpHost)
-        .onSuccess(httpServer -> log.info("HTTP server started on internal {}:{}", httpHost, httpPort))
-        .onFailure(throwable -> log.error("HTTP server failed to start on internal {}:{}", httpHost, httpPort, throwable))
-        .flatMap(ignored ->
-          vertx.deployVerticle(
-            ShellVerticle.class,
-            new DeploymentOptions()
-              .setConfig(
-                new JsonObject()
-                  .put("telnetOptions",
+    return retriever
+      .getConfig().map(retrieved -> {
+          log.info("Retrieved config: {}", retrieved.encodePrettily());
+          var merged = retrieved.mergeIn(starting);
+          log.info("Merged config: {}", merged.encodePrettily());
+          var httpHost = merged.getString("http.host", "0.0.0.0");
+          int httpPort = merged.getInteger("http.port", 8080);
+          var telnetHost = merged.getString("telnet.host", "0.0.0.0");
+          int telnetPort = merged.getInteger("telnet.port", 5000);
+          var configServerVersion = starting.getString("config-server.version", "compiled default value");
+          var configServerVersionRef = new AtomicReference<String>(configServerVersion);
+          retriever.listen(change -> {
+              var previous = change.getPreviousConfiguration();
+              var next = change.getNewConfiguration();
+              log.info("Config changed from {} to {}", previous, next);
+              var newConfigServerVersion = next.getString("config-server.version");
+              if (newConfigServerVersion != null)
+                configServerVersionRef.set(newConfigServerVersion);
+            }
+          );
+          return vertx
+            .createHttpServer()
+            .requestHandler(request -> {
+                if (log.isTraceEnabled())
+                  log.trace("Received request: {}", request.uri());
+                request
+                  .response()
+                  .putHeader("content-type", "text/plain")
+                  .end(format("Hello from Vert.x Demo, version '%s', config '%s'!", VERSION, configServerVersionRef.get()));
+              }
+            )
+            .listen(httpPort, httpHost)
+            .onSuccess(httpServer -> log.info("HTTP server started on internal {}:{}", httpHost, httpPort))
+            .onFailure(throwable -> log.error("HTTP server failed to start on internal {}:{}", httpHost, httpPort, throwable))
+            .flatMap(ignored ->
+              vertx.deployVerticle(
+                ShellVerticle.class,
+                new DeploymentOptions()
+                  .setConfig(
                     new JsonObject()
-                      .put("host", telnetHost)
-                      .put("port", telnetPort)
+                      .put("telnetOptions",
+                        new JsonObject()
+                          .put("host", telnetHost)
+                          .put("port", telnetPort)
+                      )
                   )
               )
-          )
-        )
-        .onSuccess(id -> log.info("Shell Verticle deployed on internal {}:{} with id {}", telnetHost, telnetPort, id))
-        .onFailure(throwable -> log.error("Shell Verticle failed to deploy on internal {}:{}", telnetHost, telnetPort, throwable))
-        .flatMap(ignored ->
-          CommandRegistry
-            .getShared(vertx)
-            .registerCommand(
-              CommandBuilder
-                .command("print-config")
-                .processHandler(process ->
-                  process
-                    .write("config: ")
-                    .write(config.encodePrettily())
-                    .write("\n")
-                    .end()
-                )
-                .build(vertx)
             )
-        )
-        .onSuccess(command -> log.info("Registered command {}", command.name()))
-        .onFailure(throwable -> log.error("Could not register command", throwable))
-        .flatMap(ignored -> {
-            var mbean = new Controller();
-            var name = "bbb.vertx_demo:type=basic,name=vertx-demo";
-            log.info("Registering MBean {}", name);
-            try {
-              var objectName = new ObjectName(name);
-              var instance = getPlatformMBeanServer().registerMBean(mbean, objectName);
-              return succeededFuture(instance);
-            } catch (MalformedObjectNameException |
-                     InstanceAlreadyExistsException |
-                     MBeanRegistrationException |
-                     NotCompliantMBeanException e) {
-              return failedFuture(e);
-            }
-          }
-        );
+            .onSuccess(id -> log.info("Shell Verticle deployed on internal {}:{} with id {}", telnetHost, telnetPort, id))
+            .onFailure(throwable -> log.error("Shell Verticle failed to deploy on internal {}:{}", telnetHost, telnetPort, throwable))
+            .flatMap(ignored ->
+              CommandRegistry
+                .getShared(vertx)
+                .registerCommand(
+                  CommandBuilder
+                    .command("print-config")
+                    .processHandler(process ->
+                      process
+                        .write("config: ")
+                        .write(starting.encodePrettily())
+                        .write("\n")
+                        .end()
+                    )
+                    .build(vertx)
+                )
+            )
+            .onSuccess(command -> log.info("Registered command {}", command.name()))
+            .onFailure(throwable -> log.error("Could not register command", throwable))
+            .flatMap(ignored -> {
+                var mbean = new Controller();
+                var name = "bbb.vertx_demo:type=basic,name=vertx-demo";
+                log.info("Registering MBean {}", name);
+                try {
+                  var objectName = new ObjectName(name);
+                  var instance = getPlatformMBeanServer().registerMBean(mbean, objectName);
+                  return succeededFuture(instance);
+                } catch (MalformedObjectNameException |
+                         InstanceAlreadyExistsException |
+                         MBeanRegistrationException |
+                         NotCompliantMBeanException e) {
+                  return failedFuture(e);
+                }
+              }
+            );
+        }
+      );
   }
 }
