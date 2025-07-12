@@ -3,6 +3,7 @@
     <option name="MAIN_CLASS_NAME" value="io.vertx.launcher.application.VertxApplication" />
     <module name="vertx-demo" />
     <option name="PROGRAM_PARAMETERS" value="bbb.vertx_demo.MainVerticle -conf &quot;{\&quot;config-server.version\&quot;:\&quot;set in run configuration\&quot;}&quot;" />
+    <option name="VM_PARAMETERS" value="-Dlogback.configurationFile=./logs/logback.xml" />
     <extension name="software.aws.toolkits.jetbrains.core.execution.JavaAwsConnectionExtension">
       <option name="credential" />
       <option name="region" />

@@ -32,24 +32,33 @@ public final class MainVerticle extends VerticleBase {
   public Future<?> start() {
     var starting = config();
     log.info("Start config: {}", starting.encodePrettily());
-    var configServerHttpHost = starting.getString("config-server.http.host", "localhost");
-    var configServerHttpPort = starting.getInteger("config-server.http.port", 8887);
-    var configServerHttpPath = starting.getString("config-server.http.path", "/conf.json");
-    var configServerHttpScanPeriodString = starting.getString("config-server.scan-period", "PT5S");
-    var configServerHttpScanPeriod = Duration.parse(configServerHttpScanPeriodString);
+    var configServerHost = starting.getString("config-server.http.host", "localhost");
+    log.info("Config server host: {}", configServerHost);
+    var configServerPort = starting.getInteger("config-server.http.port", 8887);
+    log.info("Config server port: {}", configServerPort);
+    var configServerPath = starting.getString("config-server.http.path", "/conf.json");
+    log.info("Config server path: {}", configServerPath);
+    var configServerScanPeriodString = starting.getString("config-server.scan-period", "PT30S");
+    log.info("Config server scan period string: {}", configServerScanPeriodString);
+    var configServerScanPeriod = Duration.parse(configServerScanPeriodString);
+    log.info("Config server scan period: {}", configServerScanPeriod);
     var retriever =
       ConfigRetriever.create(vertx,
         new ConfigRetrieverOptions()
-          .setScanPeriod(configServerHttpScanPeriod.toMillis())
+          .setScanPeriod(configServerScanPeriod.toMillis())
           .addStore(
             new ConfigStoreOptions()
               .setType("http")
               .setOptional(true)
               .setConfig(
                 new JsonObject()
-                  .put("host", configServerHttpHost)
-                  .put("port", configServerHttpPort)
-                  .put("path", configServerHttpPath)
+                  .put("host", configServerHost)
+                  .put("port", configServerPort)
+                  .put("path", configServerPath)
+                  .put("headers",
+                    new JsonObject()
+                      .put("Accept", "application/json")
+                  )
               )
           )
       );
@@ -62,17 +71,29 @@ public final class MainVerticle extends VerticleBase {
           int httpPort = merged.getInteger("http.port", 8080);
           var telnetHost = merged.getString("telnet.host", "0.0.0.0");
           int telnetPort = merged.getInteger("telnet.port", 5000);
-          var configServerVersion = starting.getString("config-server.version", "compiled default value");
-          var configServerVersionRef = new AtomicReference<String>(configServerVersion);
-          retriever.listen(change -> {
-              var previous = change.getPreviousConfiguration();
-              var next = change.getNewConfiguration();
-              log.info("Config changed from {} to {}", previous, next);
-              var newConfigServerVersion = next.getString("config-server.version");
-              if (newConfigServerVersion != null)
-                configServerVersionRef.set(newConfigServerVersion);
-            }
-          );
+          var configServerVersion = merged.getString("config-server.version", "compiled default value");
+          var configServerVersionRef = new AtomicReference<>(configServerVersion);
+          retriever
+            .setBeforeScanHandler(ignored -> {
+                if (log.isDebugEnabled())
+                  log.debug("About to scan config");
+              }
+            )
+            .setConfigurationProcessor(config -> {
+                if (log.isDebugEnabled())
+                  log.debug("Processing config: {}", config.encodePrettily());
+                return config;
+              }
+            )
+            .listen(change -> {
+                var previous = change.getPreviousConfiguration();
+                var next = change.getNewConfiguration();
+                log.info("Config changed from {} to {}", previous, next);
+                var newConfigServerVersion = next.getString("config-server.version");
+                if (newConfigServerVersion != null)
+                  configServerVersionRef.set(newConfigServerVersion);
+              }
+            );
           return vertx
             .createHttpServer()
             .requestHandler(request -> {
