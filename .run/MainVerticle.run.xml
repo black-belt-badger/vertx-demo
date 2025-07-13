@@ -1,8 +1,11 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="MainVerticle" type="Application" factoryName="Application">
+    <envs>
+      <env name="VERSION" value="dev, from envirnoment" />
+    </envs>
     <option name="MAIN_CLASS_NAME" value="io.vertx.launcher.application.VertxApplication" />
     <module name="vertx-demo" />
-    <option name="PROGRAM_PARAMETERS" value="bbb.vertx_demo.MainVerticle -conf &quot;{\&quot;config-server\&quot;:{\&quot;version\&quot;:\&quot;DEV from config server\&quot;}}&quot;" />
+    <option name="PROGRAM_PARAMETERS" value="bbb.vertx_demo.MainVerticle -conf &quot;{\&quot;config-server\&quot;:{\&quot;version\&quot;:\&quot;DEV from command line\&quot;}}&quot;" />
     <option name="VM_PARAMETERS" value="-Dlogback.configurationFile=./logs/logback.xml" />
     <extension name="software.aws.toolkits.jetbrains.core.execution.JavaAwsConnectionExtension">
       <option name="credential" />
