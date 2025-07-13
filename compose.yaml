@@ -1,7 +1,7 @@
-"services":
+services:
 
-  "vertx-demo":
-    "image": marekdudek/vertx-demo:${tag}
+  vertx-demo:
+    image: marekdudek/vertx-demo:${tag}
     container_name: vertx-demo
     ports:
       - "8081:8081"
