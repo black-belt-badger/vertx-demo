@@ -5,35 +5,39 @@ let natural = https://prelude.dhall-lang.org/v23.1.0/JSON/natural.dhall
 let object = https://prelude.dhall-lang.org/v23.1.0/JSON/object.dhall
 let type = https://prelude.dhall-lang.org/v23.1.0/JSON/Type.dhall
 
-let ConfigServer = {
-    `config-server`: {
-      version : Text,
-      host : Text,
-      port : Natural
+let Config = {
+    config-server : {
+      version     : Text,
+      host        : Text,
+      port        : Natural,
+      path        : Text,
+      scan-period : Text
     }
   }
 
-let ConfigServer/ToJSON : ConfigServer -> type
-  = \(configServer : ConfigServer)
+let Config/ToJSON : Config -> type
+  = \(config : Config)
     -> object ( toMap {
-          `config-server` = object ( toMap {
-              version = string configServer.config-server.version,
-              host    = string configServer.config-server.host,
-              port    = natural configServer.config-server.port
+          config-server = object ( toMap {
+              version     = string  config.config-server.version,
+              host        = string  config.config-server.host,
+              port        = natural config.config-server.port,
+              path        = string  config.config-server.path,
+              scan-period = string  config.config-server.scan-period
              }
             )
           }
         )
 
+let defaultHost = "localhost"
 let defaultPort = 8887
+let defaultPath = "/conf.json"
+let defaultScanPeriod = "PT30S"
 
-let dev = {`config-server` = { version = "DEV from config server", host = "localhost", port = defaultPort } }
-let devStr : Text = render (ConfigServer/ToJSON dev)
-
-let prod = {`config-server` = { version = "PROD from config server", host = "51.21.163.63", port = defaultPort } }
-let prodStr : Text = render (ConfigServer/ToJSON prod)
+let dev =  { config-server = { version = "DEV from config server",  host = defaultHost,    port = defaultPort, path = defaultPath, scan-period = defaultScanPeriod } }
+let prod = { config-server = { version = "PROD from config server", host = "51.21.163.63", port = defaultPort, path = defaultPath, scan-period = defaultScanPeriod } }
 
 in {
-  dev =  {`config.json` = devStr },
-  prod = {`config.json` = prodStr }
+  dev =  { `config.json` = render (Config/ToJSON dev)  },
+  prod = { `config.json` = render (Config/ToJSON prod) }
 }

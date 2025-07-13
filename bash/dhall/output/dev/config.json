@@ -1,7 +1,9 @@
 {
   "config-server": {
     "host": "localhost",
+    "path": "/conf.json",
     "port": 8887,
+    "scan-period": "PT30S",
     "version": "DEV from config server"
   }
 }
