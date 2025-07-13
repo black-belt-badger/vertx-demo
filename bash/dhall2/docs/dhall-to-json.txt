@@ -1,0 +1,27 @@
+Usage: dhall-to-json [[--explain] [--pretty | --compact] 
+                       [--omit-empty | --preserve-null] 
+                       [[--key ARG] [--value ARG] | --no-maps] 
+                       [--approximate-special-doubles] [--file FILE] 
+                       [--output FILE] |
+                       --version]
+  Compile Dhall to JSON
+
+Available options:
+  -h,--help                Show this help text
+  --explain                Explain error messages in detail
+  --pretty                 Deprecated, will be removed soon. Pretty print
+                           generated JSON
+  --compact                Render JSON on one line
+  --omit-empty             Omit record fields that are null or empty records
+  --preserve-null          Preserve record fields that are null
+  --key ARG                Reserved key field name for association lists
+                           (default: mapKey)
+  --value ARG              Reserved value field name for association lists
+                           (default: mapValue)
+  --no-maps                Disable conversion of association lists to
+                           homogeneous maps
+  --approximate-special-doubles
+                           Use approximate representation for NaN/±Infinity
+  --file FILE              Read expression from a file instead of standard input
+  --output FILE            Write JSON to a file instead of standard output
+  --version                Display version
