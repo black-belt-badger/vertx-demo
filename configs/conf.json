@@ -1,3 +1,5 @@
 {
-  "config-server.version": "DEV from config server"
+  "config-server": {
+    "version": "DEV from config server"
+  }
 }

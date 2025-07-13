@@ -4,25 +4,22 @@ import io.vertx.core.json.JsonObject;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 @Slf4j
-public class JsonParingTest {
+final class JsonParingTest {
+
   @Test
   void original() {
-    var original =
-      new JsonObject("{" +
-        "  \"config-server.version\": \"DEV from config server\"" +
-        "}");
-    log.info("Original: {}", original.encodePrettily());
+    var json = new JsonObject("{\"config.version\": \"some value\"}");
+    var version = json.getString("config.version");
+    assertThat(version).isEqualTo("some value");
   }
 
   @Test
   void generated() {
-    var generated =
-      new JsonObject("{" +
-        "  \"config-server\": {" +
-        "    \"version\": \"DEV from config server\"" +
-        "  }" +
-        "}");
-    log.info("Generated: {}", generated.encodePrettily());
+    var json = new JsonObject("{\"config\":{\"version\":\"some value\"}}");
+    var version = json.getJsonObject("config").getString("version");
+    assertThat(version).isEqualTo("some value");
   }
 }

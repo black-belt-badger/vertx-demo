@@ -71,7 +71,10 @@ public final class MainVerticle extends VerticleBase {
           int httpPort = merged.getInteger("http.port", 8080);
           var telnetHost = merged.getString("telnet.host", "0.0.0.0");
           int telnetPort = merged.getInteger("telnet.port", 5000);
-          var configServerVersion = merged.getString("config-server.version", "compiled default value");
+          var configServerVersion =
+            merged
+              .getJsonObject("config-server")
+              .getString("version", "compiled default value");
           var configServerVersionRef = new AtomicReference<>(configServerVersion);
           retriever
             .setBeforeScanHandler(ignored -> {
@@ -89,7 +92,10 @@ public final class MainVerticle extends VerticleBase {
                 var previous = change.getPreviousConfiguration();
                 var next = change.getNewConfiguration();
                 log.info("Config changed from {} to {}", previous.encodePrettily(), next.encodePrettily());
-                var newConfigServerVersion = next.getString("config-server.version");
+                var newConfigServerVersion =
+                  next
+                    .getJsonObject("config-server")
+                    .getString("version");
                 if (newConfigServerVersion != null)
                   configServerVersionRef.set(newConfigServerVersion);
               }
