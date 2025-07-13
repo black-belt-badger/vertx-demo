@@ -74,7 +74,7 @@ public final class MainVerticle extends VerticleBase {
           int telnetPort = merged.getInteger("telnet.port", 5000);
           var configServerVersion =
             merged
-              .getJsonObject("config-server")
+              .getJsonObject("config-server", new JsonObject())
               .getString("version", "compiled default value");
           var configServerVersionRef = new AtomicReference<>(configServerVersion);
           retriever
@@ -95,7 +95,7 @@ public final class MainVerticle extends VerticleBase {
                 log.info("Config changed from {} to {}", previous.encodePrettily(), next.encodePrettily());
                 var newConfigServerVersion =
                   next
-                    .getJsonObject("config-server")
+                    .getJsonObject("config-server", new JsonObject())
                     .getString("version");
                 if (newConfigServerVersion != null)
                   configServerVersionRef.set(newConfigServerVersion);

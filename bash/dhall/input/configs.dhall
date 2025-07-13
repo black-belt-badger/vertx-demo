@@ -34,7 +34,7 @@ let defaultPort = 8887
 let defaultPath = "/conf.json"
 let defaultScanPeriod = "PT30S"
 
-let dev =  { config-server = { version = "DEV from config server",  host = defaultHost,    port = defaultPort, path = defaultPath, scan-period = defaultScanPeriod } }
+let dev  = { config-server = { version = "DEV from config server",  host = defaultHost,    port = defaultPort, path = defaultPath, scan-period = defaultScanPeriod } }
 let prod = { config-server = { version = "PROD from config server", host = "51.21.163.63", port = defaultPort, path = defaultPath, scan-period = defaultScanPeriod } }
 
 in {

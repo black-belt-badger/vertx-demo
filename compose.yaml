@@ -35,4 +35,4 @@ services:
     ports:
       - "8887:80"
     volumes:
-      - ./configs:/usr/share/nginx/html:rw
+      - ./configs/dev:/usr/share/nginx/html:rw
