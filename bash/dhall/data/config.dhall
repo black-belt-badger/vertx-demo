@@ -1,0 +1,2 @@
+{ config-server.version = "DEV from config server"
+}
