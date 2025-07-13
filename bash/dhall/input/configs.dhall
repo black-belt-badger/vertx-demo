@@ -38,6 +38,6 @@ let dev =  { config-server = { version = "DEV from config server",  host = defau
 let prod = { config-server = { version = "PROD from config server", host = "51.21.163.63", port = defaultPort, path = defaultPath, scan-period = defaultScanPeriod } }
 
 in {
-  dev =  { `config.json` = render (Config/ToJSON dev)  },
-  prod = { `config.json` = render (Config/ToJSON prod) }
+  dev =  { `conf.json` = render (Config/ToJSON dev)  },
+  prod = { `conf.json` = render (Config/ToJSON prod) }
 }
