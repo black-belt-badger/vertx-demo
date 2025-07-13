@@ -18,14 +18,21 @@ function dhallToJson() {
     dhallhaskell/dhall-json dhall-to-json --file "$IN" --output "$OUT"
 }
 
-function yamlToDhall() {
+function dhallToYaml() {
+  local IN=/in/"$1"
+  local OUT=/out/"$2"
+  docker run -i --rm -v "$DIR"/in/:/in:ro -v "$DIR"/out/:/out:rw \
+    dhallhaskell/dhall-json dhall-to-yaml --file "$IN" --output "$OUT"
+}
+
+function yamlToDhall2() {
   local IN=/in/"$1"
   local OUT=/out/"$2"
   docker run -i --rm -v "$DIR"/in/:/in:ro -v "$DIR"/out/:/out:rw \
     dhallhaskell/dhall-yaml yaml-to-dhall --file "$IN" --output "$OUT"
 }
 
-function dhallToYaml() {
+function dhallToYaml2ng() {
   local IN=/in/"$1"
   local OUT=/out/"$2"
   docker run -i --rm -v "$DIR"/in/:/in:ro -v "$DIR"/out/:/out:rw \
