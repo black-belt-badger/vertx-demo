@@ -4,12 +4,7 @@ FILE=$(readlink -f "$0")
 DIR=$(dirname "$FILE")
 set -x
 
-function jsonToDhall() {
-  local IN=/in/"$1"
-  local OUT=/out/"$2"
-  docker run -i --rm -v "$DIR"/in/:/in:ro -v "$DIR"/out/:/out:rw \
-    dhallhaskell/dhall-json json-to-dhall --file "$IN" --output "$OUT"
-}
+# dhall-json
 
 function dhallToJson() {
   local IN=/in/"$1"
@@ -25,16 +20,25 @@ function dhallToYaml() {
     dhallhaskell/dhall-json dhall-to-yaml --file "$IN" --output "$OUT"
 }
 
-function yamlToDhall2() {
+function jsonToDhall() {
   local IN=/in/"$1"
   local OUT=/out/"$2"
   docker run -i --rm -v "$DIR"/in/:/in:ro -v "$DIR"/out/:/out:rw \
-    dhallhaskell/dhall-yaml yaml-to-dhall --file "$IN" --output "$OUT"
+    dhallhaskell/dhall-json json-to-dhall --file "$IN" --output "$OUT"
 }
+
+# dhall-yaml
 
 function dhallToYaml2ng() {
   local IN=/in/"$1"
   local OUT=/out/"$2"
   docker run -i --rm -v "$DIR"/in/:/in:ro -v "$DIR"/out/:/out:rw \
     dhallhaskell/dhall-yaml dhall-to-yaml-ng --file "$IN" --output "$OUT"
+}
+
+function yamlToDhall2() {
+  local IN=/in/"$1"
+  local OUT=/out/"$2"
+  docker run -i --rm -v "$DIR"/in/:/in:ro -v "$DIR"/out/:/out:rw \
+    dhallhaskell/dhall-yaml yaml-to-dhall --file "$IN" --output "$OUT"
 }
