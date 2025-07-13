@@ -1,0 +1,35 @@
+Usage: json-to-dhall [type | [SCHEMA] [--records-strict | --records-loose] 
+                       [--no-keyval-arrays] [--no-keyval-maps] 
+                       [--unions-first | --unions-none | --unions-strict] 
+                       [--omissible-lists] [--file FILE] [--output FILE] 
+                       [--ascii] [--plain] |
+                       (-V|--version)]
+  Convert a JSON expression to a Dhall expression, given the expected Dhall type
+
+Available options:
+  -h,--help                Show this help text
+  SCHEMA                   Dhall type (schema). You can omit the schema to let
+                           the executable infer the schema from the JSON value.
+  --records-strict         Fail if any JSON fields are missing from the expected
+                           Dhall type
+  --records-loose          Tolerate JSON fields not present within the expected
+                           Dhall type
+  --no-keyval-arrays       Disable conversion of key-value arrays to records
+  --no-keyval-maps         Disable conversion of homogeneous map objects to
+                           association lists
+  --unions-first           The first value with the matching type (successfully
+                           parsed all the way down the tree) is accepted, even
+                           if not the only possible match. (DEFAULT)
+  --unions-none            Unions not allowed
+  --unions-strict          Error if more than one union values match the type
+                           (and parse successfully)
+  --omissible-lists        Tolerate missing list values, they are assumed empty
+  --file FILE              Read JSON from a file instead of standard input
+  --output FILE            Write Dhall expression to a file instead of standard
+                           output
+  --ascii                  Format code using only ASCII syntax
+  --plain                  Disable syntax highlighting
+  -V,--version             Display version
+
+Available commands:
+  type                     Output the inferred Dhall type from a JSON value

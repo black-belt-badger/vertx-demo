@@ -1,0 +1,32 @@
+Usage: dhall-to-yaml-ng [[--explain] [--omit-empty | --preserve-null] 
+                          [--documents] [--quoted] 
+                          [[--key ARG] [--value ARG] | --no-maps] [--file FILE] 
+                          [--output FILE] [--generated-comment] 
+                          [--preserve-header] |
+                          --version]
+  Compile Dhall to YAML
+
+Available options:
+  -h,--help                Show this help text
+  --explain                Explain error messages in detail
+  --omit-empty             Omit record fields that are null or empty records
+  --preserve-null          Preserve record fields that are null
+  --documents              If given a Dhall list, output a document for every
+                           element. Each document, including the first one, will
+                           be preceded by "---", even if there is only one
+                           document. If not given a list, output a single
+                           document (as if it were a list of one element)
+  --quoted                 Prevent from generating not quoted scalars
+  --key ARG                Reserved key field name for association lists
+                           (default: mapKey)
+  --value ARG              Reserved value field name for association lists
+                           (default: mapValue)
+  --no-maps                Disable conversion of association lists to
+                           homogeneous maps
+  --file FILE              Read expression from a file instead of standard input
+  --output FILE            Write YAML to a file instead of standard output
+  --generated-comment      Include a comment header warning not to edit the
+                           generated file
+  --preserve-header        Translate any Dhall comment header to a YAML comment
+                           header
+  --version                Display version
