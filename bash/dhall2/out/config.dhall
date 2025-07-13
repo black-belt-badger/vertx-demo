@@ -1,0 +1,8 @@
+{ config-server =
+  { host = "host.docker.internal"
+  , path = "/conf.json"
+  , port = 8887
+  , scan-period = "PT5S"
+  , version = "DEV from config server"
+  }
+}
