@@ -4,3 +4,4 @@ source dhallFunctions.sh
 set -x
 
 yamlToDhall "compose-dev.yaml" "compose-dev.dhall"
+dhallToYaml "compose-dev.dhall" "compose-dev.yaml"
