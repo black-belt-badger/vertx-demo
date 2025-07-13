@@ -7,8 +7,9 @@ DIR=$(dirname "${FILE}")
 set -x
 
 docker run --interactive --rm \
-  --volume "${DIR}"/data/:/data \
+  --volume "${DIR}"/input/:/input:ro \
+  --volume "${DIR}"/output/:/output:rw \
   dhallhaskell/dhall-json \
   dhall-to-json \
-  --output '/data/example-with-code.json' \
-  <<< '/data/example-with-code.dhall'
+  --output '/output/example-with-code.json' \
+  <<< '/input/example-with-code.dhall'
