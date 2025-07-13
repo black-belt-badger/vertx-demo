@@ -21,7 +21,13 @@ services:
       VERSION: ${tag}
     command: >-
       -conf='{
-        "config-server.http.host": "0.0.0.0",
+        "config-server": {
+          "host": "host.docker.internal",
+          "path": "/conf.json",
+          "port": 8887,
+          "scan-period": "PT30S",
+          "version": "DEV inline"
+        },
         "http.port": 8081,
         "telnet.port": 5001
       }'
