@@ -1,1 +1,6 @@
-{ "config-server": { "version": "PROD from config server" } }
+{
+  "config-server": {
+    "host": "51.21.163.63",
+    "version": "PROD from config server"
+  }
+}

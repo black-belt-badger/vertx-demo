@@ -32,13 +32,14 @@ public final class MainVerticle extends VerticleBase {
   public Future<?> start() {
     var starting = config();
     log.info("Start config: {}", starting.encodePrettily());
-    var configServerHost = starting.getString("config-server.http.host", "localhost");
+    var configServer = starting.getJsonObject("config-server", new JsonObject());
+    var configServerHost = configServer.getString("host", "localhost");
     log.info("Config server host: {}", configServerHost);
-    var configServerPort = starting.getInteger("config-server.http.port", 8887);
+    var configServerPort = configServer.getInteger("port", 8887);
     log.info("Config server port: {}", configServerPort);
-    var configServerPath = starting.getString("config-server.http.path", "/conf.json");
+    var configServerPath = configServer.getString("path", "/conf.json");
     log.info("Config server path: {}", configServerPath);
-    var configServerScanPeriodString = starting.getString("config-server.scan-period", "PT30S");
+    var configServerScanPeriodString = configServer.getString("scan-period", "PT30S");
     log.info("Config server scan period string: {}", configServerScanPeriodString);
     var configServerScanPeriod = Duration.parse(configServerScanPeriodString);
     log.info("Config server scan period: {}", configServerScanPeriod);

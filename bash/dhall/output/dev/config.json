@@ -1,1 +1,6 @@
-{ "config-server": { "version": "DEV from config server" } }
+{
+  "config-server": {
+    "host": "localhost",
+    "version": "DEV from config server"
+  }
+}
