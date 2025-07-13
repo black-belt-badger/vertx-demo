@@ -6,14 +6,6 @@ FILE=$(readlink -f "$0")
 DIR=$(dirname "${FILE}")
 set -x
 
-#docker run --interactive --rm \
-#  --volume "${DIR}"/input/:/input:ro \
-#  --volume "${DIR}"/output/:/output:rw \
-#  dhallhaskell/dhall-yaml \
-#  dhall-to-yaml-ng \
-#  --output '/output/example-with-code.json' \
-#  <<< '/input/example-with-code.dhall'
-
 docker run --interactive --rm \
   --volume "${DIR}"/input/:/input:ro \
   --volume "${DIR}"/output/:/output:rw \
