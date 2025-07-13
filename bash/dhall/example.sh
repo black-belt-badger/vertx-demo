@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 set -euxo pipefail
 
-dhall <<< '{ foo = [1, 2, 3], bar = True }'
-echo '{ foo = [1, 2, 3], bar = True }' | dhall
+set +x
+FILE=$(readlink -f $0)
+DIR=`dirname ${FILE}`
+set -x
 
-docker run --interactive --rm dhallhaskell/dhall-json dhall-to-json <<< '{ x = 1, y = True }'
-docker run --interactive --rm dhallhaskell/dhall-json dhall-to-yaml <<< '{ x = 1, y = True }'
-docker run --interactive --rm dhallhaskell/dhall-json json-to-dhall <<< '{ "x": 1, "y": true }'
+docker run --interactive --rm --volume ${DIR}:/data dhallhaskell/dhall-json dhall-to-json <<< '/data/example.dhall'
