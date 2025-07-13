@@ -6,4 +6,4 @@ FILE=$(readlink -f "$0")
 DIR=$(dirname "${FILE}")
 set -x
 
-dhall to-directory-tree --file "${DIR}"/input/multiple.dhall --output "${DIR}/output"
+dhall to-directory-tree --file "${DIR}"/input/configs.dhall --output "${DIR}/output"
