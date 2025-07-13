@@ -1,6 +1,7 @@
 {
   "config-server": {
     "host": "localhost",
+    "port": 8887,
     "version": "DEV from config server"
   }
 }

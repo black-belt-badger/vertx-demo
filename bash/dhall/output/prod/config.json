@@ -1,6 +1,7 @@
 {
   "config-server": {
     "host": "51.21.163.63",
+    "port": 8887,
     "version": "PROD from config server"
   }
 }
