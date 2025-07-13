@@ -1,1 +1,1 @@
-{ "config-server": "dev value" }
+{ "config-server": { "version": "DEV from config server" } }

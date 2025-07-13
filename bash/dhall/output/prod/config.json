@@ -1,1 +1,1 @@
-{ "config-server": "prod value" }
+{ "config-server": { "version": "PROD from config server" } }
