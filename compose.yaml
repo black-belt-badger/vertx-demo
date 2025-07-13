@@ -21,7 +21,7 @@ services:
       VERSION: ${tag}
     command: >-
       -conf='{
-        "config-server.http.host": "host.docker.internal",
+        "config-server.http.host": "0.0.0.0",
         "http.port": 8081,
         "telnet.port": 5001
       }'
