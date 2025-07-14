@@ -13,8 +13,6 @@ yamlToDhall2 example-yaml.yaml example-yaml.dhall ./data/examples
 
 dhallToJson example-with-code.dhall example-with-code.json ./data/examples
 
-dhallToYaml2ng example-from-web.dhall example-from-web.yaml ./data/examples
-
 docker run --interactive --rm dhallhaskell/dhall-json dhall-to-json <<< '{ x = 1, y = True }'
 docker run --interactive --rm dhallhaskell/dhall-json dhall-to-yaml <<< '{ x = 1, y = True }'
 docker run --interactive --rm dhallhaskell/dhall-json json-to-dhall <<< '{ "x": 1, "y": true }'
