@@ -13,7 +13,7 @@ function dhallToJson() {
 }
 
 function dhallToJsonHelp() {
-  docker run -i --rm $DHALL_JSON dhall-to-json -h > ./docs/dhall-to-json.txt
+  docker run -i --rm $DHALL_JSON dhall-to-json -h > ./help/dhall-to-json.txt
 }
 
 function dhallToYaml() {
@@ -23,7 +23,7 @@ function dhallToYaml() {
 }
 
 function dhallToYamlHelp() {
-  docker run -i --rm $DHALL_JSON dhall-to-yaml -h > ./docs/dhall-to-yaml.txt
+  docker run -i --rm $DHALL_JSON dhall-to-yaml -h > ./help/dhall-to-yaml.txt
 }
 
 function jsonToDhall() {
@@ -33,7 +33,7 @@ function jsonToDhall() {
 }
 
 function jsonToDhallHelp() {
-  docker run -i --rm $DHALL_JSON json-to-dhall -h > ./docs/json-to-dhall.txt
+  docker run -i --rm $DHALL_JSON json-to-dhall -h > ./help/json-to-dhall.txt
 }
 
 DHALL_YAML=dhallhaskell/dhall-yaml
@@ -45,7 +45,7 @@ function dhallToYaml2ng() {
 }
 
 function dhallToYaml2ngHelp() {
-  docker run -i --rm $DHALL_YAML dhall-to-yaml-ng -h > ./docs/dhall-to-yaml-ng.txt
+  docker run -i --rm $DHALL_YAML dhall-to-yaml-ng -h > ./help/dhall-to-yaml-ng.txt
 }
 
 function yamlToDhall2() {
@@ -55,12 +55,12 @@ function yamlToDhall2() {
 }
 
 function yamlToDhall2Help() {
-  docker run -i --rm $DHALL_YAML yaml-to-dhall -h > ./docs/yaml-to-dhall.txt
+  docker run -i --rm $DHALL_YAML yaml-to-dhall -h > ./help/yaml-to-dhall.txt
 }
 
 DHALL=dhallhaskell/dhall
 
 function dhallHelp() {
-  docker run -i --rm $DHALL dhall -h > ./docs/dhall.txt
+  docker run -i --rm $DHALL dhall -h > ./help/dhall.txt
 }
 
