@@ -1,0 +1,8 @@
+services:
+  "config-server-nginx":
+    container_name: "config-server-nginx"
+    image: nginx
+    ports:
+    - "8887:80"
+    volumes:
+    - "./configs/dev:/usr/share/nginx/html:rw"
