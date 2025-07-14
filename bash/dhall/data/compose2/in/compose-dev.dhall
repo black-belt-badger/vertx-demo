@@ -39,6 +39,8 @@ let vertx-demo =
         [ Compose.ServiceVolume.Short "./logs/:/logs/:rw"
         , Compose.ServiceVolume.Short "./log-data/:/log-data/:rw"
         ]
+        -- Compose.ListOrDict.List ([] : Compose.ListOrDict.List)
+      , environment = None Compose.ListOrDict
       }
 
 let services
