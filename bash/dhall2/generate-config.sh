@@ -3,4 +3,4 @@ set -euo pipefail
 source ./bin/conversion-functions.sh
 set -x
 
-dhallToDirectoryTree "configs.dhall" "embedded-configs" ./data
+dhallToJson "config.dhall" "config.json" ./data
