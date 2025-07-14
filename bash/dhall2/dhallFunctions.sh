@@ -60,4 +60,7 @@ function yamlToDhall2Help() {
 
 DHALL=dhallhaskell/dhall
 
+function dhallHelp() {
+  docker run -i --rm $DHALL dhall -h > ./docs/dhall.txt
+}
 
