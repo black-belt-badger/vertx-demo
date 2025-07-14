@@ -1,5 +1,3 @@
--- ./example-with-code.dhall
-
 let List/filter = https://prelude.dhall-lang.org/v15.0.0/List/filter
 
 let Person = { name : Text, age : Natural, admin : Bool }
