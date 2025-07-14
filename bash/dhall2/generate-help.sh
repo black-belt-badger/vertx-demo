@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
-source dhallFunctions.sh
+source ./bin/help-functions.sh
 set -x
 
 dhallToJsonHelp

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
-source dhallFunctions.sh
+source ../bin/conversion-functions.sh
 set -x
 
 dhallToJson "example-json.dhall" "example-json.json"
