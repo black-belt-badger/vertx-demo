@@ -1,13 +1,19 @@
 services:
-
-  vertx-demo:
-    image: marekdudek/vertx-demo:${tag}
-    container_name: vertx-demo
+  config-server-nginx:
+    container_name: config-server-nginx
+    image: nginx
     ports:
-      - "8081:8081"
-      - "5005:5005"
-      - "5001:5001"
-      - "1099:1099"
+    - "8887:80"
+    volumes:
+    - ./configs/dev:/usr/share/nginx/html:rw
+  vertx-demo:
+    container_name: vertx-demo
+    image: marekdudek/vertx-demo:1.0.11
+    ports:
+    - "8081:8081"
+    - "5005:5005"
+    - "5001:5001"
+    - "1099:1099"
     environment:
       JAVA_TOOL_OPTIONS: >
         -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005
@@ -32,13 +38,5 @@ services:
         "telnet.port": 5001
       }'
     volumes:
-      - ./logs/:/logs/:rw
-      - ./log-data/:/log-data/:rw
-
-  config-server-nginx:
-    container_name: config-server-nginx
-    image: nginx
-    ports:
-    - "8887:80"
-    volumes:
-    - ./configs/dev:/usr/share/nginx/html:rw
+    - ./logs/:/logs/:rw
+    - ./log-data/:/log-data/:rw
