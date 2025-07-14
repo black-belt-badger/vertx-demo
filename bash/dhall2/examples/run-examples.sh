@@ -10,3 +10,5 @@ dhallToYaml2ng "example-yaml.dhall" "example-yaml-2.yaml" .
 yamlToDhall2 "example-yaml.yaml" "example-yaml.dhall" .
 
 dhallToJson example-with-code.dhall example-with-code.json .
+
+dhallToYaml2ng example-from-web.dhall example-from-web.yaml .
