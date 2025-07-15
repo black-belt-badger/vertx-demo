@@ -8,4 +8,6 @@ dhallToYamlHelp
 jsonToDhallHelp
 dhallToYaml2ngHelp
 yamlToDhall2Help
+
 dhallHelp
+dhallFormatHelp

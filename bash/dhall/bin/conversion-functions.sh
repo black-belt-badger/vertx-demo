@@ -103,3 +103,11 @@ function dhallToDirectoryTree() {
     --output "$OUT"
 }
 
+function dhallFormat() {
+  local IN=/in/"$1"
+  local DATA="$2"
+  docker run -i --rm \
+    -v "$DATA"/in/:/in:rw \
+    dhallhaskell/dhall \
+    dhall format "$IN"
+}

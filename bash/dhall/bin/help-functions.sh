@@ -36,3 +36,7 @@ function dhallHelp() {
   docker run -i --rm $DHALL dhall -h > $HELP/dhall.txt
 }
 
+function dhallFormatHelp() {
+  docker run -i --rm $DHALL dhall format -h > $HELP/dhall--format.txt
+}
+
