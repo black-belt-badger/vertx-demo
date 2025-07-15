@@ -44,11 +44,7 @@ let config-server-nginx =
           [ package.ServiceVolume.Long
               package.ServiceVolumeLong::{
               , read_only = Some False
-              , source = Some
-                  ( if    merge { Dev = True, Prod = False } env
-                    then  "./configs/dev/"
-                    else  "./configs/"
-                  )
+              , source = Some "./configs/"
               , target = Some "/usr/share/nginx/html"
               , type = Some "bind"
               }
@@ -97,9 +93,7 @@ let config-server =
           , path = "/conf.json"
           , port = 8887
           , scan-period =
-              if    merge { Dev = True, Prod = False } env
-              then  "PT10S"
-              else  "PT30S"
+              if merge { Dev = True, Prod = False } env then "PT5S" else "PT30S"
           , version =
               if    merge { Dev = True, Prod = False } env
               then  "DEV inline"

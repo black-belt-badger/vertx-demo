@@ -11,4 +11,4 @@ dhallToYaml2ngExtract compose.dhall compose-prod.yaml ./data/compose prod
 
 mkdir -p ./data/compose/out/configs/dev
 dhallFormat conf.dhall ./data/compose
-dhallToJson conf.dhall configs/dev/conf.json ./data/compose
+dhallToJson conf.dhall configs/conf.json ./data/compose

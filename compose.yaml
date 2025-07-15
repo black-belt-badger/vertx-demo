@@ -6,7 +6,7 @@ services:
     - "8887:80"
     volumes:
     - read_only: false
-      source: ./configs/dev/
+      source: ./configs/
       target: /usr/share/nginx/html
       type: bind
   vertx-demo:
