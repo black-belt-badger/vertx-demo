@@ -55,25 +55,27 @@ let config-server-nginx =
 
 let config-server =
       \(env : Environment) ->
-        { config-server =
-          { host =
-              if    merge { Dev = True, Prod = False } env
-              then  "host.docker.internal"
-              else  "51.21.163.63"
-          , path = "/conf.json"
-          , port = 8887
-          , scan-period =
-              if merge { Dev = True, Prod = False } env then "PT5S" else "PT30S"
-          , version =
-              if    merge { Dev = True, Prod = False } env
-              then  "DEV inline"
-              else  "PROD inline"
-          }
-        , `http.port` =
-            if merge { Dev = True, Prod = False } env then 8081 else 8080
-        , `telnet.port` =
-            if merge { Dev = True, Prod = False } env then 5001 else 5000
-        }
+        if    merge { Dev = True, Prod = False } env
+        then  { config-server =
+                { host = "host.docker.internal"
+                , path = "/conf.json"
+                , port = 8887
+                , scan-period = "PT5S"
+                , version = "DEV inline"
+                }
+              , `http.port` = 8081
+              , `telnet.port` = 5001
+              }
+        else  { config-server =
+                { host = "51.21.163.63"
+                , path = "/conf.json"
+                , port = 8887
+                , scan-period = "PT30S"
+                , version = "PROD inline"
+                }
+              , `http.port` = 8080
+              , `telnet.port` = 5000
+              }
 
 let config-server-string =
       \(env : Environment) ->
