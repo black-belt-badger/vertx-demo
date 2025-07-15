@@ -1,20 +1,25 @@
---let Prelude = https://prelude.dhall-lang.org/v23.0.0/package.dhall
---let Prelude =
---      https://prelude.dhall-lang.org/package.dhall sha256:931cbfae9d746c4611b07633ab1e547637ab4ba138b16bf65ef1b9ad66a60b7f
-
-let Prelude =
-        env:DHALL_PRELUDE
-      ? /usr/share/dhall/Prelude
-      ? https://prelude.dhall-lang.org/v23.0.0/package.dhall
-
+let Prelude = ../Prelude.dhall
 
 let JSON = Prelude.JSON
 
+let Map = Prelude.Map
+
 let Job = ./Type.dhall
 
-let Job/toJSON
-      : Job -> JSON.Type
-      = \(job: Job) ->
-        JSON.string "this is my string"
+let dropNones = ../dropNones.dhall
 
-in Job/toJSON
+let Optional/map = Prelude.Optional.map
+
+in  let Job/toJSON
+        : Job -> JSON.Type
+        = \(job : Job) ->
+            let everything
+                : Map.Type Text (Optional JSON.Type)
+                = toMap
+                    { stage = Optional/map Text JSON.Type JSON.string job.stage
+                    , name = Optional/map Text JSON.Type JSON.string job.name
+                    }
+
+            in  JSON.object (dropNones Text JSON.Type everything)
+
+    in  Job/toJSON

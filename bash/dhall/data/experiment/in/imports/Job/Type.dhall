@@ -1,3 +1,3 @@
-let a = "sth"
+let Prelude = ../Prelude.dhall
 
-in { stage : Optional Text }
+in  { stage : Optional Text, name : Optional Text }

@@ -1,3 +1,1 @@
-let b = "bbb"
-
-in { stage = None Text }
+let Prelude = ../Prelude.dhall in { stage = None Text, name = None Text }
