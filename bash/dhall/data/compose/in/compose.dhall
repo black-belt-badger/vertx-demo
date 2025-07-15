@@ -87,31 +87,38 @@ let Config/ToJSON
               }
           )
 
-let config-server
-    : Config
-    = { config-server =
-        { host = "host.docker.internal"
-        , path = "/conf.json"
-        , port = 8887
-        , scan-period = "PT30S"
-        , version = "DEV inline"
+let config-server =
+      \(env : Environment) ->
+        { config-server =
+          { host =
+              if    merge { Dev = True, Prod = False } env
+              then  "host.docker.internal"
+              else  "51.21.163.63"
+          , path = "/conf.json"
+          , port = 8887
+          , scan-period =
+              if    merge { Dev = True, Prod = False } env
+              then  "PT10S"
+              else  "PT30S"
+          , version =
+              if    merge { Dev = True, Prod = False } env
+              then  "DEV inline"
+              else  "PROD inline"
+          }
+        , `http.port` = 8081
+        , `telnet.port` = 5001
         }
-      , `http.port` = 8081
-      , `telnet.port` = 5001
-      }
 
-let config-server-string
-    : Text
-    = render (Config/ToJSON config-server)
+let config-server-string =
+      \(env : Environment) -> render (Config/ToJSON (config-server env))
 
-let command
-    : Text
-    = "-conf='" ++ config-server-string ++ "'"
+let command =
+      \(env : Environment) -> "-conf='" ++ config-server-string env ++ "'"
 
 let makeVertxDemo =
       \(env : Environment) ->
         package.Service::{
-        , command = Some (package.StringOrList.String command)
+        , command = Some (package.StringOrList.String (command env))
         , container_name = Some "vertx-demo"
         , environment = Some
             ( package.ListOrDict.Dict
@@ -125,7 +132,13 @@ let makeVertxDemo =
                       -Dcom.sun.management.jmxremote.ssl=false
                       -Dcom.sun.management.jmxremote.port=1099
                       -Dcom.sun.management.jmxremote.rmi.port=1099
-                      -Djava.rmi.server.hostname=0.0.0.0
+                      -Djava.rmi.server.hostname=${if    merge
+                                                           { Dev = True
+                                                           , Prod = False
+                                                           }
+                                                           env
+                                                   then  "0.0.0.0"
+                                                   else  "c2-13-60-243-123.eu-north-1.compute.amazonaws.com"}
                       ''
                   }
                 , { mapKey = "VERSION", mapValue = "1.0.11" }
