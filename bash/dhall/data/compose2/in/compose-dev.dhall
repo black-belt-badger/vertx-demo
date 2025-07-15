@@ -6,11 +6,11 @@ let package  = ./imports/compose/v3/package.dhall
 let types    = ./imports/compose/v3/types.dhall
 let defaults = ./imports/compose/v3/defaults.dhall
 
-let render = https://prelude.dhall-lang.org/v23.1.0/JSON/render.dhall
-let string = https://prelude.dhall-lang.org/v23.1.0/JSON/string.dhall
+let render  = https://prelude.dhall-lang.org/v23.1.0/JSON/render.dhall
+let string  = https://prelude.dhall-lang.org/v23.1.0/JSON/string.dhall
 let natural = https://prelude.dhall-lang.org/v23.1.0/JSON/natural.dhall
-let object = https://prelude.dhall-lang.org/v23.1.0/JSON/object.dhall
-let type = https://prelude.dhall-lang.org/v23.1.0/JSON/Type.dhall
+let object  = https://prelude.dhall-lang.org/v23.1.0/JSON/object.dhall
+let type    = https://prelude.dhall-lang.org/v23.1.0/JSON/Type.dhall
 
 let toEntry = \(name : Text) ->
   { mapKey = name
