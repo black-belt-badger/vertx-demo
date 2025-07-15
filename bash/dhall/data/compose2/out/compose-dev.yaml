@@ -21,7 +21,8 @@ services:
         },
         "http.port": 8081,
         "telnet.port": 5001
-      }'
+      }
+      '
     container_name: "vertx-demo"
     environment:
       JAVA_TOOL_OPTIONS: |

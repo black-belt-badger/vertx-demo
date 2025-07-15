@@ -21,7 +21,8 @@ services:
         },
         "http.port": 8081,
         "telnet.port": 5001
-      }'
+      }
+      '
     container_name: vertx-demo
     environment:
       JAVA_TOOL_OPTIONS: |
@@ -41,11 +42,11 @@ services:
     - "5001:5001"
     - "1099:1099"
     volumes:
-      - read_only: false
-        source: ./logs/
-        target: /logs/
-        type: bind
-      - read_only: false
-        source: ./log-data/
-        target: /log-data/
-        type: bind
+    - read_only: false
+      source: ./logs/
+      target: /logs/
+      type: bind
+    - read_only: false
+      source: ./log-data/
+      target: /log-data/
+      type: bind

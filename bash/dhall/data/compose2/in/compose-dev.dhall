@@ -6,6 +6,12 @@ let package  = ./imports/compose/v3/package.dhall
 let types    = ./imports/compose/v3/types.dhall
 let defaults = ./imports/compose/v3/defaults.dhall
 
+let render = https://prelude.dhall-lang.org/v23.1.0/JSON/render.dhall
+let string = https://prelude.dhall-lang.org/v23.1.0/JSON/string.dhall
+let natural = https://prelude.dhall-lang.org/v23.1.0/JSON/natural.dhall
+let object = https://prelude.dhall-lang.org/v23.1.0/JSON/object.dhall
+let type = https://prelude.dhall-lang.org/v23.1.0/JSON/Type.dhall
+
 let toEntry = \(name : Text) ->
   { mapKey = name
   , mapValue = Some package.Volume::{ driver = Some "local" }
@@ -28,18 +34,48 @@ let config-server-nginx = package.Service::{
 
 let nl = "\n"
 
-let command =
-  "-conf='{" ++ nl ++
-  "  \"config-server\": {" ++ nl ++
-  "    \"host\": \"host.docker.internal\"," ++ nl ++
-  "    \"path\": \"/conf.json\"," ++ nl ++
-  "    \"port\": 8887," ++ nl ++
-  "    \"scan-period\": \"PT30S\"," ++ nl ++
-  "    \"version\": \"DEV inline\"" ++ nl ++
-  "  }," ++ nl ++
-  "  \"http.port\": 8081," ++ nl ++
-  "  \"telnet.port\": 5001" ++ nl ++
-  "}'"
+let Config = {
+    config-server : {
+      version     : Text,
+      host        : Text,
+      port        : Natural,
+      path        : Text,
+      scan-period : Text
+    },
+    `http.port`     : Natural,
+    `telnet.port`   : Natural
+  }
+
+let Config/ToJSON : Config -> type
+  = \(config : Config)
+    -> object ( toMap {
+          config-server = object ( toMap {
+              version     = string  config.config-server.version,
+              host        = string  config.config-server.host,
+              port        = natural config.config-server.port,
+              path        = string  config.config-server.path,
+              scan-period = string  config.config-server.scan-period
+             }
+          )
+        , `http.port`   = natural config.`http.port`
+        , `telnet.port` = natural config.`telnet.port`
+          }
+        )
+
+let config-server : Config = {
+  config-server = {
+    host = "host.docker.internal"
+  , path = "/conf.json"
+  , port = 8887
+  , scan-period = "PT30S"
+  , version = "DEV inline"
+  },
+  `http.port` = 8081,
+  `telnet.port` = 5001
+}
+
+let config-server-string : Text = render (Config/ToJSON config-server)
+let command : Text = "-conf='" ++ config-server-string ++ "'"
 
 let vertx-demo =  package.Service::{
   , command = Some ( package.StringOrList.String command )
