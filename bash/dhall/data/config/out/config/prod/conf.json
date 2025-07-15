@@ -1,0 +1,9 @@
+{
+  "config-server": {
+    "host": "51.21.163.63",
+    "path": "/conf.json",
+    "port": 8887,
+    "scan-period": "PT30S",
+    "version": "PROD from config server"
+  }
+}
