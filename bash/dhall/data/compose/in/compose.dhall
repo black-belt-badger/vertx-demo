@@ -32,6 +32,8 @@ let Output
     : Type
     = Entry Text (Optional package.Volume.Type)
 
+let Environment = < Dev | Prod >
+
 let config-server-nginx =
       package.Service::{
       , container_name = Some "config-server-nginx"
@@ -156,10 +158,20 @@ let prodServices
     : package.Services
     = toMap { config-server-nginx, vertx-demo }
 
+--let handlers = {Environment.Dev = True, Environment.Prod = False}
+let handlers = {Environment.Dev = True}
+
+let isDev =
+  \(env : Environment) -> merge { Dev = True, Prod = False} env
+
+let makeSerivces =
+    \(env: Environment) -> if (isDev env) then devServices else prodServices
+
+
 let volumes
     : package.Volumes
     = map Text Output toEntry [ "test-volume" ]
 
-in  { dev = package.Config::{ services = Some devServices }
-    , prod = package.Config::{ services = Some prodServices }
+in  { dev = package.Config::{ services = Some (makeSerivces Environment.Dev) }
+    , prod = package.Config::{ services = Some (makeSerivces Environment.Prod) }
     }
