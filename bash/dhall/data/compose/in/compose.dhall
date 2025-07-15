@@ -105,8 +105,10 @@ let config-server =
               then  "DEV inline"
               else  "PROD inline"
           }
-        , `http.port` = 8081
-        , `telnet.port` = 5001
+        , `http.port` =
+            if merge { Dev = True, Prod = False } env then 8081 else 8080
+        , `telnet.port` =
+            if merge { Dev = True, Prod = False } env then 5001 else 5000
         }
 
 let config-server-string =

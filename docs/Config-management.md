@@ -20,9 +20,9 @@
 
 * Up
   ```shell
-  docker compose --project-name dev -f ../bash/dhall/data/compose2/out/compose-dev.yaml up -d
+  docker compose --project-name dev -f ../bash/dhall/data/compose/out/compose-dev.yaml up -d
   ```
 * Down
   ```shell
-  docker compose --project-name dev -f ../bash/dhall/data/compose2/out/compose-dev.yaml down
+  docker compose --project-name dev -f ../bash/dhall/data/compose/out/compose-dev.yaml down
   ```
