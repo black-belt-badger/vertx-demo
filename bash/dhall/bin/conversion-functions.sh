@@ -111,3 +111,12 @@ function dhallFormat() {
     dhallhaskell/dhall \
     dhall format "$IN"
 }
+
+function dhallFormat2() {
+  local DATA="$1"
+  local FILE="$2"
+  docker run -i --rm \
+    -v "$DATA":/d:rw \
+    dhallhaskell/dhall \
+    dhall format /d/"$FILE"
+}

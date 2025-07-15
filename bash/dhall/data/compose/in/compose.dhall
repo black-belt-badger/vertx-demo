@@ -22,6 +22,8 @@ let object = https://prelude.dhall-lang.org/v23.1.0/JSON/object.dhall
 
 let type = https://prelude.dhall-lang.org/v23.1.0/JSON/Type.dhall
 
+let vdc = ./imports/vertx-demo-config/vdc.dhall
+
 let toEntry =
       \(name : Text) ->
         { mapKey = name
@@ -51,38 +53,6 @@ let config-server-nginx =
           ]
         }
 
-let Config =
-      { config-server :
-          { version : Text
-          , host : Text
-          , port : Natural
-          , path : Text
-          , scan-period : Text
-          }
-      , `http.port` : Natural
-      , `telnet.port` : Natural
-      }
-
-let Config/ToJSON
-    : Config -> type
-    = \(config : Config) ->
-        object
-          ( toMap
-              { config-server =
-                  object
-                    ( toMap
-                        { version = string config.config-server.version
-                        , host = string config.config-server.host
-                        , port = natural config.config-server.port
-                        , path = string config.config-server.path
-                        , scan-period = string config.config-server.scan-period
-                        }
-                    )
-              , `http.port` = natural config.`http.port`
-              , `telnet.port` = natural config.`telnet.port`
-              }
-          )
-
 let config-server =
       \(env : Environment) ->
         { config-server =
@@ -106,7 +76,8 @@ let config-server =
         }
 
 let config-server-string =
-      \(env : Environment) -> render (Config/ToJSON (config-server env))
+      \(env : Environment) ->
+        render (vdc.VertxDemoConfig/ToJSON (config-server env))
 
 let command =
       \(env : Environment) -> "-conf='" ++ config-server-string env ++ "'"
@@ -174,8 +145,6 @@ let vertx-demo =
           ]
         }
 
-let isDev = \(env : Environment) -> merge { Dev = True, Prod = False } env
-
 let serivces =
       \(env : Environment) ->
         if    merge { Dev = True, Prod = False } env
@@ -189,10 +158,6 @@ let serivces =
               let vertx-demo = vertx-demo Environment.Prod
 
               in  toMap { config-server-nginx, vertx-demo }
-
-let volumes
-    : package.Volumes
-    = map Text Output toEntry [ "test-volume" ]
 
 in  { dev = package.Config::{ services = Some (serivces Environment.Dev) }
     , prod = package.Config::{ services = Some (serivces Environment.Prod) }

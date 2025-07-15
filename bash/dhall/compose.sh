@@ -5,6 +5,8 @@ set -x
 
 rm -fr ./data/compose/out/*
 
+dhallFormat2 ./data/compose/in/imports/vertx-demo-config vdc.dhall
+
 dhallFormat compose.dhall ./data/compose
 dhallToYaml2ngExtract compose.dhall compose-dev.yaml  ./data/compose dev
 dhallToYaml2ngExtract compose.dhall compose-prod.yaml ./data/compose prod
