@@ -5,7 +5,10 @@ services:
     ports:
     - "8887:80"
     volumes:
-    - "./configs/dev:/usr/share/nginx/html:rw"
+    - read_only: false
+      source: ./configs/dev/
+      target: /usr/share/nginx/html
+      type: bind
   "vertx-demo":
     command: |
       -conf='{

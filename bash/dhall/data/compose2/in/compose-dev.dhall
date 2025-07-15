@@ -17,7 +17,13 @@ let config-server-nginx = package.Service::{
       , image = Some "nginx"
       , ports = Some [ package.StringOrNumber.String "8887:80" ]
       , volumes = Some
-        [ package.ServiceVolume.Short "./configs/dev:/usr/share/nginx/html:rw" ]
+        [ package.ServiceVolume.Long package.ServiceVolumeLong::{
+          , read_only = Some False
+          , source = Some "./configs/dev/"
+          , target = Some "/usr/share/nginx/html"
+          , type = Some "bind"
+          }
+        ]
       }
 
 let nl = "\n"
@@ -62,15 +68,14 @@ let vertx-demo =  package.Service::{
         , package.StringOrNumber.String "1099:1099"
         ]
       , volumes = Some
-        [
-          package.ServiceVolume.Long package.ServiceVolumeLong::{
-            read_only = Some False
+        [ package.ServiceVolume.Long package.ServiceVolumeLong::{
+          , read_only = Some False
           , source = Some "./logs/"
           , target = Some "/logs/"
           , type = Some "bind"
           }
         , package.ServiceVolume.Long package.ServiceVolumeLong::{
-            read_only = Some False
+          , read_only = Some False
           , source = Some "./log-data/"
           , target = Some "/log-data/"
           , type = Some "bind"
