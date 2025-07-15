@@ -17,13 +17,27 @@ let config-server-nginx = Compose.Service::{
       , image = Some "nginx"
       , ports = Some [ Compose.StringOrNumber.String "8887:80" ]
       , volumes = Some
-        [ Compose.ServiceVolume.Short "./configs/dev:/usr/share/nginx/html:rw"
-        ]
+        [ Compose.ServiceVolume.Short "./configs/dev:/usr/share/nginx/html:rw" ]
       }
 
 let nl = "\n"
 
+let command =
+    "-conf='{" ++ nl ++
+    "  \"config-server\": {" ++ nl ++
+    "    \"host\": \"host.docker.internal\"," ++ nl ++
+    "    \"path\": \"/conf.json\"," ++ nl ++
+    "    \"port\": 8887," ++ nl ++
+    "    \"scan-period\": \"PT30S\"," ++ nl ++
+    "    \"version\": \"DEV inline\"" ++ nl ++
+    "  }," ++ nl ++
+    "  \"http.port\": 8081," ++ nl ++
+    "  \"telnet.port\": 5001" ++ nl ++
+    "}'"
+
 let vertx-demo =  Compose.Service::{
+        command = Some
+        ( Compose.StringOrList.String command )
       , container_name = Some "vertx-demo"
       , environment = Some
       ( Compose.ListOrDict.Dict

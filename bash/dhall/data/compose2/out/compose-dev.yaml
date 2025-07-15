@@ -7,6 +7,18 @@ services:
     volumes:
     - "./configs/dev:/usr/share/nginx/html:rw"
   "vertx-demo":
+    command: |
+      -conf='{
+        "config-server": {
+          "host": "host.docker.internal",
+          "path": "/conf.json",
+          "port": 8887,
+          "scan-period": "PT30S",
+          "version": "DEV inline"
+        },
+        "http.port": 8081,
+        "telnet.port": 5001
+      }'
     container_name: "vertx-demo"
     environment:
       JAVA_TOOL_OPTIONS: |
