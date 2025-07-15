@@ -1,4 +1,13 @@
 {
-  "name": "guess",
-  "stage": "preliminary"
+  "job1": {
+    "name": "guess",
+    "stage": "preliminary"
+  },
+  "job2": {
+    "name": "guess"
+  },
+  "job3": {
+    "stage": "preliminary"
+  },
+  "job4": {}
 }
