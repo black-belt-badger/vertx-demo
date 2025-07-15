@@ -7,6 +7,7 @@ let types    = ./imports/compose/v3/types.dhall
 let defaults = ./imports/compose/v3/defaults.dhall
 
 let render  = https://prelude.dhall-lang.org/v23.1.0/JSON/render.dhall
+let renderYAML = https://prelude.dhall-lang.org/v23.1.0/JSON/renderYAML.dhall
 let string  = https://prelude.dhall-lang.org/v23.1.0/JSON/string.dhall
 let natural = https://prelude.dhall-lang.org/v23.1.0/JSON/natural.dhall
 let object  = https://prelude.dhall-lang.org/v23.1.0/JSON/object.dhall
@@ -122,7 +123,12 @@ let vertx-demo =  package.Service::{
     ]
   }
 
-let services : package.Services
+let devServices : package.Services
+  = toMap {
+    , config-server-nginx = config-server-nginx
+    , vertx-demo = vertx-demo
+  }
+let prodServices : package.Services
   = toMap {
     , config-server-nginx = config-server-nginx
     , vertx-demo = vertx-demo
@@ -130,4 +136,7 @@ let services : package.Services
 
 let volumes : package.Volumes = map Text Output toEntry [ "test-volume" ]
 
-in package.Config::{ services = Some services }
+in {
+  dev  = package.Config::{ services = Some devServices },
+  prod = package.Config::{ services = Some prodServices }
+}

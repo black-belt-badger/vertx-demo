@@ -64,6 +64,19 @@ function dhallToYaml2ng() {
     --output "$OUT"
 }
 
+function dhallToYaml2ngExtract() {
+  local IN=/in/"$1"
+  local OUT=/out/"$2"
+  local DATA="$3"
+  local ENV="$4"
+  docker run -i --rm \
+    -v "$DATA"/in/:/in:ro \
+    -v "$DATA"/out/:/out:rw \
+    dhallhaskell/dhall-yaml \
+    dhall-to-yaml-ng <<< "($IN).$ENV" \
+    --output "$OUT"
+}
+
 function yamlToDhall2() {
   local IN=/in/"$1"
   local OUT=/out/"$2"
