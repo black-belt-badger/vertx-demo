@@ -34,21 +34,26 @@ let Output
 
 let Environment = < Dev | Prod >
 
-let config-server-nginx =
-      package.Service::{
-      , container_name = Some "config-server-nginx"
-      , image = Some "nginx"
-      , ports = Some [ package.StringOrNumber.String "8887:80" ]
-      , volumes = Some
-        [ package.ServiceVolume.Long
-            package.ServiceVolumeLong::{
-            , read_only = Some False
-            , source = Some "./configs/dev/"
-            , target = Some "/usr/share/nginx/html"
-            , type = Some "bind"
-            }
-        ]
-      }
+let makeConfigServerNginx =
+      \(env : Environment) ->
+        package.Service::{
+        , container_name = Some "config-server-nginx"
+        , image = Some "nginx"
+        , ports = Some [ package.StringOrNumber.String "8887:80" ]
+        , volumes = Some
+          [ package.ServiceVolume.Long
+              package.ServiceVolumeLong::{
+              , read_only = Some False
+              , source = Some
+                  ( if    merge { Dev = True, Prod = False } env
+                    then  "./configs/dev/"
+                    else  "./configs/"
+                  )
+              , target = Some "/usr/share/nginx/html"
+              , type = Some "bind"
+              }
+          ]
+        }
 
 let Config =
       { config-server :
@@ -150,23 +155,17 @@ let vertx-demo =
         ]
       }
 
-let devServices
-    : package.Services
-    = toMap { config-server-nginx, vertx-demo }
-
-let prodServices
-    : package.Services
-    = toMap { config-server-nginx, vertx-demo }
-
---let handlers = {Environment.Dev = True, Environment.Prod = False}
-let handlers = {Environment.Dev = True}
-
-let isDev =
-  \(env : Environment) -> merge { Dev = True, Prod = False} env
+let isDev = \(env : Environment) -> merge { Dev = True, Prod = False } env
 
 let makeSerivces =
-    \(env: Environment) -> if (isDev env) then devServices else prodServices
+      \(env : Environment) ->
+        if    merge { Dev = True, Prod = False } env
+        then  let config-server-nginx = makeConfigServerNginx Environment.Dev
 
+              in  toMap { config-server-nginx, vertx-demo }
+        else  let config-server-nginx = makeConfigServerNginx Environment.Prod
+
+              in  toMap { config-server-nginx, vertx-demo }
 
 let volumes
     : package.Volumes
