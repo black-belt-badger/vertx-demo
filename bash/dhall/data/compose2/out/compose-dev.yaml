@@ -8,7 +8,9 @@ services:
     - "./configs/dev:/usr/share/nginx/html:rw"
   "vertx-demo":
     container_name: "vertx-demo"
-    environment: []
+    environment:
+    - "JAVA_TOOL_OPTIONS: > -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005"
+    - "VERSION: 1.0.11"
     image: "marekdudek/vertx-demo:1.0.11"
     ports:
     - "8081:8081"

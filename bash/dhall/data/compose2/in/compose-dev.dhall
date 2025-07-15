@@ -45,7 +45,10 @@ let vertx-demo =
         [ Compose.ServiceVolume.Short "./logs/:/logs/:rw"
         , Compose.ServiceVolume.Short "./log-data/:/log-data/:rw"
         ]
-      , environment = Some (types.ListOrDict.List ([] : List (Optional types.StringOrNumber)))
+      , environment = Some (types.ListOrDict.List (
+        [ Some (Compose.StringOrNumber.String "JAVA_TOOL_OPTIONS: > -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005")
+        , Some (Compose.StringOrNumber.String "VERSION: 1.0.11")
+        ] : List (Optional types.StringOrNumber)))
       }
 
 let services
