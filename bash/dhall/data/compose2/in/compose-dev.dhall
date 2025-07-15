@@ -31,6 +31,8 @@ let config-server-nginx =
         ]
       }
 
+let nl = "\n"
+
 let vertx-demo =
       Compose.Service::{
       , image = Some "marekdudek/vertx-demo:1.0.11"
@@ -45,10 +47,21 @@ let vertx-demo =
         [ Compose.ServiceVolume.Short "./logs/:/logs/:rw"
         , Compose.ServiceVolume.Short "./log-data/:/log-data/:rw"
         ]
-      , environment = Some (types.ListOrDict.List (
-        [ Some (Compose.StringOrNumber.String "JAVA_TOOL_OPTIONS: > -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005")
-        , Some (Compose.StringOrNumber.String "VERSION: 1.0.11")
-        ] : List (Optional types.StringOrNumber)))
+      , environment = Some
+      ( Compose.ListOrDict.Dict
+        [ { mapKey = "JAVA_TOOL_OPTIONS", mapValue =
+            "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005" ++ nl ++
+            "-Dlogback.configurationFile=/logs/logback.xml" ++ nl ++
+            "-Dcom.sun.management.jmxremote" ++ nl ++
+            "-Dcom.sun.management.jmxremote.authenticate=false" ++ nl ++
+            "-Dcom.sun.management.jmxremote.ssl=false" ++ nl ++
+            "-Dcom.sun.management.jmxremote.port=1099" ++ nl ++
+            "-Dcom.sun.management.jmxremote.rmi.port=1099" ++ nl ++
+            "-Djava.rmi.server.hostname=0.0.0.0"
+           }
+        , { mapKey = "VERSION", mapValue = "1.0.11" }
+        ]
+      )
       }
 
 let services

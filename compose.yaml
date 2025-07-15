@@ -8,9 +8,8 @@ services:
     - ./configs/dev:/usr/share/nginx/html:rw
   vertx-demo:
     container_name: vertx-demo
-    image: marekdudek/vertx-demo:1.0.11
     environment:
-      JAVA_TOOL_OPTIONS: >
+      JAVA_TOOL_OPTIONS: |
         -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005
         -Dlogback.configurationFile=/logs/logback.xml
         -Dcom.sun.management.jmxremote
@@ -20,6 +19,7 @@ services:
         -Dcom.sun.management.jmxremote.rmi.port=1099
         -Djava.rmi.server.hostname=0.0.0.0
       VERSION: 1.0.11
+    image: marekdudek/vertx-demo:1.0.11
     ports:
     - "8081:8081"
     - "5005:5005"
