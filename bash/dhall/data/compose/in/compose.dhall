@@ -108,52 +108,57 @@ let command
     : Text
     = "-conf='" ++ config-server-string ++ "'"
 
-let vertx-demo =
-      package.Service::{
-      , command = Some (package.StringOrList.String command)
-      , container_name = Some "vertx-demo"
-      , environment = Some
-          ( package.ListOrDict.Dict
-              [ { mapKey = "JAVA_TOOL_OPTIONS"
-                , mapValue =
-                    ''
-                    -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005
-                    -Dlogback.configurationFile=/logs/logback.xml
-                    -Dcom.sun.management.jmxremote
-                    -Dcom.sun.management.jmxremote.authenticate=false
-                    -Dcom.sun.management.jmxremote.ssl=false
-                    -Dcom.sun.management.jmxremote.port=1099
-                    -Dcom.sun.management.jmxremote.rmi.port=1099
-                    -Djava.rmi.server.hostname=0.0.0.0
-                    ''
-                }
-              , { mapKey = "VERSION", mapValue = "1.0.11" }
-              ]
-          )
-      , image = Some "marekdudek/vertx-demo:1.0.11"
-      , ports = Some
-        [ package.StringOrNumber.String "8081:8081"
-        , package.StringOrNumber.String "5005:5005"
-        , package.StringOrNumber.String "5001:5001"
-        , package.StringOrNumber.String "1099:1099"
-        ]
-      , volumes = Some
-        [ package.ServiceVolume.Long
-            package.ServiceVolumeLong::{
-            , read_only = Some False
-            , source = Some "./logs/"
-            , target = Some "/logs/"
-            , type = Some "bind"
-            }
-        , package.ServiceVolume.Long
-            package.ServiceVolumeLong::{
-            , read_only = Some False
-            , source = Some "./log-data/"
-            , target = Some "/log-data/"
-            , type = Some "bind"
-            }
-        ]
-      }
+let makeVertxDemo =
+      \(env : Environment) ->
+        package.Service::{
+        , command = Some (package.StringOrList.String command)
+        , container_name = Some "vertx-demo"
+        , environment = Some
+            ( package.ListOrDict.Dict
+                [ { mapKey = "JAVA_TOOL_OPTIONS"
+                  , mapValue =
+                      ''
+                      -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005
+                      -Dlogback.configurationFile=/logs/logback.xml
+                      -Dcom.sun.management.jmxremote
+                      -Dcom.sun.management.jmxremote.authenticate=false
+                      -Dcom.sun.management.jmxremote.ssl=false
+                      -Dcom.sun.management.jmxremote.port=1099
+                      -Dcom.sun.management.jmxremote.rmi.port=1099
+                      -Djava.rmi.server.hostname=0.0.0.0
+                      ''
+                  }
+                , { mapKey = "VERSION", mapValue = "1.0.11" }
+                ]
+            )
+        , image = Some "marekdudek/vertx-demo:1.0.11"
+        , ports = Some
+          [ package.StringOrNumber.String
+              ( if    merge { Dev = True, Prod = False } env
+                then  "8081:8081"
+                else  "80:8080"
+              )
+          , package.StringOrNumber.String "5005:5005"
+          , package.StringOrNumber.String "5001:5001"
+          , package.StringOrNumber.String "1099:1099"
+          ]
+        , volumes = Some
+          [ package.ServiceVolume.Long
+              package.ServiceVolumeLong::{
+              , read_only = Some False
+              , source = Some "./logs/"
+              , target = Some "/logs/"
+              , type = Some "bind"
+              }
+          , package.ServiceVolume.Long
+              package.ServiceVolumeLong::{
+              , read_only = Some False
+              , source = Some "./log-data/"
+              , target = Some "/log-data/"
+              , type = Some "bind"
+              }
+          ]
+        }
 
 let isDev = \(env : Environment) -> merge { Dev = True, Prod = False } env
 
@@ -162,8 +167,12 @@ let makeSerivces =
         if    merge { Dev = True, Prod = False } env
         then  let config-server-nginx = makeConfigServerNginx Environment.Dev
 
+              let vertx-demo = makeVertxDemo Environment.Dev
+
               in  toMap { config-server-nginx, vertx-demo }
         else  let config-server-nginx = makeConfigServerNginx Environment.Prod
+
+              let vertx-demo = makeVertxDemo Environment.Prod
 
               in  toMap { config-server-nginx, vertx-demo }
 
