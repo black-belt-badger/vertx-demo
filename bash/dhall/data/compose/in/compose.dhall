@@ -34,7 +34,7 @@ let Output
 
 let Environment = < Dev | Prod >
 
-let makeConfigServerNginx =
+let config-server-nginx =
       \(env : Environment) ->
         package.Service::{
         , container_name = Some "config-server-nginx"
@@ -115,7 +115,7 @@ let config-server-string =
 let command =
       \(env : Environment) -> "-conf='" ++ config-server-string env ++ "'"
 
-let makeVertxDemo =
+let vertx-demo =
       \(env : Environment) ->
         package.Service::{
         , command = Some (package.StringOrList.String (command env))
@@ -127,6 +127,7 @@ let makeVertxDemo =
                       ''
                       -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005
                       -Dlogback.configurationFile=/logs/logback.xml
+                      -Djava.net.preferIPv4Stack=true
                       -Dcom.sun.management.jmxremote
                       -Dcom.sun.management.jmxremote.authenticate=false
                       -Dcom.sun.management.jmxremote.ssl=false
@@ -138,7 +139,7 @@ let makeVertxDemo =
                                                            }
                                                            env
                                                    then  "0.0.0.0"
-                                                   else  "c2-13-60-243-123.eu-north-1.compute.amazonaws.com"}
+                                                   else  "ec2-13-60-243-123.eu-north-1.compute.amazonaws.com"}
                       ''
                   }
                 , { mapKey = "VERSION", mapValue = "1.0.11" }
@@ -152,7 +153,11 @@ let makeVertxDemo =
                 else  "80:8080"
               )
           , package.StringOrNumber.String "5005:5005"
-          , package.StringOrNumber.String "5001:5001"
+          , package.StringOrNumber.String
+              ( if    merge { Dev = True, Prod = False } env
+                then  "5001:5001"
+                else  "5000:5000"
+              )
           , package.StringOrNumber.String "1099:1099"
           ]
         , volumes = Some
@@ -175,17 +180,17 @@ let makeVertxDemo =
 
 let isDev = \(env : Environment) -> merge { Dev = True, Prod = False } env
 
-let makeSerivces =
+let serivces =
       \(env : Environment) ->
         if    merge { Dev = True, Prod = False } env
-        then  let config-server-nginx = makeConfigServerNginx Environment.Dev
+        then  let config-server-nginx = config-server-nginx Environment.Dev
 
-              let vertx-demo = makeVertxDemo Environment.Dev
+              let vertx-demo = vertx-demo Environment.Dev
 
               in  toMap { config-server-nginx, vertx-demo }
-        else  let config-server-nginx = makeConfigServerNginx Environment.Prod
+        else  let config-server-nginx = config-server-nginx Environment.Prod
 
-              let vertx-demo = makeVertxDemo Environment.Prod
+              let vertx-demo = vertx-demo Environment.Prod
 
               in  toMap { config-server-nginx, vertx-demo }
 
@@ -193,6 +198,6 @@ let volumes
     : package.Volumes
     = map Text Output toEntry [ "test-volume" ]
 
-in  { dev = package.Config::{ services = Some (makeSerivces Environment.Dev) }
-    , prod = package.Config::{ services = Some (makeSerivces Environment.Prod) }
+in  { dev = package.Config::{ services = Some (serivces Environment.Dev) }
+    , prod = package.Config::{ services = Some (serivces Environment.Prod) }
     }
