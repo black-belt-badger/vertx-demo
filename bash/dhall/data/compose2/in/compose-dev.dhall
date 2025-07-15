@@ -2,22 +2,22 @@ let map = https://raw.githubusercontent.com/dhall-lang/dhall-lang/master/Prelude
 
 let Entry = https://raw.githubusercontent.com/dhall-lang/dhall-lang/master/Prelude/Map/Entry
 
-let Compose  = ./imports/compose/v3/package.dhall
+let package  = ./imports/compose/v3/package.dhall
 let types    = ./imports/compose/v3/types.dhall
 let defaults = ./imports/compose/v3/defaults.dhall
 
 let toEntry = \(name : Text) ->
         { mapKey = name
-        , mapValue = Some Compose.Volume::{ driver = Some "local" }
+        , mapValue = Some package.Volume::{ driver = Some "local" }
         }
-let Output : Type = Entry Text (Optional Compose.Volume.Type)
+let Output : Type = Entry Text (Optional package.Volume.Type)
 
-let config-server-nginx = Compose.Service::{
+let config-server-nginx = package.Service::{
       , container_name = Some "config-server-nginx"
       , image = Some "nginx"
-      , ports = Some [ Compose.StringOrNumber.String "8887:80" ]
+      , ports = Some [ package.StringOrNumber.String "8887:80" ]
       , volumes = Some
-        [ Compose.ServiceVolume.Short "./configs/dev:/usr/share/nginx/html:rw" ]
+        [ package.ServiceVolume.Short "./configs/dev:/usr/share/nginx/html:rw" ]
       }
 
 let nl = "\n"
@@ -35,12 +35,12 @@ let command =
     "  \"telnet.port\": 5001" ++ nl ++
     "}'"
 
-let vertx-demo =  Compose.Service::{
+let vertx-demo =  package.Service::{
         command = Some
-        ( Compose.StringOrList.String command )
+        ( package.StringOrList.String command )
       , container_name = Some "vertx-demo"
       , environment = Some
-      ( Compose.ListOrDict.Dict
+      ( package.ListOrDict.Dict
         [ { mapKey = "JAVA_TOOL_OPTIONS", mapValue =
             "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005" ++ nl ++
             "-Dlogback.configurationFile=/logs/logback.xml" ++ nl ++
@@ -56,24 +56,35 @@ let vertx-demo =  Compose.Service::{
       )
       , image = Some "marekdudek/vertx-demo:1.0.11"
       , ports = Some
-        [ Compose.StringOrNumber.String "8081:8081"
-        , Compose.StringOrNumber.String "5005:5005"
-        , Compose.StringOrNumber.String "5001:5001"
-        , Compose.StringOrNumber.String "1099:1099"
+        [ package.StringOrNumber.String "8081:8081"
+        , package.StringOrNumber.String "5005:5005"
+        , package.StringOrNumber.String "5001:5001"
+        , package.StringOrNumber.String "1099:1099"
         ]
       , volumes = Some
-        [ Compose.ServiceVolume.Short "./logs/:/logs/:rw"
-        , Compose.ServiceVolume.Short "./log-data/:/log-data/:rw"
+        [
+          package.ServiceVolume.Long package.ServiceVolumeLong::{
+            read_only = Some False
+          , source = Some "./logs/"
+          , target = Some "/logs/"
+          , type = Some "bind"
+          }
+        , package.ServiceVolume.Long package.ServiceVolumeLong::{
+            read_only = Some False
+          , source = Some "./log-data/"
+          , target = Some "/log-data/"
+          , type = Some "bind"
+          }
         ]
       }
 
-let services : Compose.Services
+let services : package.Services
     = toMap {
           config-server-nginx = config-server-nginx
         , vertx-demo = vertx-demo
       }
 
-let volumes : Compose.Volumes
+let volumes : package.Volumes
     = map Text Output toEntry [ "test-volume" ]
 
-in Compose.Config::{ services = Some services }
+in package.Config::{ services = Some services }

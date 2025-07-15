@@ -38,5 +38,11 @@ services:
     - "5001:5001"
     - "1099:1099"
     volumes:
-    - "./logs/:/logs/:rw"
-    - "./log-data/:/log-data/:rw"
+    - read_only: false
+      source: ./logs/
+      target: /logs/
+      type: bind
+    - read_only: false
+      source: "./log-data/"
+      target: "/log-data/"
+      type: bind
