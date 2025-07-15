@@ -6,6 +6,12 @@ let Entry =
 
 let Compose = ./imports/compose/v3/package.dhall
 
+let types =
+      https://raw.githubusercontent.com/falgon/dhall-docker-compose/master/compose/v3/types.dhall
+
+let defaults =
+      https://raw.githubusercontent.com/falgon/dhall-docker-compose/master/compose/v3/defaults.dhall
+
 let toEntry =
       \(name : Text) ->
         { mapKey = name
@@ -39,8 +45,7 @@ let vertx-demo =
         [ Compose.ServiceVolume.Short "./logs/:/logs/:rw"
         , Compose.ServiceVolume.Short "./log-data/:/log-data/:rw"
         ]
-        -- Compose.ListOrDict.List ([] : Compose.ListOrDict.List)
-      , environment = None Compose.ListOrDict
+      , environment = Some (types.ListOrDict.List ([] : List (Optional types.StringOrNumber)))
       }
 
 let services
