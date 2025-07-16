@@ -16,7 +16,7 @@ services:
           "host": "host.docker.internal",
           "path": "/conf.json",
           "port": 8887,
-          "scan-period": "PT30S",
+          "scan-period": "PT5S",
           "version": "DEV inline"
         },
         "http.port": 8081,
@@ -28,6 +28,7 @@ services:
       JAVA_TOOL_OPTIONS: |
         -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005
         -Dlogback.configurationFile=/logs/logback.xml
+        -Djava.net.preferIPv4Stack=true
         -Dcom.sun.management.jmxremote
         -Dcom.sun.management.jmxremote.authenticate=false
         -Dcom.sun.management.jmxremote.ssl=false
