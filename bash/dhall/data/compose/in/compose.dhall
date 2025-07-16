@@ -91,6 +91,7 @@ let vertx-demo =
         package.Service::{
         , command = Some (package.StringOrList.String (command env))
         , container_name = Some "vertx-demo"
+        , depends_on = Some [ "config-server-nginx" ]
         , environment = Some
             ( package.ListOrDict.Dict
                 [ { mapKey = "JAVA_TOOL_OPTIONS"
