@@ -10,6 +10,9 @@ import io.vertx.core.json.JsonObject;
 import io.vertx.ext.shell.ShellVerticle;
 import io.vertx.ext.shell.command.CommandBuilder;
 import io.vertx.ext.shell.command.CommandRegistry;
+import io.vertx.pgclient.PgConnectOptions;
+import io.vertx.pgclient.PgConnection;
+import io.vertx.sqlclient.PoolOptions;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.management.*;
@@ -72,6 +75,12 @@ public final class MainVerticle extends VerticleBase {
           int httpPort = merged.getInteger("http.port", 8080);
           var telnetHost = merged.getString("telnet.host", "0.0.0.0");
           int telnetPort = merged.getInteger("telnet.port", 5000);
+          var postgres = merged.getJsonObject("postgres", new JsonObject());
+          var pgHost = postgres.getString("host", "localhost");
+          int pgPort = postgres.getInteger("port", 5432);
+          var pgDatabase = postgres.getString("database", "vertx_demo_database");
+          var pgUser = postgres.getString("user", "vertx_demo_user");
+          var pgPassword = postgres.getString("password", "vertx_demo_password");
           var configServerVersion =
             merged
               .getJsonObject("config-server", new JsonObject())
@@ -163,6 +172,30 @@ public final class MainVerticle extends VerticleBase {
                          NotCompliantMBeanException e) {
                   return failedFuture(e);
                 }
+              }
+            )
+            .flatMap(ignroed -> {
+                var options =
+                  new PgConnectOptions()
+                    .setPort(pgPort)
+                    .setHost(pgHost)
+                    .setDatabase(pgDatabase)
+                    .setUser(pgUser)
+                    .setPassword(pgPassword);
+                log.info("PostgreSQL connection options {}", options.toJson());
+                var poolOptions =
+                  new PoolOptions()
+                    .setMaxSize(5);
+                log.info("PostgreSQL pool options {}", poolOptions.toJson());
+                return PgConnection
+                  .connect(vertx, options)
+                  .onSuccess(connection -> {
+                      int processId = connection.processId();
+                      int secretKey = connection.secretKey();
+                      log.info("Connected to PostgreSQL succeeded, process ID {}, secret key {}", processId, secretKey);
+                    }
+                  )
+                  .onFailure(throwable -> log.error("Connection to PostgreSQL failed", throwable));
               }
             );
         }
