@@ -35,14 +35,14 @@ services:
           "version": "DEV inline"
         },
         "http.port": 8081,
-        "telnet.port": 5001,
-        "postgres" : {
-          "host" : "host.docker.internal",
-          "port" : 5432,
-          "database" : "vertx_demo_database",
-          "user" : "vertx_demo_user",
-          "password" : "vertx_demo_password"
-        }
+        "postgres": {
+          "database": "vertx_demo_database",
+          "host": "host.docker.internal",
+          "password": "vertx_demo_password",
+          "port": 5432,
+          "user": "vertx_demo_user"
+        },
+        "telnet.port": 5001
       }
       '
     container_name: vertx-demo

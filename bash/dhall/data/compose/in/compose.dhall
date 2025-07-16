@@ -24,7 +24,7 @@ let type = https://prelude.dhall-lang.org/v23.1.0/JSON/Type.dhall
 
 let vdc = ./imports/vertx-demo-config/vdc.dhall
 
-let version = "1.0.12"
+let version = "1.0.12-SNAPSHOT"
 
 let toEntry =
       \(name : Text) ->
@@ -66,6 +66,13 @@ let config-server =
                 , version = "DEV inline"
                 }
               , `http.port` = 8081
+              , postgres =
+                { database = "vertx_demo_database"
+                , host = "host.docker.internal"
+                , password = "vertx_demo_password"
+                , port = 5432
+                , user = "vertx_demo_user"
+                }
               , `telnet.port` = 5001
               }
         else  { config-server =
@@ -76,6 +83,13 @@ let config-server =
                 , version = "PROD inline"
                 }
               , `http.port` = 8080
+              , postgres =
+                { database = "vertx_demo_database"
+                , host = "host.docker.internal"
+                , password = "vertx_demo_password"
+                , port = 5432
+                , user = "vertx_demo_user"
+                }
               , `telnet.port` = 5000
               }
 
@@ -91,7 +105,10 @@ let vertx-demo =
         package.Service::{
         , command = Some (package.StringOrList.String (command env))
         , container_name = Some "vertx-demo"
-        , depends_on = Some [ "config-server-nginx" ]
+        , depends_on =
+            if    merge { Dev = True, Prod = False } env
+            then  Some [ "config-server-nginx", "postgres" ]
+            else  Some [ "postgres" ]
         , environment = Some
             ( package.ListOrDict.Dict
                 [ { mapKey = "JAVA_TOOL_OPTIONS"
