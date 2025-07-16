@@ -24,6 +24,8 @@ let type = https://prelude.dhall-lang.org/v23.1.0/JSON/Type.dhall
 
 let vdc = ./imports/vertx-demo-config/vdc.dhall
 
+let version = "1.0.12"
+
 let toEntry =
       \(name : Text) ->
         { mapKey = name
@@ -111,10 +113,10 @@ let vertx-demo =
                                                    else  "ec2-13-60-243-123.eu-north-1.compute.amazonaws.com"}
                       ''
                   }
-                , { mapKey = "VERSION", mapValue = "1.0.11" }
+                , { mapKey = "VERSION", mapValue = version }
                 ]
             )
-        , image = Some "marekdudek/vertx-demo:1.0.11"
+        , image = Some ("marekdudek/vertx-demo:" ++ version)
         , ports = Some
           [ package.StringOrNumber.String
               ( if    merge { Dev = True, Prod = False } env

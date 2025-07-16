@@ -7,7 +7,7 @@
 
   <groupId>bbb</groupId>
   <artifactId>vertx-demo</artifactId>
-  <version>1.0.12-SNAPSHOT</version>
+  <version>1.0.12</version>
 
   <properties>
     <maven.compiler.target>21</maven.compiler.target>
