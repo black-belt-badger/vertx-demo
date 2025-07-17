@@ -9,6 +9,21 @@ services:
       source: ./configs/
       target: /usr/share/nginx/html
       type: bind
+  postgres:
+    container_name: postgres
+    environment:
+      POSTGRES_DB: vertx_demo_dev_database
+      POSTGRES_PASSWORD: vertx_demo_dev_password
+      POSTGRES_USER: vertx_demo_dev_user
+    healthcheck:
+      interval: 3s
+      retries: 10
+      test: "pg_isready -U vertx_demo_dev_user -d vertx_demo_dev_database"
+      timeout: 1s
+    image: postgres
+    ports:
+    - "5432:5432"
+    restart: "unless-stopped"
   "vertx-demo":
     command: |
       -conf='{
@@ -21,11 +36,11 @@ services:
         },
         "http.port": 8081,
         "postgres": {
-          "database": "vertx_demo_database",
+          "database": "vertx_demo_dev_database",
           "host": "host.docker.internal",
-          "password": "vertx_demo_password",
+          "password": "vertx_demo_dev_password",
           "port": 5432,
-          "user": "vertx_demo_user"
+          "user": "vertx_demo_dev_user"
         },
         "telnet.port": 5001
       }
@@ -45,8 +60,8 @@ services:
         -Dcom.sun.management.jmxremote.port=1099
         -Dcom.sun.management.jmxremote.rmi.port=1099
         -Djava.rmi.server.hostname=0.0.0.0
-      VERSION: "1.0.12-SNAPSHOT"
-    image: "marekdudek/vertx-demo:1.0.12-SNAPSHOT"
+      VERSION: '1.0.13'
+    image: "marekdudek/vertx-demo:1.0.13"
     ports:
     - "8081:8081"
     - "5005:5005"

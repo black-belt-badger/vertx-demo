@@ -1,30 +1,30 @@
 services:
-  config-server-nginx:
-    container_name: config-server-nginx
+  "config-server-nginx":
+    container_name: "config-server-nginx"
     image: nginx
     ports:
-    - "8887:80"
+      - "8887:80"
     volumes:
-    - read_only: false
-      source: ./configs/
-      target: /usr/share/nginx/html
-      type: bind
+      - read_only: false
+        source: ./configs/
+        target: /usr/share/nginx/html
+        type: bind
   postgres:
     container_name: postgres
-    image: postgres
     environment:
-      - POSTGRES_DB=vertx_demo_database
-      - POSTGRES_USER=vertx_demo_user
-      - POSTGRES_PASSWORD=vertx_demo_password
+      POSTGRES_DB: vertx_demo_dev_database
+      POSTGRES_PASSWORD: vertx_demo_dev_password
+      POSTGRES_USER: vertx_demo_dev_user
+    healthcheck:
+      interval: 3s
+      retries: 10
+      test: "pg_isready -U vertx_demo_dev_user -d vertx_demo_dev_database"
+      timeout: 1s
+    image: postgres
     ports:
       - "5432:5432"
-    restart: unless-stopped
-    healthcheck:
-      test: pg_isready -U vertx_demo_user -d vertx_demo_database
-      interval: 3s
-      timeout: 1s
-      retries: 10
-  vertx-demo:
+    restart: "unless-stopped"
+  "vertx-demo":
     command: |
       -conf='{
         "config-server": {
@@ -36,19 +36,19 @@ services:
         },
         "http.port": 8081,
         "postgres": {
-          "database": "vertx_demo_database",
+          "database": "vertx_demo_dev_database",
           "host": "host.docker.internal",
-          "password": "vertx_demo_password",
+          "password": "vertx_demo_dev_password",
           "port": 5432,
-          "user": "vertx_demo_user"
+          "user": "vertx_demo_dev_user"
         },
         "telnet.port": 5001
       }
       '
-    container_name: vertx-demo
+    container_name: "vertx-demo"
     depends_on:
-    - config-server-nginx
-    - postgres
+      - "config-server-nginx"
+      - postgres
     environment:
       JAVA_TOOL_OPTIONS: |
         -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005
@@ -60,19 +60,19 @@ services:
         -Dcom.sun.management.jmxremote.port=1099
         -Dcom.sun.management.jmxremote.rmi.port=1099
         -Djava.rmi.server.hostname=0.0.0.0
-      VERSION: 1.0.12-SNAPSHOT
-    image: marekdudek/vertx-demo:1.0.12-SNAPSHOT
+      VERSION: '1.0.12'
+    image: "marekdudek/vertx-demo:1.0.12-SNAPSHOT"
     ports:
-    - "8081:8081"
-    - "5005:5005"
-    - "5001:5001"
-    - "1099:1099"
+      - "8081:8081"
+      - "5005:5005"
+      - "5001:5001"
+      - "1099:1099"
     volumes:
-    - read_only: false
-      source: ./logs/
-      target: /logs/
-      type: bind
-    - read_only: false
-      source: ./log-data/
-      target: /log-data/
-      type: bind
+      - read_only: false
+        source: ./logs/
+        target: /logs/
+        type: bind
+      - read_only: false
+        source: "./log-data/"
+        target: "/log-data/"
+        type: bind

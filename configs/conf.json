@@ -4,6 +4,15 @@
     "path": "/conf.json",
     "port": 8887,
     "scan-period": "PT5S",
-    "version": "DEV from config server"
-  }
+    "version": "DEV inline"
+  },
+  "http.port": 8081,
+  "postgres": {
+    "database": "vertx_demo_dev_database",
+    "host": "host.docker.internal",
+    "password": "vertx_demo_dev_password",
+    "port": 5432,
+    "user": "vertx_demo_dev_user"
+  },
+  "telnet.port": 5001
 }

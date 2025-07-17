@@ -24,7 +24,7 @@ let type = https://prelude.dhall-lang.org/v23.1.0/JSON/Type.dhall
 
 let vdc = ./imports/vertx-demo-config/vdc.dhall
 
-let version = "1.0.12-SNAPSHOT"
+let version = "1.0.13"
 
 let toEntry =
       \(name : Text) ->
@@ -55,6 +55,37 @@ let config-server-nginx =
           ]
         }
 
+let dev_db_name = "vertx_demo_dev_database"
+
+let dev_db_user = "vertx_demo_dev_user"
+
+let dev_db_password = "vertx_demo_dev_password"
+
+let postgres =
+      \(env : Environment) ->
+        package.Service::{
+        , container_name = Some "postgres"
+        , environment = Some
+            ( package.ListOrDict.Dict
+                [ { mapKey = "POSTGRES_DB", mapValue = dev_db_name }
+                , { mapKey = "POSTGRES_PASSWORD", mapValue = dev_db_password }
+                , { mapKey = "POSTGRES_USER", mapValue = dev_db_user }
+                ]
+            )
+        , healthcheck = Some package.Healthcheck::{
+          , interval = Some "3s"
+          , retries = Some 10
+          , test = Some
+              ( package.StringOrList.String
+                  "pg_isready -U ${dev_db_user} -d ${dev_db_name}"
+              )
+          , timeout = Some "1s"
+          }
+        , image = Some "postgres"
+        , ports = Some [ package.StringOrNumber.String "5432:5432" ]
+        , restart = Some "unless-stopped"
+        }
+
 let config-server =
       \(env : Environment) ->
         if    merge { Dev = True, Prod = False } env
@@ -67,11 +98,11 @@ let config-server =
                 }
               , `http.port` = 8081
               , postgres =
-                { database = "vertx_demo_database"
+                { database = dev_db_name
                 , host = "host.docker.internal"
-                , password = "vertx_demo_password"
+                , password = dev_db_password
                 , port = 5432
-                , user = "vertx_demo_user"
+                , user = dev_db_user
                 }
               , `telnet.port` = 5001
               }
@@ -175,7 +206,9 @@ let serivces =
 
               let vertx-demo = vertx-demo Environment.Dev
 
-              in  toMap { config-server-nginx, vertx-demo }
+              let postgres = postgres Environment.Dev
+
+              in  toMap { config-server-nginx, vertx-demo, postgres }
         else  let config-server-nginx = config-server-nginx Environment.Prod
 
               let vertx-demo = vertx-demo Environment.Prod
