@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="MainVerticle" type="Application" factoryName="Application">
+  <configuration default="false" name="MainVerticle with AWS Postgres" type="Application" factoryName="Application">
     <envs>
       <env name="VERSION" value="dev, from envirnoment" />
     </envs>

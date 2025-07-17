@@ -1,0 +1,19 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="MainVerticle - simplest config" type="Application" factoryName="Application">
+    <envs>
+      <env name="VERSION" value="dev, from envirnoment" />
+    </envs>
+    <option name="MAIN_CLASS_NAME" value="io.vertx.launcher.application.VertxApplication" />
+    <module name="vertx-demo" />
+    <option name="PROGRAM_PARAMETERS" value="bbb.vertx_demo.MainVerticle -conf &quot;{\&quot;http.port\&quot;:8080,\&quot;telnet.port\&quot;:5000,\&quot;postgres\&quot;:{\&quot;host\&quot;:\&quot;localhost\&quot;,\&quot;database\&quot;:\&quot;vertx_demo_dev_database\&quot;,\&quot;password\&quot;:\&quot;vertx_demo_dev_password\&quot;,\&quot;port\&quot;:5432,\&quot;user\&quot;:\&quot;vertx_demo_dev_user\&quot;}}&quot;" />
+    <option name="VM_PARAMETERS" value="-Dlogback.configurationFile=src/main/resources/logback.xml" />
+    <extension name="software.aws.toolkits.jetbrains.core.execution.JavaAwsConnectionExtension">
+      <option name="credential" />
+      <option name="region" />
+      <option name="useCurrentConnection" value="false" />
+    </extension>
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
