@@ -24,6 +24,25 @@ services:
     ports:
       - "5432:5432"
     restart: "unless-stopped"
+  qpid:
+    image: apache/qpid-broker-j
+    container_name: qpid
+    ports:
+      - "5672:5672"
+      - "15672:8080"
+    environment:
+      - JAVA_GC=-XX:+UseG1GC
+      - JAVA_MEM=-Xmx256m -XX:MaxDirectMemorySize=128m
+      - JAVA_OPTS=
+      - QPID_ADMIN_USER=admin
+      - QPID_ADMIN_PASSWORD=admin
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -u admin:admin --basic -o /dev/null -f -w %{http_code} http://admin:admin@localhost:15672/api/latest/broker" ]
+      interval: 5s
+      timeout: 3s
+      retries: 3
+#    volumes:
+#      - ./qpid/default.json:/qpid-broker-j/work-init/default.json
   "vertx-demo":
     command: |
       -conf='{

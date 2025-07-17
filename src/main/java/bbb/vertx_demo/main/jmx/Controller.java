@@ -1,4 +1,4 @@
-package bbb.vertx_demo;
+package bbb.vertx_demo.main.jmx;
 
 import lombok.extern.slf4j.Slf4j;
 
