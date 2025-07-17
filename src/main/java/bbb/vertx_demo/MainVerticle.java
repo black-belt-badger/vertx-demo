@@ -11,12 +11,10 @@ import io.vertx.core.net.ClientSSLOptions;
 import io.vertx.ext.shell.ShellVerticle;
 import io.vertx.ext.shell.command.CommandBuilder;
 import io.vertx.ext.shell.command.CommandRegistry;
-import io.vertx.jdbcclient.JDBCPool;
 import io.vertx.pgclient.PgConnectOptions;
 import io.vertx.pgclient.PgConnection;
 import io.vertx.sqlclient.PoolOptions;
 import lombok.extern.slf4j.Slf4j;
-import software.amazon.jdbc.ds.AwsWrapperDataSource;
 
 import javax.management.*;
 import java.time.Duration;
@@ -191,52 +189,35 @@ public final class MainVerticle extends VerticleBase {
                     .setDatabase(pgDatabase)
                     .setUser(pgUser)
                     .setPassword(pgPassword);
-                log.info("PostgreSQL connection options {}", options.toJson());
+                log.info("Postgres connection options {}", options.toJson());
                 var poolOptions = new PoolOptions().setMaxSize(5);
-                log.info("PostgreSQL pool options {}", poolOptions.toJson());
+                log.info("Postgres pool options {}", poolOptions.toJson());
                 PgConnection.connect(vertx, options)
                   .onSuccess(connection -> {
-                      int processId = connection.processId();
-                      int secretKey = connection.secretKey();
-                      log.info("Connection to PostgreSQL succeeded, process ID {}, secret key {}", processId, secretKey);
-                      connection
-                        .query("SELECT * FROM information_schema.enabled_roles")
-                        .execute()
+                      log.info("Connection to Postgres succeeded, process ID {}, secret key {}", connection.processId(), connection.secretKey());
+                      connection.query("SELECT * FROM users").execute()
                         .onSuccess(rows -> {
-                            log.info("PostgreSQL connection succeeded and returned {} row(s)", rows.size());
-                            rows.forEach(row ->
-                              log.info("PostgreSQL connection row {}", row.toJson())
-                            );
+                            log.info("Postgres SELECT query succeeded and returned {} row(s)", rows.size());
+                            rows.forEach(row -> log.info("Postgres connection row {}", row.toJson()));
                           }
                         )
-                        .onFailure(throwable -> log.error("PostgreSQL connection failed", throwable));
+                        .onFailure(throwable -> log.error("Postgres connection failed", throwable));
+                      connection
+                        .notificationHandler(notification ->
+                          log.info("Postgres connection notice {}", notification.toJson())
+                        )
+                        .query("LISTEN my_channel").execute()
+                        .onSuccess(rows -> {
+                            log.info("Postgres LISTEN query succeeded and returned {} row(s)", rows.size());
+                            rows.forEach(row -> log.info("Postgres query row {}", row.toJson()));
+                          }
+                        )
+                        .onFailure(throwable -> log.error("Postgres query failed", throwable));
                     }
                   )
-                  .onFailure(throwable -> log.error("Connection to PostgreSQL failed", throwable));
+                  .onFailure(throwable -> log.error("Connection to Postgres failed", throwable));
               }
-            )
-            .andThen(ignored -> {
-                var source = new AwsWrapperDataSource();
-                source.setJdbcUrl("jdbc:aws-wrapper:postgresql://" + pgHost + ":5432/postgres");
-                source.setUser(pgUser);
-                source.setPassword(pgPassword);
-                var options = new PoolOptions().setMaxSize(16);
-                var pool = JDBCPool.pool(vertx, source, options);
-                log.info("JDBC connection data source {}", source);
-                pool
-                  .query("SELECT * FROM information_schema.enabled_roles")
-                  .execute()
-                  .onSuccess(rows -> {
-                      log.info("JDBC connection succeeded and returned {} row(s)", rows.size());
-                      rows.forEach(row ->
-                        log.info("JDBC connection row {}", row.toJson())
-                      );
-                    }
-                  )
-                  .onFailure(throwable -> log.error("JDBC connection failed", throwable));
-              }
-            )
-            ;
+            );
         }
       );
   }
