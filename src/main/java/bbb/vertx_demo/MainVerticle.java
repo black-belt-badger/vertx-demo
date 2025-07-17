@@ -204,7 +204,7 @@ public final class MainVerticle extends VerticleBase {
                         .onFailure(throwable -> log.error("Postgres connection failed", throwable));
                       connection
                         .notificationHandler(notification ->
-                          log.info("Postgres connection notice {}", notification.toJson())
+                          log.info("Postgres notification {}", notification.toJson())
                         )
                         .query("LISTEN my_channel").execute()
                         .onSuccess(rows -> {
@@ -213,6 +213,9 @@ public final class MainVerticle extends VerticleBase {
                           }
                         )
                         .onFailure(throwable -> log.error("Postgres query failed", throwable));
+                      connection.noticeHandler(notice ->
+                        log.info("Postgres notice {}", notice.toJson())
+                      );
                     }
                   )
                   .onFailure(throwable -> log.error("Connection to Postgres failed", throwable));
