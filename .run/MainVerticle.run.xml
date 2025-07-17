@@ -5,7 +5,7 @@
     </envs>
     <option name="MAIN_CLASS_NAME" value="io.vertx.launcher.application.VertxApplication" />
     <module name="vertx-demo" />
-    <option name="PROGRAM_PARAMETERS" value="bbb.vertx_demo.MainVerticle -conf &quot;{\&quot;config-server\&quot;:{\&quot;version\&quot;:\&quot;DEV from command line\&quot;}}&quot;" />
+    <option name="PROGRAM_PARAMETERS" value="bbb.vertx_demo.MainVerticle -conf &quot;{\&quot;config-server\&quot;:{\&quot;version\&quot;:\&quot;DEV from command line\&quot;},{\&quot;postgres\&quot;:{\&quot;host\&quot;:\&quot;vertx-demo-db2.cluster-chimcku4qngw.eu-north-1.rds.amazonaws.com\&quot;,\&quot;user\&quot;:\&quot;vertx_demo_admin\&quot;,\&quot;password\&quot;:\&quot;vertx_demo_password\&quot;}}}&quot;" />
     <option name="VM_PARAMETERS" value="-Dlogback.configurationFile=./logs/logback.xml" />
     <extension name="software.aws.toolkits.jetbrains.core.execution.JavaAwsConnectionExtension">
       <option name="credential" />
