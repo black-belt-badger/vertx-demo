@@ -7,10 +7,10 @@ import io.vertx.core.DeploymentOptions;
 import io.vertx.core.Future;
 import io.vertx.core.VerticleBase;
 import io.vertx.core.json.JsonObject;
+import io.vertx.core.net.ClientSSLOptions;
 import io.vertx.ext.shell.ShellVerticle;
 import io.vertx.ext.shell.command.CommandBuilder;
 import io.vertx.ext.shell.command.CommandRegistry;
-import io.vertx.jdbcclient.JDBCConnectOptions;
 import io.vertx.jdbcclient.JDBCPool;
 import io.vertx.pgclient.PgConnectOptions;
 import io.vertx.pgclient.PgConnection;
@@ -24,7 +24,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import static io.vertx.core.Future.failedFuture;
 import static io.vertx.core.Future.succeededFuture;
-import static io.vertx.pgclient.SslMode.PREFER;
+import static io.vertx.pgclient.SslMode.ALLOW;
 import static java.lang.String.format;
 import static java.lang.System.getenv;
 import static java.lang.management.ManagementFactory.getPlatformMBeanServer;
@@ -178,81 +178,65 @@ public final class MainVerticle extends VerticleBase {
                 }
               }
             )
-            .andThen(ignroed -> {
+            .andThen(ignored -> {
                 var options =
                   new PgConnectOptions()
                     .setPort(pgPort)
                     .setHost(pgHost)
-                    .setSslMode(PREFER)
+                    .setSslMode(ALLOW)
+                    .setSslOptions(
+                      new ClientSSLOptions()
+                        .setTrustAll(true)
+                    )
                     .setDatabase(pgDatabase)
                     .setUser(pgUser)
                     .setPassword(pgPassword);
                 log.info("PostgreSQL connection options {}", options.toJson());
-                var poolOptions =
-                  new PoolOptions()
-                    .setMaxSize(5);
+                var poolOptions = new PoolOptions().setMaxSize(5);
                 log.info("PostgreSQL pool options {}", poolOptions.toJson());
-                PgConnection
-                  .connect(vertx, options)
+                PgConnection.connect(vertx, options)
                   .onSuccess(connection -> {
                       int processId = connection.processId();
                       int secretKey = connection.secretKey();
-                      log.info("Connected to PostgreSQL succeeded, process ID {}, secret key {}", processId, secretKey);
+                      log.info("Connection to PostgreSQL succeeded, process ID {}, secret key {}", processId, secretKey);
+                      connection
+                        .query("SELECT * FROM information_schema.enabled_roles")
+                        .execute()
+                        .onSuccess(rows -> {
+                            log.info("PostgreSQL connection succeeded and returned {} row(s)", rows.size());
+                            rows.forEach(row ->
+                              log.info("PostgreSQL connection row {}", row.toJson())
+                            );
+                          }
+                        )
+                        .onFailure(throwable -> log.error("PostgreSQL connection failed", throwable));
                     }
                   )
                   .onFailure(throwable -> log.error("Connection to PostgreSQL failed", throwable));
               }
             )
             .andThen(ignored -> {
-                var connectOptions =
-                  new JDBCConnectOptions()
-                    .setJdbcUrl("jdbc:aws-wrapper:postgresql://" + pgHost + ":5432/postgres")
-                    .setExtraConfig(
-                      new JsonObject()
-                      //.put("driver_class", "software.amazon.jdbc.Driver")
-                    )
-                    .setUser(pgUser)
-                    .setPassword(pgPassword);
-                var poolOptions =
-                  new PoolOptions()
-                    .setMaxSize(16);
-                var pool = JDBCPool.pool(vertx, connectOptions, poolOptions);
-                log.info("JDBC connection #1 options {}", connectOptions.toJson());
+                var source = new AwsWrapperDataSource();
+                source.setJdbcUrl("jdbc:aws-wrapper:postgresql://" + pgHost + ":5432/postgres");
+                source.setUser(pgUser);
+                source.setPassword(pgPassword);
+                var options = new PoolOptions().setMaxSize(16);
+                var pool = JDBCPool.pool(vertx, source, options);
+                log.info("JDBC connection data source {}", source);
                 pool
-                  .query("SELECT 2 + 2")
+                  .query("SELECT * FROM information_schema.enabled_roles")
                   .execute()
                   .onSuccess(rows -> {
-                      log.info("JDBC connection #1 succeeded and returned {} row(s)", rows.size());
-                      var result = rows.iterator().next().getInteger(0);
-                      log.info("JDBC connection #1 result {}", result);
+                      log.info("JDBC connection succeeded and returned {} row(s)", rows.size());
+                      rows.forEach(row ->
+                        log.info("JDBC connection row {}", row.toJson())
+                      );
                     }
                   )
-                  .onFailure(throwable -> log.error("JDBC connection #1 failed", throwable));
+                  .onFailure(throwable -> log.error("JDBC connection failed", throwable));
               }
             )
-            .andThen(ignored -> {
-                var dataSource = new AwsWrapperDataSource();
-                dataSource.setJdbcUrl("jdbc:aws-wrapper:postgresql://" + pgHost + ":5432/postgres");
-                dataSource.setUser(pgUser);
-                dataSource.setPassword(pgPassword);
-                //dataSource.setTargetDataSourceClassName("software.amazon.jdbc.Driver");
-                var poolOptions =
-                  new PoolOptions()
-                    .setMaxSize(16);
-                var pool = JDBCPool.pool(vertx, dataSource, poolOptions);
-                log.info("JDBC connection #2 data source {}", dataSource);
-                pool
-                  .query("SELECT 2 * 3")
-                  .execute()
-                  .onSuccess(rows -> {
-                      log.info("JDBC connection #2 succeeded and returned {} row(s)", rows.size());
-                      var result = rows.iterator().next().getInteger(0);
-                      log.info("JDBC connection #2 result {}", result);
-                    }
-                  )
-                  .onFailure(throwable -> log.error("JDBC connection #2 failed", throwable));
-              }
-            );
+            ;
         }
       );
   }
