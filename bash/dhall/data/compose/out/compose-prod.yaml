@@ -21,18 +21,18 @@ services:
         },
         "http.port": 8080,
         "postgres": {
-          "database": "vertx_demo_database",
-          "host": "host.docker.internal",
+          "database": "postgres",
+          "host": "vertx-demo-db.chimcku4qngw.eu-north-1.rds.amazonaws.com",
           "password": "vertx_demo_password",
           "port": 5432,
-          "user": "vertx_demo_user"
+          "user": "vertx_demo_admin"
         },
         "telnet.port": 5000
       }
       '
     container_name: "vertx-demo"
     depends_on:
-    - postgres
+    - "config-server-nginx"
     environment:
       JAVA_TOOL_OPTIONS: |
         -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005

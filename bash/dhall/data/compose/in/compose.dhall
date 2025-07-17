@@ -84,11 +84,12 @@ let config-server =
                 }
               , `http.port` = 8080
               , postgres =
-                { database = "vertx_demo_database"
-                , host = "host.docker.internal"
+                { database = "postgres"
+                , host =
+                    "vertx-demo-db.chimcku4qngw.eu-north-1.rds.amazonaws.com"
                 , password = "vertx_demo_password"
                 , port = 5432
-                , user = "vertx_demo_user"
+                , user = "vertx_demo_admin"
                 }
               , `telnet.port` = 5000
               }
@@ -108,7 +109,7 @@ let vertx-demo =
         , depends_on =
             if    merge { Dev = True, Prod = False } env
             then  Some [ "config-server-nginx", "postgres" ]
-            else  Some [ "postgres" ]
+            else  Some [ "config-server-nginx" ]
         , environment = Some
             ( package.ListOrDict.Dict
                 [ { mapKey = "JAVA_TOOL_OPTIONS"
