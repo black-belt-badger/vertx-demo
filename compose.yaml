@@ -1,14 +1,14 @@
 services:
-  "config-server-nginx":
+  config-server-nginx:
     container_name: "config-server-nginx"
     image: nginx
     ports:
-      - "8887:80"
+    - "8887:80"
     volumes:
-      - read_only: false
-        source: ./configs/
-        target: /usr/share/nginx/html
-        type: bind
+    - read_only: false
+      source: ./configs/
+      target: /usr/share/nginx/html
+      type: bind
   postgres:
     container_name: postgres
     environment:
@@ -22,45 +22,48 @@ services:
       timeout: 1s
     image: postgres
     ports:
-      - "5432:5432"
+    - "5432:5432"
     restart: "unless-stopped"
   qpid:
-    image: apache/qpid-broker-j
     container_name: qpid
-    ports:
-      - "5672:5672"
-      - "15672:8080"
     environment:
-      - JAVA_GC=-XX:+UseG1GC
-      - JAVA_MEM=-Xmx256m -XX:MaxDirectMemorySize=128m
-      - JAVA_OPTS=
-      - QPID_ADMIN_USER=admin
-      - QPID_ADMIN_PASSWORD=admin
+      JAVA_GC: "-XX:+UseG1GC"
+      JAVA_MEM: "-Xmx256m -XX:MaxDirectMemorySize=128m"
+      JAVA_OPTS: ''
+      QPID_ADMIN_PASSWORD: admin
+      QPID_ADMIN_USER: admin
     healthcheck:
-      test: [ "CMD-SHELL", "curl -u admin:admin --basic -o /dev/null -f -w %{http_code} http://admin:admin@localhost:15672/api/latest/broker" ]
       interval: 5s
-      timeout: 3s
       retries: 3
+      test: "curl -u admin:admin --basic -o /dev/null -f -w %{http_code} http://admin:admin@host.docker.internal:15672/api/latest/broker"
+      timeout: 3s
+    image: "apache/qpid-broker-j"
+    ports:
+    - "5672:5672"
+    - "15672:8080"
     volumes:
-      - ./qpid/default.json:/qpid-broker-j/work-init/default.json
-  "vertx-demo":
+    - read_only: false
+      source: ./qpid/default.json
+      target: "/qpid-broker-j/work-init/default.json"
+      type: bind
+  vertx-demo:
     command: |
       -conf='{
-        "amqp" : {
-          "host" : "qpid",
-          "port" : 5672,
-          "username" : "admin",
-          "password" : "admin",
-          "reconnect-attempts" : 2147483647,
-          "reconnect-interval" : 100,
-          "server" : {
-            "queue" : "server-queue",
-            "delay" : 1000
+        "amqp": {
+          "client": {
+            "delay": 1000,
+            "queue": "client-queue"
           },
-          "client" : {
-            "queue" : "client-queue",
-            "delay" : 3000
-          }
+          "host": "qpid",
+          "password": "admin",
+          "port": 5672,
+          "reconnect-attempts": 2147483647,
+          "reconnect-interval": 100,
+          "server": {
+            "delay": 1000,
+            "queue": "server-queue"
+          },
+          "username": "admin"
         },
         "config-server": {
           "host": "host.docker.internal",
@@ -82,8 +85,9 @@ services:
       '
     container_name: "vertx-demo"
     depends_on:
-      - "config-server-nginx"
-      - postgres
+    - "config-server-nginx"
+    - postgres
+    - qpid
     environment:
       JAVA_TOOL_OPTIONS: |
         -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005
@@ -95,19 +99,19 @@ services:
         -Dcom.sun.management.jmxremote.port=1099
         -Dcom.sun.management.jmxremote.rmi.port=1099
         -Djava.rmi.server.hostname=0.0.0.0
-      VERSION: '1.0.14-SNAPSHOT'
+      VERSION: "1.0.14-SNAPSHOT"
     image: "marekdudek/vertx-demo:1.0.14-SNAPSHOT"
     ports:
-      - "8081:8081"
-      - "5005:5005"
-      - "5001:5001"
-      - "1099:1099"
+    - "8081:8081"
+    - "5005:5005"
+    - "5001:5001"
+    - "1099:1099"
     volumes:
-      - read_only: false
-        source: ./logs/
-        target: /logs/
-        type: bind
-      - read_only: false
-        source: "./log-data/"
-        target: "/log-data/"
-        type: bind
+    - read_only: false
+      source: ./logs/
+      target: /logs/
+      type: bind
+    - read_only: false
+      source: "./log-data/"
+      target: "/log-data/"
+      type: bind

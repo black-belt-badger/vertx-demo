@@ -11,7 +11,17 @@ let object = https://prelude.dhall-lang.org/v23.1.0/JSON/object.dhall
 
 let VertxDemoConfig
     : Type
-    = { config-server :
+    = { amqp :
+          { client : { delay : Natural, queue : Text }
+          , host : Text
+          , password : Text
+          , port : Natural
+          , reconnect-attempts : Natural
+          , reconnect-interval : Natural
+          , server : { delay : Natural, queue : Text }
+          , username : Text
+          }
+      , config-server :
           { host : Text
           , path : Text
           , port : Natural
@@ -34,7 +44,34 @@ let VertxDemoConfig/ToJSON
     = \(config : VertxDemoConfig) ->
         object
           ( toMap
-              { config-server =
+              { amqp =
+                  object
+                    ( toMap
+                        { client =
+                            object
+                              ( toMap
+                                  { delay = natural config.amqp.client.delay
+                                  , queue = string config.amqp.client.queue
+                                  }
+                              )
+                        , host = string config.amqp.host
+                        , port = natural config.amqp.port
+                        , password = string config.amqp.password
+                        , reconnect-attempts =
+                            natural config.amqp.reconnect-attempts
+                        , reconnect-interval =
+                            natural config.amqp.reconnect-interval
+                        , server =
+                            object
+                              ( toMap
+                                  { delay = natural config.amqp.server.delay
+                                  , queue = string config.amqp.server.queue
+                                  }
+                              )
+                        , username = string config.amqp.username
+                        }
+                    )
+              , config-server =
                   object
                     ( toMap
                         { host = string config.config-server.host

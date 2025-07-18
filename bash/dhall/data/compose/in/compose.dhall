@@ -24,7 +24,7 @@ let type = https://prelude.dhall-lang.org/v23.1.0/JSON/Type.dhall
 
 let vdc = ./imports/vertx-demo-config/vdc.dhall
 
-let version = "1.0.13"
+let version = "1.0.14-SNAPSHOT"
 
 let toEntry =
       \(name : Text) ->
@@ -61,6 +61,10 @@ let dev_db_user = "vertx_demo_dev_user"
 
 let dev_db_password = "vertx_demo_dev_password"
 
+let qpid_admin_username = "admin"
+
+let qpid_admin_password = "admin"
+
 let postgres =
       \(env : Environment) ->
         package.Service::{
@@ -89,7 +93,17 @@ let postgres =
 let config-server =
       \(env : Environment) ->
         if    merge { Dev = True, Prod = False } env
-        then  { config-server =
+        then  { amqp =
+                { client = { delay = 1000, queue = "client-queue" }
+                , host = "qpid"
+                , password = qpid_admin_password
+                , port = 5672
+                , reconnect-attempts = 2147483647
+                , reconnect-interval = 100
+                , server = { delay = 1000, queue = "server-queue" }
+                , username = qpid_admin_username
+                }
+              , config-server =
                 { host = "host.docker.internal"
                 , path = "/conf.json"
                 , port = 8887
@@ -106,7 +120,17 @@ let config-server =
                 }
               , `telnet.port` = 5001
               }
-        else  { config-server =
+        else  { amqp =
+                { client = { delay = 1000, queue = "client-queue" }
+                , host = "ignored"
+                , password = "ignored"
+                , port = 0
+                , reconnect-attempts = 2147483647
+                , reconnect-interval = 100
+                , server = { delay = 1000, queue = "server-queue" }
+                , username = "ignored"
+                }
+              , config-server =
                 { host = "51.21.163.63"
                 , path = "/conf.json"
                 , port = 8887
@@ -125,6 +149,48 @@ let config-server =
               , `telnet.port` = 5000
               }
 
+let qpid =
+      \(env : Environment) ->
+        package.Service::{
+        , container_name = Some "qpid"
+        , environment = Some
+            ( package.ListOrDict.Dict
+                [ { mapKey = "JAVA_GC", mapValue = "-XX:+UseG1GC" }
+                , { mapKey = "JAVA_MEM"
+                  , mapValue = "-Xmx256m -XX:MaxDirectMemorySize=128m"
+                  }
+                , { mapKey = "JAVA_OPTS", mapValue = "" }
+                , { mapKey = "QPID_ADMIN_PASSWORD"
+                  , mapValue = qpid_admin_password
+                  }
+                , { mapKey = "QPID_ADMIN_USER", mapValue = qpid_admin_username }
+                ]
+            )
+        , healthcheck = Some package.Healthcheck::{
+          , interval = Some "5s"
+          , retries = Some 3
+          , test = Some
+              ( package.StringOrList.String
+                  "curl -u ${qpid_admin_username}:${qpid_admin_password} --basic -o /dev/null -f -w %{http_code} http://${qpid_admin_username}:${qpid_admin_password}@host.docker.internal:15672/api/latest/broker"
+              )
+          , timeout = Some "3s"
+          }
+        , image = Some "apache/qpid-broker-j"
+        , ports = Some
+          [ package.StringOrNumber.String "5672:5672"
+          , package.StringOrNumber.String "15672:8080"
+          ]
+        , volumes = Some
+          [ package.ServiceVolume.Long
+              package.ServiceVolumeLong::{
+              , read_only = Some False
+              , source = Some "./qpid/default.json"
+              , target = Some "/qpid-broker-j/work-init/default.json"
+              , type = Some "bind"
+              }
+          ]
+        }
+
 let config-server-string =
       \(env : Environment) ->
         render (vdc.VertxDemoConfig/ToJSON (config-server env))
@@ -139,7 +205,7 @@ let vertx-demo =
         , container_name = Some "vertx-demo"
         , depends_on =
             if    merge { Dev = True, Prod = False } env
-            then  Some [ "config-server-nginx", "postgres" ]
+            then  Some [ "config-server-nginx", "postgres", "qpid" ]
             else  Some [ "config-server-nginx" ]
         , environment = Some
             ( package.ListOrDict.Dict
@@ -208,7 +274,9 @@ let serivces =
 
               let postgres = postgres Environment.Dev
 
-              in  toMap { config-server-nginx, vertx-demo, postgres }
+              let qpid = qpid Environment.Dev
+
+              in  toMap { config-server-nginx, vertx-demo, postgres, qpid }
         else  let config-server-nginx = config-server-nginx Environment.Prod
 
               let vertx-demo = vertx-demo Environment.Prod

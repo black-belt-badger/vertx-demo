@@ -1,5 +1,4 @@
 {
-  "id" : "3ba744e6-7a8d-4f80-995e-3bcf2c1e3c2c",
   "name" : "default",
   "modelVersion" : "9.1",
   "type" : "BDB",
@@ -13,7 +12,6 @@
     "queue.defaultMaximumQueueDepthBytes" : "1048576"
   },
   "queues" : [ {
-    "id" : "34941291-724d-4931-a559-8eee3d446942",
     "name" : "client-queue",
     "type" : "standard",
     "durable" : true,
@@ -25,19 +23,6 @@
     "createdBy" : "admin",
     "createdTime" : 1751289269063
   }, {
-    "id" : "9c2bb3d6-f33f-4fd0-8670-75f954b6d3bf",
-    "name" : "my-queue",
-    "type" : "standard",
-    "durable" : true,
-    "alternateBinding" : null,
-    "holdOnPublishEnabled" : false,
-    "owner" : null,
-    "lastUpdatedBy" : "admin",
-    "lastUpdatedTime" : 1751286219866,
-    "createdBy" : "admin",
-    "createdTime" : 1751286219866
-  }, {
-    "id" : "f58d9c5b-6b1a-4592-868a-b99559bf56a4",
     "name" : "server-queue",
     "type" : "standard",
     "durable" : true,
