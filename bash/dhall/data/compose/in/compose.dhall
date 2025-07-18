@@ -120,6 +120,8 @@ let config-server =
                 , host = "host.docker.internal"
                 , password = dev_db_password
                 , port = 5432
+                , ssl-mode = "disable"
+                , trust-all = False
                 , user = dev_db_user
                 }
               , `telnet.port` = 5001
@@ -148,6 +150,8 @@ let config-server =
                     "vertx-demo-db.chimcku4qngw.eu-north-1.rds.amazonaws.com"
                 , password = "vertx_demo_password"
                 , port = 5432
+                , ssl-mode = "allow"
+                , trust-all = True
                 , user = "vertx_demo_admin"
                 }
               , `telnet.port` = 5000

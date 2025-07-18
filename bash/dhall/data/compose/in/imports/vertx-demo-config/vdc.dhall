@@ -7,6 +7,8 @@ let string = https://prelude.dhall-lang.org/v23.1.0/JSON/string.dhall
 
 let natural = https://prelude.dhall-lang.org/v23.1.0/JSON/natural.dhall
 
+let bool = https://prelude.dhall-lang.org/v23.1.0/JSON/bool.dhall
+
 let object = https://prelude.dhall-lang.org/v23.1.0/JSON/object.dhall
 
 let VertxDemoConfig
@@ -29,14 +31,16 @@ let VertxDemoConfig
           , version : Text
           }
       , `http.port` : Natural
-      , `telnet.port` : Natural
       , postgres :
-          { host : Text
-          , port : Natural
-          , database : Text
-          , user : Text
+          { database : Text
+          , host : Text
           , password : Text
+          , port : Natural
+          , ssl-mode : Text
+          , trust-all : Bool
+          , user : Text
           }
+      , `telnet.port` : Natural
       }
 
 let VertxDemoConfig/ToJSON
@@ -89,6 +93,8 @@ let VertxDemoConfig/ToJSON
                         , host = string config.postgres.host
                         , password = string config.postgres.password
                         , port = natural config.postgres.port
+                        , ssl-mode = string config.postgres.ssl-mode
+                        , trust-all = bool config.postgres.trust-all
                         , user = string config.postgres.user
                         }
                     )

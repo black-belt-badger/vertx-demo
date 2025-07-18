@@ -63,6 +63,8 @@ services:
           "host": "vertx-demo-db.chimcku4qngw.eu-north-1.rds.amazonaws.com",
           "password": "vertx_demo_password",
           "port": 5432,
+          "ssl-mode": "allow",
+          "trust-all": true,
           "user": "vertx_demo_admin"
         },
         "telnet.port": 5000

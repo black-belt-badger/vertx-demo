@@ -78,6 +78,8 @@ services:
           "host": "host.docker.internal",
           "password": "vertx_demo_dev_password",
           "port": 5432,
+          "ssl-mode": "disable",
+          "trust-all": false,
           "user": "vertx_demo_dev_user"
         },
         "telnet.port": 5001

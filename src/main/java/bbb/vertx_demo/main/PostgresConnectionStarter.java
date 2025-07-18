@@ -6,10 +6,12 @@ import io.vertx.core.json.JsonObject;
 import io.vertx.core.net.ClientSSLOptions;
 import io.vertx.pgclient.PgConnectOptions;
 import io.vertx.pgclient.PgConnection;
+import io.vertx.pgclient.SslMode;
 import io.vertx.sqlclient.PoolOptions;
 import lombok.extern.slf4j.Slf4j;
 
-import static io.vertx.pgclient.SslMode.ALLOW;
+import static io.vertx.core.net.ClientSSLOptions.DEFAULT_TRUST_ALL;
+import static io.vertx.pgclient.PgConnectOptions.DEFAULT_SSLMODE;
 
 @Slf4j
 public enum PostgresConnectionStarter {
@@ -27,15 +29,21 @@ public enum PostgresConnectionStarter {
       postgres.getString("user", "vertx_demo_user");
     var password =
       postgres.getString("password", "vertx_demo_password");
+    var sslModeString =
+      postgres.getString("ssl-mode", DEFAULT_SSLMODE.toString());
+    var sslMode =
+      SslMode.valueOf(sslModeString.toUpperCase());
+    var trustAll =
+      postgres.getBoolean("trust-all", DEFAULT_TRUST_ALL);
+    var sslOptions =
+      new ClientSSLOptions()
+        .setTrustAll(trustAll);
     var options =
       new PgConnectOptions()
         .setPort(port)
         .setHost(host)
-        .setSslMode(ALLOW)
-        .setSslOptions(
-          new ClientSSLOptions()
-            .setTrustAll(true)
-        )
+        .setSslMode(sslMode)
+        .setSslOptions(sslOptions)
         .setDatabase(database)
         .setUser(user)
         .setPassword(password);
