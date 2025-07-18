@@ -41,11 +41,27 @@ services:
       interval: 5s
       timeout: 3s
       retries: 3
-#    volumes:
-#      - ./qpid/default.json:/qpid-broker-j/work-init/default.json
+    volumes:
+      - ./qpid/default.json:/qpid-broker-j/work-init/default.json
   "vertx-demo":
     command: |
       -conf='{
+        "amqp" : {
+          "host" : "qpid",
+          "port" : 5672,
+          "username" : "admin",
+          "password" : "admin",
+          "reconnect-attempts" : 2147483647,
+          "reconnect-interval" : 100,
+          "server" : {
+            "queue" : "server-queue",
+            "delay" : 1000
+          },
+          "client" : {
+            "queue" : "client-queue",
+            "delay" : 3000
+          }
+        },
         "config-server": {
           "host": "host.docker.internal",
           "path": "/conf.json",
@@ -79,8 +95,8 @@ services:
         -Dcom.sun.management.jmxremote.port=1099
         -Dcom.sun.management.jmxremote.rmi.port=1099
         -Djava.rmi.server.hostname=0.0.0.0
-      VERSION: '1.0.12'
-    image: "marekdudek/vertx-demo:1.0.12-SNAPSHOT"
+      VERSION: '1.0.14-SNAPSHOT'
+    image: "marekdudek/vertx-demo:1.0.14-SNAPSHOT"
     ports:
       - "8081:8081"
       - "5005:5005"

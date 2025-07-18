@@ -5,8 +5,10 @@ import io.vertx.core.VerticleBase;
 import io.vertx.core.json.JsonObject;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicReference;
 
+import static bbb.vertx_demo.main.AmqpDeployer.deployReceiverAndSender;
 import static bbb.vertx_demo.main.CommandRegistrator.registerCommand;
 import static bbb.vertx_demo.main.ConfigRetrieverCreator.retrieveAndMerge;
 import static bbb.vertx_demo.main.HttpServerStarter.startHttpServer;
@@ -48,7 +50,18 @@ public final class MainVerticle extends VerticleBase {
                       merged.getJsonObject("postgres", new JsonObject());
                     connectToPostgres(vertx, config);
                   }
-                );
+                )
+                .andThen(ignored -> {
+                    var config = merged.getJsonObject("amqp", new JsonObject());
+                    log.info("Amqp config: {}", config.encodePrettily());
+                    try {
+                      deployReceiverAndSender(vertx, config);
+                    } catch (TimeoutException e) {
+                      throw new RuntimeException(e);
+                    }
+                  }
+                )
+              ;
           }
         );
   }
