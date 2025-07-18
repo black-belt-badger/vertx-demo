@@ -9,6 +9,28 @@ services:
       source: ./configs/
       target: /usr/share/nginx/html
       type: bind
+  qpid:
+    container_name: qpid
+    environment:
+      JAVA_GC: "-XX:+UseG1GC"
+      JAVA_MEM: "-Xmx256m -XX:MaxDirectMemorySize=128m"
+      JAVA_OPTS: ''
+      QPID_ADMIN_PASSWORD: dev_secret
+      QPID_ADMIN_USER: dev_admin
+    healthcheck:
+      interval: 5s
+      retries: 3
+      test: "curl -u dev_admin:dev_secret --basic -o /dev/null -f -w %{http_code} http://dev_admin:dev_secret@host.docker.internal:15672/api/latest/broker"
+      timeout: 3s
+    image: "apache/qpid-broker-j"
+    ports:
+    - "5672:5672"
+    - "15672:8080"
+    volumes:
+    - read_only: false
+      source: ./qpid/default.json
+      target: "/qpid-broker-j/work-init/default.json"
+      type: bind
   "vertx-demo":
     command: |
       -conf='{
@@ -17,8 +39,8 @@ services:
             "delay": 1000,
             "queue": "client-queue"
           },
-          "host": "ignored",
-          "password": "ignored",
+          "host": "host.docker.internal",
+          "password": "prod_secret",
           "port": 0,
           "reconnect-attempts": 2147483647,
           "reconnect-interval": 100,
@@ -26,7 +48,7 @@ services:
             "delay": 1000,
             "queue": "server-queue"
           },
-          "username": "ignored"
+          "username": "prod_admin"
         },
         "config-server": {
           "host": "51.21.163.63",

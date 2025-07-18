@@ -31,11 +31,11 @@ public enum PostgresConnectionStarter {
       new PgConnectOptions()
         .setPort(port)
         .setHost(host)
-//        .setSslMode(ALLOW)
-//        .setSslOptions(
-//          new ClientSSLOptions()
-//            .setTrustAll(true)
-//        )
+        .setSslMode(ALLOW)
+        .setSslOptions(
+          new ClientSSLOptions()
+            .setTrustAll(true)
+        )
         .setDatabase(database)
         .setUser(user)
         .setPassword(password);

@@ -30,12 +30,12 @@ services:
       JAVA_GC: "-XX:+UseG1GC"
       JAVA_MEM: "-Xmx256m -XX:MaxDirectMemorySize=128m"
       JAVA_OPTS: ''
-      QPID_ADMIN_PASSWORD: admin
-      QPID_ADMIN_USER: admin
+      QPID_ADMIN_PASSWORD: dev_secret
+      QPID_ADMIN_USER: dev_admin
     healthcheck:
       interval: 5s
       retries: 3
-      test: "curl -u admin:admin --basic -o /dev/null -f -w %{http_code} http://admin:admin@host.docker.internal:15672/api/latest/broker"
+      test: "curl -u dev_admin:dev_secret --basic -o /dev/null -f -w %{http_code} http://dev_admin:dev_secret@host.docker.internal:15672/api/latest/broker"
       timeout: 3s
     image: "apache/qpid-broker-j"
     ports:
@@ -55,7 +55,7 @@ services:
             "queue": "client-queue"
           },
           "host": "qpid",
-          "password": "admin",
+          "password": "dev_secret",
           "port": 5672,
           "reconnect-attempts": 2147483647,
           "reconnect-interval": 100,
@@ -63,7 +63,7 @@ services:
             "delay": 1000,
             "queue": "server-queue"
           },
-          "username": "admin"
+          "username": "dev_admin"
         },
         "config-server": {
           "host": "host.docker.internal",

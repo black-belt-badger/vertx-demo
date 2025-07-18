@@ -61,9 +61,13 @@ let dev_db_user = "vertx_demo_dev_user"
 
 let dev_db_password = "vertx_demo_dev_password"
 
-let qpid_admin_username = "admin"
+let dev_qpid_admin_username = "dev_admin"
 
-let qpid_admin_password = "admin"
+let dev_qpid_admin_password = "dev_secret"
+
+let prod_qpid_admin_username = "prod_admin"
+
+let prod_qpid_admin_password = "prod_secret"
 
 let postgres =
       \(env : Environment) ->
@@ -96,12 +100,12 @@ let config-server =
         then  { amqp =
                 { client = { delay = 1000, queue = "client-queue" }
                 , host = "qpid"
-                , password = qpid_admin_password
+                , password = dev_qpid_admin_password
                 , port = 5672
                 , reconnect-attempts = 2147483647
                 , reconnect-interval = 100
                 , server = { delay = 1000, queue = "server-queue" }
-                , username = qpid_admin_username
+                , username = dev_qpid_admin_username
                 }
               , config-server =
                 { host = "host.docker.internal"
@@ -122,13 +126,13 @@ let config-server =
               }
         else  { amqp =
                 { client = { delay = 1000, queue = "client-queue" }
-                , host = "ignored"
-                , password = "ignored"
+                , host = "host.docker.internal"
+                , password = prod_qpid_admin_password
                 , port = 0
                 , reconnect-attempts = 2147483647
                 , reconnect-interval = 100
                 , server = { delay = 1000, queue = "server-queue" }
-                , username = "ignored"
+                , username = prod_qpid_admin_username
                 }
               , config-server =
                 { host = "51.21.163.63"
@@ -151,45 +155,55 @@ let config-server =
 
 let qpid =
       \(env : Environment) ->
-        package.Service::{
-        , container_name = Some "qpid"
-        , environment = Some
-            ( package.ListOrDict.Dict
-                [ { mapKey = "JAVA_GC", mapValue = "-XX:+UseG1GC" }
-                , { mapKey = "JAVA_MEM"
-                  , mapValue = "-Xmx256m -XX:MaxDirectMemorySize=128m"
-                  }
-                , { mapKey = "JAVA_OPTS", mapValue = "" }
-                , { mapKey = "QPID_ADMIN_PASSWORD"
-                  , mapValue = qpid_admin_password
-                  }
-                , { mapKey = "QPID_ADMIN_USER", mapValue = qpid_admin_username }
-                ]
-            )
-        , healthcheck = Some package.Healthcheck::{
-          , interval = Some "5s"
-          , retries = Some 3
-          , test = Some
-              ( package.StringOrList.String
-                  "curl -u ${qpid_admin_username}:${qpid_admin_password} --basic -o /dev/null -f -w %{http_code} http://${qpid_admin_username}:${qpid_admin_password}@host.docker.internal:15672/api/latest/broker"
-              )
-          , timeout = Some "3s"
-          }
-        , image = Some "apache/qpid-broker-j"
-        , ports = Some
-          [ package.StringOrNumber.String "5672:5672"
-          , package.StringOrNumber.String "15672:8080"
-          ]
-        , volumes = Some
-          [ package.ServiceVolume.Long
-              package.ServiceVolumeLong::{
-              , read_only = Some False
-              , source = Some "./qpid/default.json"
-              , target = Some "/qpid-broker-j/work-init/default.json"
-              , type = Some "bind"
+        let admin_username =
+              if    merge { Dev = True, Prod = False } env
+              then  dev_qpid_admin_username
+              else  prod_qpid_admin_username
+
+        let admin_password =
+              if    merge { Dev = True, Prod = False } env
+              then  dev_qpid_admin_password
+              else  prod_qpid_admin_password
+
+        in  package.Service::{
+            , container_name = Some "qpid"
+            , environment = Some
+                ( package.ListOrDict.Dict
+                    [ { mapKey = "JAVA_GC", mapValue = "-XX:+UseG1GC" }
+                    , { mapKey = "JAVA_MEM"
+                      , mapValue = "-Xmx256m -XX:MaxDirectMemorySize=128m"
+                      }
+                    , { mapKey = "JAVA_OPTS", mapValue = "" }
+                    , { mapKey = "QPID_ADMIN_PASSWORD"
+                      , mapValue = admin_password
+                      }
+                    , { mapKey = "QPID_ADMIN_USER", mapValue = admin_username }
+                    ]
+                )
+            , healthcheck = Some package.Healthcheck::{
+              , interval = Some "5s"
+              , retries = Some 3
+              , test = Some
+                  ( package.StringOrList.String
+                      "curl -u ${admin_username}:${admin_password} --basic -o /dev/null -f -w %{http_code} http://${admin_username}:${admin_password}@host.docker.internal:15672/api/latest/broker"
+                  )
+              , timeout = Some "3s"
               }
-          ]
-        }
+            , image = Some "apache/qpid-broker-j"
+            , ports = Some
+              [ package.StringOrNumber.String "5672:5672"
+              , package.StringOrNumber.String "15672:8080"
+              ]
+            , volumes = Some
+              [ package.ServiceVolume.Long
+                  package.ServiceVolumeLong::{
+                  , read_only = Some False
+                  , source = Some "./qpid/default.json"
+                  , target = Some "/qpid-broker-j/work-init/default.json"
+                  , type = Some "bind"
+                  }
+              ]
+            }
 
 let config-server-string =
       \(env : Environment) ->
@@ -281,7 +295,9 @@ let serivces =
 
               let vertx-demo = vertx-demo Environment.Prod
 
-              in  toMap { config-server-nginx, vertx-demo }
+              let qpid = qpid Environment.Dev
+
+              in  toMap { config-server-nginx, vertx-demo, qpid }
 
 in  { dev = package.Config::{ services = Some (serivces Environment.Dev) }
     , prod = package.Config::{ services = Some (serivces Environment.Prod) }
