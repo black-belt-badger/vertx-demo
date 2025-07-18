@@ -299,7 +299,7 @@ let serivces =
 
               let vertx-demo = vertx-demo Environment.Prod
 
-              let qpid = qpid Environment.Dev
+              let qpid = qpid Environment.Prod
 
               in  toMap { config-server-nginx, vertx-demo, qpid }
 

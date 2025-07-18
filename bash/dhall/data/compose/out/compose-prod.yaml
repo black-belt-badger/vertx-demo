@@ -15,12 +15,12 @@ services:
       JAVA_GC: "-XX:+UseG1GC"
       JAVA_MEM: "-Xmx256m -XX:MaxDirectMemorySize=128m"
       JAVA_OPTS: ''
-      QPID_ADMIN_PASSWORD: dev_secret
-      QPID_ADMIN_USER: dev_admin
+      QPID_ADMIN_PASSWORD: prod_secret
+      QPID_ADMIN_USER: prod_admin
     healthcheck:
       interval: 5s
       retries: 3
-      test: "curl -u dev_admin:dev_secret --basic -o /dev/null -f -w %{http_code} http://dev_admin:dev_secret@host.docker.internal:15672/api/latest/broker"
+      test: "curl -u prod_admin:prod_secret --basic -o /dev/null -f -w %{http_code} http://prod_admin:prod_secret@host.docker.internal:15672/api/latest/broker"
       timeout: 3s
     image: "apache/qpid-broker-j"
     ports:
