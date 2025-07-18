@@ -130,7 +130,7 @@ let config-server =
                 { client = { delay = 1000, queue = "client-queue" }
                 , host = "host.docker.internal"
                 , password = prod_qpid_admin_password
-                , port = 0
+                , port = 5672
                 , reconnect-attempts = 2147483647
                 , reconnect-interval = 100
                 , server = { delay = 1000, queue = "server-queue" }
@@ -189,7 +189,7 @@ let qpid =
               , retries = Some 3
               , test = Some
                   ( package.StringOrList.String
-                      "curl -u ${admin_username}:${admin_password} --basic -o /dev/null -f -w %{http_code} http://${admin_username}:${admin_password}@host.docker.internal:15672/api/latest/broker"
+                      "curl -u ${admin_username}:${admin_password} --basic -o /dev/null -f -w %{http_code} http://${admin_username}:${admin_password}@localhost:8080/api/latest/broker"
                   )
               , timeout = Some "3s"
               }

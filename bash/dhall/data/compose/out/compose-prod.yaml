@@ -20,7 +20,7 @@ services:
     healthcheck:
       interval: 5s
       retries: 3
-      test: "curl -u prod_admin:prod_secret --basic -o /dev/null -f -w %{http_code} http://prod_admin:prod_secret@host.docker.internal:15672/api/latest/broker"
+      test: "curl -u prod_admin:prod_secret --basic -o /dev/null -f -w %{http_code} http://prod_admin:prod_secret@localhost:8080/api/latest/broker"
       timeout: 3s
     image: "apache/qpid-broker-j"
     ports:
@@ -41,7 +41,7 @@ services:
           },
           "host": "host.docker.internal",
           "password": "prod_secret",
-          "port": 0,
+          "port": 5672,
           "reconnect-attempts": 2147483647,
           "reconnect-interval": 100,
           "server": {
