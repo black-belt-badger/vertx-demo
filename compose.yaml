@@ -1,6 +1,11 @@
 services:
   config-server-nginx:
     container_name: "config-server-nginx"
+    healthcheck:
+      interval: 10s
+      retries: 10
+      test: "service nginx status || exit 1"
+      timeout: 1s
     image: nginx
     ports:
     - "8887:80"

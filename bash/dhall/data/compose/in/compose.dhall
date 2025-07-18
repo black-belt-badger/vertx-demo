@@ -43,6 +43,13 @@ let config-server-nginx =
         package.Service::{
         , container_name = Some "config-server-nginx"
         , image = Some "nginx"
+        , healthcheck = Some package.Healthcheck::{
+          , interval = Some "10s"
+          , retries = Some 10
+          , test = Some
+              (package.StringOrList.String "service nginx status || exit 1")
+          , timeout = Some "1s"
+          }
         , ports = Some [ package.StringOrNumber.String "8887:80" ]
         , volumes = Some
           [ package.ServiceVolume.Long
