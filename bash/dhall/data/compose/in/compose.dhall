@@ -128,7 +128,7 @@ let config-server =
               }
         else  { amqp =
                 { client = { delay = 1000, queue = "client-queue" }
-                , host = "host.docker.internal"
+                , host = "qpid"
                 , password = prod_qpid_admin_password
                 , port = 5672
                 , reconnect-attempts = 2147483647

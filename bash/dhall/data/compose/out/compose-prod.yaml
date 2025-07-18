@@ -39,7 +39,7 @@ services:
             "delay": 1000,
             "queue": "client-queue"
           },
-          "host": "host.docker.internal",
+          "host": "qpid",
           "password": "prod_secret",
           "port": 5672,
           "reconnect-attempts": 2147483647,
