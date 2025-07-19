@@ -111,7 +111,7 @@ let psql =
               --file sql/init-db.sql
               ''
           )
-      , depends_on = Some [ "postgres" ]
+      , depends_on = Some [ package.DependsOn.Short "postgres" ]
       , environment = Some
           ( package.ListOrDict.Dict
               [ { mapKey = "PGPASSWORD", mapValue = dev_db_password } ]
@@ -257,8 +257,16 @@ let vertx-demo =
         , container_name = Some "vertx-demo"
         , depends_on =
             if    merge { Dev = True, Prod = False } env
-            then  Some [ "postgres", "psql", "qpid", "config-server-nginx" ]
-            else  Some [ "qpid", "config-server-nginx" ]
+            then  Some
+                    [ package.DependsOn.Short "postgres"
+                    , package.DependsOn.Short "psql"
+                    , package.DependsOn.Short "qpid"
+                    , package.DependsOn.Short "config-server-nginx"
+                    ]
+            else  Some
+                    [ package.DependsOn.Short "qpid"
+                    , package.DependsOn.Short "config-server-nginx"
+                    ]
         , environment = Some
             ( package.ListOrDict.Dict
                 [ { mapKey = "JAVA_TOOL_OPTIONS"

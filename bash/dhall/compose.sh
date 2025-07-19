@@ -5,6 +5,9 @@ set -x
 
 rm -fr ./data/compose/out/*
 
+dhallFormat2 ./data/compose/in/imports/compose/v3 defaults.dhall
+dhallFormat2 ./data/compose/in/imports/compose/v3 package.dhall
+dhallFormat2 ./data/compose/in/imports/compose/v3 types.dhall
 dhallFormat2 ./data/compose/in/imports/vertx-demo-config vdc.dhall
 
 dhallFormat compose.dhall ./data/compose
