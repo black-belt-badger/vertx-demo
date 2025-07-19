@@ -1,8 +1,10 @@
-Usage: dhall-to-yaml [[--explain] [--omit-empty | --preserve-null] [--documents]
-                       [--quoted] [[--key ARG] [--value ARG] | --no-maps] 
-                       [--file FILE] [--output FILE] [--generated-comment] 
-                       [--preserve-header] |
-                       --version]
+Usage: dhall-to-yaml-ng [[--explain] [--omit-empty | --preserve-null] 
+                          [--documents] [--quoted] 
+                          [[--key ARG] [--value ARG] | --no-maps] [--file FILE] 
+                          [--output FILE] [--generated-comment] 
+                          [--preserve-header] |
+                          --version]
+
   Compile Dhall to YAML
 
 Available options:

@@ -1,4 +1,5 @@
 Usage: dhall format [--transitive] [--check] [FILES]
+
   Standard code formatter for the Dhall language
 
 Available options:

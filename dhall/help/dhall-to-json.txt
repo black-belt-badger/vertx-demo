@@ -4,6 +4,7 @@ Usage: dhall-to-json [[--explain] [--pretty | --compact]
                        [--approximate-special-doubles] [--file FILE] 
                        [--output FILE] |
                        --version]
+
   Compile Dhall to JSON
 
 Available options:

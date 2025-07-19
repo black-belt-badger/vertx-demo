@@ -4,6 +4,7 @@ Usage: dhall [format | freeze | lint | rewrite-with-schemas | text |
                haskell-syntax-tree | [--file FILE] [--output FILE] [--annotate] 
                [--alpha] [--no-cache] [--version]] [--explain] [--plain] 
              [--unicode | --ascii] [--censor]
+
   Interpreter for the Dhall language
 
 Available options:
