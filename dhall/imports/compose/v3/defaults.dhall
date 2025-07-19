@@ -27,6 +27,9 @@ let ServiceNetwork =
       , ipv6_address = None Text
       }
 
+let DependsOnLong =
+      { condition = None Text, restart = None Bool, required = None Bool }
+
 let Service =
         { deploy = None types.Deploy
         , build = None types.Build
@@ -35,7 +38,7 @@ let Service =
         , cgroup_parent = None Text
         , command = None types.StringOrList
         , container_name = None Text
-        , depends_on = None (Map Text types.DependsOnShortOrLong)
+        , depends_on = None (Map Text types.DependsOn)
         , devices = None (List Text)
         , dns = None types.StringOrList
         , dns_search = None (List Text)
@@ -114,7 +117,8 @@ let ComposeConfig =
         }
       : types.ComposeConfig
 
-in  { Secret
+in  { DependsOnLong
+    , Secret
     , ServiceSecretLong
     , ServiceVolumeLong
     , ServiceNetwork

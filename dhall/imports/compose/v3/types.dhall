@@ -122,16 +122,16 @@ let ServiceNetworks
     : Type
     = < List : List Text | Map : Map Text ServiceNetwork >
 
-let DependsOn
+let DependsOnLong
     : Type
     = { condition : Optional Text
       , restart : Optional Bool
       , required : Optional Bool
       }
 
-let DependsOnShortOrLong
+let DependsOn
     : Type
-    = < Short : Text | Long : DependsOn >
+    = < Short : Text | Long : DependsOnLong >
 
 let Service
     : Type
@@ -142,7 +142,7 @@ let Service
       , cgroup_parent : Optional Text
       , command : Optional StringOrList
       , container_name : Optional Text
-      , depends_on : Optional (Map Text DependsOnShortOrLong)
+      , depends_on : Optional (Map Text DependsOn)
       , devices : Optional (List Text)
       , dns : Optional StringOrList
       , dns_search : Optional (List Text)
@@ -233,8 +233,8 @@ let ComposeConfig
       , volumes : Optional Volumes
       }
 
-in  { DependsOnShortOrLong
-    , DependsOn
+in  { DependsOn
+    , DependsOnLong
     , ComposeConfig
     , Secret
     , Secrets

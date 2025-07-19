@@ -11,6 +11,8 @@ in      types
           { Type = types.ServiceSecretLong
           , default = defaults.ServiceSecretLong
           }
+        , DependsOnLong =
+          { Type = types.DependsOnLong, default = defaults.DependsOnLong }
         , ServiceNetwork =
           { Type = types.ServiceNetwork, default = defaults.ServiceNetwork }
         , Service = { Type = types.Service, default = defaults.Service }

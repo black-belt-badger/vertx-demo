@@ -26,15 +26,19 @@ let vdc = ../imports/vertx-demo-config/vdc.dhall
 
 let version = "1.0.16"
 
-let toEntry =
-      \(name : Text) ->
-        { mapKey = name
-        , mapValue = Some package.Volume::{ driver = Some "local" }
-        }
+let dev_db_name = "vertx_demo_dev_database"
 
-let Output
-    : Type
-    = Entry Text (Optional package.Volume.Type)
+let dev_db_user = "vertx_demo_dev_user"
+
+let dev_db_password = "vertx_demo_dev_password"
+
+let dev_qpid_admin_username = "dev_admin"
+
+let dev_qpid_admin_password = "dev_secret"
+
+let prod_qpid_admin_username = "prod_admin"
+
+let prod_qpid_admin_password = "prod_secret"
 
 let Environment = < Dev | Prod >
 
@@ -61,20 +65,6 @@ let config-server-nginx =
               }
           ]
         }
-
-let dev_db_name = "vertx_demo_dev_database"
-
-let dev_db_user = "vertx_demo_dev_user"
-
-let dev_db_password = "vertx_demo_dev_password"
-
-let dev_qpid_admin_username = "dev_admin"
-
-let dev_qpid_admin_password = "dev_secret"
-
-let prod_qpid_admin_username = "prod_admin"
-
-let prod_qpid_admin_password = "prod_secret"
 
 let postgres =
       \(env : Environment) ->
@@ -114,11 +104,8 @@ let psql =
       , depends_on = Some
         [ { mapKey = "postgres"
           , mapValue =
-              types.DependsOnShortOrLong.Long
-                { condition = Some "service_healthy"
-                , required = Some False
-                , restart = Some False
-                }
+              package.DependsOn.Long
+                package.DependsOnLong::{ condition = Some "service_healthy" }
           }
         ]
       , environment = Some
@@ -269,52 +256,46 @@ let vertx-demo =
             then  Some
                     [ { mapKey = "config-server-nginx"
                       , mapValue =
-                          types.DependsOnShortOrLong.Long
-                            { condition = Some "service_healthy"
-                            , required = Some False
-                            , restart = Some False
+                          package.DependsOn.Long
+                            package.DependsOnLong::{
+                            , condition = Some "service_healthy"
                             }
                       }
                     , { mapKey = "postgres"
                       , mapValue =
-                          types.DependsOnShortOrLong.Long
-                            { condition = Some "service_healthy"
-                            , required = Some False
-                            , restart = Some False
+                          package.DependsOn.Long
+                            package.DependsOnLong::{
+                            , condition = Some "service_healthy"
                             }
                       }
                     , { mapKey = "psql"
                       , mapValue =
-                          types.DependsOnShortOrLong.Long
-                            { condition = Some "service_completed_successfully"
-                            , required = Some False
-                            , restart = Some False
+                          package.DependsOn.Long
+                            package.DependsOnLong::{
+                            , condition = Some "service_completed_successfully"
                             }
                       }
                     , { mapKey = "qpid"
                       , mapValue =
-                          types.DependsOnShortOrLong.Long
-                            { condition = Some "service_healthy"
-                            , required = Some False
-                            , restart = Some False
+                          package.DependsOn.Long
+                            package.DependsOnLong::{
+                            , condition = Some "service_healthy"
                             }
                       }
                     ]
             else  Some
                     [ { mapKey = "config-server-nginx"
                       , mapValue =
-                          types.DependsOnShortOrLong.Long
-                            { condition = Some "service_healthy"
-                            , required = Some False
-                            , restart = Some False
+                          package.DependsOn.Long
+                            package.DependsOnLong::{
+                            , condition = Some "service_healthy"
                             }
                       }
                     , { mapKey = "qpid"
                       , mapValue =
-                          types.DependsOnShortOrLong.Long
-                            { condition = Some "service_healthy"
-                            , required = Some False
-                            , restart = Some False
+                          package.DependsOn.Long
+                            package.DependsOnLong::{
+                            , condition = Some "service_healthy"
                             }
                       }
                     ]
