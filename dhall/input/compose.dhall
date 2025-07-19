@@ -268,7 +268,13 @@ let vertx-demo =
                     [ package.DependsOn.Longer
                         [ { mapKey = "postgres", mapValue = service-healthy } ]
                     , package.DependsOn.Longer
-                        [ { mapKey = "psql", mapValue = service-healthy } ]
+                        [ { mapKey = "psql"
+                          , mapValue =
+                            { condition = Some "service_completed_successfully"
+                            , restart = Some False
+                            }
+                          }
+                        ]
                     , package.DependsOn.Longer
                         [ { mapKey = "qpid", mapValue = service-healthy } ]
                     , package.DependsOn.Longer
