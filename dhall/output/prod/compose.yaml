@@ -1,5 +1,5 @@
 services:
-  config-server-nginx:
+  "config-server-nginx":
     container_name: "config-server-nginx"
     healthcheck:
       interval: 10s
@@ -36,7 +36,7 @@ services:
       source: ./qpid/default.json
       target: "/qpid-broker-j/work-init/default.json"
       type: bind
-  vertx-demo:
+  "vertx-demo":
     command: |
       -conf='{
         "amqp": {
@@ -77,10 +77,10 @@ services:
       '
     container_name: "vertx-demo"
     depends_on:
-      postgres:
+    - qpid:
         condition: service_healthy
         restart: false
-      "config-server-nginx":
+    - "config-server-nginx":
         condition: service_healthy
         restart: false
     environment:
