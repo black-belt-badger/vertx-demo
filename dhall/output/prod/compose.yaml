@@ -77,10 +77,10 @@ services:
       '
     container_name: "vertx-demo"
     depends_on:
-      qpid:
+    - qpid:
         condition: service_healthy
         restart: false
-      "config-server-nginx":
+    - "config-server-nginx":
         condition: service_healthy
         restart: false
     environment:

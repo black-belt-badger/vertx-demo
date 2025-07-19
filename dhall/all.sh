@@ -7,4 +7,3 @@ set -x
 ./examples.sh
 ./help.sh
 ./here-string-to-stdout.sh
-./perfect.sh
