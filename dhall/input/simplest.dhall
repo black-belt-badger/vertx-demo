@@ -26,11 +26,11 @@ let myService = package.Service::{ depends_on = Some [ "one", "two", "three" ] }
 
 let qpid
     : types.DependsOn
-    = { condition = Some "my condition", restart = Some True }
+    = { condition = Some "service_healthy", restart = Some False }
 
 let postgres
     : types.DependsOn
-    = { condition = Some "my condition", restart = Some True }
+    = { condition = Some "service_healthy", restart = Some False }
 
 let depends_on_short = types.DependsOnShortOrLong.Short "short version"
 
@@ -40,23 +40,22 @@ let depends_on_list = [ depends_on_short, depends_on_long ]
 
 let dependencies = [ postgres, qpid ]
 
-let myService2 =
-      package.Service::{
-      , depends_on2 = Some
-        [ types.DependsOnShortOrLong.Short "one"
-        , types.DependsOnShortOrLong.Short "two"
-        , types.DependsOnShortOrLong.Long qpid
-        ]
-      }
-
-let myService3 =
+let vertxDemo =
       package.Service::{
       , depends_on3 = Some
-        [ { mapKey = "postgress"
-          , mapValue = types.DependsOnShortOrLong.Long postgres
+        [ { mapKey = "postgres"
+          , mapValue =
+              types.DependsOnShortOrLong.Long
+                { condition = Some "service_healthy", restart = Some False }
           }
-        , { mapKey = "qpidd", mapValue = types.DependsOnShortOrLong.Long qpid }
+        , { mapKey = "qpid"
+          , mapValue =
+              types.DependsOnShortOrLong.Long
+                { condition = Some "service_healthy", restart = Some False }
+          }
         ]
       }
 
-in  { myService3 }
+let config = package.Config::{ services = Some (toMap { vertxDemo }) }
+
+in  { dev = config }

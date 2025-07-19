@@ -36,7 +36,6 @@ let Service =
         , command = None types.StringOrList
         , container_name = None Text
         , depends_on = None (List Text)
-        , depends_on2 = None (List types.DependsOnShortOrLong)
         , depends_on3 = None (Map Text types.DependsOnShortOrLong)
         , devices = None (List Text)
         , dns = None types.StringOrList

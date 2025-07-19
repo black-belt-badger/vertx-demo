@@ -2,9 +2,9 @@
 set -euo pipefail
 set -x
 
-dhall format ./imports/compose/v3.1/defaults.dhall
-dhall format ./imports/compose/v3.1/package.dhall
-dhall format ./imports/compose/v3.1/types.dhall
+dhall format ./imports/compose/v3/defaults.dhall
+dhall format ./imports/compose/v3/package.dhall
+dhall format ./imports/compose/v3/types.dhall
 dhall format ./imports/vertx-demo-config/vdc.dhall
 dhall format ./input/compose.dhall
 
