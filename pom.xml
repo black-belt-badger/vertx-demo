@@ -80,6 +80,10 @@
       <artifactId>vertx-amqp-client</artifactId>
     </dependency>
     <dependency>
+      <groupId>io.vertx</groupId>
+      <artifactId>vertx-health-check</artifactId>
+    </dependency>
+    <dependency>
       <groupId>software.amazon.jdbc</groupId>
       <artifactId>aws-advanced-jdbc-wrapper</artifactId>
       <version>2.4.0</version>
