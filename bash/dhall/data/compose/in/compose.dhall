@@ -24,7 +24,7 @@ let type = https://prelude.dhall-lang.org/v23.1.0/JSON/Type.dhall
 
 let vdc = ./imports/vertx-demo-config/vdc.dhall
 
-let version = "1.0.14"
+let version = "1.0.15-SNAPSHOT"
 
 let toEntry =
       \(name : Text) ->
@@ -257,6 +257,15 @@ let vertx-demo =
                 , { mapKey = "VERSION", mapValue = version }
                 ]
             )
+        , healthcheck = Some package.Healthcheck::{
+          , interval = Some "10s"
+          , retries = Some 10
+          , test = Some
+              ( package.StringOrList.String
+                  "curl -f http://localhost:8081/health"
+              )
+          , timeout = Some "1s"
+          }
         , image = Some ("marekdudek/vertx-demo:" ++ version)
         , ports = Some
           [ package.StringOrNumber.String
