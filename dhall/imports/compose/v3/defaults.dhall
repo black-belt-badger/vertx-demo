@@ -13,8 +13,6 @@ let ServiceVolumeLong =
       , tmpfs = None { size : Optional Text }
       }
 
-let DependsOnLong = { condition = None Text, restart = None Bool }
-
 let ServiceSecretLong =
       { source = None Text
       , target = None Text
@@ -37,7 +35,7 @@ let Service =
         , cgroup_parent = None Text
         , command = None types.StringOrList
         , container_name = None Text
-        , depends_on = None (List types.DependsOn)
+        , depends_on = None (List Text)
         , devices = None (List Text)
         , dns = None types.StringOrList
         , dns_search = None (List Text)
@@ -119,7 +117,6 @@ let ComposeConfig =
 in  { Secret
     , ServiceSecretLong
     , ServiceVolumeLong
-    , DependsOnLong
     , ServiceNetwork
     , Service
     , Network

@@ -111,6 +111,18 @@ let ServiceVolume
     : Type
     = < Short : Text | Long : ServiceVolumeLong >
 
+let DependsOnLong
+    : Type
+    = { condition : Optional Text, restart : Optional Bool }
+
+let DependsOnLonger
+    : Type
+    = Map Text DependsOnLong
+
+let DependsOn
+    : Type
+    = < Short : Text | Long : DependsOnLong | Longer : Map Text DependsOnLong >
+
 let ServiceNetwork
     : Type
     = { aliases : Optional (List Text)
@@ -131,7 +143,7 @@ let Service
       , cgroup_parent : Optional Text
       , command : Optional StringOrList
       , container_name : Optional Text
-      , depends_on : Optional (List Text)
+      , depends_on : Optional (List DependsOn)
       , devices : Optional (List Text)
       , dns : Optional StringOrList
       , dns_search : Optional (List Text)
@@ -231,6 +243,8 @@ in  { ComposeConfig
     , ServiceSecretLong
     , ServiceVolume
     , ServiceVolumeLong
+    , DependsOn
+    , DependsOnLong
     , ServiceNetwork
     , ServiceNetworks
     , StringOrNumber

@@ -4,11 +4,11 @@ let map =
 let Entry =
       https://raw.githubusercontent.com/dhall-lang/dhall-lang/master/Prelude/Map/Entry
 
-let package = ../imports/compose/v3/package.dhall
+let package = ../imports/compose/v3.1/package.dhall
 
-let types = ../imports/compose/v3/types.dhall
+let types = ../imports/compose/v3.1/types.dhall
 
-let defaults = ../imports/compose/v3/defaults.dhall
+let defaults = ../imports/compose/v3.1/defaults.dhall
 
 let render = https://prelude.dhall-lang.org/v23.1.0/JSON/render.dhall
 

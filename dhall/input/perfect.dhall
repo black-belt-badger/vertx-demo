@@ -4,7 +4,7 @@ let map =
 let Entry =
       https://raw.githubusercontent.com/dhall-lang/dhall-lang/master/Prelude/Map/Entry
 
-let Compose = ./imports/compose/v3/package.dhall
+let Compose = ../imports/compose/v3/package.dhall
 
 let logging =
       Some
