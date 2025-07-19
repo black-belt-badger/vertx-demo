@@ -3,9 +3,9 @@ package bbb.vertx_demo;
 import io.vertx.core.Future;
 import io.vertx.core.VerticleBase;
 import io.vertx.core.json.JsonObject;
+import io.vertx.ext.web.healthchecks.HealthCheckHandler;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicReference;
 
 import static bbb.vertx_demo.main.AmqpDeployer.deployReceiverAndSender;
@@ -24,41 +24,38 @@ public final class MainVerticle extends VerticleBase {
     var starting = config();
     log.info("Starting config: {}", starting.encodePrettily());
     var configServerVersion = new AtomicReference<String>();
+    var checks = HealthCheckHandler.create(vertx);
     return
-      retrieveAndMerge(vertx, starting, configServerVersion)
+      retrieveAndMerge(vertx, checks, starting, configServerVersion)
         .map(merged -> {
             var httpHost = merged.getString("http.host", "0.0.0.0");
             int httpPort = merged.getInteger("http.port", 8080);
             return
-              startHttpServer(vertx, configServerVersion, httpPort, httpHost)
+              startHttpServer(vertx, checks, configServerVersion, httpPort, httpHost)
                 .flatMap(ignored -> {
                     var host =
                       merged.getString("telnet.host", "0.0.0.0");
                     int port =
                       merged.getInteger("telnet.port", 5000);
-                    return deployShell(vertx, host, port);
+                    return deployShell(vertx, checks, host, port);
                   }
                 )
                 .flatMap(ignored ->
-                  registerCommand(vertx, merged)
+                  registerCommand(vertx, checks, merged)
                 )
                 .flatMap(ignored ->
-                  registerMBean()
+                  registerMBean(checks)
                 )
                 .andThen(ignored -> {
                     var config =
                       merged.getJsonObject("postgres", new JsonObject());
-                    connectToPostgres(vertx, config);
+                    connectToPostgres(vertx, checks, config);
                   }
                 )
                 .andThen(ignored -> {
                     var config = merged.getJsonObject("amqp", new JsonObject());
                     log.info("Amqp config: {}", config.encodePrettily());
-                    try {
-                      deployReceiverAndSender(vertx, config);
-                    } catch (TimeoutException e) {
-                      throw new RuntimeException(e);
-                    }
+                    deployReceiverAndSender(vertx, checks, config);
                   }
                 )
               ;

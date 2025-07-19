@@ -4,21 +4,29 @@ import io.vertx.config.ConfigRetriever;
 import io.vertx.config.ConfigRetrieverOptions;
 import io.vertx.config.ConfigStoreOptions;
 import io.vertx.core.Future;
+import io.vertx.core.Promise;
 import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonObject;
+import io.vertx.ext.web.healthchecks.HealthCheckHandler;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.Duration;
 import java.util.concurrent.atomic.AtomicReference;
+
+import static io.vertx.ext.healthchecks.Status.KO;
 
 @Slf4j
 public enum ConfigRetrieverCreator {
 
   ;
 
+  private static final String CONFIG_RETRIEVAL = "config-retrieval";
+  private static final String CONFIG_CHANGE = "config-change";
+
   public static Future<JsonObject> retrieveAndMerge
     (
       Vertx vertx,
+      HealthCheckHandler checks,
       JsonObject starting,
       AtomicReference<String> configServerVersion
     ) {
@@ -72,6 +80,19 @@ public enum ConfigRetrieverCreator {
           }
         )
         .getConfig()
+        .onSuccess(retrieved -> {
+            checks.register(CONFIG_RETRIEVAL, Promise::succeed);
+            log.info("Retrieved config: {}", retrieved.encodePrettily());
+          }
+        )
+        .onFailure(throwable -> {
+            checks.register(CONFIG_RETRIEVAL, promise -> {
+                promise.complete(KO(), throwable);
+              }
+            );
+            log.error("Failed to retrieve config", throwable);
+          }
+        )
         .map(retrieved -> {
             log.info("Retrieved config: {}", retrieved.encodePrettily());
             var merged =
@@ -84,6 +105,7 @@ public enum ConfigRetrieverCreator {
             configServerVersion.set(configVersion);
             retriever
               .listen(change -> {
+                  checks.register(CONFIG_CHANGE, Promise::succeed);
                   var previous = change.getPreviousConfiguration();
                   var next = change.getNewConfiguration();
                   log.info("Config changed from {} to {}", previous.encodePrettily(), next.encodePrettily());
