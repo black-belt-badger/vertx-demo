@@ -108,10 +108,14 @@ services:
       '
     container_name: "vertx-demo"
     depends_on:
-    - "config-server-nginx"
-    - postgres
-    - psql
-    - qpid
+      postgres:
+        condition: service_healthy
+      psql:
+        condition: service_completed_successfully
+      qpid:
+        condition: service_healthy
+      "config-server-nginx":
+        condition: service_healthy
     environment:
       JAVA_TOOL_OPTIONS: |
         -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005

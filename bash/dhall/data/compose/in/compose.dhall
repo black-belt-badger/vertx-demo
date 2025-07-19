@@ -257,8 +257,8 @@ let vertx-demo =
         , container_name = Some "vertx-demo"
         , depends_on =
             if    merge { Dev = True, Prod = False } env
-            then  Some [ "config-server-nginx", "postgres", "psql", "qpid" ]
-            else  Some [ "config-server-nginx" ]
+            then  Some [ "postgres", "psql", "qpid", "config-server-nginx" ]
+            else  Some [ "qpid", "config-server-nginx" ]
         , environment = Some
             ( package.ListOrDict.Dict
                 [ { mapKey = "JAVA_TOOL_OPTIONS"
