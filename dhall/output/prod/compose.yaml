@@ -76,7 +76,7 @@ services:
       }
       '
     container_name: "vertx-demo"
-    depends_on3:
+    depends_on:
       "config-server-nginx":
         condition: service_healthy
         restart: false

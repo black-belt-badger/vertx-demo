@@ -111,7 +111,7 @@ let psql =
               --file sql/init-db.sql
               ''
           )
-      , depends_on3 = Some
+      , depends_on = Some
         [ { mapKey = "postgres"
           , mapValue =
               types.DependsOnShortOrLong.Long
@@ -261,7 +261,7 @@ let vertx-demo =
         package.Service::{
         , command = Some (package.StringOrList.String (command env))
         , container_name = Some "vertx-demo"
-        , depends_on3 =
+        , depends_on =
             if    merge { Dev = True, Prod = False } env
             then  Some
                     [ { mapKey = "config-server-nginx"

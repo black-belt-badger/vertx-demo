@@ -139,8 +139,7 @@ let Service
       , cgroup_parent : Optional Text
       , command : Optional StringOrList
       , container_name : Optional Text
-      , depends_on : Optional (List Text)
-      , depends_on3 : Optional (Map Text DependsOnShortOrLong)
+      , depends_on : Optional (Map Text DependsOnShortOrLong)
       , devices : Optional (List Text)
       , dns : Optional StringOrList
       , dns_search : Optional (List Text)

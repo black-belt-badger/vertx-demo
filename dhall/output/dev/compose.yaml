@@ -34,7 +34,7 @@ services:
       --dbname=vertx_demo_dev_database --username vertx_demo_dev_user --host postgres --port 5432  --echo-all --single-transaction
       --file sql/init-db.sql
     container_name: psql
-    depends_on3:
+    depends_on:
       postgres:
         condition: service_healthy
         restart: false
@@ -108,7 +108,7 @@ services:
       }
       '
     container_name: "vertx-demo"
-    depends_on3:
+    depends_on:
       "config-server-nginx":
         condition: service_healthy
         restart: false
