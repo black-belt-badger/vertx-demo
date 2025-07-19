@@ -122,6 +122,14 @@ let ServiceNetworks
     : Type
     = < List : List Text | Map : Map Text ServiceNetwork >
 
+let DependsOn
+    : Type
+    = { condition : Optional Text, restart : Optional Bool }
+
+let DependsOnShortOrLong
+    : Type
+    = < Short : Text | Long : DependsOn >
+
 let Service
     : Type
     = { deploy : Optional Deploy
@@ -132,6 +140,8 @@ let Service
       , command : Optional StringOrList
       , container_name : Optional Text
       , depends_on : Optional (List Text)
+      , depends_on2 : Optional (List DependsOnShortOrLong)
+      , depends_on3 : Optional (Map Text DependsOnShortOrLong)
       , devices : Optional (List Text)
       , dns : Optional StringOrList
       , dns_search : Optional (List Text)
@@ -222,7 +232,9 @@ let ComposeConfig
       , volumes : Optional Volumes
       }
 
-in  { ComposeConfig
+in  { DependsOnShortOrLong
+    , DependsOn
+    , ComposeConfig
     , Secret
     , Secrets
     , Services
