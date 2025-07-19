@@ -115,9 +115,13 @@ let DependsOnLong
     : Type
     = { condition : Optional Text, restart : Optional Bool }
 
+let DependsOnLonger
+    : Type
+    = Map Text DependsOnLong
+
 let DependsOn
     : Type
-    = < Short : Text | Long : DependsOnLong >
+    = < Short : Text | Long : DependsOnLong | Longer : Map Text DependsOnLong >
 
 let ServiceNetwork
     : Type

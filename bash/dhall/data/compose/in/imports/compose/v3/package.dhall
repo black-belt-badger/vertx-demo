@@ -7,6 +7,8 @@ in      types
           { Type = types.ServiceVolumeLong
           , default = defaults.ServiceVolumeLong
           }
+        , DependsOnLong =
+          { Type = types.DependsOnLong, default = defaults.DependsOnLong }
         , ServiceSecretLong =
           { Type = types.ServiceSecretLong
           , default = defaults.ServiceSecretLong

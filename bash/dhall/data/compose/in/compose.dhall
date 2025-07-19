@@ -111,7 +111,14 @@ let psql =
               --file sql/init-db.sql
               ''
           )
-      , depends_on = Some [ package.DependsOn.Short "postgres" ]
+      , depends_on = Some
+        [ package.DependsOn.Longer
+            [ { mapKey = "postgres"
+              , mapValue =
+                { condition = Some "service_healthy", restart = Some False }
+              }
+            ]
+        ]
       , environment = Some
           ( package.ListOrDict.Dict
               [ { mapKey = "PGPASSWORD", mapValue = dev_db_password } ]
@@ -258,14 +265,56 @@ let vertx-demo =
         , depends_on =
             if    merge { Dev = True, Prod = False } env
             then  Some
-                    [ package.DependsOn.Short "postgres"
-                    , package.DependsOn.Short "psql"
-                    , package.DependsOn.Short "qpid"
-                    , package.DependsOn.Short "config-server-nginx"
+                    [ package.DependsOn.Longer
+                        [ { mapKey = "postgres"
+                          , mapValue =
+                            { condition = Some "service_healthy"
+                            , restart = Some False
+                            }
+                          }
+                        ]
+                    , package.DependsOn.Longer
+                        [ { mapKey = "psql"
+                          , mapValue =
+                            { condition = Some "service_healthy"
+                            , restart = Some False
+                            }
+                          }
+                        ]
+                    , package.DependsOn.Longer
+                        [ { mapKey = "qpid"
+                          , mapValue =
+                            { condition = Some "service_healthy"
+                            , restart = Some False
+                            }
+                          }
+                        ]
+                    , package.DependsOn.Longer
+                        [ { mapKey = "config-server-nginx"
+                          , mapValue =
+                            { condition = Some "service_healthy"
+                            , restart = Some False
+                            }
+                          }
+                        ]
                     ]
             else  Some
-                    [ package.DependsOn.Short "qpid"
-                    , package.DependsOn.Short "config-server-nginx"
+                    [ package.DependsOn.Longer
+                        [ { mapKey = "qpid"
+                          , mapValue =
+                            { condition = Some "service_healthy"
+                            , restart = Some False
+                            }
+                          }
+                        ]
+                    , package.DependsOn.Longer
+                        [ { mapKey = "config-server-nginx"
+                          , mapValue =
+                            { condition = Some "service_healthy"
+                            , restart = Some False
+                            }
+                          }
+                        ]
                     ]
         , environment = Some
             ( package.ListOrDict.Dict

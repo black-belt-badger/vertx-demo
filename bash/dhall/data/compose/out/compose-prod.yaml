@@ -79,8 +79,10 @@ services:
     depends_on:
       qpid:
         condition: service_healthy
+        restart: false
       "config-server-nginx":
         condition: service_healthy
+        restart: false
     environment:
       JAVA_TOOL_OPTIONS: |
         -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005
