@@ -4,6 +4,4 @@ set -x
 
 ./compose.sh
 ./conf.sh
-./examples.sh
 ./help.sh
-./here-string-to-stdout.sh
