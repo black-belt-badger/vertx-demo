@@ -115,7 +115,10 @@ let psql =
         [ { mapKey = "postgres"
           , mapValue =
               types.DependsOnShortOrLong.Long
-                { condition = Some "service_healthy", restart = Some False }
+                { condition = Some "service_healthy"
+                , required = Some False
+                , restart = Some False
+                }
           }
         ]
       , environment = Some
@@ -268,6 +271,7 @@ let vertx-demo =
                       , mapValue =
                           types.DependsOnShortOrLong.Long
                             { condition = Some "service_healthy"
+                            , required = Some False
                             , restart = Some False
                             }
                       }
@@ -275,6 +279,7 @@ let vertx-demo =
                       , mapValue =
                           types.DependsOnShortOrLong.Long
                             { condition = Some "service_healthy"
+                            , required = Some False
                             , restart = Some False
                             }
                       }
@@ -282,6 +287,7 @@ let vertx-demo =
                       , mapValue =
                           types.DependsOnShortOrLong.Long
                             { condition = Some "service_completed_successfully"
+                            , required = Some False
                             , restart = Some False
                             }
                       }
@@ -289,6 +295,7 @@ let vertx-demo =
                       , mapValue =
                           types.DependsOnShortOrLong.Long
                             { condition = Some "service_healthy"
+                            , required = Some False
                             , restart = Some False
                             }
                       }
@@ -298,6 +305,7 @@ let vertx-demo =
                       , mapValue =
                           types.DependsOnShortOrLong.Long
                             { condition = Some "service_healthy"
+                            , required = Some False
                             , restart = Some False
                             }
                       }
@@ -305,6 +313,7 @@ let vertx-demo =
                       , mapValue =
                           types.DependsOnShortOrLong.Long
                             { condition = Some "service_healthy"
+                            , required = Some False
                             , restart = Some False
                             }
                       }

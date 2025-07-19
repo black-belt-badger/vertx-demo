@@ -124,7 +124,10 @@ let ServiceNetworks
 
 let DependsOn
     : Type
-    = { condition : Optional Text, restart : Optional Bool }
+    = { condition : Optional Text
+      , restart : Optional Bool
+      , required : Optional Bool
+      }
 
 let DependsOnShortOrLong
     : Type

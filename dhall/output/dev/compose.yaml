@@ -37,6 +37,7 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
+        required: false
         restart: false
     environment:
       PGPASSWORD: vertx_demo_dev_password
@@ -111,15 +112,19 @@ services:
     depends_on:
       "config-server-nginx":
         condition: service_healthy
+        required: false
         restart: false
       postgres:
         condition: service_healthy
+        required: false
         restart: false
       psql:
         condition: service_completed_successfully
+        required: false
         restart: false
       qpid:
         condition: service_healthy
+        required: false
         restart: false
     environment:
       JAVA_TOOL_OPTIONS: |
