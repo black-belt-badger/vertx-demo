@@ -101,6 +101,10 @@ let postgres =
         , restart = Some "unless-stopped"
         }
 
+let service-healthy
+    : types.DependsOnLong
+    = { condition = Some "service_healthy", restart = Some False }
+
 let psql =
       package.Service::{
       , container_name = Some "psql"
@@ -113,11 +117,7 @@ let psql =
           )
       , depends_on = Some
         [ package.DependsOn.Longer
-            [ { mapKey = "postgres"
-              , mapValue =
-                { condition = Some "service_healthy", restart = Some False }
-              }
-            ]
+            [ { mapKey = "postgres", mapValue = service-healthy } ]
         ]
       , environment = Some
           ( package.ListOrDict.Dict
@@ -266,53 +266,23 @@ let vertx-demo =
             if    merge { Dev = True, Prod = False } env
             then  Some
                     [ package.DependsOn.Longer
-                        [ { mapKey = "postgres"
-                          , mapValue =
-                            { condition = Some "service_healthy"
-                            , restart = Some False
-                            }
-                          }
-                        ]
+                        [ { mapKey = "postgres", mapValue = service-healthy } ]
                     , package.DependsOn.Longer
-                        [ { mapKey = "psql"
-                          , mapValue =
-                            { condition = Some "service_healthy"
-                            , restart = Some False
-                            }
-                          }
-                        ]
+                        [ { mapKey = "psql", mapValue = service-healthy } ]
                     , package.DependsOn.Longer
-                        [ { mapKey = "qpid"
-                          , mapValue =
-                            { condition = Some "service_healthy"
-                            , restart = Some False
-                            }
-                          }
-                        ]
+                        [ { mapKey = "qpid", mapValue = service-healthy } ]
                     , package.DependsOn.Longer
                         [ { mapKey = "config-server-nginx"
-                          , mapValue =
-                            { condition = Some "service_healthy"
-                            , restart = Some False
-                            }
+                          , mapValue = service-healthy
                           }
                         ]
                     ]
             else  Some
                     [ package.DependsOn.Longer
-                        [ { mapKey = "qpid"
-                          , mapValue =
-                            { condition = Some "service_healthy"
-                            , restart = Some False
-                            }
-                          }
-                        ]
+                        [ { mapKey = "qpid", mapValue = service-healthy } ]
                     , package.DependsOn.Longer
                         [ { mapKey = "config-server-nginx"
-                          , mapValue =
-                            { condition = Some "service_healthy"
-                            , restart = Some False
-                            }
+                          , mapValue = service-healthy
                           }
                         ]
                     ]
