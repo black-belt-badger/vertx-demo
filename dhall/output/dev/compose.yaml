@@ -35,7 +35,7 @@ services:
       --file sql/init-db.sql
     container_name: psql
     depends_on:
-    - postgres:
+      postgres:
         condition: service_healthy
         restart: false
     environment:
@@ -109,16 +109,16 @@ services:
       '
     container_name: "vertx-demo"
     depends_on:
-    - postgres:
+      postgres:
         condition: service_healthy
         restart: false
-    - psql:
+      psql:
         condition: service_healthy
         restart: false
-    - qpid:
+      qpid:
         condition: service_healthy
         restart: false
-    - "config-server-nginx":
+      "config-server-nginx":
         condition: service_healthy
         restart: false
     environment:
