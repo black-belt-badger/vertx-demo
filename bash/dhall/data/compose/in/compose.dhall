@@ -101,6 +101,33 @@ let postgres =
         , restart = Some "unless-stopped"
         }
 
+let psql =
+      package.Service::{
+      , container_name = Some "psql"
+      , command = Some
+          ( package.StringOrList.String
+              ''
+              --dbname=${dev_db_name} --username ${dev_db_user} --host postgres --port 5432  --echo-all --single-transaction
+              --file sql/init-db.sql
+              ''
+          )
+      , depends_on = Some [ "postgres" ]
+      , environment = Some
+          ( package.ListOrDict.Dict
+              [ { mapKey = "PGPASSWORD", mapValue = dev_db_password } ]
+          )
+      , image = Some "alpine/psql"
+      , volumes = Some
+        [ package.ServiceVolume.Long
+            package.ServiceVolumeLong::{
+            , read_only = Some False
+            , source = Some "./sql"
+            , target = Some "/sql"
+            , type = Some "bind"
+            }
+        ]
+      }
+
 let config-server =
       \(env : Environment) ->
         if    merge { Dev = True, Prod = False } env
@@ -230,7 +257,7 @@ let vertx-demo =
         , container_name = Some "vertx-demo"
         , depends_on =
             if    merge { Dev = True, Prod = False } env
-            then  Some [ "config-server-nginx", "postgres", "qpid" ]
+            then  Some [ "config-server-nginx", "postgres", "psql", "qpid" ]
             else  Some [ "config-server-nginx" ]
         , environment = Some
             ( package.ListOrDict.Dict
@@ -310,7 +337,8 @@ let serivces =
 
               let qpid = qpid Environment.Dev
 
-              in  toMap { config-server-nginx, vertx-demo, postgres, qpid }
+              in  toMap
+                    { config-server-nginx, vertx-demo, postgres, psql, qpid }
         else  let config-server-nginx = config-server-nginx Environment.Prod
 
               let vertx-demo = vertx-demo Environment.Prod

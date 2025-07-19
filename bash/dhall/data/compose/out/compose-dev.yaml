@@ -29,6 +29,21 @@ services:
     ports:
     - "5432:5432"
     restart: "unless-stopped"
+  psql:
+    command: |
+      --dbname=vertx_demo_dev_database --username vertx_demo_dev_user --host postgres --port 5432  --echo-all --single-transaction
+      --file sql/init-db.sql
+    container_name: psql
+    depends_on:
+    - postgres
+    environment:
+      PGPASSWORD: vertx_demo_dev_password
+    image: alpine/psql
+    volumes:
+    - read_only: false
+      source: ./sql
+      target: /sql
+      type: bind
   qpid:
     container_name: qpid
     environment:
@@ -94,6 +109,7 @@ services:
     depends_on:
     - "config-server-nginx"
     - postgres
+    - psql
     - qpid
     environment:
       JAVA_TOOL_OPTIONS: |
