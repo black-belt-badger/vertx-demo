@@ -7,7 +7,7 @@
 
   <groupId>bbb</groupId>
   <artifactId>vertx-demo</artifactId>
-  <version>1.0.18</version>
+  <version>1.0.19-SNAPSHOT</version>
 
   <properties>
     <maven.compiler.target>21</maven.compiler.target>
@@ -66,6 +66,10 @@
     <dependency>
       <groupId>io.vertx</groupId>
       <artifactId>vertx-web</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.vertx</groupId>
+      <artifactId>vertx-web-templ-thymeleaf</artifactId>
     </dependency>
     <dependency>
       <groupId>io.vertx</groupId>
