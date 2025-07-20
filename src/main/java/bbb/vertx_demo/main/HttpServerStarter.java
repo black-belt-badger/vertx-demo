@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.concurrent.atomic.AtomicReference;
 
 import static io.vertx.ext.healthchecks.Status.KO;
+import static java.lang.String.format;
 import static java.lang.System.getenv;
 import static java.util.Optional.ofNullable;
 
@@ -44,16 +45,14 @@ public enum HttpServerStarter {
           engine
             .render(
               new JsonObject()
-                .put("foo", "Foo")
-                .put("bar", "Bar")
-                .put("version", configServerVersionRef.get()
+                .put("version", format("Version: %s", configServerVersionRef.get())
                 ),
-              "thymeleaf/example-template.html"
+              "thymeleaf/index.html"
             )
             .onFailure(throwable -> log.error("error rendering template", throwable))
             .onSuccess(buffer -> {
                 context.response()
-                  .putHeader("content-type", "text/plain")
+                  .putHeader("content-type", "text/html")
                   .end(buffer);
               }
             );
