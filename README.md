@@ -51,7 +51,7 @@
 
 * Remove qpid data volume
   ```shell
-  docker volume rm vertx-in-docker_prometheus_data
+  docker volume prune --all --force
   ```
 
 ## Access
