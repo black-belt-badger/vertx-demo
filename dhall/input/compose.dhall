@@ -24,7 +24,9 @@ let type = https://prelude.dhall-lang.org/v23.1.0/JSON/Type.dhall
 
 let vdc = ../imports/vertx-demo-config/vdc.dhall
 
-let version = "1.0.16"
+let version = "1.0.17"
+
+let Environment = < Dev | Prod >
 
 let dev_db_name = "vertx_demo_dev_database"
 
@@ -40,7 +42,15 @@ let prod_qpid_admin_username = "prod_admin"
 
 let prod_qpid_admin_password = "prod_secret"
 
-let Environment = < Dev | Prod >
+let service_healthy =
+      package.DependsOn.Long
+        package.DependsOnLong::{ condition = Some "service_healthy" }
+
+let service_completed_successfully =
+      package.DependsOn.Long
+        package.DependsOnLong::{
+        , condition = Some "service_completed_successfully"
+        }
 
 let config-server-nginx =
       \(env : Environment) ->
@@ -102,12 +112,7 @@ let psql =
               ''
           )
       , depends_on = Some
-        [ { mapKey = "postgres"
-          , mapValue =
-              package.DependsOn.Long
-                package.DependsOnLong::{ condition = Some "service_healthy" }
-          }
-        ]
+        [ { mapKey = "postgres", mapValue = service_healthy } ]
       , environment = Some
           ( package.ListOrDict.Dict
               [ { mapKey = "PGPASSWORD", mapValue = dev_db_password } ]
@@ -255,49 +260,19 @@ let vertx-demo =
             if    merge { Dev = True, Prod = False } env
             then  Some
                     [ { mapKey = "config-server-nginx"
-                      , mapValue =
-                          package.DependsOn.Long
-                            package.DependsOnLong::{
-                            , condition = Some "service_healthy"
-                            }
+                      , mapValue = service_healthy
                       }
-                    , { mapKey = "postgres"
-                      , mapValue =
-                          package.DependsOn.Long
-                            package.DependsOnLong::{
-                            , condition = Some "service_healthy"
-                            }
-                      }
+                    , { mapKey = "postgres", mapValue = service_healthy }
                     , { mapKey = "psql"
-                      , mapValue =
-                          package.DependsOn.Long
-                            package.DependsOnLong::{
-                            , condition = Some "service_completed_successfully"
-                            }
+                      , mapValue = service_completed_successfully
                       }
-                    , { mapKey = "qpid"
-                      , mapValue =
-                          package.DependsOn.Long
-                            package.DependsOnLong::{
-                            , condition = Some "service_healthy"
-                            }
-                      }
+                    , { mapKey = "qpid", mapValue = service_healthy }
                     ]
             else  Some
                     [ { mapKey = "config-server-nginx"
-                      , mapValue =
-                          package.DependsOn.Long
-                            package.DependsOnLong::{
-                            , condition = Some "service_healthy"
-                            }
+                      , mapValue = service_healthy
                       }
-                    , { mapKey = "qpid"
-                      , mapValue =
-                          package.DependsOn.Long
-                            package.DependsOnLong::{
-                            , condition = Some "service_healthy"
-                            }
-                      }
+                    , { mapKey = "qpid", mapValue = service_healthy }
                     ]
         , environment = Some
             ( package.ListOrDict.Dict
