@@ -24,7 +24,7 @@ let type = https://prelude.dhall-lang.org/v23.1.0/JSON/Type.dhall
 
 let vdc = ../imports/vertx-demo-config/vdc.dhall
 
-let version = "1.0.19-SNAPSHOT"
+let version = "1.0.19"
 
 let Environment = < Dev | Prod >
 

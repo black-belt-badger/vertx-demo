@@ -133,7 +133,7 @@ services:
       retries: 10
       test: "curl -f http://localhost:8081/health"
       timeout: 1s
-    image: "marekdudek/vertx-demo:1.0.19-SNAPSHOT"
+    image: "marekdudek/vertx-demo:1.0.19"
     ports:
     - "8081:8081"
     - "5005:5005"

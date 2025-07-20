@@ -58,7 +58,6 @@ public enum HttpServerStarter {
             );
         }
       );
-
     return vertx
       .createHttpServer()
       .requestHandler(router)

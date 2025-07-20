@@ -92,13 +92,13 @@ services:
         -Dcom.sun.management.jmxremote.port=1099
         -Dcom.sun.management.jmxremote.rmi.port=1099
         -Djava.rmi.server.hostname=ec2-13-60-243-123.eu-north-1.compute.amazonaws.com
-      VERSION: "1.0.19-SNAPSHOT"
+      VERSION: '1.0.19'
     healthcheck:
       interval: 10s
       retries: 10
       test: "curl -f http://localhost:8081/health"
       timeout: 1s
-    image: "marekdudek/vertx-demo:1.0.19-SNAPSHOT"
+    image: "marekdudek/vertx-demo:1.0.19"
     ports:
     - "80:8080"
     - "5005:5005"
