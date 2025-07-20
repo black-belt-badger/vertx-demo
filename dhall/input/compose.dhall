@@ -344,21 +344,21 @@ let vertx-demo =
 let serivces =
       \(env : Environment) ->
         if    merge { Dev = True, Prod = False } env
-        then  let config-server-nginx = config-server-nginx Environment.Dev
+        then  let config-server-nginx = config-server-nginx env
 
-              let vertx-demo = vertx-demo Environment.Dev
+              let vertx-demo = vertx-demo env
 
-              let postgres = postgres Environment.Dev
+              let postgres = postgres env
 
-              let qpid = qpid Environment.Dev
+              let qpid = qpid env
 
               in  toMap
                     { config-server-nginx, vertx-demo, postgres, psql, qpid }
-        else  let config-server-nginx = config-server-nginx Environment.Prod
+        else  let config-server-nginx = config-server-nginx env
 
-              let vertx-demo = vertx-demo Environment.Prod
+              let vertx-demo = vertx-demo env
 
-              let qpid = qpid Environment.Prod
+              let qpid = qpid env
 
               in  toMap { config-server-nginx, vertx-demo, qpid }
 
