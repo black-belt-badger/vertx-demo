@@ -37,7 +37,6 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
-        restart: false
     environment:
       PGPASSWORD: vertx_demo_dev_password
     image: alpine/psql
@@ -111,16 +110,12 @@ services:
     depends_on:
       "config-server-nginx":
         condition: service_healthy
-        restart: false
       postgres:
         condition: service_healthy
-        restart: false
       psql:
         condition: service_completed_successfully
-        restart: false
       qpid:
         condition: service_healthy
-        restart: false
     environment:
       JAVA_TOOL_OPTIONS: |
         -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005
