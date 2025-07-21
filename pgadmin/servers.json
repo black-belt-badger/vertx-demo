@@ -1,0 +1,25 @@
+{
+  "Servers": {
+    "1": {
+      "Name": "dockerized",
+      "Group": "Servers",
+      "Host": "host.docker.internal",
+      "Port": 5432,
+      "MaintenanceDB": "vertx_demo_dev_database",
+      "Username": "vertx_demo_dev_user",
+      "Password": "vertx_demo_dev_password",
+      "UseSSHTunnel": 0,
+      "TunnelPort": "22",
+      "TunnelAuthentication": 0,
+      "TunnelKeepAlive": 0,
+      "KerberosAuthentication": false,
+      "ConnectionParameters": {
+        "sslmode": "prefer",
+        "connect_timeout": 10,
+        "sslcert": "<STORAGE_DIR>/.postgresql/postgresql.crt",
+        "sslkey": "<STORAGE_DIR>/.postgresql/postgresql.key"
+      },
+      "Tags": []
+    }
+  }
+}

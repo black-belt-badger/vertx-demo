@@ -24,7 +24,7 @@ let type = https://prelude.dhall-lang.org/v23.1.0/JSON/Type.dhall
 
 let vdc = ../imports/vertx-demo-config/vdc.dhall
 
-let version = "1.0.19"
+let version = "1.0.20.1"
 
 let Environment = < Dev | Prod >
 
@@ -74,6 +74,34 @@ let config-server-nginx =
               , type = Some "bind"
               }
           ]
+        }
+
+let pgadmin =
+      \(env : Environment) ->
+        package.Service::{
+        , container_name = Some "pgadmin"
+        , depends_on = Some
+          [ { mapKey = "postgres", mapValue = service_healthy } ]
+        , environment = Some
+            ( package.ListOrDict.Dict
+                [ { mapKey = "PGADMIN_DEFAULT_EMAIL"
+                  , mapValue = "user@domain.com"
+                  }
+                , { mapKey = "PGADMIN_DEFAULT_PASSWORD", mapValue = "secret" }
+                ]
+            )
+        , image = Some "dpage/pgadmin4"
+        , ports = Some [ package.StringOrNumber.String "5050:80" ]
+        , volumes = Some
+          [ package.ServiceVolume.Long
+              package.ServiceVolumeLong::{
+              , read_only = Some False
+              , source = Some "./pgadmin/servers.json"
+              , target = Some "/pgadmin4/servers.json"
+              , type = Some "bind"
+              }
+          ]
+        , restart = Some "unless-stopped"
         }
 
 let postgres =
@@ -348,12 +376,20 @@ let serivces =
 
               let vertx-demo = vertx-demo env
 
+              let pgadmin = pgadmin env
+
               let postgres = postgres env
 
               let qpid = qpid env
 
               in  toMap
-                    { config-server-nginx, vertx-demo, postgres, psql, qpid }
+                    { config-server-nginx
+                    , vertx-demo
+                    , pgadmin
+                    , postgres
+                    , psql
+                    , qpid
+                    }
         else  let config-server-nginx = config-server-nginx env
 
               let vertx-demo = vertx-demo env

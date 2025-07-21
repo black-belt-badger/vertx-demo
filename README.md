@@ -6,8 +6,6 @@
 
 ## [Maven maintenance](docs/Maven-maintenance.md)
 
-## [Config management](docs/Config-management.md)
-
 ## [AMQP](docs/AMQP.md)
 
 ## Building
