@@ -176,6 +176,40 @@ public enum HttpServerStarter {
           }
         )
     );
+    router.get("/forex-news").handler(context ->
+      client
+        .get(FINNHUB_PORT, FINNHUB_HOST, "/api/v1/news?category=forex")
+        .putHeader(FINNHUB_HEADER, FINNHUB_API_KEY)
+        .send()
+        .onFailure(throwable -> log.error("error sending request", throwable))
+        .onSuccess(response -> {
+            var array = response.bodyAsJsonArray();
+            engine
+              .render(new JsonObject().put("news", array).put("caption", "Forex news"), "templates/news.html")
+              .onFailure(throwable -> log.error("error rendering countries template", throwable))
+              .onSuccess(buffer ->
+                context.response().putHeader("content-type", "text/html").end(buffer)
+              );
+          }
+        )
+    );
+    router.get("/crypto-news").handler(context ->
+      client
+        .get(FINNHUB_PORT, FINNHUB_HOST, "/api/v1/news?category=crypto")
+        .putHeader(FINNHUB_HEADER, FINNHUB_API_KEY)
+        .send()
+        .onFailure(throwable -> log.error("error sending request", throwable))
+        .onSuccess(response -> {
+            var array = response.bodyAsJsonArray();
+            engine
+              .render(new JsonObject().put("news", array).put("caption", "Crypto news"), "templates/news.html")
+              .onFailure(throwable -> log.error("error rendering countries template", throwable))
+              .onSuccess(buffer ->
+                context.response().putHeader("content-type", "text/html").end(buffer)
+              );
+          }
+        )
+    );
     return vertx
       .createHttpServer()
       .requestHandler(router)
