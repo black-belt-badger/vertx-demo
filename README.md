@@ -87,7 +87,7 @@
      ```
     * prod
      ```shell
-     jconsole ec2-13-60-243-123.eu-north-1.compute.amazonaws.com:1099 &
+     jconsole ec2-51-21-163-63.eu-north-1.compute.amazonaws.com &
      ```
   * VisualVM
     * dev
@@ -96,7 +96,7 @@
     ```
     * prod
     ```shell
-    visualvm --nosplash --openjmx ec2-13-60-243-123.eu-north-1.compute.amazonaws.com:1099 &
+    visualvm --nosplash --openjmx ec2-51-21-163-63.eu-north-1.compute.amazonaws.com:1099 &
     ```
 * Docker
   ```shell

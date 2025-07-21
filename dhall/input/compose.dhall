@@ -24,7 +24,7 @@ let type = https://prelude.dhall-lang.org/v23.1.0/JSON/Type.dhall
 
 let vdc = ../imports/vertx-demo-config/vdc.dhall
 
-let version = "1.0.20.3"
+let version = "1.0.20.4"
 
 let Environment = < Dev | Prod >
 
@@ -321,7 +321,7 @@ let vertx-demo =
                                                            }
                                                            env
                                                    then  "0.0.0.0"
-                                                   else  "ec2-13-60-243-123.eu-north-1.compute.amazonaws.com"}
+                                                   else  "ec2-51-21-163-63.eu-north-1.compute.amazonaws.com"}
                       ''
                   }
                 , { mapKey = "VERSION", mapValue = version }
@@ -394,11 +394,9 @@ let serivces =
 
               let vertx-demo = vertx-demo env
 
-              let pgadmin = pgadmin env
-
               let qpid = qpid env
 
-              in  toMap { config-server-nginx, vertx-demo, pgadmin, qpid }
+              in  toMap { config-server-nginx, vertx-demo, qpid }
 
 in  { dev = package.Config::{ services = Some (serivces Environment.Dev) }
     , prod = package.Config::{ services = Some (serivces Environment.Prod) }
