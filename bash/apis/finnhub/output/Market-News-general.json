@@ -1,0 +1,79 @@
+[
+  {
+    "category": "top news",
+    "datetime": 1753050420,
+    "headline": "U.S. stock futures flat as investors look ahead to earnings, tariff developments",
+    "id": 7499101,
+    "image": "https://static2.finnhub.io/file/publicdatany/finnhubimage/market_watch_logo.png",
+    "related": "",
+    "source": "MarketWatch",
+    "summary": "U.S. stock-market futures were little changed Sunday, as investors await the next tariff developments and a big week of quarterly earnings.",
+    "url": "https://www.marketwatch.com/story/u-s-stock-futures-flat-as-investors-look-ahead-to-earnings-tariff-developments-8bb2b0f6"
+  },
+  {
+    "category": "top news",
+    "datetime": 1753027200,
+    "headline": "Stock market’s rally now hinges on earnings — with tariffs and Fed drama hopefully background noise",
+    "id": 7499087,
+    "image": "https://static2.finnhub.io/file/publicdatany/finnhubimage/market_watch_logo.png",
+    "related": "",
+    "source": "MarketWatch",
+    "summary": "There’s a feeling of optimism in the U.S. stock market about the week ahead, with corporate earnings finally poised to hold the spotlight.",
+    "url": "https://www.marketwatch.com/story/stock-markets-rally-now-hinges-on-earnings-with-tariffs-and-fed-drama-hopefully-background-noise-a51e642c"
+  },
+  {
+    "category": "top news",
+    "datetime": 1753022976,
+    "headline": "Here are the 5 things we're watching in the stock market in the week ahead",
+    "id": 7499083,
+    "image": "https://image.cnbcfm.com/api/v1/image/105293193-1529952569074rts1fw5u.jpg?v=1728314650\u0026w=1920\u0026h=1080",
+    "related": "",
+    "source": "CNBC",
+    "summary": "Second-quarter earnings season is picking up steam.",
+    "url": "https://www.cnbc.com/2025/07/20/here-are-the-5-things-were-watching-in-the-stock-market-in-the-week-ahead.html"
+  },
+  {
+    "category": "top news",
+    "datetime": 1753020000,
+    "headline": "Alphabet’s earnings will probably be fine, analysts say, but it faces this threat to its core business",
+    "id": 7499081,
+    "image": "https://static2.finnhub.io/file/publicdatany/finnhubimage/market_watch_logo.png",
+    "related": "",
+    "source": "MarketWatch",
+    "summary": "AI is a main theme of second-quarter earnings as Alphabet reports this week. Tesla, Mattel, Hasbro and Coca-Cola also report, as Trump policies remain top of mind.",
+    "url": "https://www.marketwatch.com/story/alphabets-earnings-will-probably-be-fine-analysts-say-but-it-faces-this-threat-to-its-core-business-ca255ba2"
+  },
+  {
+    "category": "top news",
+    "datetime": 1753016401,
+    "headline": "Retirees are fleeing these 10 U.S. cities—most are in states where you need over $1 million to retire",
+    "id": 7499075,
+    "image": "https://image.cnbcfm.com/api/v1/image/108173997-1752855753981-gettyimages-2210406964-_dsc0638-aprimorado-nr.jpeg?v=1752855837\u0026w=1920\u0026h=1080",
+    "related": "",
+    "source": "CNBC",
+    "summary": "In 2023, New York City had the highest loss of residents 60 and older.",
+    "url": "https://www.cnbc.com/2025/07/20/retirees-fleeing-these-us-cities.html"
+  },
+  {
+    "category": "top news",
+    "datetime": 1752985552,
+    "headline": "Hong Kong Issues Highest Storm Alert as Typhoon Wipha Moves In",
+    "id": 7499135,
+    "image": "https://data.bloomberglp.com/company/sites/2/2019/01/logobbg-wht.png",
+    "related": "",
+    "source": "Bloomberg",
+    "summary": "Hong Kong raised its storm alert to the highest level as tropical cyclone Wipha moved closer, with Cathay Pacific Airways Ltd. delaying and canceling flights in and out of the city on Sunday.",
+    "url": "https://www.bloomberg.com/news/articles/2025-07-20/hong-kong-issues-highest-storm-alert-as-typhoon-wipha-approaches"
+  },
+  {
+    "category": "top news",
+    "datetime": 1752984021,
+    "headline": "Musk says xAI will make kid-friendly app called Baby Grok",
+    "id": 7499133,
+    "image": "https://data.bloomberglp.com/company/sites/2/2019/01/logobbg-wht.png",
+    "related": "",
+    "source": "Bloomberg",
+    "summary": "Elon Musk's AI startup to launch kid-friendly app Baby Grok, following controversy over chatbot's antisemitic comments.",
+    "url": "https://www.bloomberg.com/news/articles/2025-07-20/musk-says-xai-will-make-kid-friendly-app-called-baby-grok"
+  }
+]
