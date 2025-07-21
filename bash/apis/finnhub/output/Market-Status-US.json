@@ -1,1 +1,8 @@
-{"exchange":"US","holiday":null,"isOpen":false,"session":null,"t":1753074130,"timezone":"America/New_York"}
+{
+  "exchange": "US",
+  "holiday": null,
+  "isOpen": false,
+  "session": null,
+  "t": 1753075043,
+  "timezone": "America/New_York"
+}
