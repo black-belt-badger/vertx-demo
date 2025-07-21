@@ -28,19 +28,19 @@
     </ul>
   </nav>
   <table>
-    <caption th:text="'Crypto symbol'"/>
+    <caption th:text="'Forex Exchanges'"/>
     <thead>
     <tr>
-      <th data-th-text="'Display symbol'"></th>
-      <th data-th-text="'Symbol'"></th>
-      <th data-th-text="'Description'"></th>
+      <th data-th-text="'Exchange'"></th>
+<!--      <th data-th-text="'Symbols'"></th>-->
     </tr>
     </thead>
     <tbody>
-    <tr data-th-each="symbol : ${symbols.list}">
-      <th data-th-text="${symbol.displaySymbol}"/>
-      <td data-th-text="${symbol.symbol}"/>
-      <td data-th-text="${symbol.description}"/>
+    <tr data-th-each="exchange : ${exchanges.list}">
+      <th data-th-text="${exchange}"/>
+<!--      <td>-->
+<!--        <a th:href="@{/crypto-symbols/{id}(id=${exchange})}">Symbols</a>-->
+<!--      </td>-->
     </tr>
     </tbody>
   </table>
