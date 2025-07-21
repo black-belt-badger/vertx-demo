@@ -168,7 +168,7 @@ public enum HttpServerStarter {
         .onSuccess(response -> {
             var array = response.bodyAsJsonArray();
             engine
-              .render(new JsonObject().put("news", array), "templates/news.html")
+              .render(new JsonObject().put("news", array).put("caption", "General news"), "templates/news.html")
               .onFailure(throwable -> log.error("error rendering countries template", throwable))
               .onSuccess(buffer ->
                 context.response().putHeader("content-type", "text/html").end(buffer)
