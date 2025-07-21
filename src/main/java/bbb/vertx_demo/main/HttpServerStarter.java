@@ -6,6 +6,7 @@ import io.vertx.core.Vertx;
 import io.vertx.core.http.HttpServer;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.Router;
+import io.vertx.ext.web.client.WebClient;
 import io.vertx.ext.web.healthchecks.HealthCheckHandler;
 import io.vertx.ext.web.templ.thymeleaf.ThymeleafTemplateEngine;
 import lombok.extern.slf4j.Slf4j;
@@ -40,20 +41,34 @@ public enum HttpServerStarter {
         checks.register(WEB_SERVER_ONLINE, Promise::succeed)
       );
     var engine = ThymeleafTemplateEngine.create(vertx);
+    var client = WebClient.create(vertx);
     router.get("/")
       .handler(context -> {
           engine
-            .render(
-              new JsonObject()
-                .put("version", format("Version: %s", VERSION)
-                ),
-              "thymeleaf/index.html"
-            )
+            .render(new JsonObject().put("version", format("Version: %s", VERSION)), "templates/index.html")
             .onFailure(throwable -> log.error("error rendering template", throwable))
             .onSuccess(buffer -> {
-                context.response()
-                  .putHeader("content-type", "text/html")
-                  .end(buffer);
+                context.response().putHeader("content-type", "text/html").end(buffer);
+              }
+            );
+        }
+      );
+    router.get("/countries")
+      .handler(context -> {
+          client
+            .get(80, "finnhub.io", "/api/v1//country")
+            .putHeader("X-Finnhub-Token", "d1uqv0pr01qletnb7080d1uqv0pr01qletnb708g")
+            .send()
+            .onFailure(throwable -> log.error("error sending request", throwable))
+            .onSuccess(response -> {
+                var array = response.bodyAsJsonArray();
+                engine
+                  .render(new JsonObject().put("countries", array), "templates/countries.html")
+                  .onFailure(throwable -> log.error("error rendering countries template", throwable))
+                  .onSuccess(buffer -> {
+                      context.response().putHeader("content-type", "text/html").end(buffer);
+                    }
+                  );
               }
             );
         }

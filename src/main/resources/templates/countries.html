@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+  <title>Vert.x Demo application</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+
+<body>
+
+<div>
+  <table>
+    <caption>Countries</caption>
+    <thead>
+    <tr>
+      <th>Country</th>
+      <th>alpha-2</th>
+      <th>alpha-3</th>
+      <th>UN</th>
+      <th>Region</th>
+      <th>Subregion</th>
+      <th>Currency</th>
+      <th>Currency code</th>
+      <th>Default spread</th>
+      <th>Rating</th>
+      <th>Equity risk premium</th>
+      <th>Country risk premium</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr data-th-each="country : ${countries.list}">
+      <th data-th-text="${country.country}"/>
+      <td data-th-text="${country.code2}"/>
+      <td data-th-text="${country.code3}"/>
+      <td data-th-text="${country.codeNo}"/>
+      <td data-th-text="${country.region}"/>
+      <td data-th-text="${country.subRegion}"/>
+      <td data-th-text="${country.currency}"/>
+      <td data-th-text="${country.currencyCode}"/>
+      <td data-th-text="${country.defaultSpread}"/>
+      <td data-th-text="${country.Rating}"/>
+      <td data-th-text="${country.equityRiskPremium}"/>
+      <td data-th-text="${country.countryRiskPremium}"/>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+</body>
+
+</html>
