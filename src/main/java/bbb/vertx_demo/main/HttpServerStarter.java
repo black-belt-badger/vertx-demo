@@ -110,6 +110,24 @@ public enum HttpServerStarter {
           );
       }
     );
+    router.get("/fda-advisory-committee-calendar").handler(context ->
+      client
+        .get(FINNHUB_PORT, FINNHUB_HOST, "/api/v1/fda-advisory-committee-calendar")
+        .putHeader(FINNHUB_HEADER, FINNHUB_API_KEY)
+        .send()
+        .onFailure(throwable -> log.error("error sending request", throwable))
+        .onSuccess(response -> {
+            var array = response.bodyAsJsonArray();
+            engine
+              .render(new JsonObject().put("entries", array), "templates/fda-advisory-committee-calendar.html")
+              .onFailure(throwable -> log.error("error rendering countries template", throwable))
+              .onSuccess(buffer -> {
+                  context.response().putHeader("content-type", "text/html").end(buffer);
+                }
+              );
+          }
+        )
+    );
     return vertx
       .createHttpServer()
       .requestHandler(router)

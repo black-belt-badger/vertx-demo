@@ -28,16 +28,18 @@
     <caption th:text="'Crypto symbol'"/>
     <thead>
     <tr>
-      <th data-th-text="'Display symbol'"></th>
-      <th data-th-text="'Symbol'"></th>
-      <th data-th-text="'Description'"></th>
+      <th data-th-text="'Event description'"></th>
+      <th data-th-text="'URL'"></th>
+      <th data-th-text="'From'"></th>
+      <th data-th-text="'To'"></th>
     </tr>
     </thead>
     <tbody>
-    <tr data-th-each="symbol : ${symbols.list}">
-      <th data-th-text="${symbol.displaySymbol}"/>
-      <td data-th-text="${symbol.symbol}"/>
-      <td data-th-text="${symbol.description}"/>
+    <tr data-th-each="entry : ${entries.list}">
+      <th data-th-text="${entry.eventDescription}"/>
+      <th data-th-text="${entry.url}"/>
+      <td data-th-text="${entry.fromDate}"/>
+      <td data-th-text="${entry.toDate}"/>
     </tr>
     </tbody>
   </table>
