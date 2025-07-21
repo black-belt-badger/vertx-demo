@@ -2,7 +2,7 @@
 
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-  <title>Vert.x Demo application - Home</title>
+  <title>Vert.x Demo application - Countries</title>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.classless.min.css">
 </head>
@@ -21,6 +21,19 @@
       </li>
     </ul>
   </nav>
+  <table>
+    <caption th:text="'Crypto Exchanges'"/>
+    <thead>
+    <tr>
+      <th data-th-text="'Exchange'"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr data-th-each="exchange : ${cryptoExchanges.list}">
+      <th data-th-text="${exchange}"/>
+    </tr>
+    </tbody>
+  </table>
 </main>
 </body>
 </html>

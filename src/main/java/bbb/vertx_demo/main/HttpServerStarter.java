@@ -26,6 +26,10 @@ public enum HttpServerStarter {
   private static final String VERSION = ofNullable(getenv("VERSION")).orElse("unknown");
   private static final String WEB_SERVER_STARTED = "web-server-started";
   private static final String WEB_SERVER_ONLINE = "web-server-online";
+  public static final int FINNHUB_PORT = 80;
+  public static final String FINNHUB_HOST = "finnhub.io";
+  public static final String FINNHUB_HEADER = "X-Finnhub-Token";
+  public static final String FINNHUB_API_KEY = "d1uqv0pr01qletnb7080d1uqv0pr01qletnb708g";
 
   public static Future<HttpServer> startHttpServer
     (
@@ -56,8 +60,8 @@ public enum HttpServerStarter {
     router.get("/countries")
       .handler(context -> {
           client
-            .get(80, "finnhub.io", "/api/v1//country")
-            .putHeader("X-Finnhub-Token", "d1uqv0pr01qletnb7080d1uqv0pr01qletnb708g")
+            .get(FINNHUB_PORT, FINNHUB_HOST, "/api/v1/country")
+            .putHeader(FINNHUB_HEADER, FINNHUB_API_KEY)
             .send()
             .onFailure(throwable -> log.error("error sending request", throwable))
             .onSuccess(response -> {
@@ -71,6 +75,27 @@ public enum HttpServerStarter {
                   );
               }
             );
+        }
+      );
+    router.get("/crypto-exchanges")
+      .handler(context -> {
+          client
+            .get(FINNHUB_PORT, FINNHUB_HOST, "/api/v1/crypto/exchange")
+            .putHeader(FINNHUB_HEADER, FINNHUB_API_KEY)
+            .send()
+            .onFailure(throwable -> log.error("error sending request", throwable))
+            .onSuccess(response -> {
+                var array = response.bodyAsJsonArray();
+                engine
+                  .render(new JsonObject().put("cryptoExchanges", array), "templates/crypto-exchanges.html")
+                  .onFailure(throwable -> log.error("error rendering countries template", throwable))
+                  .onSuccess(buffer -> {
+                      context.response().putHeader("content-type", "text/html").end(buffer);
+                    }
+                  );
+              }
+            );
+
         }
       );
     return vertx

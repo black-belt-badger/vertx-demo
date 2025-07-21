@@ -8,12 +8,19 @@
 </head>
 <body>
 <main>
-  <menu>
-    <li>
-      <a th:href="@{/}" th:text="Home"/>
-    </li>
-  </menu>
-  <h1 th:text="'Countries'"/>
+  <nav>
+    <ul>
+      <li>
+        <a th:href="@{/}" th:text="Home"/>
+      </li>
+      <li>
+        <a th:href="@{/countries}" th:text="Countries"/>
+      </li>
+      <li>
+        <a th:href="@{/crypto-exchanges}" th:text="'Crypto Exchanges'"/>
+      </li>
+    </ul>
+  </nav>
   <table>
     <caption>Countries</caption>
     <thead>
