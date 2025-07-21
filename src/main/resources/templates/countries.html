@@ -1,15 +1,19 @@
 <!DOCTYPE html>
 
-<html>
-
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-  <title>Vert.x Demo application</title>
+  <title>Vert.x Demo application - Countries</title>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.classless.min.css">
 </head>
-
 <body>
-
-<div>
+<main>
+  <menu>
+    <li>
+      <a th:href="@{/}" th:text="Home"/>
+    </li>
+  </menu>
+  <h1 th:text="'Countries'"/>
   <table>
     <caption>Countries</caption>
     <thead>
@@ -45,8 +49,6 @@
     </tr>
     </tbody>
   </table>
-</div>
-
+</main>
 </body>
-
 </html>

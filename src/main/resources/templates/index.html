@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 
-<html xmlns:th="http://www.thymeleaf.org">
-
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-  <title>Vert.x Demo application</title>
+  <title>Vert.x Demo application - Home</title>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.classless.min.css">
 </head>
-
 <body>
-
-<div>
-  <p>Vert.x Demo application</p>
-  <p th:text="${version}"></p>
-</div>
-
+<main>
+  <h1 th:text="'Vert.x Demo application'"/>
+  <menu>
+    <li>
+      <a th:href="@{/countries}" th:text="Countries"/>
+    </li>
+  </menu>
+</main>
 </body>
-
 </html>
