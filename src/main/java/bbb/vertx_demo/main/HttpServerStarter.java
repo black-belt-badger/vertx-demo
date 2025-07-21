@@ -210,6 +210,23 @@ public enum HttpServerStarter {
           }
         )
     );
+    router.get("/merger-news").handler(context ->
+      client
+        .get(FINNHUB_PORT, FINNHUB_HOST, "/api/v1/news?category=merger")
+        .putHeader(FINNHUB_HEADER, FINNHUB_API_KEY)
+        .send()
+        .onFailure(throwable -> log.error("error sending request", throwable))
+        .onSuccess(response -> {
+            var array = response.bodyAsJsonArray();
+            engine
+              .render(new JsonObject().put("news", array).put("caption", "Merger news"), "templates/news.html")
+              .onFailure(throwable -> log.error("error rendering countries template", throwable))
+              .onSuccess(buffer ->
+                context.response().putHeader("content-type", "text/html").end(buffer)
+              );
+          }
+        )
+    );
     return vertx
       .createHttpServer()
       .requestHandler(router)
