@@ -1,0 +1,3270 @@
+{
+  "data": [
+    {
+      "applicationNumber": "17565837",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "OBSTACLE TO PATH ASSIGNMENT FOR AUTONOMOUS SYSTEMS AND APPLICATIONS",
+      "filingDate": "2021-12-30 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230213945A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-07-06 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17564703",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "GENERATING IMAGE BLENDING WEIGHTS",
+      "filingDate": "2021-12-29 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230206394A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-06-29 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17565345",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "IMPLEMENTING HARDWARE-BASED MEMORY SAFETY FOR A GRAPHIC PROCESSING UNIT",
+      "filingDate": "2021-12-29 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230061154A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-03-02 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17565352",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "IMPLEMENTING COMPILER-BASED MEMORY SAFETY FOR A GRAPHIC PROCESSING UNIT",
+      "filingDate": "2021-12-29 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230063568A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-03-02 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17562494",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "GENERATIVE NEURAL NETWORKS WITH REDUCED ALIASING",
+      "filingDate": "2021-12-27 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20220405880A1",
+      "patentType": "Utility",
+      "publicationDate": "2022-12-22 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17562521",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "FUSED PROCESSING OF A CONTINUOUS MATHEMATICAL OPERATOR",
+      "filingDate": "2021-12-27 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20220405980A1",
+      "patentType": "Utility",
+      "publicationDate": "2022-12-22 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "63294008",
+      "companyFilingName": [
+        "NVIDIA CORPORATION",
+        "NVIDIA CORPORATION"
+      ],
+      "description": "HIGH-SPEED SIGNALING SYSTEM WITH GROUND REFERENCED SIGNALING (GRS) OVER SUBSTRATE",
+      "filingDate": "2021-12-27 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "",
+      "patentType": "Provisional",
+      "publicationDate": "",
+      "url": ""
+    },
+    {
+      "applicationNumber": "63294029",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "RELIABILITY MANAGEMENT FOR A HIGH-SPEED SIGNALING INTERCONNECT",
+      "filingDate": "2021-12-27 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "",
+      "patentType": "Provisional",
+      "publicationDate": "",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17560845",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "HARDWARE-ACCELERATED NEAREST NEIGHBOR QUERIES FOR ARBITRARY DATA PRIMITIVES",
+      "filingDate": "2021-12-23 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230206378A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-06-29 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17558881",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "NOVEL VIEW SYNTHESIS USING ATTRIBUTE CORRESPONDENCES AND GEOMETRIC RELATIONSHIP CONSTRAINTS",
+      "filingDate": "2021-12-22 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230306678A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-09-28 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "PCT/US21/64865",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "MULTI-FUNCTION UEFI DRIVER WITH UPDATE CAPABILITIES",
+      "filingDate": "2021-12-22 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "2022140544",
+      "patentType": "PCT",
+      "publicationDate": "2022-06-30 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "PCT/US21/64943",
+      "companyFilingName": [
+        "NEBULON, INC.",
+        "NVIDIA CORPORATION"
+      ],
+      "description": "MANUFACTURING USING CLOUD-CONTROLLED DEVICE CONFIGURATION AND TESTS",
+      "filingDate": "2021-12-22 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "2022140596",
+      "patentType": "PCT",
+      "publicationDate": "2022-06-30 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17557511",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "TECHNIQUES FOR GENERATING A SYSTEM CACHE PARTITIONING POLICY",
+      "filingDate": "2021-12-21 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "",
+      "patentType": "Utility",
+      "publicationDate": "",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17557836",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "ERROR RATE INTERRUPTS IN HARDWARE FOR HIGH-SPEED SIGNALING INTERCONNECT",
+      "filingDate": "2021-12-21 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230195551A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-06-22 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17556046",
+      "companyFilingName": [
+        "NVIDIA CORP."
+      ],
+      "description": "SLEW SIGNAL SHAPER CIRCUIT USING TWO SIGNAL PATHS",
+      "filingDate": "2021-12-20 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230197127A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-06-22 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17556216",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "LINK TRAINING THROUGH HANDSHAKE ON HIGH-SPEED INTERCONNECT",
+      "filingDate": "2021-12-20 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230198852A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-06-22 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17556451",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "DETERMINING ASSOCIATIONS BETWEEN OBJECTS AND PERSONS USING MACHINE LEARNING MODELS",
+      "filingDate": "2021-12-20 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20220114800A1",
+      "patentType": "Utility",
+      "publicationDate": "2022-04-14 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17556473",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "LEVERAGING LOW POWER STATES FOR FAULT TESTING OF PROCESSING CORES AT RUNTIME",
+      "filingDate": "2021-12-20 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20220114069A1",
+      "patentType": "Utility",
+      "publicationDate": "2022-04-14 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17556512",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "LINK STATUS DETECTION FOR A HIGH-SPEED SIGNALING INTERCONNECT",
+      "filingDate": "2021-12-20 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "",
+      "patentType": "Utility",
+      "publicationDate": "",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17556819",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "EFFICIENT LOSSLESS COMPRESSION OF CAPTURED RAW IMAGE INFORMATION SYSTEMS AND METHODS",
+      "filingDate": "2021-12-20 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20220116628A1",
+      "patentType": "Utility",
+      "publicationDate": "2022-04-14 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17556885",
+      "companyFilingName": [
+        "NVIDIA CORPORATION",
+        "NVIDIA CORPORATION"
+      ],
+      "description": "IMAGE BLENDING USING ONE OR MORE NEURAL NETWORKS",
+      "filingDate": "2021-12-20 00:00:00",
+      "filingStatus": "Granted",
+      "patentNumber": "US20230196662A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-06-22 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17556892",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "FRAME ALIGNMENT RECOVERY FOR A HIGH-SPEED SIGNALING INTERCONNECT",
+      "filingDate": "2021-12-20 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230195674A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-06-22 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "63291801",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "Data Scrambling on a Memory Interface",
+      "filingDate": "2021-12-20 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "",
+      "patentType": "Provisional",
+      "publicationDate": "",
+      "url": ""
+    },
+    {
+      "applicationNumber": "63291205",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "TECHINQUES FOR IMPLEMENTING TRANSFORMERS TO COLLECT ROBOTIC TASK DEMONSTRATIONS",
+      "filingDate": "2021-12-17 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "",
+      "patentType": "Provisional",
+      "publicationDate": "",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17553519",
+      "companyFilingName": [
+        "NVIDIA CORP."
+      ],
+      "description": "Staggered Dual-Side Multi-Chip Interconnect",
+      "filingDate": "2021-12-16 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230197696A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-06-22 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17553651",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "APPLICATION PROGRAMMING INTERFACE TO CREATE AND MODIFY GRAPHICS OBJECTS",
+      "filingDate": "2021-12-16 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230196677A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-06-22 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17553692",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "SPATIO-TEMPORAL NOISE MASKS AND SAMPLING USING VECTORS FOR IMAGE PROCESSING AND LIGHT TRANSPORT SIMULATION SYSTEMS AND APPLICATIONS",
+      "filingDate": "2021-12-16 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20220392142A1",
+      "patentType": "Utility",
+      "publicationDate": "2022-12-08 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17644625",
+      "companyFilingName": [
+        "MELLANOX TECHNOLOGIES, LTD."
+      ],
+      "description": "HIGH BANDWIDTH OPTICAL MODULATOR",
+      "filingDate": "2021-12-16 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230198625A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-06-22 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17551986",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "SINGLE AND ACROSS SENSOR OBJECT TRACKING USING FEATURE DESCRIPTOR MAPPING IN AUTONOMOUS SYSTEMS AND APPLICATIONS",
+      "filingDate": "2021-12-15 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230186640A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-06-15 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17552050",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "MACHINE LEARNING VIA DIFFERENTIABLE SIMULATION",
+      "filingDate": "2021-12-15 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "",
+      "patentType": "Utility",
+      "publicationDate": "",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17644470",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "SYSTEMS, METHODS, AND APPARATUSES FOR MAKING WRITES TO PERSISTENT MEMORY",
+      "filingDate": "2021-12-15 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230185485A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-06-15 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "PCT/US21/63578",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "ALLOCATION, DISTRIBUTION, AND CONFIGURATION OF VOLUMES IN STORAGE SYSTEMS",
+      "filingDate": "2021-12-15 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "2022132947",
+      "patentType": "PCT",
+      "publicationDate": "2022-06-23 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "PCT/US21/63591",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "CLOUD PROVISIONED BOOT VOLUMES",
+      "filingDate": "2021-12-15 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "2022132957",
+      "patentType": "PCT",
+      "publicationDate": "2022-06-23 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17549949",
+      "companyFilingName": [
+        "MELLANOX TECHNOLOGIES, LTD."
+      ],
+      "description": "SYSTEM TO TRIGGER TIME-DEPENDENT ACTION",
+      "filingDate": "2021-12-14 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230185600A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-06-15 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17550811",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "TECHNIQUES FOR PERFORMING WRITE TRAINING ON A DYNAMIC RANDOM-ACCESS MEMORY",
+      "filingDate": "2021-12-14 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20220244863A1",
+      "patentType": "Utility",
+      "publicationDate": "2022-08-04 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17550867",
+      "companyFilingName": [
+        "MELLANOX TECHNOLOGIES LTD."
+      ],
+      "description": "AI-SUPPORTED NETWORK TELEMETRY USING DATA PROCESSING UNIT",
+      "filingDate": "2021-12-14 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230188561A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-06-15 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17551005",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "PRUNING A VISION TRANSFORMER",
+      "filingDate": "2021-12-14 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230080247A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-03-16 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17551046",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "SINGLE-IMAGE INVERSE RENDERING",
+      "filingDate": "2021-12-14 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230081641A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-03-16 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17548688",
+      "companyFilingName": [
+        "MELLANOX TECHNOLOGIES LTD."
+      ],
+      "description": "DEVICE CONNECTABLE TO A PRINTED CIRCUIT BOARD WITH HIGH PRECISION",
+      "filingDate": "2021-12-13 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230187858A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-06-15 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17549418",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "GLARE MITIGATION USING IMAGE CONTRAST ANALYSIS FOR AUTONOMOUS SYSTEMS AND APPLICATIONS",
+      "filingDate": "2021-12-13 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230186593A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-06-15 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17549529",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "TECHNIQUES FOR SIMULATING OBJECTS INTERACTING IN A REAL-TIME COMPUTING APPLICATION",
+      "filingDate": "2021-12-13 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20220100928A1",
+      "patentType": "Utility",
+      "publicationDate": "2022-03-31 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17549620",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "APPLICATION PROGRAMMING INTERFACE TO CAUSE GRAPH CODE TO WAIT ON A SEMAPHORE",
+      "filingDate": "2021-12-13 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230244549A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-08-03 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17549627",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "APPLICATION PROGRAMMING INTERFACE TO CAUSE GRAPH CODE TO UPDATE A SEMAPHORE",
+      "filingDate": "2021-12-13 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230185634A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-06-15 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17548038",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "CONSTRAINED BSDF SAMPLING",
+      "filingDate": "2021-12-10 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20220189114A1",
+      "patentType": "Utility",
+      "publicationDate": "2022-06-16 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17548412",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "APPLICATION PROGRAMMING INTERFACES FOR INTEROPERABILITY",
+      "filingDate": "2021-12-10 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230185635A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-06-15 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17548433",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "APPLICATION PROGRAMMING INTERFACES FOR INTEROPERABILITY",
+      "filingDate": "2021-12-10 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230185636A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-06-15 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17548440",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "APPLICATION PROGRAMMING INTERFACES FOR INTEROPERABILITY",
+      "filingDate": "2021-12-10 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230185637A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-06-15 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17548445",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "APPLICATION PROGRAMMING INTERFACES FOR INTEROPERABILITY",
+      "filingDate": "2021-12-10 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230185638A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-06-15 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17548452",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "APPLICATION PROGRAMMING INTERFACE TO STORE PORTIONS OF AN IMAGE",
+      "filingDate": "2021-12-10 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230185641A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-06-15 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17548457",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "APPLICATION PROGRAMMING INTERFACE TO RETRIEVE PORTIONS OF AN IMAGE",
+      "filingDate": "2021-12-10 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230185642A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-06-15 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "PCT/US21/62876",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "SECURE DISTRIBUTION AND UPDATE OF ENCRYPTION KEYS IN CLUSTER STORAGE",
+      "filingDate": "2021-12-10 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "2022125943",
+      "patentType": "PCT",
+      "publicationDate": "2022-06-16 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17546438",
+      "companyFilingName": [
+        "NVIDIA CORP."
+      ],
+      "description": "STABILITY OF BIT GENERATING CELLS THROUGH AGING",
+      "filingDate": "2021-12-09 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20220271752A1",
+      "patentType": "Utility",
+      "publicationDate": "2022-08-25 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17546643",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "ASYNCHRONOUS MEMORY ALLOCATION",
+      "filingDate": "2021-12-09 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230185612A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-06-15 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17546979",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "ASYNCHRONOUS MEMORY DEALLOCATION",
+      "filingDate": "2021-12-09 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230185706A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-06-15 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17617603",
+      "companyFilingName": [
+        "MELLANOX TECHNOLOGIES, LTD.",
+        "ARISTOTLE UNIVERSITY OF THESSALONIKI",
+        "ETH ZURICH"
+      ],
+      "description": "Integrated plasmonic modulator",
+      "filingDate": "2021-12-09 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20220236619A1",
+      "patentType": "Utility",
+      "publicationDate": "2022-07-28 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "63287938",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "TECHNIQUES FOR ADJUSTING ADAPTIVE TOKEN DEPTH FOR NETWORKS WITH TRANSFORMER BLOCKS",
+      "filingDate": "2021-12-09 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "",
+      "patentType": "Provisional",
+      "publicationDate": "",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17545918",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "PLAYSTYLE ANALYSIS FOR GAME RECOMMENDATIONS",
+      "filingDate": "2021-12-08 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230177583A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-06-08 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17544829",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "TECHNIQUES FOR MODIFYING GRAPH CODE",
+      "filingDate": "2021-12-07 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230176933A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-06-08 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "63286708",
+      "companyFilingName": [
+        "NEBLUON, INC.",
+        "NVIDIA CORPORATION"
+      ],
+      "description": "PROVISION AND CONFIGURATION OF QUORUM WITNESSES IN CLUSTERS",
+      "filingDate": "2021-12-07 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "",
+      "patentType": "Provisional",
+      "publicationDate": "",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17457825",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "OBJECT DETECTION USING SKEWED POLYGONS SUITABLE FOR PARKING SPACE DETECTION",
+      "filingDate": "2021-12-06 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20220092855A1",
+      "patentType": "Utility",
+      "publicationDate": "2022-03-24 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17542736",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "ADJUSTABLE FLUID COUPLING IN DATACENTER COOLING SYSTEMS",
+      "filingDate": "2021-12-06 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230180444A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-06-08 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17543075",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "VIDEO UPSAMPLING USING ONE OR MORE NEURAL NETWORKS",
+      "filingDate": "2021-12-06 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20220092736A1",
+      "patentType": "Utility",
+      "publicationDate": "2022-03-24 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17543098",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "VIDEO UPSAMPLING USING ONE OR MORE NEURAL NETWORKS",
+      "filingDate": "2021-12-06 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20220092737A1",
+      "patentType": "Utility",
+      "publicationDate": "2022-03-24 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17543334",
+      "companyFilingName": [
+        "MELLANOX TECHNOLOGIES LTD."
+      ],
+      "description": "SYSTEM WHICH PROVIDES PLURAL PROCESSES IN A HOST WITH ASYNCHRONOUS ACCESS TO PLURAL PORTIONS OF THE MEMORY OF ANOTHER HOST",
+      "filingDate": "2021-12-06 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230176769A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-06-08 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17543342",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "AIR FLOW CONTROL FOR COOLING EFFICIENCY",
+      "filingDate": "2021-12-06 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230180426A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-06-08 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17542426",
+      "companyFilingName": [
+        "MELLANOX TECHNOLOGIES, LTD."
+      ],
+      "description": "Regrouping of video data in host memory",
+      "filingDate": "2021-12-05 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20220095007A1",
+      "patentType": "Utility",
+      "publicationDate": "2022-03-24 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17541628",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "TEMPORAL IMAGE BLENDING USING ONE OR MORE NEURAL NETWORKS",
+      "filingDate": "2021-12-03 00:00:00",
+      "filingStatus": "Granted",
+      "patentNumber": "US20230177649A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-06-08 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17541918",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "APPLICATION PROGRAMMING INTERFACE TO LIMIT MEMORY",
+      "filingDate": "2021-12-03 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230185611A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-06-15 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17542041",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "CLOUD-CENTRIC PLATFORM FOR COLLABORATION AND CONNECTIVITY ON 3D VIRTUAL ENVIRONMENTS",
+      "filingDate": "2021-12-03 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20220101619A1",
+      "patentType": "Utility",
+      "publicationDate": "2022-03-31 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17542269",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "SELF-REFERENCED DELAY CELL-BASED TIME-TO-DIGITAL CONVERTER",
+      "filingDate": "2021-12-03 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230179207A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-06-08 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17540440",
+      "companyFilingName": [
+        "MELLANOX TECHNOLOGIES LTD.",
+        "BAR-ILAN UNIVERSITY"
+      ],
+      "description": "LIGHT EMITTING SILICON DEVICE",
+      "filingDate": "2021-12-02 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230170670A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-06-01 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17540654",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "DEEP LEARNING BASED OPERATIONAL DOMAIN VERIFICATION USING CAMERA-BASED INPUTS FOR AUTONOMOUS SYSTEMS AND APPLICATIONS",
+      "filingDate": "2021-12-02 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230177839A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-06-08 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17539252",
+      "companyFilingName": [
+        "MELLANOX TECHNOLOGIES, LTD."
+      ],
+      "description": "Large-scale network with high port utilization",
+      "filingDate": "2021-12-01 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230171206A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-06-01 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17539947",
+      "companyFilingName": [
+        "NVIDIA CORP."
+      ],
+      "description": "SCALABLE LIGHT-WEIGHT PROTOCOLS FOR WIRE-SPEED PACKET ORDERING",
+      "filingDate": "2021-12-01 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20220095017A1",
+      "patentType": "Utility",
+      "publicationDate": "2022-03-24 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17540107",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "METHOD TO INCORPORATE UNCERTAIN INPUTS INTO NEURAL NETWORKS",
+      "filingDate": "2021-12-01 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230169329A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-06-01 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17540167",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "REDUCING CROSSTALK PESSIMISM USING GPU-ACCELERATED GATE SIMULATION AND MACHINE LEARNING",
+      "filingDate": "2021-12-01 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230089606A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-03-23 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17537543",
+      "companyFilingName": [
+        "MELLANOX TECHNOLOGIES, LTD."
+      ],
+      "description": "Transaction based fault tolerant computing system",
+      "filingDate": "2021-11-30 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230168978A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-06-01 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17456835",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "MULTI-VIEW GEOMETRY-BASED HAZARD DETECTION FOR AUTONOMOUS SYSTEMS AND APPLICATIONS",
+      "filingDate": "2021-11-29 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20220250624A1",
+      "patentType": "Utility",
+      "publicationDate": "2022-08-11 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17536141",
+      "companyFilingName": [
+        "MELLANOX TECHNOLOGIES, LTD."
+      ],
+      "description": "Memory Access Tracking Using a Peripheral Device",
+      "filingDate": "2021-11-29 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230133439A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-05-04 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17536531",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "CONSISTENT SAMPLING FOR SPATIAL HASHING",
+      "filingDate": "2021-11-29 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230169721A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-06-01 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17535608",
+      "companyFilingName": [
+        "MELLANOX TECHNOLOGIES, LTD."
+      ],
+      "description": "Direct Packet Placement",
+      "filingDate": "2021-11-25 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20220086105A1",
+      "patentType": "Utility",
+      "publicationDate": "2022-03-17 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17534645",
+      "companyFilingName": [
+        "MELLANOX TECHNOLOGIES LTD."
+      ],
+      "description": "DEVICE WITH INTEGRATED LIQUID COOLING SYSTEM",
+      "filingDate": "2021-11-24 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230164948A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-05-25 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17534776",
+      "companyFilingName": [
+        "MELLANOX TECHNOLOGIES LTD."
+      ],
+      "description": "CONTROLLER WHICH ADJUSTS CLOCK FREQUENCY BASED ON RECEIVED SYMBOL RATE",
+      "filingDate": "2021-11-24 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230163869A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-05-25 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17534922",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "TEXT CLASSIFICATION USING ONE OR MORE NEURAL NETWORKS",
+      "filingDate": "2021-11-24 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230162021A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-05-25 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17456045",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "OBJECT DETECTION AND DETECTION CONFIDENCE SUITABLE FOR AUTONOMOUS DRIVING",
+      "filingDate": "2021-11-22 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20220101635A1",
+      "patentType": "Utility",
+      "publicationDate": "2022-03-31 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17532937",
+      "companyFilingName": [
+        "MELLANOX TECHNOLOGIES LTD."
+      ],
+      "description": "DUAL CONNECT SWITCH MODULE",
+      "filingDate": "2021-11-22 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230164944A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-05-25 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17533062",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "SPATIO-TEMPORAL NOISE MASKS FOR IMAGE PROCESSING",
+      "filingDate": "2021-11-22 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20220392023A1",
+      "patentType": "Utility",
+      "publicationDate": "2022-12-08 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "63281935",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "DIGITAL DELAY LINE CALIBRATION WITH DUTY CYCLE CORRECTION FOR HIGH BANDWIDTH MEMORY INTERFACE",
+      "filingDate": "2021-11-22 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "",
+      "patentType": "Provisional",
+      "publicationDate": "",
+      "url": ""
+    },
+    {
+      "applicationNumber": "63281938",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "MITIGATING DUTY CYCLE DISTORTION DEGRADATION DUE TO DEVICE AGING ON HIGH-BANDWIDTH MEMORY INTERFACE",
+      "filingDate": "2021-11-22 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "",
+      "patentType": "Provisional",
+      "publicationDate": "",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17530852",
+      "companyFilingName": [
+        "NVIDIA CORP.",
+        "NVIDIA CORP."
+      ],
+      "description": "Efficient Neural Network Accelerator Dataflows",
+      "filingDate": "2021-11-19 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20220076110A1",
+      "patentType": "Utility",
+      "publicationDate": "2022-03-10 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17529637",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "PREDICATED PACKET PROCESSING IN NETWORK SWITCHING DEVICES",
+      "filingDate": "2021-11-18 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230096887A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-03-30 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "63281045",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "Pruning for Complex Vision Machine Learning Models",
+      "filingDate": "2021-11-18 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "",
+      "patentType": "Provisional",
+      "publicationDate": "",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17528591",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "RAY-TRACING FOR AUTO EXPOSURE",
+      "filingDate": "2021-11-17 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20220076482A1",
+      "patentType": "Utility",
+      "publicationDate": "2022-03-10 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17528875",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "DYNAMICALLY SELECTING FROM MULTIPLE STREAMS FOR PRESENTATION BY PREDICTING EVENTS USING ARTIFICIAL INTELLIGENCE",
+      "filingDate": "2021-11-17 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230149819A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-05-18 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17527197",
+      "companyFilingName": [
+        "MELLANOX TECHNOLOGIES, LTD."
+      ],
+      "description": "Enhanced Storage Protocol Emulation in a Peripheral Device",
+      "filingDate": "2021-11-16 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20220308764A1",
+      "patentType": "Utility",
+      "publicationDate": "2022-09-29 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17527433",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "HIGH-PRECISION MATRIX MULTIPLICATION FOR NEURAL NETWORKS",
+      "filingDate": "2021-11-16 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230153374A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-05-18 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17528093",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "RECEIVER AND TRANSMITTER ADAPTATION USING STOCHASTIC GRADIENT HILL CLIMBING WITH GENETIC MUTATION",
+      "filingDate": "2021-11-16 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20220078054A1",
+      "patentType": "Utility",
+      "publicationDate": "2022-03-10 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17611763",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "MOTION PREDICTION USING ONE OR MORE NEURAL NETWORKS",
+      "filingDate": "2021-11-16 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20220230376A1",
+      "patentType": "Utility",
+      "publicationDate": "2022-07-21 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17526750",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "ENHANCED OPTICAL FLOW ESTIMATION USING A VARIED SCAN ORDER",
+      "filingDate": "2021-11-15 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20220076429A1",
+      "patentType": "Utility",
+      "publicationDate": "2022-03-10 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17526753",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "INCREASED PHASE INTERPOLATOR LINEARITY IN PHASE-LOCKED LOOP",
+      "filingDate": "2021-11-15 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230155595A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-05-18 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17526767",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "AUTOMATIC GENERATION OF VIDEO PLAYBACK EFFECTS",
+      "filingDate": "2021-11-15 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20220076704A1",
+      "patentType": "Utility",
+      "publicationDate": "2022-03-10 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17525636",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "MEMORY ALLOCATION USING GRAPHS",
+      "filingDate": "2021-11-12 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230005096A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-01-05 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17525647",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "MEMORY DEALLOCATION USING GRAPHS",
+      "filingDate": "2021-11-12 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230005097A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-01-05 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17525662",
+      "companyFilingName": [
+        "NVIDIA CORPORATION",
+        "NVIDIA CORPORATION"
+      ],
+      "description": "DIRECT USER MODE WORK SUBMISSION IN SECURE COMPUTING ENABLED PROCESSORS",
+      "filingDate": "2021-11-12 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230153146A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-05-18 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17525739",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "IMAGE GENERATION USING ONE OR MORE NEURAL NETWORKS",
+      "filingDate": "2021-11-12 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230153949A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-05-18 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17454338",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "RADAR-BASED LANE CHANGE SAFETY SYSTEM",
+      "filingDate": "2021-11-10 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230145218A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-05-11 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17454389",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "Particle-Based Hazard Detection for Autonomous Machine Applications",
+      "filingDate": "2021-11-10 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230142299A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-05-11 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17523358",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "LOW-POWER DYNAMIC OFFSET CALIBRATION OF AN ERROR AMPLIFIER",
+      "filingDate": "2021-11-10 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230145487A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-05-11 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17523775",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "TECHNIQUES FOR DATA SCRAMBLING ON A MEMORY INTERFACE",
+      "filingDate": "2021-11-10 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20220245025A1",
+      "patentType": "Utility",
+      "publicationDate": "2022-08-04 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17523778",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "TECHNIQUES FOR PERFORMING COMMAND ADDRESS INTERFACE TRAINING ON A DYNAMIC RANDOM-ACCESS MEMORY",
+      "filingDate": "2021-11-10 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20220246183A1",
+      "patentType": "Utility",
+      "publicationDate": "2022-08-04 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17523779",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "TECHNIQUES FOR PERFORMING WRITE TRAINING ON A DYNAMIC RANDOM-ACCESS MEMORY",
+      "filingDate": "2021-11-10 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20220246184A1",
+      "patentType": "Utility",
+      "publicationDate": "2022-08-04 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17523780",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "TECHNIQUES FOR TRANSFERRING COMMANDS TO A DYNAMIC RANDOM-ACCESS MEMORY",
+      "filingDate": "2021-11-10 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20220244890A1",
+      "patentType": "Utility",
+      "publicationDate": "2022-08-04 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17522417",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "LIVENESS AS A FACTOR TO EVALUATE MEMORY VULNERABILITY TO SOFT ERRORS",
+      "filingDate": "2021-11-09 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20220114075A1",
+      "patentType": "Utility",
+      "publicationDate": "2022-04-14 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17522562",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "TECHNIQUES FOR PARTITIONING NEURAL NETWORKS",
+      "filingDate": "2021-11-09 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230144662A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-05-11 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17522605",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "APPLICATION PROGRAMMING INTERFACE TO RETRIEVE DATA",
+      "filingDate": "2021-11-09 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230087457A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-03-23 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17522624",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "DISTANCE TO OBSTACLE DETECTION IN AUTONOMOUS MACHINE APPLICATIONS",
+      "filingDate": "2021-11-09 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20220108465A1",
+      "patentType": "Utility",
+      "publicationDate": "2022-04-07 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17522776",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "GENERATING IMAGES OF OBJECT MOTION USING ONE OR MORE NEURAL NETWORKS",
+      "filingDate": "2021-11-09 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230147641A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-05-11 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17521232",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "UNSTRUCTURED DATA STORAGE AND RETRIEVAL IN CONVERSATIONAL ARTIFICIAL INTELLIGENCE APPLICATIONS",
+      "filingDate": "2021-11-08 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230147096A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-05-11 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17521262",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "RECOGNITION OF USER INTENTS AND ASSOCIATED ENTITIES USING A NEURAL NETWORK IN AN INTERACTION ENVIRONMENT",
+      "filingDate": "2021-11-08 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230142339A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-05-11 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17521440",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "PARALLEL PROCESSING FOR COMBINATORIAL OPTIMIZATION",
+      "filingDate": "2021-11-08 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230145783A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-05-11 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17521580",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "WIDEBAND PHASE-LOCKED LOOP FOR DELAY AND JITTER TRACKING",
+      "filingDate": "2021-11-08 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230141897A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-05-11 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17520674",
+      "companyFilingName": [
+        "MELLANOX TECHNOLOGIES, LTD."
+      ],
+      "description": "Time Synchronization Based on Network Traffic Patterns",
+      "filingDate": "2021-11-07 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "",
+      "patentType": "Utility",
+      "publicationDate": "",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17520093",
+      "companyFilingName": [
+        "MELLANOX TECHNOLOGIES LTD."
+      ],
+      "description": "CO-PACKAGED SWITCH WITH INTEGRATED QUANTUM KEY DISTRIBUTION CAPABILITIES",
+      "filingDate": "2021-11-05 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230132571A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-05-04 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17520448",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "NOVEL METHOD OF TRAINING A NEURAL NETWORK",
+      "filingDate": "2021-11-05 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230146647A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-05-11 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17518966",
+      "companyFilingName": [
+        "MELLANOX TECHNOLOGIES, LTD.",
+        "ARISTOTLE UNIVERSITY OF THESSALONIKI"
+      ],
+      "description": "BEAMFORMING SYSTEMS, NETWORKS, AND ELEMENTS CONFIGURED FOR SIMULTANEOUS OPTICAL UP/DOWN CONVERSION AND BEAMFORMING",
+      "filingDate": "2021-11-04 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230109405A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-04-06 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17519411",
+      "companyFilingName": [
+        "MELLANOX TECHNOLOGIES, LTD."
+      ],
+      "description": "Integrated Optical Switch Having Doped Fiber/Waveguide Amplifiers Packaged in A Transposer",
+      "filingDate": "2021-11-04 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230121874A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-04-20 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17519458",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "FORWARD ERROR CORRECTION ENCODING USING BINARY CLUSTERING",
+      "filingDate": "2021-11-04 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "",
+      "patentType": "Utility",
+      "publicationDate": "",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17519532",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "NEURAL NETWORKS TRAINED USING EVENT OCCURRENCES",
+      "filingDate": "2021-11-04 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230135659A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-05-04 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17517693",
+      "companyFilingName": [
+        "MELLANOX TECHNOLOGIES, LTD."
+      ],
+      "description": "Heat removal from silicon photonics chip using a recessed side-by-side thermal dissipation layout",
+      "filingDate": "2021-11-03 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20220061148A1",
+      "patentType": "Utility",
+      "publicationDate": "2022-02-24 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17518057",
+      "companyFilingName": [
+        "MELLANOX TECHNOLOGIES LTD."
+      ],
+      "description": "SYSTEMS AND METHODS FOR DETECTING CONNECTION ANOMALIES",
+      "filingDate": "2021-11-03 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230139081A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-05-04 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17518517",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "WIRELESS SIGNAL STRENGTH INDICATIONS",
+      "filingDate": "2021-11-03 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230133992A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-05-04 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17453222",
+      "companyFilingName": [
+        "MELLANOX TECHNOLOGIES, LTD.",
+        "MELLANOX TECHNOLOGIES, LTD."
+      ],
+      "description": "SELF-ALIGNED INTEGRATED LENS ON PILLAR",
+      "filingDate": "2021-11-02 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230107350A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-04-06 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17516731",
+      "companyFilingName": [
+        "MELLANOX TECHNOLOGIES, LTD."
+      ],
+      "description": "Queue Bandwidth Estimation for Management of Shared Buffers and Allowing Visibility of Shared Buffer Status",
+      "filingDate": "2021-11-02 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230138522A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-05-04 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17517007",
+      "companyFilingName": [
+        "MELLANOX TECHNOLOGIES LTD."
+      ],
+      "description": "NETWORK INTERFACE DEVICE HAVING HEAT DISSIPATING MEMBERS",
+      "filingDate": "2021-11-02 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230137375A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-05-04 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17517457",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "SHARING SENSOR DATA BETWEEN MULTIPLE CONTROLLERS TO SUPPORT VEHICLE OPERATIONS",
+      "filingDate": "2021-11-02 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20220057798A1",
+      "patentType": "Utility",
+      "publicationDate": "2022-02-24 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17517484",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "POLAR STROKING FOR VECTOR GRAPHICS",
+      "filingDate": "2021-11-02 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20220058868A1",
+      "patentType": "Utility",
+      "publicationDate": "2022-02-24 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17517612",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "DATA PATH CIRCUIT DESIGN USING REINFORCEMENT LEARNING",
+      "filingDate": "2021-11-02 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230139623A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-05-04 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17608170",
+      "companyFilingName": [
+        "MELLANOX TECHNOLOGIES, LTD."
+      ],
+      "description": "Consolidating multiple electrical data signals into an optical data signal on a multi-chip module using ASIC for controlling a photonics transceiver",
+      "filingDate": "2021-11-02 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20220216919A1",
+      "patentType": "Utility",
+      "publicationDate": "2022-07-07 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "63274553",
+      "companyFilingName": [
+        "MELLANOX TECHNOLOGIES, LTD."
+      ],
+      "description": "Hardware-Agnostic Specification of Packet-Processing Pipelines",
+      "filingDate": "2021-11-02 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "",
+      "patentType": "Provisional",
+      "publicationDate": "",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17453055",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "MODEL-BASED REINFORCEMENT LEARNING FOR BEHAVIOR PREDICTION",
+      "filingDate": "2021-11-01 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20220138568A1",
+      "patentType": "Utility",
+      "publicationDate": "2022-05-05 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17516506",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "CONTINUOUS TRAINING OF AN OBJECT DETECTION AND CLASSIFICATION MODEL FOR VARYING ENVIRONMENTAL CONDITIONS",
+      "filingDate": "2021-11-01 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230139682A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-05-04 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17514730",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "VIEW GENERATION USING ONE OR MORE NEURAL NETWORKS",
+      "filingDate": "2021-10-29 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230137403A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-05-04 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17514735",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "TECHNIQUE FOR AUTONOMOUSLY MANAGING CACHE USING MACHINE LEARNING",
+      "filingDate": "2021-10-29 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230137205A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-05-04 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17515355",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "REMOTE ATTESTATION OF DEVICE LOCATION",
+      "filingDate": "2021-10-29 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "",
+      "patentType": "Utility",
+      "publicationDate": "",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17607537",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "ADJUSTABLE FAN FOR DATACENTER COOLING SYSTEMS",
+      "filingDate": "2021-10-29 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230262925A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-08-17 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17452744",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "3D SURFACE RECONSTRUCTION WITH POINT CLOUD DENSIFICATION USING ARTIFICIAL INTELLIGENCE FOR AUTONOMOUS SYSTEMS AND APPLICATIONS",
+      "filingDate": "2021-10-28 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230136235A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-05-04 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17452747",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "3D SURFACE RECONSTRUCTION WITH POINT CLOUD DENSIFICATION USING DEEP NEURAL NETWORKS FOR AUTONOMOUS SYSTEMS AND APPLICATIONS",
+      "filingDate": "2021-10-28 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230135088A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-05-04 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17452749",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "3D SURFACE STRUCTURE ESTIMATION USING NEURAL NETWORKS FOR AUTONOMOUS SYSTEMS AND APPLICATIONS",
+      "filingDate": "2021-10-28 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230139772A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-05-04 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17452751",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "3D SURFACE STRUCTURE ESTIMATION USING NEURAL NETWORKS FOR AUTONOMOUS SYSTEMS AND APPLICATIONS",
+      "filingDate": "2021-10-28 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230136860A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-05-04 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17452752",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "USING NEURAL NETWORKS FOR 3D SURFACE STRUCTURE ESTIMATION BASED ON REAL-WORLD DATA FOR AUTONOMOUS SYSTEMS AND APPLICATIONS",
+      "filingDate": "2021-10-28 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230135234A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-05-04 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17513023",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "QUERY-SPECIFIC BEHAVIORAL MODIFICATION OF TREE TRAVERSAL",
+      "filingDate": "2021-10-28 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20220051468A1",
+      "patentType": "Utility",
+      "publicationDate": "2022-02-17 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17512495",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "YIELD SCENARIO ENCODING FOR AUTONOMOUS SYSTEMS",
+      "filingDate": "2021-10-27 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230130814A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-04-27 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17512590",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "AUGMENTING MULTIMEDIA STREAMING BY ANTICIPATING EVENTS USING ARTIFICIAL INTELLIGENCE",
+      "filingDate": "2021-10-27 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230128243A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-04-27 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17606952",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "INTELLIGENT ADAPTABLE FINS FOR COOLING DATACENTER DEVICES",
+      "filingDate": "2021-10-27 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20220322581A1",
+      "patentType": "Utility",
+      "publicationDate": "2022-10-06 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17511117",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "PARALLEL SELECTION OF FIFTH GENERATION (5G) NEW RADIO INFORMATION",
+      "filingDate": "2021-10-26 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230103866A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-04-06 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17511443",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "DEFECT DETECTION USING ONE OR MORE NEURAL NETWORKS",
+      "filingDate": "2021-10-26 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230125477A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-04-27 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17606632",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "MULTI-FORMAT GRAPHICS PROCESSING UNIT DOCKING BOARD",
+      "filingDate": "2021-10-26 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20220309017A1",
+      "patentType": "Utility",
+      "publicationDate": "2022-09-29 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17509233",
+      "companyFilingName": [
+        "MELLANOX TECHNOLOGIES LTD."
+      ],
+      "description": "MECHANICAL DEVICE FOR COOLING AN ELECTRONIC COMPONENT",
+      "filingDate": "2021-10-25 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230125975A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-04-27 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17509948",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "NON-VOLATILE MEMORY STORAGE AND INTERFACE",
+      "filingDate": "2021-10-25 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230126350A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-04-27 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17509966",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "RUN-TIME CONFIGURATION LOADING",
+      "filingDate": "2021-10-25 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230125892A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-04-27 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17509976",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "CONNECTOR POSITIONING SYSTEM AND METHOD",
+      "filingDate": "2021-10-25 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230129374A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-04-27 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17510057",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "PARALLEL REFRIGERANT COOLING IN DATACENTER COOLING SYSTEMS",
+      "filingDate": "2021-10-25 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230127470A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-04-27 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17508998",
+      "companyFilingName": [
+        "MELLANOX TECHNOLOGIES, LTD."
+      ],
+      "description": "Template-Based Packet Parsing",
+      "filingDate": "2021-10-24 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230127568A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-04-27 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17451964",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "PARALLEL PROCESSING OF VIDEO FRAMES DURING VIDEO ENCODING",
+      "filingDate": "2021-10-22 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230068408A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-03-02 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17451972",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "HARDWARE CODEC ACCELERATORS FOR HIGH-PERFORMANCE VIDEO ENCODING",
+      "filingDate": "2021-10-22 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230063062A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-03-02 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17451974",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "PARALLEL ENCODING OF VIDEO FRAMES WITHOUT FILTERING DEPENDENCY",
+      "filingDate": "2021-10-22 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230071018A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-03-09 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17508290",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "APPLICATION PROGRAMMING INTERFACE TO CONFIGURE PROCESSOR PARTITIONING",
+      "filingDate": "2021-10-22 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230131961A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-04-27 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17508356",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "VIRTUAL CHANNEL STARVATION-FREE ARBITRATION FOR SWITCHES",
+      "filingDate": "2021-10-22 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230070690A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-03-09 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17507070",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "IDENTIFYING IMAGE SEGMENTATION QUALITY USING NEURAL NETWORKS",
+      "filingDate": "2021-10-21 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20220044412A1",
+      "patentType": "Utility",
+      "publicationDate": "2022-02-10 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17507620",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "NEURAL NETWORK MODEL TRAINED USING GENERATED SYNTHETIC IMAGES",
+      "filingDate": "2021-10-21 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20220044075A1",
+      "patentType": "Utility",
+      "publicationDate": "2022-02-10 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17451578",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "MAINTAINING NEIGHBORING CONTEXTUAL AWARENESS WITH ZOOM",
+      "filingDate": "2021-10-20 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230118522A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-04-20 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17505670",
+      "companyFilingName": [
+        "MELLANOX TECHNOLOGIES, LTD."
+      ],
+      "description": "Pacing in a storage sub-system",
+      "filingDate": "2021-10-20 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230052614A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-02-16 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17504517",
+      "companyFilingName": [
+        "MELLANOX TECHNOLOGIES, LTD."
+      ],
+      "description": "Network telemetry based on application-level information",
+      "filingDate": "2021-10-19 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230125017A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-04-20 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17505374",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "RAIL POWER DENSITY AWARE STANDARD CELL PLACEMENT FOR INTEGRATED CIRCUITS",
+      "filingDate": "2021-10-19 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230130642A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-04-27 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17505384",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "IMAGE GENERATION USING ONE OR MORE NEURAL NETWORKS",
+      "filingDate": "2021-10-19 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230015253A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-01-19 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17503383",
+      "companyFilingName": [
+        "MELLANOX TECHNOLOGIES, LTD."
+      ],
+      "description": "Dynamic Reserve Allocation on Shared-Buffer",
+      "filingDate": "2021-10-18 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230120745A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-04-20 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17503392",
+      "companyFilingName": [
+        "MELLANOX TECHNOLOGIES, LTD."
+      ],
+      "description": "Multi-socket network interface controller with consistent transaction ordering",
+      "filingDate": "2021-10-18 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20220358063A1",
+      "patentType": "Utility",
+      "publicationDate": "2022-11-10 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17504041",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "CONFIGURABLE PROCESSOR PARTITIONING",
+      "filingDate": "2021-10-18 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230118662A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-04-20 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "63256897",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "TECHNIQUES FOR SCALABLE PARALLEL BOUNDING VOLUME HIERARCHY CONSTRUCTION",
+      "filingDate": "2021-10-18 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "",
+      "patentType": "Provisional",
+      "publicationDate": "",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17503314",
+      "companyFilingName": [
+        "MELLANOX TECHNOLOGIES TLV LTD.",
+        "MELLANOX TECHNOLOGIES, LTD."
+      ],
+      "description": "Wavelength-splitting optical cable",
+      "filingDate": "2021-10-17 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20220043214A1",
+      "patentType": "Utility",
+      "publicationDate": "2022-02-10 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17503067",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "TECHNIQUES FOR DETERMINING DIMENSIONS OF DATA",
+      "filingDate": "2021-10-15 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230121044A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-04-20 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17503180",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "REAL-TIME PERSISTENT OBJECT TRACKING FOR INTELLIGENT VIDEO ANALYTICS SYSTEMS",
+      "filingDate": "2021-10-15 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "",
+      "patentType": "Utility",
+      "publicationDate": "",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17503183",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "DYNAMICALLY COMPOSABLE OBJECT TRACKER CONFIGURATION FOR INTELLIGENT VIDEO ANALYTICS SYSTEMS",
+      "filingDate": "2021-10-15 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "",
+      "patentType": "Utility",
+      "publicationDate": "",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17503210",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "TECHNIQUES FOR INFERRING INFORMATION",
+      "filingDate": "2021-10-15 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230123811A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-04-20 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "63255864",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "AUTOMATIC INSTANTIATION OF NON-NATIVE VIRTUAL INTERFACES FOR STREAMING APPLICATIONS",
+      "filingDate": "2021-10-14 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "",
+      "patentType": "Provisional",
+      "publicationDate": "",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17450743",
+      "companyFilingName": [
+        "MELLANOX TECHNOLOGIES, LTD"
+      ],
+      "description": "KERNEL OPTIMIZATION AND DELAYED EXECUTION",
+      "filingDate": "2021-10-13 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230112420A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-04-13 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17500167",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "ACCELERATED NON-MAXIMUM SUPPRESSION IN MACHINE LEARNING APPLICATIONS",
+      "filingDate": "2021-10-13 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "",
+      "patentType": "Utility",
+      "publicationDate": "",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17500289",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "ENHANCED HIGH-DYNAMIC-RANGE IMAGING AND TONE MAPPING",
+      "filingDate": "2021-10-13 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20220036524A1",
+      "patentType": "Utility",
+      "publicationDate": "2022-02-03 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17500338",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "IMAGE SEGMENTATION USING A NEURAL NETWORK TRANSLATION MODEL",
+      "filingDate": "2021-10-13 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20220254029A1",
+      "patentType": "Utility",
+      "publicationDate": "2022-08-11 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17500598",
+      "companyFilingName": [
+        "MELLANOX TECHNOLOGIES LTD."
+      ],
+      "description": "VECTOR ACTIVATION FUNCTION TO SUPPORT MACHINE LEARNING INFERENCE AND OTHER PROCESSES",
+      "filingDate": "2021-10-13 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230110285A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-04-13 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17499300",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "EQUALIZATION ADAPTATION SCHEMES FOR HIGH-SPEED LINKS",
+      "filingDate": "2021-10-12 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230109793A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-04-13 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17499438",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "CODE GENERATION BASED ON PROCESSOR USAGE",
+      "filingDate": "2021-10-12 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "",
+      "patentType": "Utility",
+      "publicationDate": "",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17499580",
+      "companyFilingName": [
+        "MELLANOX TECHNOLOGIES LTD."
+      ],
+      "description": "MATRIX AND VECTOR MANIPULATION TO SUPPORT MACHINE LEARNING INFERENCE AND OTHER PROCESSES",
+      "filingDate": "2021-10-12 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230110316A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-04-13 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17498633",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "HIGH-DEFINITION MAPS AND LOCALIZATION FOR ROAD VEHICLES",
+      "filingDate": "2021-10-11 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20220214187A1",
+      "patentType": "Utility",
+      "publicationDate": "2022-07-07 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17497479",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "TRAINING CONFIGURATION-AGNOSTIC MACHINE LEARNING MODELS USING SYNTHETIC DATA FOR AUTONOMOUS MACHINE APPLICATIONS",
+      "filingDate": "2021-10-08 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230110713A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-04-13 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17497507",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "NEURAL NETWORK DATA REPLACEMENT",
+      "filingDate": "2021-10-08 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230110438A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-04-13 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17497685",
+      "companyFilingName": [
+        "NVIDIA CORPORATION",
+        "NVIDIA CORPORATION"
+      ],
+      "description": "SAFETY DECOMPOSITION ARCHITECTURE FOR AUTONOMOUS MACHINE APPLICATIONS",
+      "filingDate": "2021-10-08 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20220135075A1",
+      "patentType": "Utility",
+      "publicationDate": "2022-05-05 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17497731",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "APPLICATION PROGRAMMING INTERFACE FOR SCAN OPERATIONS",
+      "filingDate": "2021-10-08 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230111125A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-04-13 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17497770",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "TECHNIQUES TO PERFORM FAST FOURIER TRANSFORM",
+      "filingDate": "2021-10-08 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "",
+      "patentType": "Utility",
+      "publicationDate": "",
+      "url": ""
+    },
+    {
+      "applicationNumber": "63253769",
+      "companyFilingName": [
+        "NVIDIA CORP."
+      ],
+      "description": "SOFTWARE-DIRECTED DIVERGENT BRANCH TARGET PRIORITIZATION",
+      "filingDate": "2021-10-08 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "",
+      "patentType": "Provisional",
+      "publicationDate": "",
+      "url": ""
+    },
+    {
+      "applicationNumber": "63253787",
+      "companyFilingName": [
+        "NVIDIA CORP."
+      ],
+      "description": "Software-directed register file sharing",
+      "filingDate": "2021-10-08 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "",
+      "patentType": "Provisional",
+      "publicationDate": "",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17495824",
+      "companyFilingName": [
+        "MELLANOX TECHNOLOGIES TLV LTD.",
+        "MELLANOX TECHNOLOGIES, LTD."
+      ],
+      "description": "Collective communication system and methods",
+      "filingDate": "2021-10-07 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20220029854A1",
+      "patentType": "Utility",
+      "publicationDate": "2022-01-27 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17496260",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "WORKLOAD-BASED DYNAMIC THROTTLING OF VIDEO PROCESSING FUNCTIONS USING MACHINE LEARNING",
+      "filingDate": "2021-10-07 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230109778A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-04-13 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17496569",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "UNSUPERVISED ALIGNMENT FOR TEXT TO SPEECH SYNTHESIS USING NEURAL NETWORKS",
+      "filingDate": "2021-10-07 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230113950A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-04-13 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17495547",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "SCALABLE IN-NETWORK COMPUTATION FOR MASSIVELY-PARALLEL SHARED-MEMORY PROCESSORS",
+      "filingDate": "2021-10-06 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20220029845A1",
+      "patentType": "Utility",
+      "publicationDate": "2022-01-27 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17493877",
+      "companyFilingName": [
+        "MELLANOX TECHNOLOGIES, LTD."
+      ],
+      "description": "Hardware accelerated video encoding",
+      "filingDate": "2021-10-05 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230107012A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-04-06 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17493882",
+      "companyFilingName": [
+        "MELLANOX TECHNOLOGIES, LTD."
+      ],
+      "description": "Mirror-image chips on a common substrate",
+      "filingDate": "2021-10-05 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230105149A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-04-06 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17494614",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "SILICON TEST STRUCTURES FOR SEPARATE MEASUREMENT OF NMOS AND PMOS TRANSISTOR DELAYS",
+      "filingDate": "2021-10-05 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230104105A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-04-06 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17490987",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "LOW STRESS PLANE DESIGN FOR IC PACKAGE SUBSTRATE",
+      "filingDate": "2021-09-30 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230103147A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-03-30 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17491030",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "HEATER FOR MICRORING RESONATORS",
+      "filingDate": "2021-09-30 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230096775A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-03-30 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17491266",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "TECHNIQUES FOR STORING SUB-ALIGNMENT DATA WHEN ACCELERATING SMITH-WATERMAN SEQUENCE ALIGNMENTS",
+      "filingDate": "2021-09-30 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230095916A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-03-30 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17491276",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "TECHNIQUES FOR ACCELERATING SMITH-WATERMAN SEQUENCE ALIGNMENTS",
+      "filingDate": "2021-09-30 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230101085A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-03-30 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17491279",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "IMPLEMENTING SPECIALIZED INSTRUCTIONS FOR ACCELERATING SMITH-WATERMAN SEQUENCE ALIGNMENTS",
+      "filingDate": "2021-09-30 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "",
+      "patentType": "Utility",
+      "publicationDate": "",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17491341",
+      "companyFilingName": [
+        "AMAZON TECHNOLOGIES, INC.",
+        "NVIDIA CORPORATION"
+      ],
+      "description": "OPTIMIZING CONCURRENT ARTIFICIAL INTELLIGENCE PROCESSING USING DERIVED NEURAL NETWORKS",
+      "filingDate": "2021-09-30 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230097169A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-03-30 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17449306",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "VISIBILITY DISTANCE ESTIMATION USING DEEP LEARNING IN AUTONOMOUS MACHINE APPLICATIONS",
+      "filingDate": "2021-09-29 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230110027A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-04-13 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17449310",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "DISTANCE ESTIMATION TO OBJECTS AND FREE-SPACE BOUNDARIES IN AUTONOMOUS MACHINE APPLICATIONS",
+      "filingDate": "2021-09-29 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20220019893A1",
+      "patentType": "Utility",
+      "publicationDate": "2022-01-20 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17488362",
+      "companyFilingName": [
+        "MELLANOX TECHNOLOGIES, LTD."
+      ],
+      "description": "Zero-copy processing",
+      "filingDate": "2021-09-29 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230099304A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-03-30 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17489346",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "ASSIGNING OBSTACLES TO LANES USING NEURAL NETWORKS FOR AUTONOMOUS MACHINE APPLICATIONS",
+      "filingDate": "2021-09-29 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230099494A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-03-30 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "63261809",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "PREDICATED PACKET PROCESSING IN NETWORK SWITCHING DEVICES",
+      "filingDate": "2021-09-29 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "",
+      "patentType": "Provisional",
+      "publicationDate": "",
+      "url": ""
+    },
+    {
+      "applicationNumber": "63261827",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "DETERMINISTIC SCHEDULING FOR AUTONOMOUS MACHINE APPLICATIONS",
+      "filingDate": "2021-09-29 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "",
+      "patentType": "Provisional",
+      "publicationDate": "",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17487813",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "PRIORITY ENCODER-BASED TECHNIQUES FOR COMPUTING THE MINIMUM OR THE MAXIMUM OF MULTIPLE VALUES",
+      "filingDate": "2021-09-28 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230100785A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-03-30 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17486691",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "USER-CONFIGURABLE MEMORY ALLOCATION",
+      "filingDate": "2021-09-27 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230102843A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-03-30 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17484106",
+      "companyFilingName": [
+        "MELLANOX TECHNOLOGIES LTD."
+      ],
+      "description": "SYSTEMS, METHODS, AND DEVICES FOR REPLACEABLE ELEMENTS WITHIN NETWORK SWITCHES",
+      "filingDate": "2021-09-24 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230109006A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-04-06 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17485110",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "IMPLEMENTING TRUSTED EXECUTING ENVIRONMENTS ACROSS MULTIPLE PROCESSOR DEVICES",
+      "filingDate": "2021-09-24 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230094125A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-03-30 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17485148",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "SECURE EXECUTION FOR MULTIPLE PROCESSOR DEVICES USING TRUSTED EXECUTING ENVIRONMENTS",
+      "filingDate": "2021-09-24 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230103518A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-04-06 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17483019",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "SAFETY DECOMPOSITION FOR PATH DETERMINATION IN AUTONOMOUS SYSTEMS",
+      "filingDate": "2021-09-23 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20220144304A1",
+      "patentType": "Utility",
+      "publicationDate": "2022-05-12 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17483498",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "APPLICATION PROGRAMMING INTERFACE TO SET UP GRAPH RESOURCES",
+      "filingDate": "2021-09-23 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230093254A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-03-23 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17483560",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "TECHNIQUES TO TRANSFER DATA AMONG HARDWARE DEVICES",
+      "filingDate": "2021-09-23 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20220012207A1",
+      "patentType": "Utility",
+      "publicationDate": "2022-01-13 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17483688",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "CREATING AN IMAGE UTILIZING A MAP REPRESENTING DIFFERENT CLASSES OF PIXELS",
+      "filingDate": "2021-09-23 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20220012536A1",
+      "patentType": "Utility",
+      "publicationDate": "2022-01-13 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17481624",
+      "companyFilingName": [
+        "MELLANOX TECHNOLOGIES LTD."
+      ],
+      "description": "SYSTEMS, DEVICES, AND METHODS FOR DUAL POLARIZATION RECOVERY",
+      "filingDate": "2021-09-22 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230090061A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-03-23 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17448247",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "SIMULATING VIEWPOINT TRANSFORMATIONS FOR SENSOR INDEPENDENT SCENE UNDERSTANDING IN AUTONOMOUS SYSTEMS",
+      "filingDate": "2021-09-21 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20220092317A1",
+      "patentType": "Utility",
+      "publicationDate": "2022-03-24 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17448249",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "MEASURING THE EFFECTS OF AUGMENTATION ARTIFACTS ON A MACHINE LEARNING NETWORK",
+      "filingDate": "2021-09-21 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20220092349A1",
+      "patentType": "Utility",
+      "publicationDate": "2022-03-24 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17448258",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "DYNAMICALLY REDUCING LATENCY IN PROCESSING PIPELINES",
+      "filingDate": "2021-09-21 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230087268A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-03-23 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17480728",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "HIGH-THROUGHPUT ASYNCHRONOUS DATA PIPELINE",
+      "filingDate": "2021-09-21 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230047511A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-02-16 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17481154",
+      "companyFilingName": [
+        "NVIDIA CORP."
+      ],
+      "description": "DETECTION AND MITIGATION OF UNSTABLE CELLS IN UNCLONABLE CELL ARRAY",
+      "filingDate": "2021-09-21 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20220271952A1",
+      "patentType": "Utility",
+      "publicationDate": "2022-08-25 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17479648",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "JOINT ESTIMATION OF HEART RATE AND RESPIRATORY RATE USING NEURAL NETWORKS",
+      "filingDate": "2021-09-20 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230091371A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-03-23 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17479866",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "GENERATION OF DIFFERENTIABLE, MANIFOLD MESHES OF ARBITRARY GENUS",
+      "filingDate": "2021-09-20 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230104782A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-04-06 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17478079",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "PARALLEL PROCESSING OF THREAD GROUPS",
+      "filingDate": "2021-09-17 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230086989A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-03-23 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17478736",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "PERFORMING TESTING UTILIZING STAGGERED CLOCKS",
+      "filingDate": "2021-09-17 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230089800A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-03-23 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17477214",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "ISOLATING A REGION OF A SYSTEM ON A CHIP FOR SAFETY CRITICAL OPERATIONS",
+      "filingDate": "2021-09-16 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230036117A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-02-02 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17477225",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "COMMUNICATING FAULTS TO AN ISOLATED SAFETY REGION OF A SYSTEM ON A CHIP",
+      "filingDate": "2021-09-16 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230032305A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-02-02 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17477360",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "TRANSMITTING DATA BETWEEN REGIONS OF VARYING SAFETY INTEGRITY LEVELS IN A SYSTEM ON A CHIP",
+      "filingDate": "2021-09-16 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230036130A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-02-02 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17477370",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "TRAINING OBJECT DETECTION MODELS USING TRANSFER LEARNING",
+      "filingDate": "2021-09-16 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230078218A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-03-16 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17477410",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "SYNCHRONIZING GRAPH EXECUTION",
+      "filingDate": "2021-09-16 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230084951A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-03-16 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17475081",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "HOLOGRAPHIC VIRTUAL REALITY DISPLAY",
+      "filingDate": "2021-09-14 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20220334392A1",
+      "patentType": "Utility",
+      "publicationDate": "2022-10-20 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17473850",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "COMPILED SHADER PROGRAM CACHES IN A CLOUD COMPUTING ENVIRONMENT",
+      "filingDate": "2021-09-13 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230077865A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-03-16 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17438143",
+      "companyFilingName": [
+        "MELLANOX TECHNOLOGIES, LTD."
+      ],
+      "description": "DUAL POLARIZATION UNIT FOR COHERENT TRANSCEIVER OR RECEIVER",
+      "filingDate": "2021-09-10 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20220190929A1",
+      "patentType": "Utility",
+      "publicationDate": "2022-06-16 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17470797",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "AUDIO UPSAMPLING USING ONE OR MORE NEURAL NETWORKS",
+      "filingDate": "2021-09-09 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20230076431A1",
+      "patentType": "Utility",
+      "publicationDate": "2023-03-09 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17470979",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "SINGLE-STAGE CATEGORY-LEVEL OBJECT POSE ESTIMATION",
+      "filingDate": "2021-09-09 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20220277472A1",
+      "patentType": "Utility",
+      "publicationDate": "2022-09-01 00:00:00",
+      "url": ""
+    },
+    {
+      "applicationNumber": "17471048",
+      "companyFilingName": [
+        "NVIDIA CORPORATION"
+      ],
+      "description": "TARGET-BASED MOUSE SENSITIVITY RECOMMENDATIONS",
+      "filingDate": "2021-09-09 00:00:00",
+      "filingStatus": "Application",
+      "patentNumber": "US20220203230A1",
+      "patentType": "Utility",
+      "publicationDate": "2022-06-30 00:00:00",
+      "url": ""
+    }
+  ],
+  "symbol": "NVDA"
+}
