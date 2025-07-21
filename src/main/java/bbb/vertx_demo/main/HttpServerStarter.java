@@ -45,7 +45,7 @@ public enum HttpServerStarter {
           engine
             .render(
               new JsonObject()
-                .put("version", format("Version: %s", configServerVersionRef.get())
+                .put("version", format("Version: %s", VERSION)
                 ),
               "thymeleaf/index.html"
             )

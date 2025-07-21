@@ -144,13 +144,13 @@ services:
         -Dcom.sun.management.jmxremote.port=1099
         -Dcom.sun.management.jmxremote.rmi.port=1099
         -Djava.rmi.server.hostname=0.0.0.0
-      VERSION: '1.0.20.2'
+      VERSION: '1.0.20.3'
     healthcheck:
       interval: 10s
       retries: 10
       test: "curl -f http://localhost:8081/health"
       timeout: 1s
-    image: "marekdudek/vertx-demo:1.0.20.2"
+    image: "marekdudek/vertx-demo:1.0.20.3"
     ports:
     - "8081:8081"
     - "5005:5005"
