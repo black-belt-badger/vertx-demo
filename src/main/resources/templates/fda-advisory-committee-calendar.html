@@ -29,15 +29,13 @@
     <thead>
     <tr>
       <th data-th-text="'Event description'"></th>
-      <th data-th-text="'URL'"></th>
       <th data-th-text="'From'"></th>
       <th data-th-text="'To'"></th>
     </tr>
     </thead>
     <tbody>
     <tr data-th-each="entry : ${entries.list}">
-      <th data-th-text="${entry.eventDescription}"/>
-      <th data-th-text="${entry.url}"/>
+      <th><a th:href="${entry.url}" th:text="${entry.eventDescription}"></a></th>
       <td data-th-text="${entry.fromDate}"/>
       <td data-th-text="${entry.toDate}"/>
     </tr>
