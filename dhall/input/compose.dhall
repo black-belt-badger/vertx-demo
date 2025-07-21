@@ -24,7 +24,7 @@ let type = https://prelude.dhall-lang.org/v23.1.0/JSON/Type.dhall
 
 let vdc = ../imports/vertx-demo-config/vdc.dhall
 
-let version = "1.0.20.1"
+let version = "1.0.20.2"
 
 let Environment = < Dev | Prod >
 
@@ -394,9 +394,11 @@ let serivces =
 
               let vertx-demo = vertx-demo env
 
+              let pgadmin = pgadmin env
+
               let qpid = qpid env
 
-              in  toMap { config-server-nginx, vertx-demo, qpid }
+              in  toMap { config-server-nginx, vertx-demo, pgadmin, qpid }
 
 in  { dev = package.Config::{ services = Some (serivces Environment.Dev) }
     , prod = package.Config::{ services = Some (serivces Environment.Prod) }
