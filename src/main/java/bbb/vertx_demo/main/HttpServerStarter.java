@@ -40,64 +40,76 @@ public enum HttpServerStarter {
       String host
     ) {
     var router = Router.router(vertx);
-    router.get("/health")
-      .handler(
-        checks.register(WEB_SERVER_ONLINE, Promise::succeed)
-      );
+    router.get("/health").handler(
+      checks.register(WEB_SERVER_ONLINE, Promise::succeed)
+    );
     var engine = ThymeleafTemplateEngine.create(vertx);
     var client = WebClient.create(vertx);
-    router.get("/")
-      .handler(context -> {
-          engine
-            .render(new JsonObject().put("version", format("Version: %s", VERSION)), "templates/index.html")
-            .onFailure(throwable -> log.error("error rendering template", throwable))
-            .onSuccess(buffer -> {
-                context.response().putHeader("content-type", "text/html").end(buffer);
-              }
-            );
-        }
-      );
-    router.get("/countries")
-      .handler(context -> {
-          client
-            .get(FINNHUB_PORT, FINNHUB_HOST, "/api/v1/country")
-            .putHeader(FINNHUB_HEADER, FINNHUB_API_KEY)
-            .send()
-            .onFailure(throwable -> log.error("error sending request", throwable))
-            .onSuccess(response -> {
-                var array = response.bodyAsJsonArray();
-                engine
-                  .render(new JsonObject().put("countries", array), "templates/countries.html")
-                  .onFailure(throwable -> log.error("error rendering countries template", throwable))
-                  .onSuccess(buffer -> {
-                      context.response().putHeader("content-type", "text/html").end(buffer);
-                    }
-                  );
-              }
-            );
-        }
-      );
-    router.get("/crypto-exchanges")
-      .handler(context -> {
-          client
-            .get(FINNHUB_PORT, FINNHUB_HOST, "/api/v1/crypto/exchange")
-            .putHeader(FINNHUB_HEADER, FINNHUB_API_KEY)
-            .send()
-            .onFailure(throwable -> log.error("error sending request", throwable))
-            .onSuccess(response -> {
-                var array = response.bodyAsJsonArray();
-                engine
-                  .render(new JsonObject().put("cryptoExchanges", array), "templates/crypto-exchanges.html")
-                  .onFailure(throwable -> log.error("error rendering countries template", throwable))
-                  .onSuccess(buffer -> {
-                      context.response().putHeader("content-type", "text/html").end(buffer);
-                    }
-                  );
-              }
-            );
-
-        }
-      );
+    router.get("/").handler(context ->
+      engine
+        .render(new JsonObject().put("version", format("Version: %s", VERSION)), "templates/index.html")
+        .onFailure(throwable -> log.error("error rendering template", throwable))
+        .onSuccess(buffer -> {
+            context.response().putHeader("content-type", "text/html").end(buffer);
+          }
+        )
+    );
+    router.get("/countries").handler(context ->
+      client
+        .get(FINNHUB_PORT, FINNHUB_HOST, "/api/v1/country")
+        .putHeader(FINNHUB_HEADER, FINNHUB_API_KEY)
+        .send()
+        .onFailure(throwable -> log.error("error sending request", throwable))
+        .onSuccess(response -> {
+            var array = response.bodyAsJsonArray();
+            engine
+              .render(new JsonObject().put("countries", array), "templates/countries.html")
+              .onFailure(throwable -> log.error("error rendering countries template", throwable))
+              .onSuccess(buffer -> {
+                  context.response().putHeader("content-type", "text/html").end(buffer);
+                }
+              );
+          }
+        )
+    );
+    router.get("/crypto-exchanges").handler(context ->
+      client
+        .get(FINNHUB_PORT, FINNHUB_HOST, "/api/v1/crypto/exchange")
+        .putHeader(FINNHUB_HEADER, FINNHUB_API_KEY)
+        .send()
+        .onFailure(throwable -> log.error("error sending request", throwable))
+        .onSuccess(response -> {
+            var array = response.bodyAsJsonArray();
+            engine
+              .render(new JsonObject().put("exchanges", array), "templates/crypto-exchanges.html")
+              .onFailure(throwable -> log.error("error rendering countries template", throwable))
+              .onSuccess(buffer -> {
+                  context.response().putHeader("content-type", "text/html").end(buffer);
+                }
+              );
+          }
+        )
+    );
+    router.get("/crypto-symbols/:exchange").handler(context -> {
+        var exchange = context.pathParam("exchange");
+        client
+          .get(FINNHUB_PORT, FINNHUB_HOST, "/api/v1/crypto/symbol?exchange=" + exchange)
+          .putHeader(FINNHUB_HEADER, FINNHUB_API_KEY)
+          .send()
+          .onFailure(throwable -> log.error("error sending request", throwable))
+          .onSuccess(response -> {
+              var array = response.bodyAsJsonArray();
+              engine
+                .render(new JsonObject().put("symbols", array), "templates/crypto-symbols.html")
+                .onFailure(throwable -> log.error("error rendering countries template", throwable))
+                .onSuccess(buffer -> {
+                    context.response().putHeader("content-type", "text/html").end(buffer);
+                  }
+                );
+            }
+          );
+      }
+    );
     return vertx
       .createHttpServer()
       .requestHandler(router)
