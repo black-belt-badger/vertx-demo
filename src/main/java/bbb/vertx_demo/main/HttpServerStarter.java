@@ -87,6 +87,25 @@ public enum HttpServerStarter {
           }
         )
     );
+    router.get("/forex-symbols/:exchange").handler(context -> {
+        var exchange = context.pathParam("exchange");
+        client
+          .get(FINNHUB_PORT, FINNHUB_HOST, "/api/v1/forex/symbol?exchange=" + exchange)
+          .putHeader(FINNHUB_HEADER, FINNHUB_API_KEY)
+          .send()
+          .onFailure(throwable -> log.error("error sending request", throwable))
+          .onSuccess(response -> {
+              var array = response.bodyAsJsonArray();
+              engine
+                .render(new JsonObject().put("symbols", array), "templates/crypto-symbols.html")
+                .onFailure(throwable -> log.error("error rendering countries template", throwable))
+                .onSuccess(buffer ->
+                  context.response().putHeader("content-type", "text/html").end(buffer)
+                );
+            }
+          );
+      }
+    );
     router.get("/crypto-exchanges").handler(context ->
       client
         .get(FINNHUB_PORT, FINNHUB_HOST, "/api/v1/crypto/exchange")
