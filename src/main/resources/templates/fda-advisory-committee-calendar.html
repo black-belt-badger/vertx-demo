@@ -25,6 +25,9 @@
       <li>
         <a th:href="@{/fda-advisory-committee-calendar}" th:text="'FDA Committee Meeting Calendar'"/>
       </li>
+      <li>
+        <a th:href="@{/general-news}" th:text="'General news'"/>
+      </li>
     </ul>
   </nav>
   <table>
@@ -38,7 +41,7 @@
     </thead>
     <tbody>
     <tr data-th-each="entry : ${entries.list}">
-      <th><a th:href="${entry.url}" th:text="${entry.eventDescription}"></a></th>
+      <th><a th:href="${entry.url}" th:text="${entry.eventDescription}" th:target="_blank"></a></th>
       <td data-th-text="${entry.fromDate}"/>
       <td data-th-text="${entry.toDate}"/>
     </tr>

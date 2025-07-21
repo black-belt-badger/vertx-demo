@@ -2,7 +2,7 @@
 
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-  <title>Vert.x Demo application - Home</title>
+  <title>Vert.x Demo application - Countries</title>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.classless.min.css">
 </head>
@@ -30,6 +30,33 @@
       </li>
     </ul>
   </nav>
+  <table>
+    <caption th:text="'News'"/>
+    <thead>
+    <tr>
+      <th data-th-text="'Headline'"/>
+      <th data-th-text="'Summary'"/>
+      <th data-th-text="'Source'"/>
+      <th data-th-text="'Category'"/>
+      <th data-th-text="'Datetime'"/>
+      <th data-th-text="'Related'"/>
+    </tr>
+    </thead>
+    <tbody>
+    <tr data-th-each="new : ${news.list}">
+      <td data-th-text="${new.headline}"/>
+      <td>
+        <a th:href="@{{url}(url=${new.url})}" th:text="${new.summary}" th:target="_blank"/>
+      </td>
+      <td>
+        <img th:src="@{{image}(image=${new.image})}" th:alt="${new.source}"/>
+      </td>
+      <td data-th-text="${new.category}"/>
+      <td data-th-text="${new.datetime}"/>
+      <td data-th-text="${new.related}"/>
+    </tr>
+    </tbody>
+  </table>
 </main>
 </body>
 </html>
