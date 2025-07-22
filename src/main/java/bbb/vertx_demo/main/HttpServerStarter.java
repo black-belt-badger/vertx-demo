@@ -63,7 +63,7 @@ public enum HttpServerStarter {
             var array = response.bodyAsJsonArray();
             engine
               .render(new JsonObject().put("countries", array), "templates/countries.html")
-              .onFailure(throwable -> log.error("error rendering countries template", throwable))
+              .onFailure(throwable -> log.error("error rendering template", throwable))
               .onSuccess(buffer ->
                 context.response().putHeader("content-type", "text/html").end(buffer)
               );
@@ -80,7 +80,7 @@ public enum HttpServerStarter {
             var array = response.bodyAsJsonArray();
             engine
               .render(new JsonObject().put("exchanges", array), "templates/forex-exchanges.html")
-              .onFailure(throwable -> log.error("error rendering countries template", throwable))
+              .onFailure(throwable -> log.error("error rendering template", throwable))
               .onSuccess(buffer ->
                 context.response().putHeader("content-type", "text/html").end(buffer)
               );
@@ -97,8 +97,8 @@ public enum HttpServerStarter {
           .onSuccess(response -> {
               var array = response.bodyAsJsonArray();
               engine
-                .render(new JsonObject().put("symbols", array), "templates/crypto-symbols.html")
-                .onFailure(throwable -> log.error("error rendering countries template", throwable))
+                .render(new JsonObject().put("symbols", array), "templates/forex-symbols.html")
+                .onFailure(throwable -> log.error("error rendering template", throwable))
                 .onSuccess(buffer ->
                   context.response().putHeader("content-type", "text/html").end(buffer)
                 );
@@ -116,7 +116,7 @@ public enum HttpServerStarter {
             var array = response.bodyAsJsonArray();
             engine
               .render(new JsonObject().put("exchanges", array), "templates/crypto-exchanges.html")
-              .onFailure(throwable -> log.error("error rendering countries template", throwable))
+              .onFailure(throwable -> log.error("error rendering template", throwable))
               .onSuccess(buffer ->
                 context.response().putHeader("content-type", "text/html").end(buffer)
               );
@@ -134,7 +134,7 @@ public enum HttpServerStarter {
               var array = response.bodyAsJsonArray();
               engine
                 .render(new JsonObject().put("symbols", array), "templates/crypto-symbols.html")
-                .onFailure(throwable -> log.error("error rendering countries template", throwable))
+                .onFailure(throwable -> log.error("error rendering template", throwable))
                 .onSuccess(buffer ->
                   context.response().putHeader("content-type", "text/html").end(buffer)
                 );
@@ -152,7 +152,7 @@ public enum HttpServerStarter {
             var array = response.bodyAsJsonArray();
             engine
               .render(new JsonObject().put("entries", array), "templates/fda-advisory-committee-calendar.html")
-              .onFailure(throwable -> log.error("error rendering countries template", throwable))
+              .onFailure(throwable -> log.error("error rendering template", throwable))
               .onSuccess(buffer ->
                 context.response().putHeader("content-type", "text/html").end(buffer)
               );
@@ -169,7 +169,7 @@ public enum HttpServerStarter {
             var array = response.bodyAsJsonArray();
             engine
               .render(new JsonObject().put("news", array).put("caption", "General news"), "templates/news.html")
-              .onFailure(throwable -> log.error("error rendering countries template", throwable))
+              .onFailure(throwable -> log.error("error rendering template", throwable))
               .onSuccess(buffer ->
                 context.response().putHeader("content-type", "text/html").end(buffer)
               );
@@ -186,7 +186,7 @@ public enum HttpServerStarter {
             var array = response.bodyAsJsonArray();
             engine
               .render(new JsonObject().put("news", array).put("caption", "Forex news"), "templates/news.html")
-              .onFailure(throwable -> log.error("error rendering countries template", throwable))
+              .onFailure(throwable -> log.error("error rendering template", throwable))
               .onSuccess(buffer ->
                 context.response().putHeader("content-type", "text/html").end(buffer)
               );
@@ -203,7 +203,7 @@ public enum HttpServerStarter {
             var array = response.bodyAsJsonArray();
             engine
               .render(new JsonObject().put("news", array).put("caption", "Crypto news"), "templates/news.html")
-              .onFailure(throwable -> log.error("error rendering countries template", throwable))
+              .onFailure(throwable -> log.error("error rendering template", throwable))
               .onSuccess(buffer ->
                 context.response().putHeader("content-type", "text/html").end(buffer)
               );
@@ -220,7 +220,7 @@ public enum HttpServerStarter {
             var array = response.bodyAsJsonArray();
             engine
               .render(new JsonObject().put("news", array).put("caption", "Merger news"), "templates/news.html")
-              .onFailure(throwable -> log.error("error rendering countries template", throwable))
+              .onFailure(throwable -> log.error("error rendering template", throwable))
               .onSuccess(buffer ->
                 context.response().putHeader("content-type", "text/html").end(buffer)
               );

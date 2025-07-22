@@ -7,11 +7,19 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.classless.min.css">
 </head>
 <body>
+<header>
+  <nav th:insert="~{templates/menu.html}"></nav>
+</header>
 <main>
-  <nav th:insert="~{templates/menu.html}">
-  </nav>
-  <section th:replace="${content}">
-  </section>
+  <section th:replace="${content}"></section>
 </main>
+<footer>
+  <p>Implemented in <a href="https://vertx.io/" target="_blank">Vert.x</a></p>
+  <p>Configured with <a href="https://dhall-lang.org/" target="_blank">Dhall</a></p>
+  <p>Templated in <a href="https://www.thymeleaf.org/" target="_blank">Thymeleaf</a></p>
+  <p>Developed with <a href="https://www.docker.com/" target="_blank">Docker</a></p>
+  <p>Hosted on <a href="https://aws.amazon.com/" target="_blank">AWS</a></p>
+  <p>Financial data sourced from <a href="https://finnhub.io/" target="_blank">Finnhub stock API</a></p>
+</footer>
 </body>
 </html>

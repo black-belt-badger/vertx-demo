@@ -6,23 +6,29 @@
 <body>
 <main>
   <section>
-    <table>
-      <caption>Forex symbol</caption>
-      <thead>
-      <tr>
-        <th>Display symbol</th>
-        <th>Symbol</th>
-        <th>Description</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr data-th-each="symbol : ${symbols.list}">
-        <th data-th-text="${symbol.displaySymbol}"/>
-        <td data-th-text="${symbol.symbol}"/>
-        <td data-th-text="${symbol.description}"/>
-      </tr>
-      </tbody>
-    </table>
+    <details>
+      <summary>Finnhub API details</summary>
+      <p>Docs <a href="https://finnhub.io/docs/api/forex-symbols" target="_blank">/forex/symbol</a></p>
+    </details>
+    <article>
+      <table>
+        <caption>Forex symbol</caption>
+        <thead>
+        <tr>
+          <th>Display symbol</th>
+          <th>Symbol</th>
+          <th>Description</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr data-th-each="symbol : ${symbols.list}">
+          <th data-th-text="${symbol.displaySymbol}"/>
+          <td data-th-text="${symbol.symbol}"/>
+          <td data-th-text="${symbol.description}"/>
+        </tr>
+        </tbody>
+      </table>
+    </article>
   </section>
 </main>
 </body>

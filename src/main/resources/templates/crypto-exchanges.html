@@ -6,23 +6,29 @@
 <body>
 <main>
   <section>
-    <table>
-      <caption>Crypto Exchanges</caption>
-      <thead>
-      <tr>
-        <th>Exchange</th>
-        <th>Symbols</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr data-th-each="exchange : ${exchanges.list}">
-        <th data-th-text="${exchange}"/>
-        <td>
-          <a th:href="@{/crypto-symbols/{id}(id=${exchange})}">Symbols</a>
-        </td>
-      </tr>
-      </tbody>
-    </table>
+    <details>
+      <summary>Finnhub API details</summary>
+      <p>Docs <a href="https://finnhub.io/docs/api/crypto-exchanges" target="_blank">/crypto/exchange</a></p>
+    </details>
+    <article>
+      <table>
+        <caption>Crypto Exchanges</caption>
+        <thead>
+        <tr>
+          <th>Exchange</th>
+          <th>Symbols</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr data-th-each="exchange : ${exchanges.list}">
+          <th data-th-text="${exchange}"/>
+          <td>
+            <a th:href="@{/crypto-symbols/{id}(id=${exchange})}">Symbols</a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </article>
   </section>
 </main>
 </body>
