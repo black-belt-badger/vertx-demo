@@ -70,6 +70,23 @@ public enum HttpServerStarter {
           }
         )
     );
+    router.get("/stock-symbols").handler(context ->
+      client
+        .get(FINNHUB_PORT, FINNHUB_HOST, "/api/v1/stock/symbol?exchange=US")
+        .putHeader(FINNHUB_HEADER, FINNHUB_API_KEY)
+        .send()
+        .onFailure(throwable -> log.error("error sending request", throwable))
+        .onSuccess(response -> {
+            var array = response.bodyAsJsonArray();
+            engine
+              .render(new JsonObject().put("symbols", array), "templates/stock-symbols.html")
+              .onFailure(throwable -> log.error("error rendering template", throwable))
+              .onSuccess(buffer ->
+                context.response().putHeader("content-type", "text/html").end(buffer)
+              );
+          }
+        )
+    );
     router.get("/forex-exchanges").handler(context ->
       client
         .get(FINNHUB_PORT, FINNHUB_HOST, "/api/v1/forex/exchange")

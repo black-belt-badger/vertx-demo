@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html th:replace="~{'./templates/layout.html' :: layout(~{::title}, ~{::section})}" lang="en">
+<head>
+  <title>Vert.x Demo application - Forex symbol</title>
+</head>
+<body>
+<main>
+  <section>
+    <details>
+      <summary>Finnhub API details</summary>
+      <p>Docs <a href="https://finnhub.io/docs/api/stock-symbols" target="_blank">/stock/symbol</a></p>
+    </details>
+    <article>
+      <table>
+        <caption>Stock symbol</caption>
+        <thead>
+        <tr>
+          <th>Display symbol</th>
+          <th>Symbol</th>
+          <th>Symbol 2</th>
+          <th>Description</th>
+          <th>Type</th>
+          <th>Currency</th>
+          <th>FIGI</th>
+          <th>ISIN</th>
+          <th>MIC</th>
+          <th>Share Class FIGI</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr data-th-each="symbol : ${symbols.list}">
+          <th data-th-text="${symbol.displaySymbol}"/>
+          <th data-th-text="${symbol.symbol}"/>
+          <th data-th-text="${symbol.symbol2}"/>
+          <th data-th-text="${symbol.description}"/>
+          <th data-th-text="${symbol.type}"/>
+          <th data-th-text="${symbol.currency}"/>
+          <th data-th-text="${symbol.figi}"/>
+          <th data-th-text="${symbol.isin}"/>
+          <th data-th-text="${symbol.mic}"/>
+          <th data-th-text="${symbol.shareClassFIGI}"/>
+        </tr>
+        </tbody>
+      </table>
+    </article>
+  </section>
+</main>
+</body>
+</html>
