@@ -33,11 +33,11 @@
         <tbody>
         <tr data-th-each="symbol : ${symbols.list}">
           <th data-th-text="${symbol.displaySymbol}"/>
-          <td data-th-text="${symbol.description}"/>
+          <td data-th-text="${symbol.description}" class="nobr"/>
           <td>
-            <a th:href="@{/company-profile/{id}(id=${symbol.symbol})}">Profile</a>
+            <a th:href="@{/company-profile/{id}(id=${symbol.symbol})}">profile</a>
           </td>
-          <td data-th-text="${symbol.type}"/>
+          <td data-th-text="${symbol.type}" class="nobr"/>
           <td data-th-text="${symbol.currency}"/>
           <td data-th-text="${symbol.isin}"/>
           <td data-th-text="${symbol.mic}"/>
