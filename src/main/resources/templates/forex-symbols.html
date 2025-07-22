@@ -8,36 +8,7 @@
 </head>
 <body>
 <main>
-  <nav>
-    <ul>
-      <li>
-        <a th:href="@{/}" th:text="Home"/>
-      </li>
-      <li>
-        <a th:href="@{/countries}" th:text="Countries"/>
-      </li>
-      <li>
-        <a th:href="@{/forex-exchanges}" th:text="'Forex Exchanges'"/>
-      </li>
-      <li>
-        <a th:href="@{/crypto-exchanges}" th:text="'Crypto Exchanges'"/>
-      </li>
-      <li>
-        <a th:href="@{/fda-advisory-committee-calendar}" th:text="'FDA Committee Meeting Calendar'"/>
-      </li>
-      <li>
-        <a th:href="@{/general-news}" th:text="'General news'"/>
-      </li>
-      <li>
-        <a th:href="@{/forex-news}" th:text="'Forex news'"/>
-      </li>
-      <li>
-        <a th:href="@{/crypto-news}" th:text="'Crypto news'"/>
-      </li>
-      <li>
-        <a th:href="@{/merger-news}" th:text="'Merger news'"/>
-      </li>
-    </ul>
+  <nav th:insert="templates/menu.html">
   </nav>
   <table>
     <caption th:text="'Forex symbol'"/>
