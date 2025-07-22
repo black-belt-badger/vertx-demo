@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html th:replace="~{'./templates/layout.html' :: layout(~{::title}, ~{::section})}" lang="en">
+<head>
+  <title>Vert.x Demo application - Forex symbol</title>
+</head>
+<body>
+<main>
+  <section>
+    <details>
+      <summary>Finnhub API details</summary>
+      <p>Docs <a href="https://finnhub.io/docs/api/forex-symbols" target="_blank">/forex/symbol</a></p>
+    </details>
+    <article>
+      <table>
+        <caption th:text="'Stock earning surprises - ' + ${symbol}"></caption>
+        <thead>
+        <tr>
+          <th>Year/Quarter</th>
+          <th>Period</th>
+          <th>Estimate</th>
+          <th>Surprise</th>
+          <th>Surprise percent</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr data-th-each="element : ${array.list}">
+          <td data-th-text="${element.year} + '/' + ${element.quarter}"/>
+          <td data-th-text="${element.period}" class="nobr"/>
+          <td data-th-text="${element.estimate}"/>
+          <td data-th-text="${element.surprise}"/>
+          <td data-th-text="${element.surprisePercent}"/>
+        </tr>
+        </tbody>
+      </table>
+    </article>
+  </section>
+</main>
+</body>
+</html>

@@ -90,15 +90,33 @@ public enum HttpServerStarter {
     router.get("/company-profile/:symbol").handler(context -> {
         var symbol = context.pathParam("symbol");
         client
-          .get(FINNHUB_PORT, FINNHUB_HOST, "/api/v1//stock/profile2?symbol=" + symbol)
+          .get(FINNHUB_PORT, FINNHUB_HOST, "/api/v1/stock/profile2?symbol=" + symbol)
           .putHeader(FINNHUB_HEADER, FINNHUB_API_KEY)
           .send()
           .onFailure(throwable -> log.error("error sending request", throwable))
           .onSuccess(response -> {
-              log.info(response.bodyAsString());
               var object = response.bodyAsJsonObject();
               engine
                 .render(new JsonObject().put("profile", object), "templates/company-profile.html")
+                .onFailure(throwable -> log.error("error rendering template", throwable))
+                .onSuccess(buffer ->
+                  context.response().putHeader("content-type", "text/html").end(buffer)
+                );
+            }
+          );
+      }
+    );
+    router.get("/stock/earnings/:symbol").handler(context -> {
+        var symbol = context.pathParam("symbol");
+        client
+          .get(FINNHUB_PORT, FINNHUB_HOST, "/api/v1/stock/earnings?symbol=" + symbol)
+          .putHeader(FINNHUB_HEADER, FINNHUB_API_KEY)
+          .send()
+          .onFailure(throwable -> log.error("error sending request", throwable))
+          .onSuccess(response -> {
+              var array = response.bodyAsJsonArray();
+              engine
+                .render(new JsonObject().put("array", array).put("symbol", symbol), "templates/stock-earnings.html")
                 .onFailure(throwable -> log.error("error rendering template", throwable))
                 .onSuccess(buffer ->
                   context.response().putHeader("content-type", "text/html").end(buffer)
