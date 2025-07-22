@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html th:replace="~{'./templates/layout.html' :: layout(~{::title}, ~{::section})}" lang="en">
 <head>
-  <title>Vert.x Demo application - News</title>
+  <title data-th-text="'Vert.x Demo application ' + ${caption}"></title>
 </head>
 <body>
 <main>
@@ -22,7 +22,7 @@
       <tr data-th-each="new : ${news.list}">
         <td data-th-text="${new.headline}"/>
         <td>
-          <a th:href="@{{url}(url=${new.url})}" th:text="${new.summary}" th:target="_blank"/>
+          <a th:href="@{{url}(url=${new.url})}" th:text="${new.summary}" th:target="_blank"></a>
         </td>
         <td>
           <img th:src="@{{image}(image=${new.image})}" th:alt="${new.source}"/>
