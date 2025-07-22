@@ -6,35 +6,35 @@
 <body>
 <main>
   <section>
-    <details>
-      <summary>Finnhub API details</summary>
-      <p>Docs <a href="https://finnhub.io/docs/api/country" target="_blank">/country</a></p>
-    </details>
+    <article>
+      <details>
+        <summary>Finnhub API details</summary>
+        <p>Docs <a href="https://finnhub.io/docs/api/country" target="_blank">/country</a></p>
+      </details>
+    </article>
+  </section>
+  <section>
     <article>
       <table>
         <caption>Countries</caption>
         <thead>
         <tr>
           <th>Country</th>
-          <th>alpha-2</th>
-          <th>alpha-3</th>
-          <th>UN</th>
+          <th>Code</th>
           <th>Region</th>
           <th>Subregion</th>
           <th>Currency</th>
-          <th>Currency code</th>
-          <th>Default spread</th>
+          <th class="nobr">Currency code</th>
+          <th class="nobr">Default spread</th>
           <th>Rating</th>
-          <th>Equity risk premium</th>
-          <th>Country risk premium</th>
+          <th class="nobr">Equity risk premium</th>
+          <th class="nobr">Country risk premium</th>
         </tr>
         </thead>
         <tbody>
         <tr data-th-each="country : ${countries.list}">
           <th data-th-text="${country.country}"/>
           <td data-th-text="${country.code2}"/>
-          <td data-th-text="${country.code3}"/>
-          <td data-th-text="${country.codeNo}"/>
           <td data-th-text="${country.region}"/>
           <td data-th-text="${country.subRegion}"/>
           <td data-th-text="${country.currency}"/>

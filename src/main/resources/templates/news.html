@@ -6,10 +6,14 @@
 <body>
 <main>
   <section>
-    <details>
-      <summary>Finnhub API details</summary>
-      <p>Docs <a href="https://finnhub.io/docs/api/market-news" target="_blank">/news</a></p>
-    </details>
+    <article>
+      <details>
+        <summary>Finnhub API details</summary>
+        <p>Docs <a href="https://finnhub.io/docs/api/market-news" target="_blank">/news</a></p>
+      </details>
+    </article>
+  </section>
+  <section>
     <article>
       <table>
         <caption th:text="${caption}"></caption>
@@ -25,12 +29,12 @@
         </thead>
         <tbody>
         <tr data-th-each="new : ${news.list}">
-          <td data-th-text="${new.headline}"/>
           <td>
-            <a th:href="@{{url}(url=${new.url})}" th:text="${new.summary}" th:target="_blank"></a>
+            <a th:href="@{{url}(url=${new.url})}" th:text="${new.headline}" th:target="_blank"></a>
           </td>
+          <td data-th-text="${new.summary}"/>
           <td>
-            <img th:src="@{{image}(image=${new.image})}" th:alt="${new.source}"/>
+            <img th:src="@{{image}(image=${new.image})}" th:alt="${new.source}" th:title="${new.source}"/>
           </td>
           <td data-th-text="${new.category}"/>
           <td data-th-text="${new.datetime}"/>

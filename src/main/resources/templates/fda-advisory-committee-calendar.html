@@ -6,26 +6,29 @@
 <body>
 <main>
   <section>
-    <details>
-      <summary>Finnhub API details</summary>
-      <p>Docs <a href="https://finnhub.io/docs/api/fda-committee-meeting-calendar" target="_blank">/fda-advisory-committee-calendar</a>
-      </p>
-    </details>
+    <article>
+      <details>
+        <summary>Finnhub API details</summary>
+        <p>Docs <a href="https://finnhub.io/docs/api/fda-committee-meeting-calendar" target="_blank">/fda-advisory-committee-calendar</a>
+      </details>
+    </article>
+  </section>
+  <section>
     <article>
       <table>
         <caption>FDA Advisory Committee Calendar</caption>
         <thead>
         <tr>
-          <th data-th-text="'Event description'"></th>
-          <th data-th-text="'From'"></th>
-          <th data-th-text="'To'"></th>
+          <th>Event description</th>
+          <th>From</th>
+          <th>To</th>
         </tr>
         </thead>
         <tbody>
         <tr data-th-each="entry : ${entries.list}">
           <th><a th:href="${entry.url}" th:text="${entry.eventDescription}" th:target="_blank"></a></th>
-          <td data-th-text="${entry.fromDate}"/>
-          <td data-th-text="${entry.toDate}"/>
+          <td data-th-text="${entry.fromDate}" class="nobr"/>
+          <td data-th-text="${entry.toDate}" class="nobr"/>
         </tr>
         </tbody>
       </table>
