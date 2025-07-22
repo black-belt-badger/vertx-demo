@@ -1,15 +1,11 @@
 <!DOCTYPE html>
-
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html th:replace="~{'./templates/layout.html' :: layout(~{::title}, ~{::section})}" lang="en">
 <head>
-  <title>Vert.x Demo application - Home</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.classless.min.css">
+  <title>Vert.x Demo application - Countries</title>
 </head>
 <body>
 <main>
-  <nav th:insert="templates/menu.html">
-  </nav>
+  <section></section>
 </main>
 </body>
 </html>

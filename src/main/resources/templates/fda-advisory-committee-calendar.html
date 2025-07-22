@@ -1,32 +1,29 @@
 <!DOCTYPE html>
-
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html th:replace="~{'./templates/layout.html' :: layout(~{::title}, ~{::section})}" lang="en">
 <head>
   <title>Vert.x Demo application - Countries</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.classless.min.css">
 </head>
 <body>
 <main>
-  <nav th:insert="templates/menu.html">
-  </nav>
-  <table>
-    <caption th:text="'FDA Advisory Committee Calendar'"/>
-    <thead>
-    <tr>
-      <th data-th-text="'Event description'"></th>
-      <th data-th-text="'From'"></th>
-      <th data-th-text="'To'"></th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr data-th-each="entry : ${entries.list}">
-      <th><a th:href="${entry.url}" th:text="${entry.eventDescription}" th:target="_blank"></a></th>
-      <td data-th-text="${entry.fromDate}"/>
-      <td data-th-text="${entry.toDate}"/>
-    </tr>
-    </tbody>
-  </table>
+  <section>
+    <table>
+      <caption>FDA Advisory Committee Calendar</caption>
+      <thead>
+      <tr>
+        <th data-th-text="'Event description'"></th>
+        <th data-th-text="'From'"></th>
+        <th data-th-text="'To'"></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr data-th-each="entry : ${entries.list}">
+        <th><a th:href="${entry.url}" th:text="${entry.eventDescription}" th:target="_blank"></a></th>
+        <td data-th-text="${entry.fromDate}"/>
+        <td data-th-text="${entry.toDate}"/>
+      </tr>
+      </tbody>
+    </table>
+  </section>
 </main>
 </body>
 </html>

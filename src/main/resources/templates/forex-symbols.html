@@ -1,32 +1,29 @@
 <!DOCTYPE html>
-
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html th:replace="~{'./templates/layout.html' :: layout(~{::title}, ~{::section})}" lang="en">
 <head>
-  <title>Vert.x Demo application - Countries</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.classless.min.css">
+  <title>Vert.x Demo application - Forex symbol</title>
 </head>
 <body>
 <main>
-  <nav th:insert="templates/menu.html">
-  </nav>
-  <table>
-    <caption th:text="'Forex symbol'"/>
-    <thead>
-    <tr>
-      <th data-th-text="'Display symbol'"></th>
-      <th data-th-text="'Symbol'"></th>
-      <th data-th-text="'Description'"></th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr data-th-each="symbol : ${symbols.list}">
-      <th data-th-text="${symbol.displaySymbol}"/>
-      <td data-th-text="${symbol.symbol}"/>
-      <td data-th-text="${symbol.description}"/>
-    </tr>
-    </tbody>
-  </table>
+  <section>
+    <table>
+      <caption>Forex symbol</caption>
+      <thead>
+      <tr>
+        <th>Display symbol</th>
+        <th>Symbol</th>
+        <th>Description</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr data-th-each="symbol : ${symbols.list}">
+        <th data-th-text="${symbol.displaySymbol}"/>
+        <td data-th-text="${symbol.symbol}"/>
+        <td data-th-text="${symbol.description}"/>
+      </tr>
+      </tbody>
+    </table>
+  </section>
 </main>
 </body>
 </html>

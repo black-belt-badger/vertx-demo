@@ -1,32 +1,29 @@
 <!DOCTYPE html>
-
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html th:replace="~{'./templates/layout.html' :: layout(~{::title}, ~{::section})}" lang="en">
 <head>
-  <title>Vert.x Demo application - Countries</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.classless.min.css">
+  <title>Vert.x Demo application - Forex Exchanges</title>
 </head>
 <body>
 <main>
-  <nav th:insert="templates/menu.html">
-  </nav>
-  <table>
-    <caption th:text="'Forex Exchanges'"/>
-    <thead>
-    <tr>
-      <th data-th-text="'Exchange'"></th>
-      <th data-th-text="'Symbols'"></th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr data-th-each="exchange : ${exchanges.list}">
-      <th data-th-text="${exchange}"/>
-      <td>
-        <a th:href="@{/crypto-symbols/{id}(id=${exchange})}">Symbols</a>
-      </td>
-    </tr>
-    </tbody>
-  </table>
+  <section>
+    <table>
+      <caption>Forex Exchanges</caption>
+      <thead>
+      <tr>
+        <th>Exchange</th>
+        <th>Symbols</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr data-th-each="exchange : ${exchanges.list}">
+        <th data-th-text="${exchange}"/>
+        <td>
+          <a th:href="@{/crypto-symbols/{id}(id=${exchange})}">Symbols</a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </section>
 </main>
 </body>
 </html>

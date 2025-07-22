@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+
+<html th:fragment="layout (title, content)" xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <title th:replace="${title}">Vert.x Demo application</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.classless.min.css">
+</head>
+<body>
+<main>
+  <nav th:insert="~{templates/menu.html}">
+  </nav>
+  <section th:replace="${content}">
+  </section>
+</main>
+</body>
+</html>
