@@ -15,30 +15,30 @@
         <caption>Stock symbol</caption>
         <thead>
         <tr>
-          <th>Display symbol</th>
           <th>Symbol</th>
-          <th>Symbol 2</th>
           <th>Description</th>
+          <th>Company profile</th>
           <th>Type</th>
           <th>Currency</th>
-          <th>FIGI</th>
           <th>ISIN</th>
           <th>MIC</th>
+          <th>FIGI</th>
           <th>Share Class FIGI</th>
         </tr>
         </thead>
         <tbody>
         <tr data-th-each="symbol : ${symbols.list}">
           <th data-th-text="${symbol.displaySymbol}"/>
-          <th data-th-text="${symbol.symbol}"/>
-          <th data-th-text="${symbol.symbol2}"/>
-          <th data-th-text="${symbol.description}"/>
-          <th data-th-text="${symbol.type}"/>
-          <th data-th-text="${symbol.currency}"/>
-          <th data-th-text="${symbol.figi}"/>
-          <th data-th-text="${symbol.isin}"/>
-          <th data-th-text="${symbol.mic}"/>
-          <th data-th-text="${symbol.shareClassFIGI}"/>
+          <td data-th-text="${symbol.description}"/>
+          <td>
+            <a th:href="@{/company-profile/{id}(id=${symbol.symbol})}">Profile</a>
+          </td>
+          <td data-th-text="${symbol.type}"/>
+          <td data-th-text="${symbol.currency}"/>
+          <td data-th-text="${symbol.isin}"/>
+          <td data-th-text="${symbol.mic}"/>
+          <td data-th-text="${symbol.figi}"/>
+          <td data-th-text="${symbol.shareClassFIGI}"/>
         </tr>
         </tbody>
       </table>

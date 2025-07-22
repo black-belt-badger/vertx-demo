@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html th:replace="~{'./templates/layout.html' :: layout(~{::title}, ~{::section})}" lang="en">
+<head>
+  <title>Vert.x Demo application - Countries</title>
+</head>
+<body>
+<main>
+  <section>
+    <article>
+      <table>
+        <caption>Company profile</caption>
+        <thead>
+        <tr>
+          <th>Field</th>
+          <th>Value</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <th>Name</th>
+          <td data-th-text="${profile.getString('name')}"/>
+        </tr>
+        <tr>
+          <th>Country</th>
+          <td data-th-text="${profile.getString('country')}"/>
+        </tr>
+        <tr>
+          <th>Phone</th>
+          <td data-th-text="${profile.getString('phone')}"/>
+        </tr>
+        <tr>
+          <th>Web URL</th>
+          <td data-th-text="${profile.getString('weburl')}"/>
+        </tr>
+        <tr>
+          <th>Logo</th>
+          <td>
+            <img th:src="@{{image}(image=${profile.getString('logo')})}" th:alt="${profile.getString('name')}"
+                 width="100" height="100"/>
+          </td>
+        </tr>
+        <tr>
+          <th>Currency</th>
+          <td data-th-text="${profile.getString('currency')}"/>
+        </tr>
+        <tr>
+          <th>IPO</th>
+          <td data-th-text="${profile.getString('ipo')}"/>
+        </tr>
+        <tr>
+          <th>Exchange</th>
+          <td data-th-text="${profile.getString('exchange')}"/>
+        </tr>
+        <tr>
+          <th>Ticker</th>
+          <td data-th-text="${profile.getString('ticker')}"/>
+        </tr>
+        <tr>
+          <th>Market capitalization</th>
+          <td data-th-text="${profile.getString('marketCapitalization')}"/>
+        </tr>
+        <tr>
+          <th>Share outstanding</th>
+          <td data-th-text="${profile.getString('shareOutstanding')}"/>
+        </tr>
+        </tbody>
+      </table>
+    </article>
+  </section>
+  <section>
+    <article>
+      <details>
+        <summary>Finnhub API details</summary>
+        <p>Docs <a href="https://finnhub.io/docs/api/company-profile2" target="_blank">/stock/profile2</a></p>
+      </details>
+    </article>
+  </section>
+</main>
+</body>
+</html>
