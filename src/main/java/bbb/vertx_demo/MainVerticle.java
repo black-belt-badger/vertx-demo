@@ -11,10 +11,10 @@ import java.util.concurrent.atomic.AtomicReference;
 import static bbb.vertx_demo.main.AmqpDeployer.deployReceiverAndSender;
 import static bbb.vertx_demo.main.CommandRegistrator.registerCommand;
 import static bbb.vertx_demo.main.ConfigRetrieverCreator.retrieveAndMerge;
-import static bbb.vertx_demo.main.HttpServerStarter.startHttpServer;
 import static bbb.vertx_demo.main.MBeanRegistrator.registerMBean;
 import static bbb.vertx_demo.main.PostgresConnectionStarter.connectToPostgres;
 import static bbb.vertx_demo.main.ShellDeployer.deployShell;
+import static bbb.vertx_demo.main.http_server.HttpServerStarter.startHttpServer;
 
 @Slf4j
 public final class MainVerticle extends VerticleBase {
@@ -31,7 +31,7 @@ public final class MainVerticle extends VerticleBase {
             var httpHost = merged.getString("http.host", "0.0.0.0");
             int httpPort = merged.getInteger("http.port", 8080);
             return
-              startHttpServer(vertx, checks, configServerVersion, httpPort, httpHost)
+              startHttpServer(vertx, checks, httpPort, httpHost)
                 .flatMap(ignored -> {
                     var host =
                       merged.getString("telnet.host", "0.0.0.0");
