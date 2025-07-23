@@ -7,6 +7,15 @@
 <main>
   <section>
     <article>
+      <details>
+        <summary>Finnhub API details</summary>
+        <p>Docs <a href="https://finnhub.io/docs/api/financials-reported" target="_blank">/stock/financials-reported</a>
+        </p>
+      </details>
+    </article>
+  </section>
+  <section>
+    <article>
       <p data-th-text="'CIK: ' + ${object.getString('cik')}"/>
       <p data-th-text="'Symbol: ' + ${object.getString('symbol')}"/>
       <table>
@@ -74,14 +83,6 @@
         </tr>
         </tbody>
       </table>
-    </article>
-  </section>
-  <section>
-    <article>
-      <details>
-        <summary>Finnhub API details</summary>
-        <p>Docs <a href="https://finnhub.io/docs/api/company-profile2" target="_blank">/stock/profile2</a></p>
-      </details>
     </article>
   </section>
 </main>
