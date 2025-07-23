@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html th:replace="~{'./templates/layout.html' :: layout(~{::title}, ~{::section})}" lang="en">
+<head>
+  <title>Vert.x Demo application - Countries</title>
+</head>
+<body>
+<main>
+  <section>
+    <article>
+      <p data-th-text="'Symbol: ' + ${object.getString('symbol')}"/>
+      <table>
+        <caption>Financials reported</caption>
+        <thead>
+        </thead>
+        <tbody>
+        <tr>
+          <th class="nobr">Year</th>
+          <th>Quarter</th>
+          <th class="nobr">Case number</th>
+          <th class="nobr">Case status</th>
+          <th class="nobr">Received date</th>
+          <th class="nobr">Visa class</th>
+          <th class="nobr">Job title</th>
+          <th class="nobr">Soc code</th>
+          <th class="nobr">Fulltime position</th>
+          <th class="nobr">Begin date</th>
+          <th class="nobr">End date</th>
+          <th class="nobr">Employer name</th>
+          <th class="nobr">Worksite address</th>
+          <th class="nobr">Worksite city</th>
+          <th class="nobr">Worksite county</th>
+          <th class="nobr">Worksite state</th>
+          <th class="nobr">Worksite postal code</th>
+          <th class="nobr">Wage range from</th>
+          <th class="nobr">Wage range to</th>
+          <th class="nobr">Wage unit of pay</th>
+          <th class="nobr">Wage level</th>
+          <th class="nobr">H1B dependent</th>
+        </tr>
+        <tr data-th-each="element : ${object.getJsonArray('data')}">
+          <td data-th-text="${element.getString('year')}" class="nobr"/>
+          <td data-th-text="${element.getString('quarter')}" class="nobr"/>
+          <td data-th-text="${element.getString('caseNumber')}" class="nobr"/>
+          <td data-th-text="${element.getString('caseStatus')}" class="nobr"/>
+          <td data-th-text="${element.getString('receivedDate')}" class="nobr"/>
+          <td data-th-text="${element.getString('visaClass')}" class="nobr"/>
+          <td data-th-text="${element.getString('jobTitle')}" class="nobr"/>
+          <td data-th-text="${element.getString('socCode')}" class="nobr"/>
+          <td data-th-text="${element.getString('fullTimePosition')}" class="nobr"/>
+          <td data-th-text="${element.getString('beginDate')}" class="nobr"/>
+          <td data-th-text="${element.getString('endDate')}" class="nobr"/>
+          <td data-th-text="${element.getString('employerName')}" class="nobr"/>
+          <td data-th-text="${element.getString('worksiteAddress')}" class="nobr"/>
+          <td data-th-text="${element.getString('worksiteCity')}" class="nobr"/>
+          <td data-th-text="${element.getString('worksiteCounty')}" class="nobr"/>
+          <td data-th-text="${element.getString('worksiteState')}" class="nobr"/>
+          <td data-th-text="${element.getString('worksitePostalCode')}" class="nobr"/>
+          <td data-th-text="${element.getString('wageRangeFrom')}" class="nobr"/>
+          <td data-th-text="${element.getString('wageRangeTo')}" class="nobr"/>
+          <td data-th-text="${element.getString('wageUnitOfPay')}" class="nobr"/>
+          <td data-th-text="${element.getString('wageLevel')}" class="nobr"/>
+          <td data-th-text="${element.getString('h1bDependent')}" class="nobr"/>
+        </tr>
+        </tbody>
+      </table>
+    </article>
+  </section>
+  <section>
+    <article>
+      <details>
+        <summary>Finnhub API details</summary>
+        <p>Docs <a href="https://finnhub.io/docs/api/company-profile2" target="_blank">/stock/profile2</a></p>
+      </details>
+    </article>
+  </section>
+</main>
+</body>
+</html>

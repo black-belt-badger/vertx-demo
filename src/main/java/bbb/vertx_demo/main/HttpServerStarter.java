@@ -144,6 +144,25 @@ public enum HttpServerStarter {
           );
       }
     );
+    router.get("/stock/visa-application/:symbol").handler(context -> {
+        var symbol = context.pathParam("symbol");
+        client
+          .get(FINNHUB_PORT, FINNHUB_HOST, "/api/v1/stock/visa-application?symbol=" + symbol)
+          .putHeader(FINNHUB_HEADER, FINNHUB_API_KEY)
+          .send()
+          .onFailure(throwable -> log.error("error sending request", throwable))
+          .onSuccess(response -> {
+              var object = response.bodyAsJsonObject();
+              engine
+                .render(new JsonObject().put("object", object).put("symbol", symbol), "templates/stock-visa-application.html")
+                .onFailure(throwable -> log.error("error rendering template", throwable))
+                .onSuccess(buffer ->
+                  context.response().putHeader("content-type", "text/html").end(buffer)
+                );
+            }
+          );
+      }
+    );
     router.get("/forex-exchanges").handler(context ->
       client
         .get(FINNHUB_PORT, FINNHUB_HOST, "/api/v1/forex/exchange")
