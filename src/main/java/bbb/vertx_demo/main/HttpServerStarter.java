@@ -4,6 +4,7 @@ import io.vertx.core.Future;
 import io.vertx.core.Promise;
 import io.vertx.core.Vertx;
 import io.vertx.core.http.HttpServer;
+import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.client.WebClient;
@@ -11,6 +12,8 @@ import io.vertx.ext.web.healthchecks.HealthCheckHandler;
 import io.vertx.ext.web.templ.thymeleaf.ThymeleafTemplateEngine;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 
 import static io.vertx.ext.healthchecks.Status.KO;
@@ -117,6 +120,34 @@ public enum HttpServerStarter {
               var array = response.bodyAsJsonArray();
               engine
                 .render(new JsonObject().put("array", array).put("symbol", symbol), "templates/stock-earnings.html")
+                .onFailure(throwable -> log.error("error rendering template", throwable))
+                .onSuccess(buffer ->
+                  context.response().putHeader("content-type", "text/html").end(buffer)
+                );
+            }
+          );
+      }
+    );
+    router.get("/stock/financials-reported/:symbol").handler(context -> {
+        var symbol = context.pathParam("symbol");
+        client
+          .get(FINNHUB_PORT, FINNHUB_HOST, "/api/v1/stock/financials-reported?symbol=" + symbol)
+          .putHeader(FINNHUB_HEADER, FINNHUB_API_KEY)
+          .send()
+          .onFailure(throwable -> log.error("error sending request", throwable))
+          .onSuccess(response -> {
+              var object = response.bodyAsJsonObject();
+              JsonArray data = object.getJsonArray("data");
+              Set<Map.Entry<String, Object>> entries =
+                ((JsonObject) data.iterator().next())
+                  .getJsonObject("report")
+                  .getMap()
+                  .entrySet();
+              Map.Entry<String, Object> next = entries.iterator().next();
+              String key = next.getKey();
+              Object value = next.getValue();
+              engine
+                .render(new JsonObject().put("object", object).put("symbol", symbol), "templates/stock-financials-reported.html")
                 .onFailure(throwable -> log.error("error rendering template", throwable))
                 .onSuccess(buffer ->
                   context.response().putHeader("content-type", "text/html").end(buffer)

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html th:replace="~{'./templates/layout.html' :: layout(~{::title}, ~{::section})}" lang="en">
+<head>
+  <title>Vert.x Demo application - Countries</title>
+</head>
+<body>
+<main>
+  <section>
+    <article>
+      <p data-th-text="'CIK: ' + ${object.getString('cik')}"/>
+      <p data-th-text="'Symbol: ' + ${object.getString('symbol')}"/>
+      <table>
+        <caption>Financials reported</caption>
+        <thead>
+        </thead>
+        <tbody>
+        <tr>
+          <th>Access number</th>
+          <th>Symbol</th>
+          <th>Year</th>
+          <th>Quarter</th>
+          <th>Form</th>
+          <th>Start date</th>
+          <th>End date</th>
+          <th>Filed date</th>
+          <th>Accepted date</th>
+          <th>Report</th>
+        </tr>
+        <tr data-th-each="element : ${object.getJsonArray('data')}">
+          <td data-th-text="${element.getString('accessNumber')}" class="nobr"/>
+          <td data-th-text="${element.getString('symbol')}"/>
+          <td data-th-text="${element.getInteger('year')}"/>
+          <td data-th-text="${element.getInteger('quarter')}"/>
+          <td data-th-text="${element.getString('form')}" class="nobr"/>
+          <td data-th-text="${element.getString('startDate')}" class="nobr"/>
+          <td data-th-text="${element.getString('endDate')}" class="nobr"/>
+          <td data-th-text="${element.getString('filedDate')}" class="nobr"/>
+          <td data-th-text="${element.getString('acceptedDate')}" class="nobr"/>
+          <td>
+            <table>
+              <thead>
+              <tr>
+                <th>Key</th>
+                <th>Value</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr data-th-each="entry: ${element.getJsonObject('report').getMap().entrySet()}">
+                <td data-th-text="${entry.getKey()}" class="nobr"/>
+                <td>
+                  <table>
+                    <thead>
+                    <tr>
+                      <th>Concept</th>
+                      <th>Unit</th>
+                      <th>Label</th>
+                      <th>Value</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr data-th-each="map : ${entry.getValue()}">
+                      <td data-th-text="${map.get('concept')}"/>
+                      <td data-th-text="${map.get('unit')}"/>
+                      <td data-th-text="${map.get('label')}"/>
+                      <td data-th-text="${map.get('value')}"/>
+                    </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </article>
+  </section>
+  <section>
+    <article>
+      <details>
+        <summary>Finnhub API details</summary>
+        <p>Docs <a href="https://finnhub.io/docs/api/company-profile2" target="_blank">/stock/profile2</a></p>
+      </details>
+    </article>
+  </section>
+</main>
+</body>
+</html>
