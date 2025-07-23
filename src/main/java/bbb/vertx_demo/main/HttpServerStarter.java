@@ -70,7 +70,7 @@ public enum HttpServerStarter {
           }
         )
     );
-    router.get("/stock-symbols").handler(context ->
+    router.get("/stock/symbol").handler(context ->
       client
         .get(FINNHUB_PORT, FINNHUB_HOST, "/api/v1/stock/symbol?exchange=US")
         .putHeader(FINNHUB_HEADER, FINNHUB_API_KEY)
@@ -79,7 +79,7 @@ public enum HttpServerStarter {
         .onSuccess(response -> {
             var array = response.bodyAsJsonArray();
             engine
-              .render(new JsonObject().put("symbols", array), "templates/stock-symbols.html")
+              .render(new JsonObject().put("symbols", array), "templates/stock/symbol.html")
               .onFailure(throwable -> log.error("error rendering template", throwable))
               .onSuccess(buffer ->
                 context.response().putHeader("content-type", "text/html").end(buffer)
@@ -87,7 +87,7 @@ public enum HttpServerStarter {
           }
         )
     );
-    router.get("/company-profile/:symbol").handler(context -> {
+    router.get("/stock/profile2/:symbol").handler(context -> {
         var symbol = context.pathParam("symbol");
         client
           .get(FINNHUB_PORT, FINNHUB_HOST, "/api/v1/stock/profile2?symbol=" + symbol)
@@ -97,7 +97,7 @@ public enum HttpServerStarter {
           .onSuccess(response -> {
               var object = response.bodyAsJsonObject();
               engine
-                .render(new JsonObject().put("profile", object), "templates/company-profile.html")
+                .render(new JsonObject().put("profile", object), "templates/stock/profile2.html")
                 .onFailure(throwable -> log.error("error rendering template", throwable))
                 .onSuccess(buffer ->
                   context.response().putHeader("content-type", "text/html").end(buffer)
@@ -116,7 +116,7 @@ public enum HttpServerStarter {
           .onSuccess(response -> {
               var array = response.bodyAsJsonArray();
               engine
-                .render(new JsonObject().put("array", array).put("symbol", symbol), "templates/stock-earnings.html")
+                .render(new JsonObject().put("array", array).put("symbol", symbol), "templates/stock/earnings.html")
                 .onFailure(throwable -> log.error("error rendering template", throwable))
                 .onSuccess(buffer ->
                   context.response().putHeader("content-type", "text/html").end(buffer)
@@ -135,7 +135,7 @@ public enum HttpServerStarter {
           .onSuccess(response -> {
               var object = response.bodyAsJsonObject();
               engine
-                .render(new JsonObject().put("object", object).put("symbol", symbol), "templates/stock-financials-reported.html")
+                .render(new JsonObject().put("object", object).put("symbol", symbol), "templates/stock/financials-reported.html")
                 .onFailure(throwable -> log.error("error rendering template", throwable))
                 .onSuccess(buffer ->
                   context.response().putHeader("content-type", "text/html").end(buffer)
@@ -154,7 +154,7 @@ public enum HttpServerStarter {
           .onSuccess(response -> {
               var object = response.bodyAsJsonObject();
               engine
-                .render(new JsonObject().put("object", object).put("symbol", symbol), "templates/stock-visa-application.html")
+                .render(new JsonObject().put("object", object).put("symbol", symbol), "templates/stock/visa-application.html")
                 .onFailure(throwable -> log.error("error rendering template", throwable))
                 .onSuccess(buffer ->
                   context.response().putHeader("content-type", "text/html").end(buffer)
@@ -173,7 +173,7 @@ public enum HttpServerStarter {
           .onSuccess(response -> {
               var object = response.bodyAsJsonObject();
               engine
-                .render(new JsonObject().put("object", object).put("symbol", symbol), "templates/stock-insider-sentiment.html")
+                .render(new JsonObject().put("object", object).put("symbol", symbol), "templates/stock/insider-sentiment.html")
                 .onFailure(throwable -> log.error("error rendering template", throwable))
                 .onSuccess(buffer ->
                   context.response().putHeader("content-type", "text/html").end(buffer)
@@ -192,7 +192,7 @@ public enum HttpServerStarter {
           .onSuccess(response -> {
               var object = response.bodyAsJsonObject();
               engine
-                .render(new JsonObject().put("object", object).put("symbol", symbol), "templates/stock-insider-transactions.html")
+                .render(new JsonObject().put("object", object).put("symbol", symbol), "templates/stock/insider-transactions.html")
                 .onFailure(throwable -> log.error("error rendering template", throwable))
                 .onSuccess(buffer ->
                   context.response().putHeader("content-type", "text/html").end(buffer)
@@ -211,7 +211,7 @@ public enum HttpServerStarter {
           .onSuccess(response -> {
               var object = response.bodyAsJsonObject();
               engine
-                .render(new JsonObject().put("object", object).put("exchange", exchange), "templates/stock-market-holiday.html")
+                .render(new JsonObject().put("object", object).put("exchange", exchange), "templates/stock/market-holiday.html")
                 .onFailure(throwable -> log.error("error rendering template", throwable))
                 .onSuccess(buffer ->
                   context.response().putHeader("content-type", "text/html").end(buffer)
