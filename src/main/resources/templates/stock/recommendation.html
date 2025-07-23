@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html th:replace="~{'./templates/layout.html' :: layout(~{::title}, ~{::section})}" lang="en">
+<head>
+  <title>South Park Investments - Stock recommendation</title>
+</head>
+<body>
+<main>
+  <section>
+    <article>
+      <table>
+        <caption th:text="'Stock recommendation - ' + ${symbol}"></caption>
+        <thead>
+        <tr>
+          <th>Symbol</th>
+          <th>Period</th>
+          <th>Strong buy</th>
+          <th>Buy</th>
+          <th>Hold</th>
+          <th>Sell</th>
+          <th>Strong sell</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr data-th-each="element : ${array.list}">
+          <td data-th-text="${element.symbol}"/>
+          <td data-th-text="${element.period}"/>
+          <td data-th-text="${element.strongBuy}"/>
+          <td data-th-text="${element.buy}"/>
+          <td data-th-text="${element.hold}"/>
+          <td data-th-text="${element.sell}"/>
+          <td data-th-text="${element.strongSell}"/>
+        </tr>
+        </tbody>
+      </table>
+    </article>
+  </section>
+</main>
+</body>
+</html>

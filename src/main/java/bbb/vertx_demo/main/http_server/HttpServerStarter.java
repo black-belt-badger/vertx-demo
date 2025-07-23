@@ -45,24 +45,25 @@ public enum HttpServerStarter {
     var client = WebClient.create(vertx);
     router.get("/").handler(home(engine));
     router.get("/countries").handler(countries(client, engine));
-    router.get("/stock/symbol").handler(stockSymbolHandler(client, engine));
-    router.get("/stock/profile2/:symbol").handler(stockProfile2(client, engine));
-    router.get("/stock/earnings/:symbol").handler(stockEarnings(client, engine));
-    router.get("/stock/financials-reported/:symbol").handler(stockFinancialsReported(client, engine));
-    router.get("/stock/visa-application/:symbol").handler(stockVisaApplication(client, engine));
-    router.get("/stock/insider-sentiment/:symbol").handler(stockInsiderSentiment(client, engine));
-    router.get("/stock/insider-transactions/:symbol").handler(stockInsiderTransactions(client, engine));
-    router.get("/stock/market-holiday/:exchange").handler(stockMarketHoliday(client, engine));
-    router.get("/forex/exchange").handler(forexExchange(client, engine));
-    router.get("/forex/symbol/:exchange").handler(forexSymbol(client, engine));
     router.get("/crypto/exchange").handler(cryptoExchange(client, engine));
     router.get("/crypto/symbol/:exchange").handler(cryptoSymbol(client, engine));
     router.get("/fda-advisory-committee-calendar").handler(fdaAdvisoryCommiteeCalendar(client, engine));
+    router.get("/forex/exchange").handler(forexExchange(client, engine));
+    router.get("/forex/symbol/:exchange").handler(forexSymbol(client, engine));
     router.get("/ipo-calendar").handler(ipoCalendar(client, engine));
-    router.get("/general-news").handler(generalNews(client, engine));
-    router.get("/forex-news").handler(forexNews(client, engine));
     router.get("/crypto-news").handler(cryptoNews(client, engine));
+    router.get("/forex-news").handler(forexNews(client, engine));
+    router.get("/general-news").handler(generalNews(client, engine));
     router.get("/merger-news").handler(mergerNews(client, engine));
+    router.get("/stock/earnings/:symbol").handler(stockEarnings(client, engine));
+    router.get("/stock/financials-reported/:symbol").handler(stockFinancialsReported(client, engine));
+    router.get("/stock/insider-sentiment/:symbol").handler(stockInsiderSentiment(client, engine));
+    router.get("/stock/insider-transactions/:symbol").handler(stockInsiderTransactions(client, engine));
+    router.get("/stock/recommendation/:symbol").handler(stockRecommendation(client, engine));
+    router.get("/stock/market-holiday/:exchange").handler(stockMarketHoliday(client, engine));
+    router.get("/stock/profile2/:symbol").handler(stockProfile2(client, engine));
+    router.get("/stock/symbol").handler(stockSymbolHandler(client, engine));
+    router.get("/stock/visa-application/:symbol").handler(stockVisaApplication(client, engine));
     return vertx
       .createHttpServer()
       .requestHandler(router)
