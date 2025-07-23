@@ -1,20 +1,10 @@
 <!DOCTYPE html>
 <html th:replace="~{'./templates/layout.html' :: layout(~{::title}, ~{::section})}" lang="en">
 <head>
-  <title>Vert.x Demo - Insider transactions</title>
+  <title>South Park Investments - Insider transactions</title>
 </head>
 <body>
 <main>
-  <section>
-    <article>
-      <details>
-        <summary>Finnhub API details</summary>
-        <p>Docs <a href="https://finnhub.io/docs/api/insider-transactions"
-                   target="_blank">/stock/insider-transactions</a>
-        </p>
-      </details>
-    </article>
-  </section>
   <section>
     <article>
       <p data-th-text="'Symbol: ' + ${object.getString('symbol')}"/>

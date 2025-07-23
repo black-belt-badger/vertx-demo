@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html th:replace="~{'./templates/layout.html' :: layout(~{::title}, ~{::section})}" lang="en">
+<head>
+  <title>South Park Investments - Market holidays</title>
+</head>
+<body>
+<main>
+  <section>
+    <article>
+      <p data-th-text="'Exchange: ' + ${object.getString('exchange')}"/>
+      <p data-th-text="'Timezone: ' + ${object.getString('timezone')}"/>
+      <table>
+        <caption>Market holidays</caption>
+        <thead>
+        </thead>
+        <tbody>
+        <tr>
+          <th>Event name</th>
+          <th>At date</th>
+          <th>Trading hours</th>
+        </tr>
+        <tr data-th-each="element : ${object.getJsonArray('data')}">
+          <th data-th-text="${element.getString('eventName')}" class="nobr"/>
+          <td data-th-text="${element.getString('atDate')}" class="nobr"/>
+          <td data-th-text="${element.getString('tradingHour')}" class="nobr"/>
+        </tr>
+        </tbody>
+      </table>
+    </article>
+  </section>
+</main>
+</body>
+</html>

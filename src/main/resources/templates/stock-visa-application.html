@@ -1,23 +1,15 @@
 <!DOCTYPE html>
 <html th:replace="~{'./templates/layout.html' :: layout(~{::title}, ~{::section})}" lang="en">
 <head>
-  <title>Vert.x Demo - Countries</title>
+  <title>South Park Investments - Visa applications</title>
 </head>
 <body>
 <main>
   <section>
     <article>
-      <details>
-        <summary>Finnhub API details</summary>
-        <p>Docs <a href="https://finnhub.io/docs/api/stock-visa-application" target="_blank">/stock/profile2</a></p>
-      </details>
-    </article>
-  </section>
-  <section>
-    <article>
       <p data-th-text="'Symbol: ' + ${object.getString('symbol')}"/>
       <table>
-        <caption>Financials reported</caption>
+        <caption>Visa applications</caption>
         <thead>
         </thead>
         <tbody>
