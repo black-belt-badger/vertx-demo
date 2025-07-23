@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html th:replace="~{'./templates/layout.html' :: layout(~{::title}, ~{::section})}" lang="en">
+<head>
+  <title>Vert.x Demo - Insider transactions</title>
+</head>
+<body>
+<main>
+  <section>
+    <article>
+      <details>
+        <summary>Finnhub API details</summary>
+        <p>Docs <a href="https://finnhub.io/docs/api/insider-transactions"
+                   target="_blank">/stock/insider-transactions</a>
+        </p>
+      </details>
+    </article>
+  </section>
+  <section>
+    <article>
+      <p data-th-text="'Symbol: ' + ${object.getString('symbol')}"/>
+      <table>
+        <caption>Insider transaction</caption>
+        <thead>
+        </thead>
+        <tbody>
+        <tr>
+          <th>Change</th>
+          <th>Currency</th>
+          <th class="nobr">Filing date</th>
+          <th>ID</th>
+          <th class="nobr">Is derivative</th>
+          <th>Name</th>
+          <th>Share</th>
+          <th>Source</th>
+          <th>Symbol</th>
+          <th class="nobr">Transaction code</th>
+          <th class="nobr">Transaction date</th>
+          <th class="nobr">Transaction price</th>
+        </tr>
+        <tr data-th-each="element : ${object.getJsonArray('data')}">
+          <td data-th-text="${element.getString('change')}" class="nobr"/>
+          <td data-th-text="${element.getString('currency')}" class="nobr"/>
+          <td data-th-text="${element.getString('filingDate')}" class="nobr"/>
+          <td data-th-text="${element.getString('id')}" class="nobr"/>
+          <td data-th-text="${element.getString('isDerivative')}" class="nobr"/>
+          <td data-th-text="${element.getString('name')}" class="nobr"/>
+          <td data-th-text="${element.getString('share')}" class="nobr"/>
+          <td data-th-text="${element.getString('source')}" class="nobr"/>
+          <td data-th-text="${element.getString('symbol')}" class="nobr"/>
+          <td data-th-text="${element.getString('transactionCode')}" class="nobr"/>
+          <td data-th-text="${element.getString('transactionDate')}" class="nobr"/>
+          <td data-th-text="${element.getString('transactionPrice')}" class="nobr"/>
+        </tr>
+        </tbody>
+      </table>
+    </article>
+  </section>
+</main>
+</body>
+</html>
