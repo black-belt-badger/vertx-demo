@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html th:replace="~{'./templates/layout.html' :: layout(~{::title}, ~{::section})}" lang="en">
+<head>
+  <title>South Park Investments - Stock filings</title>
+</head>
+<body>
+<main>
+  <section>
+    <article>
+      <table>
+        <caption th:text="'Stock filings - ' + ${symbol}"></caption>
+        <thead>
+        <tr>
+          <th>Access number</th>
+          <th>Symbol</th>
+          <th>CIK</th>
+          <th>Form</th>
+          <th>Filed date</th>
+          <th>Accepted date</th>
+          <th>Report URL</th>
+          <th>Filing URL</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr data-th-each="element : ${array.list}">
+          <td data-th-text="${element.accessNumber}" class="nobr"/>
+          <td data-th-text="${element.symbol}" class="nobr"/>
+          <td data-th-text="${element.cik}" class="nobr"/>
+          <td data-th-text="${element.form}" class="nobr"/>
+          <td data-th-text="${element.filedDate}" class="nobr"/>
+          <td data-th-text="${element.acceptedDate}" class="nobr"/>
+          <td class="nobr">
+            <a th:href="${element.reportUrl}" th:target="_blank">report</a>
+          </td>
+          <td class="nobr">
+            <a th:href="${element.filingUrl}" th:target="_blank">filing</a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </article>
+  </section>
+</main>
+</body>
+</html>

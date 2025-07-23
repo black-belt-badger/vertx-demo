@@ -56,6 +56,7 @@ public enum HttpServerStarter {
     router.get("/general-news").handler(generalNews(client, engine));
     router.get("/merger-news").handler(mergerNews(client, engine));
     router.get("/stock/earnings/:symbol").handler(stockEarnings(client, engine));
+    router.get("/stock/filings/:symbol").handler(stockFilings(client, engine));
     router.get("/stock/financials-reported/:symbol").handler(stockFinancialsReported(client, engine));
     router.get("/stock/insider-sentiment/:symbol").handler(stockInsiderSentiment(client, engine));
     router.get("/stock/insider-transactions/:symbol").handler(stockInsiderTransactions(client, engine));
