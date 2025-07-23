@@ -60,10 +60,11 @@ public enum HttpServerStarter {
     router.get("/stock/financials-reported/:symbol").handler(stockFinancialsReported(client, engine));
     router.get("/stock/insider-sentiment/:symbol").handler(stockInsiderSentiment(client, engine));
     router.get("/stock/insider-transactions/:symbol").handler(stockInsiderTransactions(client, engine));
-    router.get("/stock/recommendation/:symbol").handler(stockRecommendation(client, engine));
     router.get("/stock/market-holiday/:exchange").handler(stockMarketHoliday(client, engine));
     router.get("/stock/profile2/:symbol").handler(stockProfile2(client, engine));
+    router.get("/stock/recommendation/:symbol").handler(stockRecommendation(client, engine));
     router.get("/stock/symbol").handler(stockSymbolHandler(client, engine));
+    router.get("/stock/usa-spending/:symbol").handler(stockUsaSpending(client, engine));
     router.get("/stock/visa-application/:symbol").handler(stockVisaApplication(client, engine));
     return vertx
       .createHttpServer()

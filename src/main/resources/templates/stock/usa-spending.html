@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html th:replace="~{'./templates/layout.html' :: layout(~{::title}, ~{::section})}" lang="en">
+<head>
+  <title>South Park Investments - USA spending</title>
+</head>
+<body>
+<main>
+  <section>
+    <article>
+      <table>
+        <caption th:text="'USA spending - ' + ${symbol}"></caption>
+        <thead>
+        </thead>
+        <tbody>
+        <tr>
+          <th class="nobr">Symbol</th>
+          <th class="nobr">Recipient name</th>
+          <th class="nobr">Recipient parent name</th>
+          <th class="nobr">Country</th>
+          <th class="nobr">Total value</th>
+          <th class="nobr">Outlayed amount</th>
+          <th class="nobr">Obligated amount</th>
+          <th class="nobr">Action date</th>
+          <th class="nobr">Performance start date</th>
+          <th class="nobr">Performance end date</th>
+          <th class="nobr">Awarding agency name</th>
+          <th class="nobr">Awarding subagency name</th>
+          <th class="nobr">Awarding office name</th>
+          <th class="nobr">Performance country</th>
+          <th class="nobr">Performance city</th>
+          <th class="nobr">Performance county</th>
+          <th class="nobr">Performance state</th>
+          <th class="nobr">Performance zip code</th>
+          <th class="nobr">Performance congressional district</th>
+          <th class="nobr">Award description</th>
+          <th class="nobr">NAICS code</th>
+          <th class="nobr">Permalink</th>
+        </tr>
+        <tr data-th-each="element : ${object.getJsonArray('data')}">
+          <td data-th-text="${element.getString('symbol')}" class="nobr"/>
+          <td data-th-text="${element.getString('recipientName')}" class="nobr"/>
+          <td data-th-text="${element.getString('recipientParentName')}" class="nobr"/>
+          <td data-th-text="${element.getString('country')}" class="nobr"/>
+          <td data-th-text="${element.getString('totalValue')}" class="nobr"/>
+          <td data-th-text="${element.getString('outlayedAmount')}" class="nobr"/>
+          <td data-th-text="${element.getString('obligatedAmount')}" class="nobr"/>
+          <td data-th-text="${element.getString('actionDate')}" class="nobr"/>
+          <td data-th-text="${element.getString('performanceStartDate')}" class="nobr"/>
+          <td data-th-text="${element.getString('performanceEndDate')}" class="nobr"/>
+          <td data-th-text="${element.getString('awardingAgencyName')}" class="nobr"/>
+          <td data-th-text="${element.getString('awardingSubAgencyName')}" class="nobr"/>
+          <td data-th-text="${element.getString('awardingOfficeName')}" class="nobr"/>
+          <td data-th-text="${element.getString('performanceCountry')}" class="nobr"/>
+          <td data-th-text="${element.getString('performanceCity')}" class="nobr"/>
+          <td data-th-text="${element.getString('performanceCounty')}" class="nobr"/>
+          <td data-th-text="${element.getString('performanceState')}" class="nobr"/>
+          <td data-th-text="${element.getString('performanceZipCode')}" class="nobr"/>
+          <td data-th-text="${element.getString('performanceCongressionalDistrict')}" class="nobr"/>
+          <td data-th-text="${element.getString('awardDescription')}" class="nobr"/>
+          <td data-th-text="${element.getString('naicsCode')}" class="nobr"/>
+          <td class="nobr">
+            <a th:href="${element.getString('permalink')}" th:target="_blank">permalink</a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </article>
+  </section>
+</main>
+</body>
+</html>
