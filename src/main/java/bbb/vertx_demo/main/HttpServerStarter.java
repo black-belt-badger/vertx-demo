@@ -220,7 +220,7 @@ public enum HttpServerStarter {
           );
       }
     );
-    router.get("/forex-exchanges").handler(context ->
+    router.get("/forex/exchange").handler(context ->
       client
         .get(FINNHUB_PORT, FINNHUB_HOST, "/api/v1/forex/exchange")
         .putHeader(FINNHUB_HEADER, FINNHUB_API_KEY)
@@ -229,7 +229,7 @@ public enum HttpServerStarter {
         .onSuccess(response -> {
             var array = response.bodyAsJsonArray();
             engine
-              .render(new JsonObject().put("exchanges", array), "templates/forex-exchanges.html")
+              .render(new JsonObject().put("exchanges", array), "templates/forex/exchange.html")
               .onFailure(throwable -> log.error("error rendering template", throwable))
               .onSuccess(buffer ->
                 context.response().putHeader("content-type", "text/html").end(buffer)
@@ -237,7 +237,7 @@ public enum HttpServerStarter {
           }
         )
     );
-    router.get("/forex-symbols/:exchange").handler(context -> {
+    router.get("/forex/symbol/:exchange").handler(context -> {
         var exchange = context.pathParam("exchange");
         client
           .get(FINNHUB_PORT, FINNHUB_HOST, "/api/v1/forex/symbol?exchange=" + exchange)
@@ -247,7 +247,7 @@ public enum HttpServerStarter {
           .onSuccess(response -> {
               var array = response.bodyAsJsonArray();
               engine
-                .render(new JsonObject().put("symbols", array), "templates/forex-symbols.html")
+                .render(new JsonObject().put("symbols", array), "templates/forex/symbol.html")
                 .onFailure(throwable -> log.error("error rendering template", throwable))
                 .onSuccess(buffer ->
                   context.response().putHeader("content-type", "text/html").end(buffer)
