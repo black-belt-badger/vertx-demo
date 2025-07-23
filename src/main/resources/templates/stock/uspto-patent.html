@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html th:replace="~{'./templates/layout.html' :: layout(~{::title}, ~{::section})}" lang="en">
+<head>
+  <title>South Park Investments - USPTO patent</title>
+</head>
+<body>
+<main>
+  <section>
+    <article>
+      <table>
+        <caption th:text="'USPTO patent - ' + ${symbol}"></caption>
+        <thead>
+        </thead>
+        <tbody>
+        <tr>
+          <th class="nobr">Application number</th>
+          <th class="nobr">Company filing name</th>
+          <th class="nobr">Description</th>
+          <th class="nobr">Filing date</th>
+          <th class="nobr">Filing status</th>
+          <th class="nobr">Patent number</th>
+          <th class="nobr">Patent type</th>
+          <th class="nobr">Publication date</th>
+          <th class="nobr">URL</th>
+        </tr>
+        <tr data-th-each="element : ${object.getJsonArray('data')}">
+          <td data-th-text="${element.getString('applicationNumber')}" class="nobr"/>
+          <td data-th-text="${element.getString('companyFilingName')}" class="nobr"/>
+          <td data-th-text="${element.getString('description')}" class="nobr"/>
+          <td data-th-text="${element.getString('filingDate')}" class="nobr"/>
+          <td data-th-text="${element.getString('filingStatus')}" class="nobr"/>
+          <td data-th-text="${element.getString('patentNumber')}" class="nobr"/>
+          <td data-th-text="${element.getString('patentType')}" class="nobr"/>
+          <td data-th-text="${element.getString('publicationDate')}" class="nobr"/>
+          <td data-th-text="${element.getString('url')}" class="nobr"/>
+        </tr>
+        </tbody>
+      </table>
+    </article>
+  </section>
+</main>
+</body>
+</html>

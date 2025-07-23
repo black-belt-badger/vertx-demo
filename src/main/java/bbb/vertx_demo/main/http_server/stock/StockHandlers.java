@@ -183,7 +183,7 @@ public enum StockHandlers {
     };
   }
 
-  public static Handler<RoutingContext> stockSymbolHandler(WebClient client, TemplateEngine engine) {
+  public static Handler<RoutingContext> stockSymbol(WebClient client, TemplateEngine engine) {
     return context ->
       client
         .get(FINNHUB_PORT, FINNHUB_HOST, "/api/v1/stock/symbol?exchange=US")
@@ -214,6 +214,27 @@ public enum StockHandlers {
           var object = response.bodyAsJsonObject();
             engine
               .render(new JsonObject().put("object", object).put("symbol", symbol), "templates/stock/usa-spending.html")
+              .onFailure(throwable -> log.error("error rendering template", throwable))
+              .onSuccess(buffer ->
+                context.response().putHeader("content-type", "text/html").end(buffer)
+              );
+          }
+        );
+    };
+  }
+
+  public static Handler<RoutingContext> stockUsptoPatent(WebClient client, ThymeleafTemplateEngine engine) {
+    return context -> {
+      var symbol = context.pathParam("symbol");
+      client
+        .get(FINNHUB_PORT, FINNHUB_HOST, "/api/v1/stock/uspto-patent?symbol=" + symbol + "&from=2020-01-01&to=2025-06-01")
+        .putHeader(FINNHUB_HEADER, FINNHUB_API_KEY)
+        .send()
+        .onFailure(throwable -> log.error("error sending request", throwable))
+        .onSuccess(response -> {
+            var object = response.bodyAsJsonObject();
+            engine
+              .render(new JsonObject().put("object", object).put("symbol", symbol), "templates/stock/uspto-patent.html")
               .onFailure(throwable -> log.error("error rendering template", throwable))
               .onSuccess(buffer ->
                 context.response().putHeader("content-type", "text/html").end(buffer)

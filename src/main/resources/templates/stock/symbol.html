@@ -24,6 +24,7 @@
           <th class="nobr">Recommendation trends</th>
           <th class="nobr">Filings</th>
           <th class="nobr">USA spending</th>
+          <th class="nobr">USPTO patent</th>
           <th>ISIN</th>
           <th>MIC</th>
           <th>FIGI</th>
@@ -62,6 +63,9 @@
           </td>
           <td>
             <a th:href="@{/stock/usa-spending/{id}(id=${symbol.symbol})}">USA spending</a>
+          </td>
+          <td>
+            <a th:href="@{/stock/uspto-patent/{id}(id=${symbol.symbol})}">USPTO patent</a>
           </td>
           <td data-th-text="${symbol.isin}"/>
           <td data-th-text="${symbol.mic}"/>
