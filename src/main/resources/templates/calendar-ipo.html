@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html th:replace="~{'./templates/layout.html' :: layout(~{::title}, ~{::section})}" lang="en">
+<head>
+  <title>Vert.x Demo - IPO calendar</title>
+</head>
+<body>
+<main>
+  <section>
+    <article>
+      <details>
+        <summary>Finnhub API details</summary>
+        <p>Docs <a href="https://finnhub.io/docs/api/ipo-calendar" target="_blank">/ipo/calendar</a>
+        </p>
+      </details>
+    </article>
+  </section>
+  <section>
+    <article>
+      <table>
+        <caption>IPO calendar</caption>
+        <thead>
+        </thead>
+        <tbody>
+        <tr>
+          <th>Date</th>
+          <th>Exchange</th>
+          <th>Name</th>
+          <th class="nobr">Number of shares</th>
+          <th>Price</th>
+          <th>Status</th>
+          <th>Symbol</th>
+          <th class="nobr">Total shares value</th>
+        </tr>
+        <tr data-th-each="element : ${object.getJsonArray('ipoCalendar')}">
+          <td data-th-text="${element.getString('date')}" class="nobr"/>
+          <td data-th-text="${element.getString('exchange')}" class="nobr"/>
+          <td data-th-text="${element.getString('name')}" class="nobr"/>
+          <td data-th-text="${element.getString('numberOfShares')}" class="nobr"/>
+          <td data-th-text="${element.getString('price')}" class="nobr"/>
+          <td data-th-text="${element.getString('status')}" class="nobr"/>
+          <td data-th-text="${element.getString('symbol')}" class="nobr"/>
+          <td data-th-text="${element.getString('totalSharesValue')}" class="nobr"/>
+        </tr>
+        </tbody>
+      </table>
+    </article>
+  </section>
+</main>
+</body>
+</html>
