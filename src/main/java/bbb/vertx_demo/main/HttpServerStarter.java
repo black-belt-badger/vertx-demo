@@ -256,7 +256,7 @@ public enum HttpServerStarter {
           );
       }
     );
-    router.get("/crypto-exchanges").handler(context ->
+    router.get("/crypto/exchange").handler(context ->
       client
         .get(FINNHUB_PORT, FINNHUB_HOST, "/api/v1/crypto/exchange")
         .putHeader(FINNHUB_HEADER, FINNHUB_API_KEY)
@@ -265,7 +265,7 @@ public enum HttpServerStarter {
         .onSuccess(response -> {
             var array = response.bodyAsJsonArray();
             engine
-              .render(new JsonObject().put("exchanges", array), "templates/crypto-exchanges.html")
+              .render(new JsonObject().put("exchanges", array), "templates/crypto/exchange.html")
               .onFailure(throwable -> log.error("error rendering template", throwable))
               .onSuccess(buffer ->
                 context.response().putHeader("content-type", "text/html").end(buffer)
@@ -273,7 +273,7 @@ public enum HttpServerStarter {
           }
         )
     );
-    router.get("/crypto-symbols/:exchange").handler(context -> {
+    router.get("/crypto/symbol/:exchange").handler(context -> {
         var exchange = context.pathParam("exchange");
         client
           .get(FINNHUB_PORT, FINNHUB_HOST, "/api/v1/crypto/symbol?exchange=" + exchange)
@@ -283,7 +283,7 @@ public enum HttpServerStarter {
           .onSuccess(response -> {
               var array = response.bodyAsJsonArray();
               engine
-                .render(new JsonObject().put("symbols", array), "templates/crypto-symbols.html")
+                .render(new JsonObject().put("symbols", array), "templates/crypto/symbol.html")
                 .onFailure(throwable -> log.error("error rendering template", throwable))
                 .onSuccess(buffer ->
                   context.response().putHeader("content-type", "text/html").end(buffer)

@@ -19,7 +19,7 @@
         <tr data-th-each="exchange : ${exchanges.list}">
           <th data-th-text="${exchange}"/>
           <td>
-            <a th:href="@{/crypto-symbols/{id}(id=${exchange})}">symbols</a>
+            <a th:href="@{/crypto/symbol/{id}(id=${exchange})}">symbols</a>
           </td>
         </tr>
         </tbody>
