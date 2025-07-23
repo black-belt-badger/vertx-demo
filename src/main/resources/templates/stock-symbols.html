@@ -27,6 +27,7 @@
           <th class="nobr">Earning surprises</th>
           <th class="nobr">Financials reported</th>
           <th class="nobr">Visa applications</th>
+          <th class="nobr">Insider sentiment</th>
           <th>ISIN</th>
           <th>MIC</th>
           <th>FIGI</th>
@@ -50,6 +51,9 @@
           </td>
           <td>
             <a th:href="@{/stock/visa-application/{id}(id=${symbol.symbol})}">visa applications</a>
+          </td>
+          <td>
+            <a th:href="@{/stock/insider-sentiment/{id}(id=${symbol.symbol})}">insider sentiment</a>
           </td>
           <td data-th-text="${symbol.isin}"/>
           <td data-th-text="${symbol.mic}"/>

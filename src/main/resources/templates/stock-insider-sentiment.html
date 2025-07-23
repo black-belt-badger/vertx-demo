@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html th:replace="~{'./templates/layout.html' :: layout(~{::title}, ~{::section})}" lang="en">
+<head>
+  <title>Vert.x Demo application - Countries</title>
+</head>
+<body>
+<main>
+  <section>
+    <article>
+      <details>
+        <summary>Finnhub API details</summary>
+        <p>Docs <a href="https://finnhub.io/docs/api/insider-sentiment" target="_blank">/stock/insider-sentiment</a>
+        </p>
+      </details>
+    </article>
+  </section>
+  <section>
+    <article>
+      <p data-th-text="'Symbol: ' + ${object.getString('symbol')}"/>
+      <table>
+        <caption>Insider sentiment</caption>
+        <thead>
+        </thead>
+        <tbody>
+        <tr>
+          <th>Symbol</th>
+          <th>Year</th>
+          <th>Month</th>
+          <th>Change</th>
+          <th>MSPR</th>
+        </tr>
+        <tr data-th-each="element : ${object.getJsonArray('data')}">
+          <td data-th-text="${element.getString('symbol')}" class="nobr"/>
+          <td data-th-text="${element.getString('year')}" class="nobr"/>
+          <td data-th-text="${element.getString('month')}" class="nobr"/>
+          <td data-th-text="${element.getString('change')}" class="nobr"/>
+          <td data-th-text="${element.getString('mspr')}" class="nobr"/>
+        </tr>
+        </tbody>
+      </table>
+    </article>
+  </section>
+</main>
+</body>
+</html>
