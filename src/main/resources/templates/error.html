@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html th:replace="~{'./templates/common/layout.html' :: layout(~{::title}, ~{::section})}" lang="en">
 <head>
-  <title>South Park Investments - Home</title>
+  <title>South Park Investments - Error</title>
 </head>
 <body>
 <main>
-  <section></section>
+  <section>
+    <article>
+      <p data-th-text="'Error ' + ${error}" />
+    </article>
+  </section>
 </main>
 </body>
 </html>

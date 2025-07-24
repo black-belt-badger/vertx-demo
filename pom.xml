@@ -7,7 +7,7 @@
 
   <groupId>bbb</groupId>
   <artifactId>vertx-demo</artifactId>
-  <version>1.0.21-SNAPSHOT</version>
+  <version>1.0.21</version>
 
   <properties>
     <maven.compiler.target>21</maven.compiler.target>
@@ -129,6 +129,16 @@
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
       <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.google.guava</groupId>
+      <artifactId>guava</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>org.checkerframework</groupId>
+          <artifactId>checker-qual</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>software.amazon.awssdk</groupId>
@@ -257,6 +267,7 @@
                 <exclude>org.apache.sshd:*</exclude>
                 <exclude>software.amazon.jdbc:*</exclude>
                 <exclude>org.postgresql:*</exclude>
+                <exclude>com.google.guava:*</exclude>
               </excludes>
             </banTransitiveDependencies>
             <dependencyConvergence>true</dependencyConvergence>
@@ -399,6 +410,11 @@
         <groupId>org.projectlombok</groupId>
         <artifactId>lombok</artifactId>
         <version>${lombok.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.google.guava</groupId>
+        <artifactId>guava</artifactId>
+        <version>33.4.0-jre</version>
       </dependency>
       <dependency>
         <groupId>software.amazon.awssdk</groupId>

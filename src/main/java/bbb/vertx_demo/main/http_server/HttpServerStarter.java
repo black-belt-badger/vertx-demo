@@ -63,7 +63,8 @@ public enum HttpServerStarter {
     router.get("/stock/market-holiday/:exchange").handler(stockMarketHoliday(client, engine));
     router.get("/stock/profile2/:symbol").handler(stockProfile2(client, engine));
     router.get("/stock/recommendation/:symbol").handler(stockRecommendation(client, engine));
-    router.get("/stock/symbol").blockingHandler(stockSymbol(client, engine));
+    deploySymbolVerticle(vertx, client);
+    router.get("/stock/symbol").handler(stockSymbol(vertx, engine));
     router.get("/stock/usa-spending/:symbol").handler(stockUsaSpending(client, engine));
     router.get("/stock/uspto-patent/:symbol").handler(stockUsptoPatent(client, engine));
     router.get("/stock/visa-application/:symbol").handler(stockVisaApplication(client, engine));
