@@ -38,5 +38,19 @@
 
 * enforce
   ```shell
-  ./mvnw enforcer:enforce
+  cd .. && ./mvnw enforcer:enforce
+  ```
+## Versions
+
+* next snapshot (from release)
+  ```shell
+  cd .. && ./mvnw versions:set -DnextSnapshot=true
+  ```
+* clean up versions backup file
+  ```shell
+  cd .. && ./mvnw versions:commit
+  ```
+* revert version
+  ```shell
+  cd .. && ./mvnw versions:revert
   ```

@@ -1,14 +1,22 @@
 package bbb.vertx_demo.main.http_server;
 
+import com.google.common.base.Stopwatch;
 import io.vertx.core.Handler;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.client.WebClient;
 import io.vertx.ext.web.templ.thymeleaf.ThymeleafTemplateEngine;
+import io.vertx.redis.client.RedisAPI;
+import io.vertx.redis.client.RedisConnection;
 import lombok.extern.slf4j.Slf4j;
 
 import static bbb.vertx_demo.main.http_server.HttpServerStarter.*;
+import static com.google.common.net.MediaType.HTML_UTF_8;
+import static io.vertx.core.http.HttpHeaders.CONTENT_TYPE;
+import static io.vertx.redis.client.Command.SET;
+import static io.vertx.redis.client.Request.cmd;
 import static java.lang.System.getenv;
+import static java.util.Objects.nonNull;
 import static java.util.Optional.ofNullable;
 
 @Slf4j
@@ -17,6 +25,7 @@ public enum Handlers {
   ;
 
   private static final String VERSION = ofNullable(getenv("VERSION")).orElse("unknown");
+  private static final String HTML = HTML_UTF_8.toString();
 
   static Handler<RoutingContext> mergerNews(WebClient client, ThymeleafTemplateEngine engine) {
     return context ->
@@ -132,23 +141,50 @@ public enum Handlers {
         );
   }
 
-  static Handler<RoutingContext> countries(WebClient client, ThymeleafTemplateEngine engine) {
-    return context ->
-      client
-        .get(FINNHUB_PORT, FINNHUB_HOST, "/api/v1/country")
-        .putHeader(FINNHUB_HEADER, FINNHUB_API_KEY)
-        .send()
-        .onFailure(throwable -> log.error("error sending request", throwable))
-        .onSuccess(response -> {
-            var array = response.bodyAsJsonArray();
-            engine
-              .render(new JsonObject().put("countries", array), "templates/countries.html")
-              .onFailure(throwable -> log.error("error rendering template", throwable))
-              .onSuccess(buffer ->
-                context.response().putHeader("content-type", "text/html").end(buffer)
-              );
+  private static final String COUNTRIES_REDIS_KEY = "/api/v1/country";
+  private static final String COUNTRIES_TEMPLATE_KEY = "countries";
+
+  static Handler<RoutingContext> countries
+    (
+      WebClient webClient,
+      ThymeleafTemplateEngine engine,
+      RedisAPI redisAPI,
+      RedisConnection redisConnection
+    ) {
+    return context -> {
+      var watch = Stopwatch.createStarted();
+      redisAPI
+        .get(COUNTRIES_REDIS_KEY)
+        .onFailure(throwable -> log.error("error getting countries from Redis", throwable))
+        .onSuccess(redisResponse -> {
+            if (nonNull(redisResponse)) {
+              var buffer = redisResponse.toBuffer();
+              context.response().putHeader(CONTENT_TYPE, HTML).end(buffer);
+              log.info("Countries request handled in {}", watch.elapsed());
+            } else {
+              webClient
+                .get(FINNHUB_PORT, FINNHUB_HOST, COUNTRIES_REDIS_KEY)
+                .putHeader(FINNHUB_HEADER, FINNHUB_API_KEY)
+                .send()
+                .onFailure(throwable -> log.error("error sending request", throwable))
+                .onSuccess(response -> {
+                    var array = response.bodyAsJsonArray();
+                    engine
+                      .render(new JsonObject().put(COUNTRIES_TEMPLATE_KEY, array), "templates/countries.html")
+                      .onFailure(throwable -> log.error("error rendering template", throwable))
+                      .onSuccess(buffer -> {
+                          context.response().putHeader(CONTENT_TYPE, HTML).end(buffer);
+                          log.info("Countries request handled in {}", watch.elapsed());
+                          var request = cmd(SET).arg(COUNTRIES_REDIS_KEY).arg(buffer);
+                          redisConnection.send(request);
+                        }
+                      );
+                  }
+                );
+            }
           }
         );
+    };
   }
 
   static Handler<RoutingContext> home(ThymeleafTemplateEngine engine) {

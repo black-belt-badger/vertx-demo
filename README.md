@@ -8,6 +8,8 @@
 
 ## [AMQP](docs/AMQP.md)
 
+## [Redis](docs/Redis.md)
+
 ## Building
 
 ### Docker

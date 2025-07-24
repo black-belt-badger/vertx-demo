@@ -19,7 +19,7 @@
     <lombok.version>1.18.38</lombok.version>
     <netty-tcnative.version>2.0.72.Final</netty-tcnative.version>
     <logback.version>1.5.18</logback.version>
-    <junit-jupiter.version>6.0.0-M1</junit-jupiter.version>
+    <junit-jupiter.version>6.0.0-M2</junit-jupiter.version>
     <jackson.version>2.19.1</jackson.version>
   </properties>
 
@@ -92,20 +92,12 @@
       <artifactId>vertx-health-check</artifactId>
     </dependency>
     <dependency>
-      <groupId>software.amazon.jdbc</groupId>
-      <artifactId>aws-advanced-jdbc-wrapper</artifactId>
-      <version>2.4.0</version>
-      <exclusions>
-        <exclusion>
-          <groupId>org.apache.httpcomponents</groupId>
-          <artifactId>httpclient</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
       <groupId>org.postgresql</groupId>
       <artifactId>postgresql</artifactId>
-      <version>42.7.7</version>
+    </dependency>
+    <dependency>
+      <groupId>io.vertx</groupId>
+      <artifactId>vertx-redis-client</artifactId>
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
@@ -118,12 +110,6 @@
     <dependency>
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-classic</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>org.slf4j</groupId>
-          <artifactId>slf4j-api</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.projectlombok</groupId>
@@ -133,26 +119,6 @@
     <dependency>
       <groupId>com.google.guava</groupId>
       <artifactId>guava</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>org.checkerframework</groupId>
-          <artifactId>checker-qual</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>software.amazon.awssdk</groupId>
-      <artifactId>s3</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>software.amazon.awssdk</groupId>
-          <artifactId>netty-nio-client</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>software.amazon.awssdk</groupId>
-          <artifactId>apache-client</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
     <dependency>
       <groupId>io.vertx</groupId>
@@ -263,9 +229,7 @@
             <banTransitiveDependencies>
               <excludes>
                 <exclude>io.vertx:*</exclude>
-                <exclude>software.amazon.awssdk:s3:*</exclude>
                 <exclude>org.apache.sshd:*</exclude>
-                <exclude>software.amazon.jdbc:*</exclude>
                 <exclude>org.postgresql:*</exclude>
                 <exclude>com.google.guava:*</exclude>
               </excludes>
@@ -414,19 +378,23 @@
       <dependency>
         <groupId>com.google.guava</groupId>
         <artifactId>guava</artifactId>
-        <version>33.4.0-jre</version>
+        <version>33.4.8-jre</version>
+        <exclusions>
+          <exclusion>
+            <groupId>org.checkerframework</groupId>
+            <artifactId>checker-qual</artifactId>
+          </exclusion>
+        </exclusions>
       </dependency>
       <dependency>
-        <groupId>software.amazon.awssdk</groupId>
-        <artifactId>bom</artifactId>
-        <version>2.31.77</version>
-        <type>pom</type>
-        <scope>import</scope>
+        <groupId>org.postgresql</groupId>
+        <artifactId>postgresql</artifactId>
+        <version>42.7.7</version>
       </dependency>
       <dependency>
         <groupId>org.assertj</groupId>
         <artifactId>assertj-core</artifactId>
-        <version>3.27.3</version>
+        <version>4.0.0-M1</version>
         <scope>test</scope>
       </dependency>
     </dependencies>
