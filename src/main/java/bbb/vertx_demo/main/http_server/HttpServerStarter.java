@@ -120,7 +120,8 @@ public enum HttpServerStarter {
     router.get("/stock/insider-sentiment/:symbol").handler(stockInsiderSentiment(webClient, engine));
     router.get("/stock/insider-transactions/:symbol").handler(stockInsiderTransactions(webClient, engine));
     router.get("/stock/market-holiday/:exchange").handler(stockMarketHoliday(webClient, engine));
-    router.get("/stock/profile2/:symbol").handler(stockProfile2(webClient, engine));
+    var profile2 = cache.getJsonObject("profile2", new JsonObject());
+    router.get("/stock/profile2/:symbol").handler(stockProfile2(webClient, engine, redisApi, redisConnection, profile2));
     router.get("/stock/recommendation/:symbol").handler(stockRecommendation(webClient, engine));
     deploySymbolVerticle(vertx, webClient);
     var stockSymbols = cache.getJsonObject("stock-symbols", new JsonObject());
