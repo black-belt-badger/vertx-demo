@@ -5,7 +5,7 @@ import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.client.WebClient;
-import io.vertx.ext.web.templ.thymeleaf.ThymeleafTemplateEngine;
+import io.vertx.ext.web.common.template.TemplateEngine;
 import io.vertx.redis.client.RedisAPI;
 import io.vertx.redis.client.RedisConnection;
 import lombok.extern.slf4j.Slf4j;
@@ -28,25 +28,26 @@ public enum Countries {
 
   ;
 
-  private static final String COUNTRIES_REDIS_KEY = "/api/v1/country";
-  private static final String COUNTRIES_TEMPLATE_KEY = "countries";
+  private static final String FINNHUB_URL = "/api/v1/country";
+  private static final String REDIS_KEY = "/api/v1/country";
+  private static final String TEMPLATE_KEY = "countries";
 
   static Handler<RoutingContext> countries
     (
       WebClient webClient,
-      ThymeleafTemplateEngine engine,
+      TemplateEngine engine,
       RedisAPI redisAPI,
       RedisConnection redisConnection,
-      JsonObject countries
+      JsonObject config
     ) {
     return context -> {
-      var maxAgeString = countries.getString("max-age", "PT1H");
+      var maxAgeString = config.getString("max-age", "PT1H");
       var maxAge = Duration.parse(maxAgeString).toSeconds();
       log.info("Cache expiry for countries is {} seconds", maxAge);
       var cacheControl = format("public, max-age=%d, immutable", maxAge);
       var watch = createStarted();
       redisAPI
-        .get(COUNTRIES_REDIS_KEY)
+        .get(REDIS_KEY)
         .onFailure(throwable -> log.error("error getting countries from Redis", throwable))
         .onSuccess(redisResponse -> {
             if (nonNull(redisResponse)) {
@@ -58,10 +59,10 @@ public enum Countries {
               log.info("Countries request handled in {}", watch.elapsed());
             } else {
               webClient
-                .get(FINNHUB_PORT, FINNHUB_HOST, COUNTRIES_REDIS_KEY)
+                .get(FINNHUB_PORT, FINNHUB_HOST, FINNHUB_URL)
                 .putHeader(FINNHUB_HEADER, FINNHUB_API_KEY)
                 .send()
-                .onFailure(throwable -> log.error("error sending request", throwable))
+                .onFailure(throwable -> log.error("error sending countries request", throwable))
                 .onSuccess(response -> {
                     var array = response.bodyAsJsonArray();
                     var list =
@@ -77,8 +78,8 @@ public enum Countries {
                         )
                         .toList();
                     engine
-                      .render(new JsonObject().put(COUNTRIES_TEMPLATE_KEY, map), "templates/countries.html")
-                      .onFailure(throwable -> log.error("error rendering template", throwable))
+                      .render(new JsonObject().put(TEMPLATE_KEY, map), "templates/countries.html")
+                      .onFailure(throwable -> log.error("error rendering countries template", throwable))
                       .onSuccess(buffer -> {
                           context.response()
                             .putHeader(CONTENT_TYPE, HTML)
@@ -86,7 +87,7 @@ public enum Countries {
                             .end(buffer);
                           log.info("Countries request handled in {}", watch.elapsed());
                           var request = cmd(SETEX)
-                            .arg(COUNTRIES_REDIS_KEY)
+                            .arg(REDIS_KEY)
                             .arg(maxAge)
                             .arg(buffer);
                           redisConnection.send(request);
