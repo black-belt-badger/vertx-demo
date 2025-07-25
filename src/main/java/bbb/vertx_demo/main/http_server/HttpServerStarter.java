@@ -50,6 +50,36 @@ public enum HttpServerStarter {
       JsonObject cache
     ) {
     var router = Router.router(vertx);
+    router.route().handler(ctx -> {
+        var path = ctx.normalizedPath();
+        if (
+          path.equals("/") ||
+            path.equals("/robots.txt") ||
+            path.endsWith(".png") ||
+            path.endsWith(".ico") ||
+            path.endsWith(".svg") ||
+            path.endsWith(".css") ||
+            path.endsWith(".js")
+        ) {
+          ctx.next();
+          return;
+        }
+        var auth = ctx.request().getHeader("Authorization");
+        if (auth != null && auth.startsWith("Basic ")) {
+          var base64 = auth.substring("Basic ".length());
+          var decoded = new String(java.util.Base64.getDecoder().decode(base64));
+          var parts = decoded.split(":", 2);
+          if (parts.length == 2 && parts[0].equals("user") && parts[1].equals("pass")) {
+            ctx.next();
+            return;
+          }
+        }
+        ctx.response()
+          .putHeader("WWW-Authenticate", "Basic realm=\"9ROVE\"")
+          .setStatusCode(401)
+          .end("Unauthorized");
+      }
+    );
     router.route("/*").handler(StaticHandler.create("webroot"));
     router.route("/favicon.png").handler(StaticHandler.create());
     router.get("/health").handler(checks.register(WEB_SERVER_ONLINE, Promise::succeed));
