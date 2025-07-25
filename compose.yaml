@@ -134,6 +134,9 @@ services:
         "cache": {
           "countries" : {
             "max-age": "PT20S"
+          },
+          "forex-exchanges" : {
+            "max-age": "PT30S"
           }
         }
       }
