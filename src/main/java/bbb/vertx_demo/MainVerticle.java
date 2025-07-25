@@ -6,6 +6,7 @@ import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.healthchecks.HealthCheckHandler;
 import io.vertx.redis.client.Redis;
 import io.vertx.redis.client.RedisAPI;
+import io.vertx.redis.client.RedisOptions;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.concurrent.atomic.AtomicReference;
@@ -30,16 +31,19 @@ public final class MainVerticle extends VerticleBase {
     return
       retrieveAndMerge(vertx, checks, starting, configServerVersion)
         .map(merged -> {
-            var httpHost = merged.getString("http.host", "0.0.0.0");
-            int httpPort = merged.getInteger("http.port", 8080);
+            var redisHost = merged.getString("redis.host", "0.0.0.0");
+            int redisPort = merged.getInteger("redis.port", 6379);
             return Redis
-              .createClient(vertx)
+              .createClient(vertx, new RedisOptions().addConnectionString("redis://" + redisHost + ":" + redisPort))
               .connect()
               .onSuccess(conn -> log.info("Connected to Redis server"))
               .onFailure(throwable -> log.error("Failed to connect to Redis server", throwable))
               .flatMap(redisConnection -> {
+                  var httpHost = merged.getString("http.host", "0.0.0.0");
+                  int httpPort = merged.getInteger("http.port", 8080);
                   var redisAPI = RedisAPI.api(redisConnection);
-                  return startHttpServer(vertx, checks, httpPort, httpHost, redisAPI, redisConnection)
+                  var cache = merged.getJsonObject("cache", new JsonObject());
+                  return startHttpServer(vertx, checks, httpPort, httpHost, redisAPI, redisConnection, cache)
                     .flatMap(ignored -> {
                         var host =
                           merged.getString("telnet.host", "0.0.0.0");

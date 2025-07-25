@@ -84,6 +84,15 @@ services:
       source: ./qpid/default.json
       target: "/qpid-broker-j/work-init/default.json"
       type: bind
+  redis:
+    command: [ "redis-server", "--appendonly", "yes" ]
+    container_name: redis
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    restart: unless-stopped
+    volumes:
+      - redis_data:/data
   vertx-demo:
     command: |
       -conf='{
@@ -120,7 +129,13 @@ services:
           "trust-all": false,
           "user": "vertx_demo_dev_user"
         },
-        "telnet.port": 5001
+        "telnet.port": 5001,
+        "redis.host": "redis",
+        "cache": {
+          "countries" : {
+            "max-age": "PT20S"
+          }
+        }
       }
       '
     container_name: "vertx-demo"
@@ -150,7 +165,7 @@ services:
       retries: 10
       test: "curl -f http://localhost:8081/health"
       timeout: 1s
-    image: "marekdudek/vertx-demo:1.0.23"
+    image: marekdudek/vertx-demo:1.0.24-SNAPSHOT
     ports:
     - "8081:8081"
     - "5005:5005"
@@ -165,3 +180,5 @@ services:
       source: "./log-data/"
       target: "/log-data/"
       type: bind
+volumes:
+  redis_data:

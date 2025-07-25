@@ -24,12 +24,12 @@
         </tr>
         </thead>
         <tbody>
-        <tr data-th-each="country : ${countries.list}">
-          <th data-th-text="${country.country}"/>
+        <tr data-th-each="country : ${countries}">
+          <th data-th-text="${country.country}" class="nobr"/>
           <td data-th-text="${country.code2}"/>
           <td data-th-text="${country.region}"/>
-          <td data-th-text="${country.subRegion}"/>
-          <td data-th-text="${country.currency}"/>
+          <td data-th-text="${country.subRegion}" class="nobr"/>
+          <td data-th-text="${country.currency}" class="nobr"/>
           <td data-th-text="${country.currencyCode}"/>
           <td data-th-text="${country.defaultSpread}"/>
           <td data-th-text="${country.Rating}"/>
