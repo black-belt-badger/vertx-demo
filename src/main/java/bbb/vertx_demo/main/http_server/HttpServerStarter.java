@@ -16,8 +16,8 @@ import lombok.extern.slf4j.Slf4j;
 import static bbb.vertx_demo.main.http_server.Handlers.*;
 import static bbb.vertx_demo.main.http_server.crypto.CryptoHandlers.cryptoExchange;
 import static bbb.vertx_demo.main.http_server.crypto.CryptoHandlers.cryptoSymbol;
-import static bbb.vertx_demo.main.http_server.forex.ForexHandlers.forexExchange;
-import static bbb.vertx_demo.main.http_server.forex.ForexHandlers.forexSymbol;
+import static bbb.vertx_demo.main.http_server.forex.ForexExchanges.forexExchange;
+import static bbb.vertx_demo.main.http_server.forex.ForexSymbol.forexSymbol;
 import static bbb.vertx_demo.main.http_server.stock.StockHandlers.*;
 import static io.vertx.ext.healthchecks.Status.KO;
 
@@ -55,7 +55,8 @@ public enum HttpServerStarter {
     router.get("/fda-advisory-committee-calendar").handler(fdaAdvisoryCommiteeCalendar(webClient, engine));
     var forexExchanges = cache.getJsonObject("forex-exchanges", new JsonObject());
     router.get("/forex/exchange").handler(forexExchange(webClient, engine, redisApi, redisConnection, forexExchanges));
-    router.get("/forex/symbol/:exchange").handler(forexSymbol(webClient, engine));
+    var forexSymbols = cache.getJsonObject("forex-exchanges", new JsonObject());
+    router.get("/forex/symbol/:exchange").handler(forexSymbol(webClient, engine, redisApi, redisConnection, forexSymbols));
     router.get("/ipo-calendar").handler(ipoCalendar(webClient, engine));
     router.get("/crypto-news").handler(cryptoNews(webClient, engine));
     router.get("/forex-news").handler(forexNews(webClient, engine));
