@@ -16,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import static bbb.vertx_demo.main.http_server.Countries.countries;
 import static bbb.vertx_demo.main.http_server.FdaAdvisoryCommiteeCalendar.fdaAdvisoryCommitteeCalendar;
 import static bbb.vertx_demo.main.http_server.Handlers.*;
+import static bbb.vertx_demo.main.http_server.IpoCalendar.ipoCalendar;
 import static bbb.vertx_demo.main.http_server.crypto.CryptoExchanges.cryptoExchange;
 import static bbb.vertx_demo.main.http_server.crypto.CryptoSymbols.cryptoSymbol;
 import static bbb.vertx_demo.main.http_server.forex.ForexExchanges.forexExchange;
