@@ -23,9 +23,19 @@ import static bbb.vertx_demo.main.http_server.crypto.CryptoExchanges.cryptoExcha
 import static bbb.vertx_demo.main.http_server.crypto.CryptoSymbols.cryptoSymbol;
 import static bbb.vertx_demo.main.http_server.forex.ForexExchanges.forexExchange;
 import static bbb.vertx_demo.main.http_server.forex.ForexSymbol.forexSymbol;
-import static bbb.vertx_demo.main.http_server.stock.StockHandlers.*;
+import static bbb.vertx_demo.main.http_server.stock.StockEarnings.stockEarnings;
+import static bbb.vertx_demo.main.http_server.stock.StockFilings.stockFilings;
+import static bbb.vertx_demo.main.http_server.stock.StockFinancialsReported.stockFinancialsReported;
+import static bbb.vertx_demo.main.http_server.stock.StockInsiderSentiment.stockInsiderSentiment;
+import static bbb.vertx_demo.main.http_server.stock.StockInsiderTransactions.stockInsiderTransactions;
+import static bbb.vertx_demo.main.http_server.stock.StockMarketHoliday.stockMarketHoliday;
+import static bbb.vertx_demo.main.http_server.stock.StockProfile2.stockProfile2;
+import static bbb.vertx_demo.main.http_server.stock.StockRecommendation.stockRecommendation;
 import static bbb.vertx_demo.main.http_server.stock.StockSymbol.deploySymbolVerticle;
 import static bbb.vertx_demo.main.http_server.stock.StockSymbol.stockSymbol;
+import static bbb.vertx_demo.main.http_server.stock.StockUsaSpending.stockUsaSpending;
+import static bbb.vertx_demo.main.http_server.stock.StockUsptoPatent.stockUsptoPatent;
+import static bbb.vertx_demo.main.http_server.stock.StockVisaApplications.stockVisaApplication;
 import static io.vertx.ext.healthchecks.Status.KO;
 
 @Slf4j
