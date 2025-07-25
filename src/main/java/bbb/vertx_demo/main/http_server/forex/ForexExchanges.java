@@ -28,6 +28,8 @@ public enum ForexExchanges {
 
   ;
 
+  // TODO: add summary information: symbol count by exchange
+
   private static final String FOREX_EXCHANGES_REDIS_KEY = "/api/v1/forex/exchange";
   private static final String FOREX_EXCHANGES_FINNHUB_URL = "/api/v1/forex/exchange";
 

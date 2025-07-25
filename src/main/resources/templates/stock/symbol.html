@@ -32,7 +32,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr data-th-each="symbol : ${symbols.list}">
+        <tr data-th-each="symbol : ${symbols}">
           <th data-th-text="${symbol.displaySymbol}"/>
           <td data-th-text="${symbol.description}" class="nobr"/>
           <td data-th-text="${symbol.type}" class="nobr"/>

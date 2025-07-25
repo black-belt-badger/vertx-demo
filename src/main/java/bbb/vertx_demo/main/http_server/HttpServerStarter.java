@@ -19,6 +19,8 @@ import static bbb.vertx_demo.main.http_server.crypto.CryptoHandlers.cryptoSymbol
 import static bbb.vertx_demo.main.http_server.forex.ForexExchanges.forexExchange;
 import static bbb.vertx_demo.main.http_server.forex.ForexSymbol.forexSymbol;
 import static bbb.vertx_demo.main.http_server.stock.StockHandlers.*;
+import static bbb.vertx_demo.main.http_server.stock.StockSymbol.deploySymbolVerticle;
+import static bbb.vertx_demo.main.http_server.stock.StockSymbol.stockSymbol;
 import static io.vertx.ext.healthchecks.Status.KO;
 
 @Slf4j
@@ -71,7 +73,8 @@ public enum HttpServerStarter {
     router.get("/stock/profile2/:symbol").handler(stockProfile2(webClient, engine));
     router.get("/stock/recommendation/:symbol").handler(stockRecommendation(webClient, engine));
     deploySymbolVerticle(vertx, webClient);
-    router.get("/stock/symbol").handler(stockSymbol(vertx, engine));
+    var stockSymbols = cache.getJsonObject("stock-symbols", new JsonObject());
+    router.get("/stock/symbol/:exchange").handler(stockSymbol(vertx, engine, redisApi, redisConnection, stockSymbols));
     router.get("/stock/usa-spending/:symbol").handler(stockUsaSpending(webClient, engine));
     router.get("/stock/uspto-patent/:symbol").handler(stockUsptoPatent(webClient, engine));
     router.get("/stock/visa-application/:symbol").handler(stockVisaApplication(webClient, engine));
