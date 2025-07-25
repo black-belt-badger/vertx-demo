@@ -31,7 +31,7 @@ public enum Handlers {
   ;
 
   private static final String VERSION = ofNullable(getenv("VERSION")).orElse("unknown");
-  private static final String HTML = HTML_UTF_8.toString();
+  public static final String HTML = HTML_UTF_8.toString();
 
   static Handler<RoutingContext> mergerNews(WebClient client, ThymeleafTemplateEngine engine) {
     return context ->
@@ -183,7 +183,7 @@ public enum Handlers {
                 .onFailure(throwable -> log.error("error sending request", throwable))
                 .onSuccess(response -> {
                     var array = response.bodyAsJsonArray();
-                    var sorted =
+                    var list =
                       array.stream()
                         .map(o -> (JsonObject) o)
                         .sorted(
@@ -191,7 +191,7 @@ public enum Handlers {
                         )
                         .toList();
                     var map =
-                      new JsonArray(sorted).stream().map(o ->
+                      new JsonArray(list).stream().map(o ->
                           ((JsonObject) o).getMap()
                         )
                         .toList();
@@ -199,7 +199,10 @@ public enum Handlers {
                       .render(new JsonObject().put(COUNTRIES_TEMPLATE_KEY, map), "templates/countries.html")
                       .onFailure(throwable -> log.error("error rendering template", throwable))
                       .onSuccess(buffer -> {
-                          context.response().putHeader(CONTENT_TYPE, HTML).end(buffer);
+                          context.response()
+                            .putHeader(CONTENT_TYPE, HTML)
+                            .putHeader(CACHE_CONTROL, cacheControl)
+                            .end(buffer);
                           log.info("Countries request handled in {}", watch.elapsed());
                           var request = cmd(SETEX)
                             .arg(COUNTRIES_REDIS_KEY)

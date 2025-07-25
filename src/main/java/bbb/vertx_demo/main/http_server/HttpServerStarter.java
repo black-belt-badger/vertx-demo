@@ -53,7 +53,8 @@ public enum HttpServerStarter {
     router.get("/crypto/exchange").handler(cryptoExchange(webClient, engine));
     router.get("/crypto/symbol/:exchange").handler(cryptoSymbol(webClient, engine));
     router.get("/fda-advisory-committee-calendar").handler(fdaAdvisoryCommiteeCalendar(webClient, engine));
-    router.get("/forex/exchange").handler(forexExchange(webClient, engine));
+    var forexExchanges = cache.getJsonObject("forex-exchanges", new JsonObject());
+    router.get("/forex/exchange").handler(forexExchange(webClient, engine, redisApi, redisConnection, forexExchanges));
     router.get("/forex/symbol/:exchange").handler(forexSymbol(webClient, engine));
     router.get("/ipo-calendar").handler(ipoCalendar(webClient, engine));
     router.get("/crypto-news").handler(cryptoNews(webClient, engine));
