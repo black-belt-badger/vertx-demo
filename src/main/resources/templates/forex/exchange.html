@@ -16,10 +16,10 @@
         </tr>
         </thead>
         <tbody>
-        <tr data-th-each="exchange : ${exchanges.list}">
-          <th data-th-text="${exchange}"/>
+        <tr data-th-each="exchange : ${exchanges}">
+          <th data-th-text="${exchange.getMap().name}"/>
           <td>
-            <a th:href="@{/forex/symbol/{id}(id=${exchange})}">symbols</a>
+            <a th:href="@{/forex/symbol/{id}(id=${exchange.getMap().encoded})}">symbols</a>
           </td>
         </tr>
         </tbody>

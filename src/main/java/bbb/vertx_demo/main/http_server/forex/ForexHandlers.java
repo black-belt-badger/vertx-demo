@@ -8,6 +8,8 @@ import io.vertx.ext.web.templ.thymeleaf.ThymeleafTemplateEngine;
 import lombok.extern.slf4j.Slf4j;
 
 import static bbb.vertx_demo.main.http_server.HttpServerStarter.*;
+import static java.net.URLEncoder.encode;
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 @Slf4j
 public enum ForexHandlers {
@@ -36,7 +38,7 @@ public enum ForexHandlers {
   }
 
   public static Handler<RoutingContext> forexExchange(WebClient client, ThymeleafTemplateEngine engine) {
-    return context ->
+    return context -> {
       client
         .get(FINNHUB_PORT, FINNHUB_HOST, "/api/v1/forex/exchange")
         .putHeader(FINNHUB_HEADER, FINNHUB_API_KEY)
@@ -44,13 +46,26 @@ public enum ForexHandlers {
         .onFailure(throwable -> log.error("error sending request", throwable))
         .onSuccess(response -> {
             var array = response.bodyAsJsonArray();
+            var sorted =
+              array
+                .stream()
+                .sorted()
+                .map(obj -> {
+                    var string = (String) obj;
+                    return new JsonObject()
+                      .put("name", string)
+                      .put("encoded", encode(string, UTF_8));
+                  }
+                )
+                .toList();
             engine
-              .render(new JsonObject().put("exchanges", array), "templates/forex/exchange.html")
+              .render(new JsonObject().put("exchanges", sorted), "templates/forex/exchange.html")
               .onFailure(throwable -> log.error("error rendering template", throwable))
               .onSuccess(buffer ->
                 context.response().putHeader("content-type", "text/html").end(buffer)
               );
           }
         );
+    };
   }
 }
