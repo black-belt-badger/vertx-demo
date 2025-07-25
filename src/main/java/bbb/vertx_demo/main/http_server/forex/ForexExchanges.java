@@ -1,6 +1,5 @@
 package bbb.vertx_demo.main.http_server.forex;
 
-import com.google.common.base.Stopwatch;
 import io.vertx.core.Handler;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.RoutingContext;
@@ -14,6 +13,7 @@ import java.time.Duration;
 
 import static bbb.vertx_demo.main.http_server.Handlers.HTML;
 import static bbb.vertx_demo.main.http_server.HttpServerStarter.*;
+import static com.google.common.base.Stopwatch.createStarted;
 import static io.vertx.core.http.HttpHeaders.CACHE_CONTROL;
 import static io.vertx.core.http.HttpHeaders.CONTENT_TYPE;
 import static io.vertx.redis.client.Command.SETEX;
@@ -44,7 +44,7 @@ public enum ForexExchanges {
       var maxAge = Duration.parse(maxAgeString).toSeconds();
       log.info("Cache expiry for forex exchanges is {} seconds", maxAge);
       var cacheControl = format("public, max-age=%d, immutable", maxAge);
-      var watch = Stopwatch.createStarted();
+      var watch = createStarted();
       redisApi
         .get(FOREX_EXCHANGES_REDIS_KEY)
         .onFailure(throwable -> log.error("error getting forex exchanges from Redis", throwable))

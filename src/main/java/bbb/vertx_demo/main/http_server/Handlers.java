@@ -1,6 +1,5 @@
 package bbb.vertx_demo.main.http_server;
 
-import com.google.common.base.Stopwatch;
 import io.vertx.core.Handler;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
@@ -14,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.time.Duration;
 
 import static bbb.vertx_demo.main.http_server.HttpServerStarter.*;
+import static com.google.common.base.Stopwatch.createStarted;
 import static com.google.common.net.MediaType.HTML_UTF_8;
 import static io.vertx.core.http.HttpHeaders.CACHE_CONTROL;
 import static io.vertx.core.http.HttpHeaders.CONTENT_TYPE;
@@ -163,7 +163,7 @@ public enum Handlers {
       var maxAge = Duration.parse(maxAgeString).toSeconds();
       log.info("Cache expiry for countries is {} seconds", maxAge);
       var cacheControl = format("public, max-age=%d, immutable", maxAge);
-      var watch = Stopwatch.createStarted();
+      var watch = createStarted();
       redisAPI
         .get(COUNTRIES_REDIS_KEY)
         .onFailure(throwable -> log.error("error getting countries from Redis", throwable))

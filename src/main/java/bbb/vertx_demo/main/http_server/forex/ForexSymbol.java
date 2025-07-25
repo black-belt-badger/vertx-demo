@@ -1,7 +1,7 @@
 package bbb.vertx_demo.main.http_server.forex;
 
-import com.google.common.base.Stopwatch;
 import io.vertx.core.Handler;
+import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.client.WebClient;
@@ -14,11 +14,13 @@ import java.time.Duration;
 
 import static bbb.vertx_demo.main.http_server.Handlers.HTML;
 import static bbb.vertx_demo.main.http_server.HttpServerStarter.*;
+import static com.google.common.base.Stopwatch.createStarted;
 import static io.vertx.core.http.HttpHeaders.CACHE_CONTROL;
 import static io.vertx.core.http.HttpHeaders.CONTENT_TYPE;
 import static io.vertx.redis.client.Command.SETEX;
 import static io.vertx.redis.client.Request.cmd;
 import static java.lang.String.format;
+import static java.util.Comparator.comparing;
 import static java.util.Objects.nonNull;
 
 @Slf4j
@@ -39,7 +41,7 @@ public enum ForexSymbol {
       var maxAge = Duration.parse(maxAgeString).toSeconds();
       log.info("Cache expiry for forex symbols is {} seconds", maxAge);
       var cacheControl = format("public, max-age=%d, immutable", maxAge);
-      var watch = Stopwatch.createStarted();
+      var watch = createStarted();
       var exchange = context.pathParam("exchange");
       var redisKey = "/api/v1/forex/symbol?exchange=" + exchange;
       redisApi
@@ -62,8 +64,18 @@ public enum ForexSymbol {
                 .onFailure(throwable -> log.error("error sending request", throwable))
                 .onSuccess(response -> {
                     var array = response.bodyAsJsonArray();
+                    var list =
+                      array.stream()
+                        .map(o -> (JsonObject) o)
+                        .sorted(comparing(obj -> obj.getString("displaySymbol")))
+                        .toList();
+                    var map =
+                      new JsonArray(list).stream().map(o ->
+                          ((JsonObject) o).getMap()
+                        )
+                        .toList();
                     engine
-                      .render(new JsonObject().put("symbols", array), "templates/forex/symbol.html")
+                      .render(new JsonObject().put("symbols", map), "templates/forex/symbol.html")
                       .onFailure(throwable -> log.error("error rendering template", throwable))
                       .onSuccess(buffer -> {
                           context.response()
