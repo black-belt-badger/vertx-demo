@@ -36,6 +36,15 @@ services:
       source: ./qpid/default.json
       target: "/qpid-broker-j/work-init/default.json"
       type: bind
+  redis:
+    command: "redis-server --appendonly yes"
+    container_name: redis
+    image: "redis:latest"
+    ports:
+    - "6379:6379"
+    restart: "unless-stopped"
+    volumes:
+    - "redis_data:/data"
   "vertx-demo":
     command: |
       -conf='{
@@ -72,6 +81,7 @@ services:
           "trust-all": true,
           "user": "vertx_demo_admin"
         },
+        "redis.host": "redis",
         "telnet.port": 5000
       }
       '

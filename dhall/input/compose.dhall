@@ -28,6 +28,16 @@ let version = "1.0.24"
 
 let Environment = < Dev | Prod >
 
+let Output
+    : Type
+    = Entry Text (Optional package.Volume.Type)
+
+let toEntry =
+      \(name : Text) ->
+        { mapKey = name
+        , mapValue = Some package.Volume::{ driver = None Text }
+        }
+
 let dev_db_name = "vertx_demo_dev_database"
 
 let dev_db_user = "vertx_demo_dev_user"
@@ -187,6 +197,7 @@ let config-server =
                 , trust-all = False
                 , user = dev_db_user
                 }
+              , `redis.host` = "redis"
               , `telnet.port` = 5001
               }
         else  { amqp =
@@ -217,6 +228,7 @@ let config-server =
                 , trust-all = True
                 , user = "vertx_demo_admin"
                 }
+              , `redis.host` = "redis"
               , `telnet.port` = 5000
               }
 
@@ -271,6 +283,23 @@ let qpid =
                   }
               ]
             }
+
+let redis_data
+    : Text
+    = "redis_data"
+
+let redis =
+      \(env : Environment) ->
+        package.Service::{
+        , command = Some
+            (package.StringOrList.String "redis-server --appendonly yes")
+        , container_name = Some "redis"
+        , image = Some "redis:latest"
+        , ports = Some [ package.StringOrNumber.String "6379:6379" ]
+        , restart = Some "unless-stopped"
+        , volumes = Some
+          [ package.ServiceVolume.Short (redis_data ++ ":/data") ]
+        }
 
 let config-server-string =
       \(env : Environment) ->
@@ -380,6 +409,8 @@ let serivces =
 
               let postgres = postgres env
 
+              let redis = redis env
+
               let qpid = qpid env
 
               in  toMap
@@ -389,15 +420,25 @@ let serivces =
                     , postgres
                     , psql
                     , qpid
+                    , redis
                     }
         else  let config-server-nginx = config-server-nginx env
 
               let vertx-demo = vertx-demo env
 
+              let redis = redis env
+
               let qpid = qpid env
 
-              in  toMap { config-server-nginx, vertx-demo, qpid }
+              in  toMap { config-server-nginx, vertx-demo, qpid, redis }
 
-in  { dev = package.Config::{ services = Some (serivces Environment.Dev) }
+let volumes
+    : package.Volumes
+    = map Text Output toEntry [ redis_data ]
+
+in  { dev = package.Config::{
+      , services = Some (serivces Environment.Dev)
+      , volumes = Some volumes
+      }
     , prod = package.Config::{ services = Some (serivces Environment.Prod) }
     }

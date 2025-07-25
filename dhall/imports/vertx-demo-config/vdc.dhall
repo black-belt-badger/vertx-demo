@@ -40,6 +40,7 @@ let VertxDemoConfig
           , trust-all : Bool
           , user : Text
           }
+      , `redis.host` : Text
       , `telnet.port` : Natural
       }
 
@@ -98,6 +99,7 @@ let VertxDemoConfig/ToJSON
                         , user = string config.postgres.user
                         }
                     )
+              , `redis.host` = string config.`redis.host`
               , `telnet.port` = natural config.`telnet.port`
               }
           )
