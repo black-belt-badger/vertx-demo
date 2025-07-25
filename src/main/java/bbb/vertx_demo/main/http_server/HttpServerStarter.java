@@ -86,7 +86,8 @@ public enum HttpServerStarter {
     router.get("/health").handler(checks.register(WEB_SERVER_ONLINE, Promise::succeed));
     var engine = ThymeleafTemplateEngine.create(vertx);
     var webClient = WebClient.create(vertx);
-    router.get("/").handler(home(engine));
+    var home = cache.getJsonObject("home", new JsonObject());
+    router.get("/").handler(home(engine, redisApi, redisConnection, home));
     var countries = cache.getJsonObject("countries", new JsonObject());
     router.get("/countries").handler(countries(webClient, engine, redisApi, redisConnection, countries));
     var cryptoExchanges = cache.getJsonObject("crypto-exchanges", new JsonObject());
