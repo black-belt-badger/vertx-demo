@@ -14,8 +14,8 @@ import io.vertx.redis.client.RedisConnection;
 import lombok.extern.slf4j.Slf4j;
 
 import static bbb.vertx_demo.main.http_server.Handlers.*;
-import static bbb.vertx_demo.main.http_server.crypto.CryptoHandlers.cryptoExchange;
-import static bbb.vertx_demo.main.http_server.crypto.CryptoHandlers.cryptoSymbol;
+import static bbb.vertx_demo.main.http_server.crypto.CryptoExchanges.cryptoExchange;
+import static bbb.vertx_demo.main.http_server.crypto.CryptoSymbols.cryptoSymbol;
 import static bbb.vertx_demo.main.http_server.forex.ForexExchanges.forexExchange;
 import static bbb.vertx_demo.main.http_server.forex.ForexSymbol.forexSymbol;
 import static bbb.vertx_demo.main.http_server.stock.StockHandlers.*;
@@ -52,8 +52,10 @@ public enum HttpServerStarter {
     router.get("/").handler(home(engine));
     var countries = cache.getJsonObject("countries", new JsonObject());
     router.get("/countries").handler(countries(webClient, engine, redisApi, redisConnection, countries));
-    router.get("/crypto/exchange").handler(cryptoExchange(webClient, engine));
-    router.get("/crypto/symbol/:exchange").handler(cryptoSymbol(webClient, engine));
+    var cryptoExchanges = cache.getJsonObject("crypto-exchanges", new JsonObject());
+    router.get("/crypto/exchange").handler(cryptoExchange(webClient, engine, redisApi, redisConnection, cryptoExchanges));
+    var cryptoSymbols = cache.getJsonObject("crypto-exchanges", new JsonObject());
+    router.get("/crypto/symbol/:exchange").handler(cryptoSymbol(webClient, engine, redisApi, redisConnection, cryptoSymbols));
     router.get("/fda-advisory-committee-calendar").handler(fdaAdvisoryCommiteeCalendar(webClient, engine));
     var forexExchanges = cache.getJsonObject("forex-exchanges", new JsonObject());
     router.get("/forex/exchange").handler(forexExchange(webClient, engine, redisApi, redisConnection, forexExchanges));

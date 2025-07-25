@@ -34,10 +34,10 @@ public enum ForexSymbol {
       TemplateEngine engine,
       RedisAPI redisApi,
       RedisConnection redisConnection,
-      JsonObject forexSymbols
+      JsonObject config
     ) {
     return context -> {
-      var maxAgeString = forexSymbols.getString("max-age", "PT30M");
+      var maxAgeString = config.getString("max-age", "PT30M");
       var maxAge = Duration.parse(maxAgeString).toSeconds();
       log.info("Cache expiry for forex symbols is {} seconds", maxAge);
       var cacheControl = format("public, max-age=%d, immutable", maxAge);
@@ -76,7 +76,7 @@ public enum ForexSymbol {
                         .toList();
                     engine
                       .render(new JsonObject().put("symbols", map), "templates/forex/symbol.html")
-                      .onFailure(throwable -> log.error("error rendering template", throwable))
+                      .onFailure(throwable -> log.error("error rendering forex symbols template", throwable))
                       .onSuccess(buffer -> {
                           context.response()
                             .putHeader(CONTENT_TYPE, HTML)
