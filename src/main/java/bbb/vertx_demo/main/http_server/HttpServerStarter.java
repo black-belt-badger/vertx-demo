@@ -65,7 +65,8 @@ public enum HttpServerStarter {
     router.get("/forex/exchange").handler(forexExchange(webClient, engine, redisApi, redisConnection, forexExchanges));
     var forexSymbols = cache.getJsonObject("forex-exchanges", new JsonObject());
     router.get("/forex/symbol/:exchange").handler(forexSymbol(webClient, engine, redisApi, redisConnection, forexSymbols));
-    router.get("/ipo-calendar").handler(ipoCalendar(webClient, engine));
+    var ipoCalendar = cache.getJsonObject("ipo-calendar", new JsonObject());
+    router.get("/ipo-calendar").handler(ipoCalendar(webClient, engine, redisApi, redisConnection, ipoCalendar));
     router.get("/crypto-news").handler(cryptoNews(webClient, engine));
     router.get("/forex-news").handler(forexNews(webClient, engine));
     router.get("/general-news").handler(generalNews(webClient, engine));
