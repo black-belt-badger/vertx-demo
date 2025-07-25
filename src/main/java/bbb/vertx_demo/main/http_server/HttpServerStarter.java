@@ -7,6 +7,7 @@ import io.vertx.core.http.HttpServer;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.client.WebClient;
+import io.vertx.ext.web.handler.StaticHandler;
 import io.vertx.ext.web.healthchecks.HealthCheckHandler;
 import io.vertx.ext.web.templ.thymeleaf.ThymeleafTemplateEngine;
 import io.vertx.redis.client.RedisAPI;
@@ -49,6 +50,8 @@ public enum HttpServerStarter {
       JsonObject cache
     ) {
     var router = Router.router(vertx);
+    router.route("/*").handler(StaticHandler.create("webroot"));
+    router.route("/favicon.png").handler(StaticHandler.create());
     router.get("/health").handler(checks.register(WEB_SERVER_ONLINE, Promise::succeed));
     var engine = ThymeleafTemplateEngine.create(vertx);
     var webClient = WebClient.create(vertx);
