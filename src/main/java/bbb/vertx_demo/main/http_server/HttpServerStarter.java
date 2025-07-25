@@ -16,8 +16,9 @@ import lombok.extern.slf4j.Slf4j;
 
 import static bbb.vertx_demo.main.http_server.Countries.countries;
 import static bbb.vertx_demo.main.http_server.FdaAdvisoryCommiteeCalendar.fdaAdvisoryCommitteeCalendar;
-import static bbb.vertx_demo.main.http_server.Handlers.*;
+import static bbb.vertx_demo.main.http_server.Home.home;
 import static bbb.vertx_demo.main.http_server.IpoCalendar.ipoCalendar;
+import static bbb.vertx_demo.main.http_server.News.news;
 import static bbb.vertx_demo.main.http_server.crypto.CryptoExchanges.cryptoExchange;
 import static bbb.vertx_demo.main.http_server.crypto.CryptoSymbols.cryptoSymbol;
 import static bbb.vertx_demo.main.http_server.forex.ForexExchanges.forexExchange;
@@ -100,10 +101,7 @@ public enum HttpServerStarter {
     router.get("/forex/symbol/:exchange").handler(forexSymbol(webClient, engine, redisApi, redisConnection, forexSymbols));
     var ipoCalendar = cache.getJsonObject("ipo-calendar", new JsonObject());
     router.get("/ipo-calendar").handler(ipoCalendar(webClient, engine, redisApi, redisConnection, ipoCalendar));
-    router.get("/crypto-news").handler(cryptoNews(webClient, engine));
-    router.get("/forex-news").handler(forexNews(webClient, engine));
-    router.get("/general-news").handler(generalNews(webClient, engine));
-    router.get("/merger-news").handler(mergerNews(webClient, engine));
+    router.get("/news/:category").handler(news(webClient, engine));
     router.get("/stock/earnings/:symbol").handler(stockEarnings(webClient, engine));
     router.get("/stock/filings/:symbol").handler(stockFilings(webClient, engine));
     router.get("/stock/financials-reported/:symbol").handler(stockFinancialsReported(webClient, engine));

@@ -12,7 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.time.Duration;
 
-import static bbb.vertx_demo.main.http_server.Handlers.HTML;
+import static bbb.vertx_demo.main.http_server.Home.HTML;
 import static bbb.vertx_demo.main.http_server.HttpServerStarter.*;
 import static com.google.common.base.Stopwatch.createStarted;
 import static io.vertx.core.http.HttpHeaders.CACHE_CONTROL;
