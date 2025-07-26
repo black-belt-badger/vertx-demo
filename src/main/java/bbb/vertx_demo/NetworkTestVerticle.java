@@ -14,10 +14,10 @@ public final class NetworkTestVerticle extends VerticleBase {
   private static final String WILDCARD = "0.0.0.0";
   private static final String LOOPBACK = "127.0.0.1";
   private static final String LOCALHOST = "localhost";
-  private static final String HTTP_HOST = LOCALHOST;
-  private static final String HTTPS_HOST = LOCALHOST;
-  private static final int HTTP_PORT = 8080;
-  private static final int HTTPS_PORT = 8443;
+  private static final String HTTP_HOST = WILDCARD;
+  private static final String HTTPS_HOST = WILDCARD;
+  private static final int HTTP_PORT = 18080;
+  private static final int HTTPS_PORT = 18443;
 
   @Override
   public Future<?> start() {
@@ -31,7 +31,7 @@ public final class NetworkTestVerticle extends VerticleBase {
         var path = request.path();
         var query = request.query();
         var fullPath = path + (query != null ? "?" + query : "");
-        var redirectUrl = "https://" + hostOnly + ":8443" + fullPath;
+        var redirectUrl = "https://" + hostOnly + ":" + HTTPS_PORT + fullPath;
         log.info("Redirecting to: {}", redirectUrl);
         context.response()
           .setStatusCode(301)
@@ -52,7 +52,9 @@ public final class NetworkTestVerticle extends VerticleBase {
       }
     );
     var keyCertOptions =
-      new PemKeyCertOptions().setKeyPath("security/smooth-all/server.key.pem").setCertPath("security/smooth-all/server.cert.pem");
+      new PemKeyCertOptions()
+        .setKeyPath("/etc/letsencrypt/live/9rove.com/privkey.pem")
+        .setCertPath("/etc/letsencrypt/live/9rove.com/fullchain.pem");
     var httpsOptions =
       new HttpServerOptions().setSsl(true).setKeyCertOptions(keyCertOptions);
     var httpsServer =

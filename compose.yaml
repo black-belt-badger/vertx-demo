@@ -93,6 +93,28 @@ services:
     restart: "unless-stopped"
     volumes:
     - "redis_data:/data"
+  vertx-demo-network-test:
+      command: "bbb.vertx_demo.NetworkTestVerticle"
+      container_name: "vertx-demo-network-test"
+      environment:
+        JAVA_TOOL_OPTIONS: |
+          -Dlogback.configurationFile=/logs/logback.xml
+          -Djava.net.preferIPv4Stack=true
+      image: "marekdudek/vertx-demo:1.0.24-SNAPSHOT-17"
+      ports:
+      - "18080:18080"
+      - "18443:18443"
+      profiles:
+        - disabled
+      volumes:
+      - read_only: false
+        source: ./logs/
+        target: /logs/
+        type: bind
+      - read_only: false
+        source: "./log-data/"
+        target: "/log-data/"
+        type: bind
   vertx-demo:
     command: |
       -conf='{
