@@ -5,6 +5,7 @@ import io.vertx.core.VerticleBase;
 import io.vertx.core.http.HttpServerOptions;
 import io.vertx.core.net.PemKeyCertOptions;
 import io.vertx.ext.web.Router;
+import io.vertx.ext.web.RoutingContext;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -20,16 +21,33 @@ public final class NetworkTestVerticle extends VerticleBase {
   public Future<?> start() {
 
     var httpRouter = Router.router(vertx);
-    httpRouter.get("/").handler(ctx ->
-      ctx.response().putHeader("Content-Type", "text/plain").end("HTTP server works")
+    httpRouter.get("/").handler(context -> {
+        logRoutingContext(context);
+        var request = context.request();
+        var hostHeader = request.getHeader("Host");
+        var hostOnly = hostHeader.contains(":") ? hostHeader.split(":")[0] : hostHeader;
+        var path = request.path();
+        var query = request.query();
+        var fullPath = path + (query != null ? "?" + query : "");
+        var redirectUrl = "https://" + hostOnly + ":8443" + fullPath;
+        log.info("Redirecting to: {}", redirectUrl);
+        context.response()
+          .setStatusCode(301)
+          .putHeader("Location", redirectUrl)
+          .end();
+      }
     );
     var httpOptions = new HttpServerOptions();
     var httpServer =
       vertx.createHttpServer(httpOptions).requestHandler(httpRouter);
 
     var httpsRouter = Router.router(vertx);
-    httpsRouter.get("/").handler(ctx ->
-      ctx.response().putHeader("Content-Type", "text/plain").end("HTTPS server works")
+    httpsRouter.get("/").handler(context -> {
+        logRoutingContext(context);
+        context.response()
+          .putHeader("Content-Type", "text/plain")
+          .end("HTTPS server works" + System.lineSeparator());
+      }
     );
     var keyCertOptions =
       new PemKeyCertOptions().setKeyPath("cert/key.pem").setCertPath("cert/cert.pem");
@@ -57,5 +75,12 @@ public final class NetworkTestVerticle extends VerticleBase {
               log.info("HTTPS {}:{}", HTTPS_HOST, HTTPS_PORT)
             )
         );
+  }
+
+  private static void logRoutingContext(RoutingContext ctx) {
+    var request = ctx.request();
+    log.info("authority {}", request.authority());
+    log.info("absolute URI: {}", request.absoluteURI());
+    log.info("is SSL: {}", request.isSSL());
   }
 }
