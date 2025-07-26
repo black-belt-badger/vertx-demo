@@ -48,6 +48,10 @@
   ```shell
   docker compose down
   ```
+* Pull with `docker compose`
+  ```shell
+  docker compose pull
+  ```
 
 * Remove qpid data volume
   ```shell

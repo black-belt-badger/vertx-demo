@@ -100,7 +100,7 @@ services:
         JAVA_TOOL_OPTIONS: |
           -Dlogback.configurationFile=/logs/logback.xml
           -Djava.net.preferIPv4Stack=true
-      image: "marekdudek/vertx-demo:1.0.24-SNAPSHOT-17"
+      image: "marekdudek/vertx-demo:1.0.24-SNAPSHOT"
       ports:
       - "18080:18080"
       - "18443:18443"

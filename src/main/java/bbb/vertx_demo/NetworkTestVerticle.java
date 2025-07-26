@@ -22,6 +22,8 @@ public final class NetworkTestVerticle extends VerticleBase {
   @Override
   public Future<?> start() {
 
+    var config = config();
+
     var httpRouter = Router.router(vertx);
     httpRouter.get("/").handler(context -> {
         logRoutingContext(context);
@@ -51,10 +53,14 @@ public final class NetworkTestVerticle extends VerticleBase {
           .end("HTTPS server works" + System.lineSeparator());
       }
     );
+
+    var keyPath = config.getString("key-path", "security/smooth-all/server.key.pem");
+    var certPath = config.getString("cert-path", "security/smooth-all/server.cert.pem");
+    log.info("Effective key path: {}", keyPath);
+    log.info("Effective cert path: {}", certPath);
+
     var keyCertOptions =
-      new PemKeyCertOptions()
-        .setKeyPath("/etc/letsencrypt/live/9rove.com/privkey.pem")
-        .setCertPath("/etc/letsencrypt/live/9rove.com/fullchain.pem");
+      new PemKeyCertOptions().setKeyPath(keyPath).setCertPath(certPath);
     var httpsOptions =
       new HttpServerOptions().setSsl(true).setKeyCertOptions(keyCertOptions);
     var httpsServer =
