@@ -11,9 +11,11 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public final class NetworkTestVerticle extends VerticleBase {
 
-  private static final String ZEROS = "0.0.0.0";
-  private static final String HTTP_HOST = ZEROS;
-  private static final String HTTPS_HOST = ZEROS;
+  private static final String WILDCARD = "0.0.0.0";
+  private static final String LOOPBACK = "127.0.0.1";
+  private static final String LOCALHOST = "localhost";
+  private static final String HTTP_HOST = LOCALHOST;
+  private static final String HTTPS_HOST = LOCALHOST;
   private static final int HTTP_PORT = 8080;
   private static final int HTTPS_PORT = 8443;
 
@@ -50,7 +52,7 @@ public final class NetworkTestVerticle extends VerticleBase {
       }
     );
     var keyCertOptions =
-      new PemKeyCertOptions().setKeyPath("cert/key.pem").setCertPath("cert/cert.pem");
+      new PemKeyCertOptions().setKeyPath("security/smooth-all/server.key.pem").setCertPath("security/smooth-all/server.cert.pem");
     var httpsOptions =
       new HttpServerOptions().setSsl(true).setKeyCertOptions(keyCertOptions);
     var httpsServer =
