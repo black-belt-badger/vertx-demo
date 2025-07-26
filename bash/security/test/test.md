@@ -2,6 +2,8 @@
 
 ## Command-line tests
 
+### Insecure
+
 * cURL on 0.0.0.0
   ```shell
   ./test-http-https-insecure-0.0.0.0.sh
@@ -15,6 +17,23 @@
 * cURL on 127.0.0.1
   ```shell
   ./test-http-https-insecure-127.0.0.1.sh
+  ```
+
+### Secure
+
+* cURL on 0.0.0.0
+  ```shell
+  ./test-http-https-secure-0.0.0.0.sh
+  ```
+
+* cURL on localhost
+  ```shell
+  ./test-http-https-secure-localhost.sh
+  ```
+
+* cURL on 127.0.0.1
+  ```shell
+  ./test-http-https-secure-127.0.0.1.sh
   ```
 
 ## Browser tests
