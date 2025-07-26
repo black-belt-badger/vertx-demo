@@ -120,6 +120,7 @@ services:
           "version": "DEV inline"
         },
         "http.port": 8081,
+        "https.port": 8444,
         "postgres": {
           "database": "vertx_demo_dev_database",
           "host": "host.docker.internal",
@@ -163,6 +164,7 @@ services:
     image: "marekdudek/vertx-demo:1.0.24"
     ports:
     - "8081:8081"
+    - "8444:8444"
     - "5005:5005"
     - "5001:5001"
     - "1099:1099"

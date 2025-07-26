@@ -4,7 +4,9 @@ import io.vertx.core.Future;
 import io.vertx.core.Promise;
 import io.vertx.core.Vertx;
 import io.vertx.core.http.HttpServer;
+import io.vertx.core.http.HttpServerOptions;
 import io.vertx.core.json.JsonObject;
+import io.vertx.core.net.PemKeyCertOptions;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.client.WebClient;
 import io.vertx.ext.web.handler.StaticHandler;
@@ -43,8 +45,9 @@ public enum HttpServerStarter {
 
   ;
 
-  private static final String WEB_SERVER_STARTED = "web-server-started";
-  private static final String WEB_SERVER_ONLINE = "web-server-online";
+  private static final String HTTPS_WEB_SERVER_STARTED = "https-web-server-started";
+  private static final String HTTPS_WEB_SERVER_ONLINE = "https-web-server-online";
+  private static final String HTTP_WEB_SERVER_STARTED = "http-web-server-started";
   public static final int FINNHUB_PORT = 80;
   public static final String FINNHUB_HOST = "finnhub.io";
   public static final String FINNHUB_HEADER = "X-Finnhub-Token";
@@ -54,14 +57,37 @@ public enum HttpServerStarter {
     (
       Vertx vertx,
       HealthCheckHandler checks,
-      int port,
-      String host,
+      String keyPath,
+      String certPath,
+      String httpsHost,
+      int httpsPort,
+      String httpHost,
+      int httpPort,
       RedisAPI redisApi,
       RedisConnection redisConnection,
       JsonObject cache
     ) {
-    var router = Router.router(vertx);
-    router.route().handler(ctx -> {
+    var httpRouter = Router.router(vertx);
+    httpRouter.get("/").handler(context -> {
+        var request = context.request();
+        log.info("authority {}", request.authority());
+        log.info("absolute URI: {}", request.absoluteURI());
+        log.info("is SSL: {}", request.isSSL());
+        var hostHeader = request.getHeader("Host");
+        var host = hostHeader.contains(":") ? hostHeader.split(":")[0] : hostHeader;
+        var path = request.path();
+        var query = request.query();
+        var fullPath = path + (query != null ? "?" + query : "");
+        var redirectUrl = "https://" + host + ":" + httpsPort + fullPath;
+        log.info("Redirecting to: {}", redirectUrl);
+        context.response()
+          .setStatusCode(301)
+          .putHeader("Location", redirectUrl)
+          .end();
+      }
+    );
+    var httpsRouter = Router.router(vertx);
+    httpsRouter.route().handler(ctx -> {
         var path = ctx.normalizedPath();
         if (
           path.equals("/") ||
@@ -91,59 +117,76 @@ public enum HttpServerStarter {
           .end("Unauthorized");
       }
     );
-    router.route("/*").handler(StaticHandler.create("webroot"));
-    router.route("/favicon.png").handler(StaticHandler.create());
-    router.get("/health").handler(checks.register(WEB_SERVER_ONLINE, Promise::succeed));
+    httpsRouter.route("/*").handler(StaticHandler.create("webroot"));
+    httpsRouter.route("/favicon.png").handler(StaticHandler.create());
+    httpsRouter.get("/health").handler(checks.register(HTTPS_WEB_SERVER_ONLINE, Promise::succeed));
     var engine = ThymeleafTemplateEngine.create(vertx);
     var webClient = WebClient.create(vertx);
     var home = cache.getJsonObject("home", new JsonObject());
-    router.get("/").handler(home(engine, redisApi, redisConnection, home));
+    httpsRouter.get("/").handler(home(engine, redisApi, redisConnection, home));
     var countries = cache.getJsonObject("countries", new JsonObject());
-    router.get("/countries").handler(countries(webClient, engine, redisApi, redisConnection, countries));
+    httpsRouter.get("/countries").handler(countries(webClient, engine, redisApi, redisConnection, countries));
     var cryptoExchanges = cache.getJsonObject("crypto-exchanges", new JsonObject());
-    router.get("/crypto/exchange").handler(cryptoExchange(webClient, engine, redisApi, redisConnection, cryptoExchanges));
+    httpsRouter.get("/crypto/exchange").handler(cryptoExchange(webClient, engine, redisApi, redisConnection, cryptoExchanges));
     var cryptoSymbols = cache.getJsonObject("crypto-exchanges", new JsonObject());
-    router.get("/crypto/symbol/:exchange").handler(cryptoSymbol(webClient, engine, redisApi, redisConnection, cryptoSymbols));
+    httpsRouter.get("/crypto/symbol/:exchange").handler(cryptoSymbol(webClient, engine, redisApi, redisConnection, cryptoSymbols));
     var fdaCalendar = cache.getJsonObject("fda-calendar", new JsonObject());
-    router.get("/fda-advisory-committee-calendar").handler(fdaAdvisoryCommitteeCalendar(webClient, engine, redisApi, redisConnection, fdaCalendar));
+    httpsRouter.get("/fda-advisory-committee-calendar").handler(fdaAdvisoryCommitteeCalendar(webClient, engine, redisApi, redisConnection, fdaCalendar));
     var forexExchanges = cache.getJsonObject("forex-exchanges", new JsonObject());
-    router.get("/forex/exchange").handler(forexExchange(webClient, engine, redisApi, redisConnection, forexExchanges));
+    httpsRouter.get("/forex/exchange").handler(forexExchange(webClient, engine, redisApi, redisConnection, forexExchanges));
     var forexSymbols = cache.getJsonObject("forex-exchanges", new JsonObject());
-    router.get("/forex/symbol/:exchange").handler(forexSymbol(webClient, engine, redisApi, redisConnection, forexSymbols));
+    httpsRouter.get("/forex/symbol/:exchange").handler(forexSymbol(webClient, engine, redisApi, redisConnection, forexSymbols));
     var ipoCalendar = cache.getJsonObject("ipo-calendar", new JsonObject());
-    router.get("/ipo-calendar").handler(ipoCalendar(webClient, engine, redisApi, redisConnection, ipoCalendar));
+    httpsRouter.get("/ipo-calendar").handler(ipoCalendar(webClient, engine, redisApi, redisConnection, ipoCalendar));
     var news = cache.getJsonObject("news", new JsonObject());
-    router.get("/news/:category").handler(news(webClient, engine, redisApi, redisConnection, news));
-    router.get("/stock/earnings/:symbol").handler(stockEarnings(webClient, engine));
-    router.get("/stock/filings/:symbol").handler(stockFilings(webClient, engine));
-    router.get("/stock/financials-reported/:symbol").handler(stockFinancialsReported(webClient, engine));
-    router.get("/stock/insider-sentiment/:symbol").handler(stockInsiderSentiment(webClient, engine));
-    router.get("/stock/insider-transactions/:symbol").handler(stockInsiderTransactions(webClient, engine));
-    router.get("/stock/market-holiday/:exchange").handler(stockMarketHoliday(webClient, engine));
+    httpsRouter.get("/news/:category").handler(news(webClient, engine, redisApi, redisConnection, news));
+    httpsRouter.get("/stock/earnings/:symbol").handler(stockEarnings(webClient, engine));
+    httpsRouter.get("/stock/filings/:symbol").handler(stockFilings(webClient, engine));
+    httpsRouter.get("/stock/financials-reported/:symbol").handler(stockFinancialsReported(webClient, engine));
+    httpsRouter.get("/stock/insider-sentiment/:symbol").handler(stockInsiderSentiment(webClient, engine));
+    httpsRouter.get("/stock/insider-transactions/:symbol").handler(stockInsiderTransactions(webClient, engine));
+    httpsRouter.get("/stock/market-holiday/:exchange").handler(stockMarketHoliday(webClient, engine));
     var profile2 = cache.getJsonObject("profile2", new JsonObject());
-    router.get("/stock/profile2/:symbol").handler(stockProfile2(webClient, engine, redisApi, redisConnection, profile2));
-    router.get("/stock/recommendation/:symbol").handler(stockRecommendation(webClient, engine));
+    httpsRouter.get("/stock/profile2/:symbol").handler(stockProfile2(webClient, engine, redisApi, redisConnection, profile2));
+    httpsRouter.get("/stock/recommendation/:symbol").handler(stockRecommendation(webClient, engine));
     deploySymbolVerticle(vertx, webClient);
     var stockSymbols = cache.getJsonObject("stock-symbols", new JsonObject());
-    router.get("/stock/symbol/:exchange").handler(stockSymbol(vertx, engine, redisApi, redisConnection, stockSymbols));
-    router.get("/stock/usa-spending/:symbol").handler(stockUsaSpending(webClient, engine));
-    router.get("/stock/uspto-patent/:symbol").handler(stockUsptoPatent(webClient, engine));
-    router.get("/stock/visa-application/:symbol").handler(stockVisaApplication(webClient, engine));
-    return vertx
-      .createHttpServer()
-      .requestHandler(router)
-      .listen(port, host)
-      .onSuccess(server -> {
-          checks.register(WEB_SERVER_STARTED, Promise::succeed);
-          log.info("HTTP server started on internal {}:{}", host, port);
-        }
-      )
-      .onFailure(throwable -> {
-          checks.register(WEB_SERVER_STARTED, promise ->
-            promise.complete(KO(), throwable)
-          );
-          log.error("HTTP server failed to start on internal {}:{}", host, port, throwable);
-        }
-      );
+    httpsRouter.get("/stock/symbol/:exchange").handler(stockSymbol(vertx, engine, redisApi, redisConnection, stockSymbols));
+    httpsRouter.get("/stock/usa-spending/:symbol").handler(stockUsaSpending(webClient, engine));
+    httpsRouter.get("/stock/uspto-patent/:symbol").handler(stockUsptoPatent(webClient, engine));
+    httpsRouter.get("/stock/visa-application/:symbol").handler(stockVisaApplication(webClient, engine));
+    return
+      vertx
+        .createHttpServer(
+          new HttpServerOptions().setSsl(true).setKeyCertOptions(
+            new PemKeyCertOptions().setKeyPath(keyPath).setCertPath(certPath)
+          )
+        )
+        .requestHandler(httpsRouter)
+        .listen(httpsPort, httpsHost)
+        .onComplete(ar -> {
+            if (ar.succeeded()) checks.register(HTTPS_WEB_SERVER_STARTED, Promise::succeed);
+            else checks.register(HTTPS_WEB_SERVER_STARTED, promise ->
+              promise.complete(KO(), ar.cause())
+            );
+            if (ar.succeeded()) log.info("HTTPS {}:{}", httpsHost, httpsPort);
+            else log.error("HTTPS failed {}:{}", httpsHost, httpsPort, ar.cause());
+          }
+        )
+        .flatMap(ignored ->
+          vertx
+            .createHttpServer(new HttpServerOptions())
+            .requestHandler(httpRouter)
+            .listen(httpPort, httpHost)
+        )
+        .onComplete(ar -> {
+            if (ar.succeeded()) checks.register(HTTP_WEB_SERVER_STARTED, Promise::succeed);
+            else checks.register(HTTP_WEB_SERVER_STARTED, promise ->
+              promise.complete(KO(), ar.cause())
+            );
+            if (ar.succeeded()) log.info("HTTP {}:{}", httpHost, httpPort);
+            else log.error("HTTP failed {}:{}", httpHost, httpPort, ar.cause());
+          }
+        );
   }
 }

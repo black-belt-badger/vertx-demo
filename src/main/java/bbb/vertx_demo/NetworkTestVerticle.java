@@ -87,8 +87,8 @@ public final class NetworkTestVerticle extends VerticleBase {
         );
   }
 
-  private static void logRoutingContext(RoutingContext ctx) {
-    var request = ctx.request();
+  private static void logRoutingContext(RoutingContext context) {
+    var request = context.request();
     log.info("authority {}", request.authority());
     log.info("absolute URI: {}", request.absoluteURI());
     log.info("is SSL: {}", request.isSSL());

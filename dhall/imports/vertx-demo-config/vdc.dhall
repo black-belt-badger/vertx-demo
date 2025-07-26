@@ -31,6 +31,7 @@ let VertxDemoConfig
           , version : Text
           }
       , `http.port` : Natural
+      , `https.port` : Natural
       , postgres :
           { database : Text
           , host : Text
@@ -87,6 +88,7 @@ let VertxDemoConfig/ToJSON
                         }
                     )
               , `http.port` = natural config.`http.port`
+              , `https.port` = natural config.`https.port`
               , postgres =
                   object
                     ( toMap

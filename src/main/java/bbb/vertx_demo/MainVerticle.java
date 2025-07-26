@@ -39,11 +39,17 @@ public final class MainVerticle extends VerticleBase {
               .onSuccess(conn -> log.info("Connected to Redis server"))
               .onFailure(throwable -> log.error("Failed to connect to Redis server", throwable))
               .flatMap(redisConnection -> {
+                  var keyPath = merged.getString("key-path", "security/smooth-all/server.key.pem");
+                  var certPath = merged.getString("cert-path", "security/smooth-all/server.cert.pem");
+                  log.info("Key path: {}", keyPath);
+                  log.info("Cert path: {}", certPath);
+                  var httpsHost = merged.getString("https.host", "0.0.0.0");
+                  int httpsPort = merged.getInteger("https.port", 8443);
                   var httpHost = merged.getString("http.host", "0.0.0.0");
                   int httpPort = merged.getInteger("http.port", 8080);
                   var redisAPI = RedisAPI.api(redisConnection);
                   var cache = merged.getJsonObject("cache", new JsonObject());
-                  return startHttpServer(vertx, checks, httpPort, httpHost, redisAPI, redisConnection, cache)
+                  return startHttpServer(vertx, checks, keyPath, certPath, httpsHost, httpsPort, httpHost, httpPort, redisAPI, redisConnection, cache)
                     .flatMap(ignored -> {
                         var host =
                           merged.getString("telnet.host", "0.0.0.0");

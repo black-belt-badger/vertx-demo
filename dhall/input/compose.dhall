@@ -188,6 +188,7 @@ let config-server =
                 , version = "DEV inline"
                 }
               , `http.port` = 8081
+              , `https.port` = 8444
               , postgres =
                 { database = dev_db_name
                 , host = "host.docker.internal"
@@ -218,6 +219,7 @@ let config-server =
                 , version = "PROD inline"
                 }
               , `http.port` = 8080
+              , `https.port` = 8443
               , postgres =
                 { database = "postgres"
                 , host =
@@ -371,6 +373,11 @@ let vertx-demo =
               ( if    merge { Dev = True, Prod = False } env
                 then  "8081:8081"
                 else  "80:8080"
+              )
+          , package.StringOrNumber.String
+              ( if    merge { Dev = True, Prod = False } env
+                then  "8444:8444"
+                else  "443:8443"
               )
           , package.StringOrNumber.String "5005:5005"
           , package.StringOrNumber.String
