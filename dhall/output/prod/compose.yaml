@@ -14,6 +14,32 @@ services:
       source: ./configs/
       target: /usr/share/nginx/html
       type: bind
+  "network-test":
+    command: |
+      bbb.vertx_demo.NetworkTestVerticle
+      -conf='{"key-path": "/etc/letsencrypt/live/9rove.com/privkey.pem", "cert-path": "/etc/letsencrypt/live/9rove.com/fullchain.pem" }'
+    container_name: "network-test"
+    environment:
+      JAVA_TOOL_OPTIONS: |
+        -Dlogback.configurationFile=/logs/logback.xml
+        -Djava.net.preferIPv4Stack=true
+    image: "marekdudek/vertx-demo:1.0.24"
+    ports:
+    - "18080:18080"
+    - "18443:18443"
+    volumes:
+    - read_only: false
+      source: ./logs/
+      target: /logs/
+      type: bind
+    - read_only: false
+      source: "./log-data/"
+      target: "/log-data/"
+      type: bind
+    - read_only: true
+      source: /etc/letsencrypt
+      target: /etc/letsencrypt
+      type: bind
   qpid:
     container_name: qpid
     environment:
@@ -64,6 +90,7 @@ services:
           },
           "username": "prod_admin"
         },
+        "cert-path": "/etc/letsencrypt/live/9rove.com/fullchain.pem",
         "config-server": {
           "host": "51.21.163.63",
           "path": "/conf.json",
@@ -73,6 +100,7 @@ services:
         },
         "http.port": 8080,
         "https.port": 8443,
+        "key-path": "/etc/letsencrypt/live/9rove.com/privkey.pem",
         "postgres": {
           "database": "postgres",
           "host": "vertx-demo-db.chimcku4qngw.eu-north-1.rds.amazonaws.com",
@@ -125,3 +153,9 @@ services:
       source: "./log-data/"
       target: "/log-data/"
       type: bind
+    - read_only: true
+      source: /etc/letsencrypt
+      target: /etc/letsencrypt
+      type: bind
+volumes:
+  redis_data: {}

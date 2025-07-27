@@ -32,6 +32,8 @@ let VertxDemoConfig
           }
       , `http.port` : Natural
       , `https.port` : Natural
+      , key-path : Text
+      , cert-path : Text
       , postgres :
           { database : Text
           , host : Text
@@ -87,6 +89,8 @@ let VertxDemoConfig/ToJSON
                         , version = string config.config-server.version
                         }
                     )
+              , key-path = string config.key-path
+              , cert-path = string config.cert-path
               , `http.port` = natural config.`http.port`
               , `https.port` = natural config.`https.port`
               , postgres =

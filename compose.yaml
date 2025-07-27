@@ -14,6 +14,26 @@ services:
       source: ./configs/
       target: /usr/share/nginx/html
       type: bind
+  network-test:
+    command: bbb.vertx_demo.NetworkTestVerticle
+    container_name: "network-test"
+    environment:
+      JAVA_TOOL_OPTIONS: |
+        -Dlogback.configurationFile=/logs/logback.xml
+        -Djava.net.preferIPv4Stack=true
+    image: "marekdudek/vertx-demo:1.0.24"
+    ports:
+    - "18080:18080"
+    - "18443:18443"
+    volumes:
+    - read_only: false
+      source: ./logs/
+      target: /logs/
+      type: bind
+    - read_only: false
+      source: "./log-data/"
+      target: "/log-data/"
+      type: bind
   pgadmin:
     container_name: pgadmin
     depends_on:
@@ -93,28 +113,6 @@ services:
     restart: "unless-stopped"
     volumes:
     - "redis_data:/data"
-  vertx-demo-network-test:
-      command: "bbb.vertx_demo.NetworkTestVerticle"
-      container_name: "vertx-demo-network-test"
-      environment:
-        JAVA_TOOL_OPTIONS: |
-          -Dlogback.configurationFile=/logs/logback.xml
-          -Djava.net.preferIPv4Stack=true
-      image: "marekdudek/vertx-demo:1.0.24-SNAPSHOT"
-      ports:
-      - "18080:18080"
-      - "18443:18443"
-      profiles:
-        - disabled
-      volumes:
-      - read_only: false
-        source: ./logs/
-        target: /logs/
-        type: bind
-      - read_only: false
-        source: "./log-data/"
-        target: "/log-data/"
-        type: bind
   vertx-demo:
     command: |
       -conf='{
@@ -134,6 +132,7 @@ services:
           },
           "username": "dev_admin"
         },
+        "cert-path": "security/smooth-all/server.cert.pem",
         "config-server": {
           "host": "host.docker.internal",
           "path": "/conf.json",
@@ -142,6 +141,8 @@ services:
           "version": "DEV inline"
         },
         "http.port": 8081,
+        "https.port": 8444,
+        "key-path": "security/smooth-all/server.key.pem",
         "postgres": {
           "database": "vertx_demo_dev_database",
           "host": "host.docker.internal",
@@ -185,6 +186,7 @@ services:
     image: "marekdudek/vertx-demo:1.0.24"
     ports:
     - "8081:8081"
+    - "8444:8444"
     - "5005:5005"
     - "5001:5001"
     - "1099:1099"

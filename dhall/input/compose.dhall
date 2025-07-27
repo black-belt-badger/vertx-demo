@@ -167,6 +167,33 @@ let psql =
         ]
       }
 
+let logs-volume =
+      package.ServiceVolume.Long
+        package.ServiceVolumeLong::{
+        , read_only = Some False
+        , source = Some "./logs/"
+        , target = Some "/logs/"
+        , type = Some "bind"
+        }
+
+let logs-data-volume =
+      package.ServiceVolume.Long
+        package.ServiceVolumeLong::{
+        , read_only = Some False
+        , source = Some "./log-data/"
+        , target = Some "/log-data/"
+        , type = Some "bind"
+        }
+
+let lets-encrypt-volume =
+      package.ServiceVolume.Long
+        package.ServiceVolumeLong::{
+        , read_only = Some True
+        , source = Some "/etc/letsencrypt"
+        , target = Some "/etc/letsencrypt"
+        , type = Some "bind"
+        }
+
 let config-server =
       \(env : Environment) ->
         if    merge { Dev = True, Prod = False } env
@@ -189,6 +216,8 @@ let config-server =
                 }
               , `http.port` = 8081
               , `https.port` = 8444
+              , key-path = "security/smooth-all/server.key.pem"
+              , cert-path = "security/smooth-all/server.cert.pem"
               , postgres =
                 { database = dev_db_name
                 , host = "host.docker.internal"
@@ -220,6 +249,8 @@ let config-server =
                 }
               , `http.port` = 8080
               , `https.port` = 8443
+              , key-path = "/etc/letsencrypt/live/9rove.com/privkey.pem"
+              , cert-path = "/etc/letsencrypt/live/9rove.com/fullchain.pem"
               , postgres =
                 { database = "postgres"
                 , host =
@@ -233,6 +264,43 @@ let config-server =
               , `redis.host` = "redis"
               , `telnet.port` = 5000
               }
+
+let network-test =
+      \(env : Environment) ->
+        package.Service::{
+        , command = Some
+            ( if    merge { Dev = True, Prod = False } env
+              then  package.StringOrList.String
+                      "bbb.vertx_demo.NetworkTestVerticle"
+              else  package.StringOrList.String
+                      ''
+                      bbb.vertx_demo.NetworkTestVerticle
+                      -conf='{"key-path": "/etc/letsencrypt/live/9rove.com/privkey.pem", "cert-path": "/etc/letsencrypt/live/9rove.com/fullchain.pem" }'
+                      ''
+            )
+        , container_name = Some "network-test"
+        , environment = Some
+            ( package.ListOrDict.Dict
+                [ { mapKey = "JAVA_TOOL_OPTIONS"
+                  , mapValue =
+                      ''
+                      -Dlogback.configurationFile=/logs/logback.xml
+                      -Djava.net.preferIPv4Stack=true
+                      ''
+                  }
+                ]
+            )
+        , image = Some ("marekdudek/vertx-demo:" ++ version)
+        , ports = Some
+          [ package.StringOrNumber.String "18080:18080"
+          , package.StringOrNumber.String "18443:18443"
+          ]
+        , volumes = Some
+            ( if    merge { Dev = True, Prod = False } env
+              then  [ logs-volume, logs-data-volume ]
+              else  [ logs-volume, logs-data-volume, lets-encrypt-volume ]
+            )
+        }
 
 let qpid =
       \(env : Environment) ->
@@ -388,21 +456,10 @@ let vertx-demo =
           , package.StringOrNumber.String "1099:1099"
           ]
         , volumes = Some
-          [ package.ServiceVolume.Long
-              package.ServiceVolumeLong::{
-              , read_only = Some False
-              , source = Some "./logs/"
-              , target = Some "/logs/"
-              , type = Some "bind"
-              }
-          , package.ServiceVolume.Long
-              package.ServiceVolumeLong::{
-              , read_only = Some False
-              , source = Some "./log-data/"
-              , target = Some "/log-data/"
-              , type = Some "bind"
-              }
-          ]
+            ( if    merge { Dev = True, Prod = False } env
+              then  [ logs-volume, logs-data-volume ]
+              else  [ logs-volume, logs-data-volume, lets-encrypt-volume ]
+            )
         }
 
 let serivces =
@@ -420,6 +477,8 @@ let serivces =
 
               let qpid = qpid env
 
+              let network-test = network-test env
+
               in  toMap
                     { config-server-nginx
                     , vertx-demo
@@ -428,6 +487,7 @@ let serivces =
                     , psql
                     , qpid
                     , redis
+                    , network-test
                     }
         else  let config-server-nginx = config-server-nginx env
 
@@ -437,7 +497,15 @@ let serivces =
 
               let qpid = qpid env
 
-              in  toMap { config-server-nginx, vertx-demo, qpid, redis }
+              let network-test = network-test env
+
+              in  toMap
+                    { config-server-nginx
+                    , vertx-demo
+                    , qpid
+                    , redis
+                    , network-test
+                    }
 
 let volumes
     : package.Volumes
@@ -447,5 +515,8 @@ in  { dev = package.Config::{
       , services = Some (serivces Environment.Dev)
       , volumes = Some volumes
       }
-    , prod = package.Config::{ services = Some (serivces Environment.Prod) }
+    , prod = package.Config::{
+      , services = Some (serivces Environment.Prod)
+      , volumes = Some volumes
+      }
     }

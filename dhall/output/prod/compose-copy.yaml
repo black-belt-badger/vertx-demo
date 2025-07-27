@@ -14,8 +14,10 @@ services:
       source: ./configs/
       target: /usr/share/nginx/html
       type: bind
-  "network-test":
-    command: bbb.vertx_demo.NetworkTestVerticle
+  network-test:
+    command: |
+      bbb.vertx_demo.NetworkTestVerticle
+      -conf='{"key-path": "/etc/letsencrypt/live/9rove.com/privkey.pem", "cert-path": "/etc/letsencrypt/live/9rove.com/fullchain.pem" }'
     container_name: "network-test"
     environment:
       JAVA_TOOL_OPTIONS: |
@@ -34,53 +36,9 @@ services:
       source: "./log-data/"
       target: "/log-data/"
       type: bind
-  pgadmin:
-    container_name: pgadmin
-    depends_on:
-      postgres:
-        condition: service_healthy
-    environment:
-      PGADMIN_DEFAULT_EMAIL: "user@domain.com"
-      PGADMIN_DEFAULT_PASSWORD: secret
-    image: dpage/pgadmin4
-    ports:
-    - "5050:80"
-    restart: "unless-stopped"
-    volumes:
-    - read_only: false
-      source: ./pgadmin/servers.json
-      target: /pgadmin4/servers.json
-      type: bind
-  postgres:
-    container_name: postgres
-    environment:
-      POSTGRES_DB: vertx_demo_dev_database
-      POSTGRES_PASSWORD: vertx_demo_dev_password
-      POSTGRES_USER: vertx_demo_dev_user
-    healthcheck:
-      interval: 3s
-      retries: 10
-      test: "pg_isready -U vertx_demo_dev_user -d vertx_demo_dev_database"
-      timeout: 1s
-    image: postgres
-    ports:
-    - "5432:5432"
-    restart: "unless-stopped"
-  psql:
-    command: |
-      --dbname=vertx_demo_dev_database --username vertx_demo_dev_user --host postgres --port 5432  --echo-all --single-transaction
-      --file sql/init-db.sql
-    container_name: psql
-    depends_on:
-      postgres:
-        condition: service_healthy
-    environment:
-      PGPASSWORD: vertx_demo_dev_password
-    image: alpine/psql
-    volumes:
-    - read_only: false
-      source: ./sql
-      target: /sql
+    - read_only: true
+      source: /etc/letsencrypt
+      target: /etc/letsencrypt
       type: bind
   qpid:
     container_name: qpid
@@ -88,12 +46,12 @@ services:
       JAVA_GC: "-XX:+UseG1GC"
       JAVA_MEM: "-Xmx256m -XX:MaxDirectMemorySize=128m"
       JAVA_OPTS: ''
-      QPID_ADMIN_PASSWORD: dev_secret
-      QPID_ADMIN_USER: dev_admin
+      QPID_ADMIN_PASSWORD: prod_secret
+      QPID_ADMIN_USER: prod_admin
     healthcheck:
       interval: 5s
       retries: 3
-      test: "curl -u dev_admin:dev_secret --basic -o /dev/null -f -w %{http_code} http://dev_admin:dev_secret@localhost:8080/api/latest/broker"
+      test: "curl -u prod_admin:prod_secret --basic -o /dev/null -f -w %{http_code} http://prod_admin:prod_secret@localhost:8080/api/latest/broker"
       timeout: 3s
     image: "apache/qpid-broker-j"
     ports:
@@ -122,7 +80,7 @@ services:
             "queue": "client-queue"
           },
           "host": "qpid",
-          "password": "dev_secret",
+          "password": "prod_secret",
           "port": 5672,
           "reconnect-attempts": 2147483647,
           "reconnect-interval": 100,
@@ -130,40 +88,36 @@ services:
             "delay": 1000,
             "queue": "server-queue"
           },
-          "username": "dev_admin"
+          "username": "prod_admin"
         },
-        "cert-path": "security/smooth-all/server.cert.pem",
+        "cert-path": "/etc/letsencrypt/live/9rove.com/fullchain.pem",
         "config-server": {
-          "host": "host.docker.internal",
+          "host": "51.21.163.63",
           "path": "/conf.json",
           "port": 8887,
-          "scan-period": "PT5S",
-          "version": "DEV inline"
+          "scan-period": "PT30S",
+          "version": "PROD inline"
         },
-        "http.port": 8081,
-        "https.port": 8444,
-        "key-path": "security/smooth-all/server.key.pem",
+        "http.port": 8080,
+        "https.port": 8443,
+        "key-path": "/etc/letsencrypt/live/9rove.com/privkey.pem",
         "postgres": {
-          "database": "vertx_demo_dev_database",
-          "host": "host.docker.internal",
-          "password": "vertx_demo_dev_password",
+          "database": "postgres",
+          "host": "vertx-demo-db.chimcku4qngw.eu-north-1.rds.amazonaws.com",
+          "password": "vertx_demo_password",
           "port": 5432,
-          "ssl-mode": "disable",
-          "trust-all": false,
-          "user": "vertx_demo_dev_user"
+          "ssl-mode": "allow",
+          "trust-all": true,
+          "user": "vertx_demo_admin"
         },
         "redis.host": "redis",
-        "telnet.port": 5001
+        "telnet.port": 5000
       }
       '
     container_name: "vertx-demo"
     depends_on:
       "config-server-nginx":
         condition: service_healthy
-      postgres:
-        condition: service_healthy
-      psql:
-        condition: service_completed_successfully
       qpid:
         condition: service_healthy
     environment:
@@ -176,7 +130,7 @@ services:
         -Dcom.sun.management.jmxremote.ssl=false
         -Dcom.sun.management.jmxremote.port=1099
         -Dcom.sun.management.jmxremote.rmi.port=1099
-        -Djava.rmi.server.hostname=0.0.0.0
+        -Djava.rmi.server.hostname=ec2-51-21-163-63.eu-north-1.compute.amazonaws.com
       VERSION: '1.0.24'
     healthcheck:
       interval: 10s
@@ -185,10 +139,10 @@ services:
       timeout: 1s
     image: "marekdudek/vertx-demo:1.0.24"
     ports:
-    - "8081:8081"
-    - "8444:8444"
+    - "80:8080"
+    - "443:8443"
     - "5005:5005"
-    - "5001:5001"
+    - "5000:5000"
     - "1099:1099"
     volumes:
     - read_only: false
@@ -199,5 +153,9 @@ services:
       source: "./log-data/"
       target: "/log-data/"
       type: bind
+    - read_only: true
+      source: /etc/letsencrypt
+      target: /etc/letsencrypt
+      type: bind
 volumes:
-  redis_data: {}
+  redis_data:
