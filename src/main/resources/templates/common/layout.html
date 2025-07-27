@@ -11,6 +11,13 @@
     .nobr {
       white-space: nowrap;
     }
+    #cookie-banner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
   </style>
 </head>
 <body>
@@ -24,5 +31,28 @@
   <hr/>
   <p>© 2025 9ROVE</p>
 </footer>
+<div id="cookie-banner" class="container"
+     style="display: none; position: fixed; bottom: 1rem; left: 1rem; right: 1rem; background: var(--card-background-color); border-radius: var(--border-radius); padding: 1rem; box-shadow: var(--card-box-shadow); z-index: 9999;">
+  <p>
+    This website uses cookies to ensure you get the best experience.
+    <a href="/about#cookies">Learn more</a>.
+  </p>
+  <button id="accept-cookies" class="secondary">Got it!</button>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const banner = document.getElementById('cookie-banner');
+    const acceptBtn = document.getElementById('accept-cookies');
+
+    if (!localStorage.getItem('cookiesAccepted')) {
+      banner.style.display = 'block';
+    }
+
+    acceptBtn.addEventListener('click', function () {
+      localStorage.setItem('cookiesAccepted', 'true');
+      banner.style.display = 'none';
+    });
+  });
+</script>
 </body>
 </html>
