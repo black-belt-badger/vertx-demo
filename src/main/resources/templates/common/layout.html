@@ -3,9 +3,10 @@
 <html th:fragment="layout (title, content)" xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
   <title th:replace="${title}">9rove</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
   <meta name="robots" content="noindex, nofollow">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.classless.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
   <style>
     .nobr {
       white-space: nowrap;
@@ -13,14 +14,15 @@
   </style>
 </head>
 <body>
-<header>
+<header class="container">
   <nav th:insert="~{templates/common/menu.html}"></nav>
 </header>
-<main>
+<main class="container">
   <section th:replace="${content}"></section>
 </main>
-<footer>
-  <p>© 2025 9ROVE — Source of financial news</p>
+<footer class="container">
+  <hr/>
+  <p>© 2025 9ROVE</p>
 </footer>
 </body>
 </html>
