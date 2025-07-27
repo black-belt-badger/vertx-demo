@@ -7,6 +7,7 @@ import qualified Data.Text as T
 import qualified Data.Text.IO as TIO
 import Data.Maybe (fromMaybe)
 import System.Environment (getArgs)
+import System.Exit (die)
 
 import Numeric.Natural (Natural)
 
@@ -62,17 +63,12 @@ renderIPO ipo =
 main :: IO ()
 main = do
   args <- getArgs
-  let inputPath  = fromMaybe "../output/calendar-ipo.dhall" (safeGet 0 args)
-      outputPath = fromMaybe "/tmp/insert_ipos.sql"         (safeGet 1 args)
-
-  ipos <- Dhall.input (Dhall.auto :: Dhall.Decoder [IPO]) (T.pack inputPath)
-
-  let header = "INSERT INTO fh.calendar_ipo (date, exchange, name, number_of_shares, price, status, symbol, total_shares_value) VALUES"
-      values = T.intercalate ",\n" (map renderIPO ipos)
-      statement = T.unlines [header, values, "ON CONFLICT ON CONSTRAINT value_difference DO NOTHING;"]
-
-  TIO.writeFile outputPath statement
-  putStrLn $ "SQL written to " ++ outputPath
-
-safeGet :: Int -> [a] -> Maybe a
-safeGet i xs = if i < length xs then Just (xs !! i) else Nothing
+  case args of
+    [inputPath, outputPath] -> do
+      ipos <- Dhall.input (Dhall.auto :: Dhall.Decoder [IPO]) (T.pack inputPath)
+      let header = "INSERT INTO fh.calendar_ipo (date, exchange, name, number_of_shares, price, status, symbol, total_shares_value) VALUES"
+          values = T.intercalate ",\n" (map renderIPO ipos)
+          statement = T.unlines [header, values, "ON CONFLICT ON CONSTRAINT value_difference DO NOTHING;"]
+      TIO.writeFile outputPath statement
+      putStrLn $ "SQL written to " ++ outputPath
+    _ -> die "Usage: dhall-to-sql <input.dhall> <output.sql>"

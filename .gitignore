@@ -186,3 +186,4 @@ nbdist/
 /.idea/
 /vertx-demo.pem
 /log-data/
+/dhall/haskell/.stack-work/
