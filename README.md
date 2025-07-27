@@ -108,3 +108,9 @@
   ```shell
   docker exec -it vertx-demo bash
   ```
+
+* PSQL
+  ```shell
+  export PGPASSWORD=vertx_demo_dev_password
+  psql --user vertx_demo_dev_user --dbname vertx_demo_dev_database --host localhost
+  ```

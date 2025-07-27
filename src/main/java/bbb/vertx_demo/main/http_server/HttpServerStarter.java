@@ -22,6 +22,7 @@ import static bbb.vertx_demo.main.http_server.FdaAdvisoryCommiteeCalendar.fdaAdv
 import static bbb.vertx_demo.main.http_server.Home.home;
 import static bbb.vertx_demo.main.http_server.IpoCalendar.ipoCalendar;
 import static bbb.vertx_demo.main.http_server.News.news;
+import static bbb.vertx_demo.main.http_server.ViewAllIpos.viewAllIpos;
 import static bbb.vertx_demo.main.http_server.crypto.CryptoExchanges.cryptoExchange;
 import static bbb.vertx_demo.main.http_server.crypto.CryptoSymbols.cryptoSymbol;
 import static bbb.vertx_demo.main.http_server.forex.ForexExchanges.forexExchange;
@@ -94,6 +95,7 @@ public enum HttpServerStarter {
           path.equals("/") ||
             path.equals("/robots.txt") ||
             path.equals("/about") ||
+            path.equals("/view-all-ipos") ||
             path.endsWith(".png") ||
             path.endsWith(".ico") ||
             path.endsWith(".svg") ||
@@ -123,6 +125,7 @@ public enum HttpServerStarter {
     httpsRouter.route("/favicon.png").handler(StaticHandler.create());
     var engine = ThymeleafTemplateEngine.create(vertx);
     httpsRouter.route("/about").handler(about(engine, redisApi, redisConnection, new JsonObject()));
+    httpsRouter.route("/view-all-ipos").handler(viewAllIpos(engine, redisApi, redisConnection, new JsonObject()));
     httpsRouter.get("/health").handler(checks.register(HTTPS_WEB_SERVER_ONLINE, Promise::succeed));
     var webClient = WebClient.create(vertx);
     var home = cache.getJsonObject("home", new JsonObject());

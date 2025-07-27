@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html th:replace="~{'./templates/common/layout.html' :: layout(~{::title}, ~{::section})}" lang="en">
+<head>
+  <title>All IPOs</title>
+</head>
+<body>
+<section>
+  <h1>All IPOs</h1>
+  <div class="grid" style="--min: 16rem;">
+    <div th:each="ipo : ${ipos}" class="card">
+      <h2 th:text="${ipo.name}">IPO Name</h2>
+      <p>
+        <strong>Date:</strong> <span th:text="${ipo.date}">2025-09-01</span><br>
+        <strong>Exchange:</strong> <span th:text="${ipo.exchange}">NASDAQ</span><br>
+        <strong>Ticker:</strong> <span th:text="${ipo.ticker}">XYZ</span>
+      </p>
+      <p th:if="${ipo.description != null}" th:text="${ipo.description}">Company description goes here.</p>
+      <a th:href="@{/ipos/{ticker}(ticker=${ipo.ticker})}" class="secondary">View Details</a>
+    </div>
+  </div>
+</section>
+</body>
+</html>
