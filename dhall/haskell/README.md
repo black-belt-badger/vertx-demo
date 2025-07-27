@@ -1,1 +1,0 @@
-# dhall-to-sql

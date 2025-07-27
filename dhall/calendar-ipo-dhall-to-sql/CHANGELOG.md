@@ -1,4 +1,4 @@
-# Changelog for `dhall-to-sql`
+# Changelog for `calendar-ipo-dhall-to-sql`
 
 All notable changes to this project will be documented in this file.
 

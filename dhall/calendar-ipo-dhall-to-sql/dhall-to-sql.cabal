@@ -15,7 +15,7 @@ build-type:          Simple
 extra-source-files:  README.md
                      CHANGELOG.md
 
-executable dhall-to-sql
+executable calendar-ipo-dhall-to-sql
   main-is:             Main.hs
   hs-source-dirs:      app
   build-depends:
