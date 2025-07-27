@@ -1,0 +1,57 @@
+.nobr {
+  white-space: nowrap;
+}
+
+#cookie-banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.section-highlight h2 {
+  border-left: 4px solid #00bfa6;
+  padding-left: 1rem;
+  margin-top: 2rem;
+  font-size: 1.5rem;
+  color: #00796b;
+}
+
+.section-highlight {
+  background-color: #f5f7fa;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  margin-bottom: 2rem;
+}
+
+h2 svg {
+  width: 1.2em;
+  height: 1.2em;
+  vertical-align: middle;
+  margin-right: 0.5rem;
+  stroke-width: 2;
+}
+
+tr.recent-ipo td {
+  background-color: #fff8e1;
+  font-weight: 500;
+  border-left: 4px solid #ffd580;
+}
+
+tr.recent-ipo:hover td {
+  background-color: #ffefcc;
+}
+
+td.price, td.shares {
+  text-align: right;
+}
+
+nav a {
+  color: #6b4e16;
+}
+
+nav a:hover {
+  color: #000;
+  text-decoration: underline;
+}
