@@ -16,6 +16,7 @@ import io.vertx.redis.client.RedisAPI;
 import io.vertx.redis.client.RedisConnection;
 import lombok.extern.slf4j.Slf4j;
 
+import static bbb.vertx_demo.main.http_server.About.about;
 import static bbb.vertx_demo.main.http_server.Countries.countries;
 import static bbb.vertx_demo.main.http_server.FdaAdvisoryCommiteeCalendar.fdaAdvisoryCommitteeCalendar;
 import static bbb.vertx_demo.main.http_server.Home.home;
@@ -92,6 +93,7 @@ public enum HttpServerStarter {
         if (
           path.equals("/") ||
             path.equals("/robots.txt") ||
+            path.equals("/about") ||
             path.endsWith(".png") ||
             path.endsWith(".ico") ||
             path.endsWith(".svg") ||
@@ -119,8 +121,9 @@ public enum HttpServerStarter {
     );
     httpsRouter.route("/*").handler(StaticHandler.create("webroot"));
     httpsRouter.route("/favicon.png").handler(StaticHandler.create());
-    httpsRouter.get("/health").handler(checks.register(HTTPS_WEB_SERVER_ONLINE, Promise::succeed));
     var engine = ThymeleafTemplateEngine.create(vertx);
+    httpsRouter.route("/about").handler(about(engine, redisApi, redisConnection, new JsonObject()));
+    httpsRouter.get("/health").handler(checks.register(HTTPS_WEB_SERVER_ONLINE, Promise::succeed));
     var webClient = WebClient.create(vertx);
     var home = cache.getJsonObject("home", new JsonObject());
     httpsRouter.get("/").handler(home(engine, redisApi, redisConnection, home));
