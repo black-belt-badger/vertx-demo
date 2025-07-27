@@ -6,16 +6,9 @@ import qualified Dhall
 import qualified Data.Text as T
 import qualified Data.Text.IO as TIO
 import Data.Maybe (fromMaybe)
-import qualified Dhall.Core as DC
+import System.Environment (getArgs)
 
-import qualified Dhall
-import qualified Dhall.Core as DC
-import qualified Dhall.Map as Map
-import qualified Dhall.Src as Src
-import qualified Dhall.TypeCheck as TypeCheck
-import qualified Dhall.Context as Context
-
-import Numeric.Natural (Natural) -- <== ✅ Use this!
+import Numeric.Natural (Natural)
 
 -- IPO record
 data IPO = IPO
@@ -29,20 +22,18 @@ data IPO = IPO
   , totalSharesValue :: Maybe Natural
   } deriving (Show)
 
-
 instance Dhall.FromDhall IPO where
   autoWith _ = Dhall.record
-                   ( IPO
-                     <$> Dhall.field "date" Dhall.strictText
-                     <*> Dhall.field "exchange" (Dhall.maybe Dhall.strictText)
-                     <*> Dhall.field "name" Dhall.strictText
-                     <*> Dhall.field "numberOfShares" (Dhall.maybe Dhall.natural)
-                     <*> Dhall.field "price" (Dhall.maybe Dhall.strictText)
-                     <*> Dhall.field "status" Dhall.strictText
-                     <*> Dhall.field "symbol" (Dhall.maybe Dhall.strictText)
-                     <*> Dhall.field "totalSharesValue" (Dhall.maybe Dhall.natural)
-                   )
-
+    ( IPO
+      <$> Dhall.field "date" Dhall.strictText
+      <*> Dhall.field "exchange" (Dhall.maybe Dhall.strictText)
+      <*> Dhall.field "name" Dhall.strictText
+      <*> Dhall.field "numberOfShares" (Dhall.maybe Dhall.natural)
+      <*> Dhall.field "price" (Dhall.maybe Dhall.strictText)
+      <*> Dhall.field "status" Dhall.strictText
+      <*> Dhall.field "symbol" (Dhall.maybe Dhall.strictText)
+      <*> Dhall.field "totalSharesValue" (Dhall.maybe Dhall.natural)
+    )
 
 escapeText :: T.Text -> T.Text
 escapeText = T.replace "'" "''"
@@ -70,9 +61,18 @@ renderIPO ipo =
 
 main :: IO ()
 main = do
-  ipos <- Dhall.input (Dhall.auto :: Dhall.Decoder [IPO]) "../output/calendar-ipo.dhall"
+  args <- getArgs
+  let inputPath  = fromMaybe "../output/calendar-ipo.dhall" (safeGet 0 args)
+      outputPath = fromMaybe "/tmp/insert_ipos.sql"         (safeGet 1 args)
+
+  ipos <- Dhall.input (Dhall.auto :: Dhall.Decoder [IPO]) (T.pack inputPath)
+
   let header = "INSERT INTO fh.calendar_ipo (date, exchange, name, number_of_shares, price, status, symbol, total_shares_value) VALUES"
       values = T.intercalate ",\n" (map renderIPO ipos)
       statement = T.unlines [header, values, "ON CONFLICT ON CONSTRAINT value_difference DO NOTHING;"]
-  TIO.writeFile "/tmp/insert_ipos.sql" statement
-  putStrLn "SQL written to /tmp/insert_ipos.sql"
+
+  TIO.writeFile outputPath statement
+  putStrLn $ "SQL written to " ++ outputPath
+
+safeGet :: Int -> [a] -> Maybe a
+safeGet i xs = if i < length xs then Just (xs !! i) else Nothing
