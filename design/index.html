@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
+  <title>Your App</title>
+</head>
+<body>
+
+<header>
+  <nav>
+    <a href="/"><img src="/static/logo.svg" alt="Logo" style="height:40px;"></a>
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><details class="dropdown">
+        <summary>Products</summary>
+        <ul>
+          <li><a href="/p/alpha">Alpha</a></li>
+          <li><a href="/p/beta">Beta</a></li>
+          <li><details class="dropdown">
+            <summary>Legacy</summary>
+            <ul>
+              <li><a href="/p/legacy1">Legacy 1</a></li>
+              <li><a href="/p/legacy2">Legacy 2</a></li>
+            </ul>
+          </details>
+          </li>
+        </ul>
+      </details>
+      </li>
+      <li><a href="/docs">Docs</a></li>
+      <li><a href="/about">About</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main class="container">
+  <!-- your page content -->
+</main>
+
+<footer>
+  <p>&copy; 2025 Your Company</p>
+</footer>
+
+<div class="cookie-consent-banner">
+  <p>We use necessary cookies for essential functionality. No tracking or analytics stored. <a href="/privacy">Learn more</a>.</p>
+  <button id="accept-cookies">Accept</button>
+</div>
+
+<script>
+  if (!localStorage.getItem('cookie_consent')) {
+    document.querySelector('.cookie-consent-banner').style.display = 'block';
+  }
+  document.getElementById('accept-cookies').onclick = () => {
+    localStorage.setItem('cookie_consent', 'true');
+    document.querySelector('.cookie-consent-banner').style.display = 'none';
+  };
+</script>
+
+</body>
+</html>

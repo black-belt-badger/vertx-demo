@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Upcoming IPOs – 9rove</title>
+  <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
+</head>
+<body>
+
+<main class="container">
+
+  <header>
+    <h1>Upcoming IPOs</h1>
+    <p>Stay ahead with upcoming public offerings on NASDAQ and NYSE</p>
+  </header>
+
+  <!-- Filters -->
+  <form>
+    <div class="grid">
+      <!-- Exchange filter -->
+      <label for="exchange">
+        Exchange
+        <select id="exchange" name="exchange">
+          <option value="all">All</option>
+          <option value="nasdaq">NASDAQ</option>
+          <option value="nyse">NYSE</option>
+        </select>
+      </label>
+
+      <!-- Time range filter -->
+      <label for="range">
+        Time Range
+        <select id="range" name="range">
+          <option value="upcoming" selected>Upcoming (Next 30 days)</option>
+          <option value="recent">Recent (Last 60 days)</option>
+        </select>
+      </label>
+    </div>
+  </form>
+
+  <hr />
+
+  <!-- IPO Table -->
+  <table>
+    <thead>
+    <tr>
+      <th>Date</th>
+      <th>Company</th>
+      <th>Exchange</th>
+      <th>Symbol</th>
+      <th>Shares</th>
+      <th>Price</th>
+    </tr>
+    </thead>
+    <tbody id="ipo-table-body">
+    <!-- Data will be injected here dynamically -->
+    </tbody>
+  </table>
+
+</main>
+
+<script>
+  // This JS is placeholder for data loading & filtering logic
+  const data = []; // Load your IPO JSON data here
+</script>
+
+</body>
+</html>
