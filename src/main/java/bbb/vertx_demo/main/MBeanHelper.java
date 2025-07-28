@@ -14,7 +14,7 @@ import static io.vertx.core.Future.succeededFuture;
 import static io.vertx.ext.healthchecks.Status.KO;
 
 @Slf4j
-public enum MBeanRegistrator {
+public enum MBeanHelper {
 
   ;
 
@@ -35,11 +35,11 @@ public enum MBeanRegistrator {
     } catch (MalformedObjectNameException |
              InstanceAlreadyExistsException |
              MBeanRegistrationException |
-             NotCompliantMBeanException e) {
+             NotCompliantMBeanException exception) {
       checks.register(MBEAN_REGISTRATION, promise ->
-        promise.complete(KO(), e)
+        promise.complete(KO(), exception)
       );
-      return failedFuture(e);
+      return failedFuture(exception);
     }
   }
 }

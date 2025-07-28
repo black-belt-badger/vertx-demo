@@ -12,7 +12,7 @@ import io.vertx.ext.web.healthchecks.HealthCheckHandler;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public enum CommandRegistrator {
+public enum ShellCommandHelper {
 
   ;
 

@@ -16,7 +16,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import static io.vertx.ext.healthchecks.Status.KO;
 
 @Slf4j
-public enum ConfigRetrieverCreator {
+public enum ConfigRetrieverHelper {
 
   ;
 

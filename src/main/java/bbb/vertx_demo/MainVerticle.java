@@ -11,10 +11,14 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.concurrent.atomic.AtomicReference;
 
-import static bbb.vertx_demo.main.ConfigRetrieverCreator.retrieveAndMerge;
+import static bbb.vertx_demo.main.AmqpHelper.deployReceiverAndSender;
+import static bbb.vertx_demo.main.ConfigRetrieverHelper.retrieveAndMerge;
+import static bbb.vertx_demo.main.MBeanHelper.registerMBean;
 import static bbb.vertx_demo.main.PostgresHelper.*;
 import static bbb.vertx_demo.main.RedisHelper.redisConnectionFailure;
 import static bbb.vertx_demo.main.RedisHelper.redisConnectionSuccess;
+import static bbb.vertx_demo.main.ShellCommandHelper.registerCommand;
+import static bbb.vertx_demo.main.ShellHelper.deployShell;
 import static bbb.vertx_demo.main.http_server.HttpServerStarter.startHttpServers;
 
 @Slf4j
@@ -34,39 +38,25 @@ public final class MainVerticle extends VerticleBase {
               .onSuccess(redisConnectionSuccess(checks))
               .onFailure(redisConnectionFailure(checks))
               .flatMap(redisConnection -> {
+                  var redisAPI = RedisAPI.api(redisConnection);
                   var pgConnectOptions = pgConnectOptions(config);
                   return PgConnection.connect(vertx, pgConnectOptions)
                     .onSuccess(postgresConnectionSuccess(checks))
                     .onFailure(postgresConnectionFailure(checks))
                     .flatMap(pgConnection -> {
-                        var redisAPI = RedisAPI.api(redisConnection);
-                        return startHttpServers(vertx, checks, redisAPI, redisConnection, pgConnection, config);
+                        var amqp = config.getJsonObject("amqp");
+                        return deployReceiverAndSender(vertx, checks, amqp)
+                          .flatMap(nothing -> {
+                              registerMBean(checks);
+                              var telnetHost = config().getString("telnet.host", "0.0.0.0");
+                              int telnetPort = config().getInteger("telnet.port", 5000);
+                              deployShell(vertx, checks, telnetHost, telnetPort);
+                              registerCommand(vertx, checks, config);
+                              return startHttpServers(vertx, checks, redisAPI, redisConnection, pgConnection, config);
+                            }
+                          );
                       }
                     );
-
-//                    .flatMap(ignored ->
-//                      registerCommand(vertx, checks, merged)
-//                    )
-//                    .flatMap(ignored ->
-//                      registerMBean(checks)
-//                    )
-//                    .andThen(ignored -> {
-//                        var config =
-//                          merged.getJsonObject("postgres", new JsonObject());
-//                        connectToPostgres(vertx, checks, config);
-//                      }
-//                    )
-//                    .andThen(ignored -> {
-//                        var config = merged.getJsonObject("amqp", new JsonObject());
-//                        log.info("Amqp config: {}", config.encodePrettily());
-//                        deployReceiverAndSender(vertx, checks, config);
-//                      }
-//                    )
-//                    .flatMap(ignored -> Redis
-//                      .createClient(vertx)
-//                      .connect()
-//                    )
-//                    ;
                 }
               );
           }

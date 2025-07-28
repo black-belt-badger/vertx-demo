@@ -12,7 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import static io.vertx.ext.healthchecks.Status.KO;
 
 @Slf4j
-public enum ShellDeployer {
+public enum ShellHelper {
 
   ;
 

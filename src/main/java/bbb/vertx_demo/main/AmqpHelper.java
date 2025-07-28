@@ -14,7 +14,7 @@ import static io.vertx.ext.healthchecks.Status.KO;
 import static java.lang.Integer.MAX_VALUE;
 
 @Slf4j
-public enum AmqpDeployer {
+public enum AmqpHelper {
 
   ;
 
