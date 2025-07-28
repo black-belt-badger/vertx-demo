@@ -5,6 +5,8 @@ import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.client.WebClient;
 import io.vertx.ext.web.common.template.TemplateEngine;
+import io.vertx.ext.web.healthchecks.HealthCheckHandler;
+import io.vertx.pgclient.PgConnection;
 import io.vertx.redis.client.RedisAPI;
 import io.vertx.redis.client.RedisConnection;
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +18,7 @@ import static bbb.vertx_demo.main.http_server.HttpServerStarter.*;
 import static com.google.common.base.Stopwatch.createStarted;
 import static io.vertx.core.http.HttpHeaders.CACHE_CONTROL;
 import static io.vertx.core.http.HttpHeaders.CONTENT_TYPE;
+import static io.vertx.ext.healthchecks.Status.KO;
 import static io.vertx.redis.client.Command.SETEX;
 import static io.vertx.redis.client.Request.cmd;
 import static java.lang.String.format;
@@ -32,14 +35,16 @@ public enum IpoCalendar {
 
   static Handler<RoutingContext> ipoCalendar
     (
+      HealthCheckHandler checks,
       WebClient webClient,
       TemplateEngine engine,
       RedisAPI redisApi,
       RedisConnection redisConnection,
+      PgConnection pgConnection,
       JsonObject config
     ) {
     return context -> {
-      var maxAgeString = config.getString("max-age", "PT1H");
+      var maxAgeString = config.getString("max-age", "PT1S");
       var maxAge = Duration.parse(maxAgeString).toSeconds();
       log.info("Cache expiry for ipo calendar is {} seconds", maxAge);
       var cacheControl = format("public, max-age=%d, immutable", maxAge);
@@ -56,6 +61,24 @@ public enum IpoCalendar {
                 .end(buffer);
               log.info("FDA calendar request handled in {}", watch.elapsed());
             } else {
+              var query = "SELECT date, exchange, name, number_of_shares, price, status, symbol, total_shares_value FROM finnhub.calendar_ipo";
+              pgConnection
+                .query(query)
+                .execute()
+                .onFailure(throwable -> {
+                    checks.register(query, promise ->
+                      promise.complete(KO(), throwable)
+                    );
+                    log.error("Query {} failed", query, throwable);
+                  }
+                )
+                .onSuccess(rowSet -> {
+                    rowSet.forEach(row -> {
+                        log.info("finnhub.calendar_ipo row {}", row);
+                      }
+                    );
+                  }
+                );
               webClient
                 .get(FINNHUB_PORT, FINNHUB_HOST, FINNHUB_URL)
                 .putHeader(FINNHUB_HEADER, FINNHUB_API_KEY)

@@ -11,10 +11,11 @@ CREATE TABLE IF NOT EXISTS finnhub.calendar_ipo
   price text COLLATE pg_catalog."default",
   status text COLLATE pg_catalog."default",
   symbol text COLLATE pg_catalog."default",
-  total_shares_value bigint
+  total_shares_value bigint,
+  CONSTRAINT all_fields_unique UNIQUE (date, exchange, name, number_of_shares, price, status, symbol, total_shares_value)
 )
 
   TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS finnhub.calendar_ipo
-  OWNER to vertx_demo_dev_user;
+  OWNER to vertx_demo_admin;

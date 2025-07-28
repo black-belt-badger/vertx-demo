@@ -1,4 +1,4 @@
-INSERT INTO fh.calendar_ipo (date, exchange, name, number_of_shares, price, status, symbol, total_shares_value) VALUES
+INSERT INTO finnhub.calendar_ipo (date, exchange, name, number_of_shares, price, status, symbol, total_shares_value) VALUES
 ('2025-07-31', 'NYSE', 'SHOULDER INNOVATIONS, INC.', 5000000, '19.00-21.00', 'expected', 'SI', 120750000),
 ('2025-07-31', 'NYSE', 'Figma, Inc.', 36937080, '25.00-28.00', 'expected', 'FIG', 1189373948),
 ('2025-07-30', 'NYSE', 'Ambiq Micro, Inc.', 3400000, '22.00-25.00', 'expected', 'AMBQ', 97750000),
@@ -199,4 +199,4 @@ INSERT INTO fh.calendar_ipo (date, exchange, name, number_of_shares, price, stat
 ('2025-04-30', 'NASDAQ Global', 'Lakeshore Acquisition III Corp.', 6000000, '10.00', 'priced', 'LCCCU', 60000000),
 ('2025-04-30', 'NASDAQ Global', 'Berto Acquisition Corp.', 26100000, '10.00', 'priced', 'TACOU', 261000000),
 ('2025-04-30', 'NASDAQ Global', 'Yuanbao Inc.', 2000000, '15.00', 'priced', 'YB', 30000000)
-ON CONFLICT ON CONSTRAINT value_difference DO NOTHING;
+ON CONFLICT ON CONSTRAINT all_fields_unique DO NOTHING;

@@ -1,29 +1,43 @@
 <!DOCTYPE html>
-<html th:replace="~{'./templates/common/layout.html' :: layout(~{::title}, ~{::section})}" lang="en">
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{'./templates/common/layout.html' :: layout(~{::title}, ~{::section})}" lang="en">
 <head>
-  <title>All IPOs</title>
+  <title th:text="|9rove - ${pageTitle}|"></title>
 </head>
 <body>
 <section>
-  <h1>All IPOs</h1>
-  <div class="grid" style="--min: 16rem;">
-<!--    <p data-th-text="${ipoCalendar}"></p>-->
-    <div th:each="ipo : ${ipoCalendar.getList}" class="card">
-      <p data-th-text="${ipo}"></p>
-    </div>
-
-<!--    <div th:each="ipo : ${ipoCalendar.getJsonArray('ipoCalendar')}" class="card">-->
-<!--      <p data-th-text="'IPO' + ${ipo}"></p>-->
-<!--      <h2 th:text="${ipo.name}">IPO Name</h2>-->
-<!--      <p>-->
-<!--        <strong>Date:</strong> <span th:text="${ipo.date}">2025-09-01</span><br>-->
-<!--        <strong>Exchange:</strong> <span th:text="${ipo.exchange}">NASDAQ</span><br>-->
-<!--        <strong>Ticker:</strong> <span th:text="${ipo.ticker}">XYZ</span>-->
-<!--      </p>-->
-<!--      <p th:if="${ipo.description != null}" th:text="${ipo.description}">Company description goes here.</p>-->
-<!--      <a th:href="@{/ipos/{ticker}(ticker=${ipo.ticker})}" class="secondary">View Details</a>-->
-<!--    </div>-->
-  </div>
+  <header>
+    <h1>All IPOs</h1>
+  </header>
+  <section class="section-highlight">
+    <h2><i data-lucide="globe"></i> All exchanges</h2>
+    <table role="grid">
+      <thead>
+      <tr>
+        <th>Name</th>
+        <th class="wide-column">Date</th>
+        <th>Exchange</th>
+        <th>Shares</th>
+        <th>Price</th>
+        <th>Status</th>
+        <th>Total Value</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="ipo : ${elements}">
+        <th th:text="${ipo.name}"/>
+        <td th:text="${ipo.date}" class="date wide-column"/>
+        <td th:text="${ipo.exchange}"/>
+        <td th:text="${ipo.number_of_shares}" class="large-number"/>
+        <td th:text="${ipo.price}"/>
+        <td th:text="${ipo.status}"/>
+        <td th:text="${ipo.total_shares_value}" class="large-number"/>
+      </tr>
+      </tbody>
+    </table>
+  </section>
+  <script src="/static/beautify-table.js?v=1.0.28-SNAPSHOT"></script>
+  <script>lucide.createIcons();</script>
 </section>
 </body>
 </html>

@@ -5,6 +5,7 @@ import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.client.WebClient;
 import io.vertx.ext.web.common.template.TemplateEngine;
+import io.vertx.ext.web.healthchecks.HealthCheckHandler;
 import io.vertx.redis.client.RedisAPI;
 import io.vertx.redis.client.RedisConnection;
 import lombok.extern.slf4j.Slf4j;
@@ -32,7 +33,7 @@ public enum FdaAdvisoryCommiteeCalendar {
 
   static Handler<RoutingContext> fdaAdvisoryCommitteeCalendar
     (
-      WebClient webClient,
+      HealthCheckHandler checks, WebClient webClient,
       TemplateEngine engine,
       RedisAPI redisAPI,
       RedisConnection redisConnection,

@@ -14,3 +14,8 @@ document.querySelectorAll('td.price').forEach(td => {
     td.textContent = `$${Number(td.textContent).toFixed(2)}`;
   }
 );
+
+document.querySelectorAll('td.large-number').forEach(td => {
+    td.textContent = Number(td.textContent).toLocaleString();
+  }
+);

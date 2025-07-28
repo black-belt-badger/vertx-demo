@@ -66,7 +66,7 @@ main = do
   case args of
     [inputPath, outputPath] -> do
       ipos <- Dhall.input (Dhall.auto :: Dhall.Decoder [IPO]) (T.pack inputPath)
-      let header = "INSERT INTO fh.calendar_ipo (date, exchange, name, number_of_shares, price, status, symbol, total_shares_value) VALUES"
+      let header = "INSERT INTO finnhub.calendar_ipo (date, exchange, name, number_of_shares, price, status, symbol, total_shares_value) VALUES"
           values = T.intercalate ",\n" (map renderIPO ipos)
           statement = T.unlines [header, values, "ON CONFLICT ON CONSTRAINT value_difference DO NOTHING;"]
       TIO.writeFile outputPath statement

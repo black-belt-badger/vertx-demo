@@ -43,8 +43,12 @@ tr.recent-ipo:hover td {
     background-color: #ffefcc;
 }
 
-td.price, td.shares {
+td.price, td.large-number {
     text-align: right;
+}
+
+th.wide-column {
+  white-space: nowrap;
 }
 
 nav a {

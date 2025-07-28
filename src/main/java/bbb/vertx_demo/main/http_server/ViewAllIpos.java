@@ -1,36 +1,34 @@
 package bbb.vertx_demo.main.http_server;
 
 import io.vertx.core.Handler;
-import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.client.WebClient;
 import io.vertx.ext.web.common.template.TemplateEngine;
+import io.vertx.ext.web.healthchecks.HealthCheckHandler;
+import io.vertx.pgclient.PgConnection;
 import io.vertx.redis.client.RedisAPI;
 import io.vertx.redis.client.RedisConnection;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.Duration;
-import java.util.List;
+import java.util.HashMap;
 
-import static bbb.vertx_demo.main.http_server.HttpServerStarter.*;
 import static com.google.common.base.Stopwatch.createStarted;
 import static com.google.common.net.MediaType.HTML_UTF_8;
 import static io.vertx.core.http.HttpHeaders.CACHE_CONTROL;
 import static io.vertx.core.http.HttpHeaders.CONTENT_TYPE;
+import static io.vertx.ext.healthchecks.Status.KO;
 import static io.vertx.redis.client.Command.SETEX;
 import static io.vertx.redis.client.Request.cmd;
 import static java.lang.String.format;
-import static java.lang.System.getenv;
 import static java.util.Objects.nonNull;
-import static java.util.Optional.ofNullable;
 
 @Slf4j
 public enum ViewAllIpos {
 
   ;
 
-  private static final String VERSION = ofNullable(getenv("VERSION")).orElse("unknown");
   private static final String FINNHUB_URL = "/api/v1/calendar/ipo";
   public static final String HTML = HTML_UTF_8.toString();
 
@@ -39,14 +37,16 @@ public enum ViewAllIpos {
   static Handler<RoutingContext> viewAllIpos
     (
       String name,
+      HealthCheckHandler checks,
       WebClient webClient,
       TemplateEngine engine,
       RedisAPI redisApi,
       RedisConnection redisConnection,
+      PgConnection pgConnection,
       JsonObject config
     ) {
     return context -> {
-      var maxAgeString = config.getString("max-age", "PT1S");
+      var maxAgeString = config.getString("max-age", "PT1H");
       var maxAge = Duration.parse(maxAgeString).toSeconds();
       log.info("Cache expiry for '{}' is {} seconds", name, maxAge);
       var cacheControl = format("public, max-age=%d, immutable", maxAge);
@@ -63,22 +63,38 @@ public enum ViewAllIpos {
                 .end(buffer);
               log.info("'{}' request handled in {}", name, watch.elapsed());
             } else {
-              webClient
-                .get(FINNHUB_PORT, FINNHUB_HOST, FINNHUB_URL)
-                .putHeader(FINNHUB_HEADER, FINNHUB_API_KEY)
-                .send()
-                .onFailure(throwable -> log.error("error sending '{}' request", name, throwable))
-                .onSuccess(response -> {
-                    var object = response.bodyAsJsonObject();
-                    var ipoCalendar = object.getJsonArray("ipoCalendar");
-                    var reneringContext =
-                      new JsonObject()
-                        .put("ipoCalendar", ipoCalendar);
-                    JsonArray main = reneringContext.getJsonArray("ipoCalendar");
-                  List list = main.getList();
-                  engine
-                      .render(reneringContext, "templates/view-all-ipos.html")
-                      .onFailure(throwable -> log.error("error rendering '{}' template", name, throwable))
+              var query = "SELECT date, exchange, name, number_of_shares, price, status, symbol, total_shares_value FROM finnhub.calendar_ipo";
+              pgConnection
+                .query(query)
+                .execute()
+                .onFailure(throwable -> {
+                    checks.register(query, promise ->
+                      promise.complete(KO(), throwable)
+                    );
+                    log.error("Query {} failed", query, throwable);
+                  }
+                )
+                .onSuccess(rowSet -> {
+                    var renderingContext = new HashMap<String, Object>();
+                    renderingContext.put("pageTitle", "All IPOs");
+                    var elements = rowSet.stream().map(row -> {
+                        var element = new HashMap<String, Object>();
+                        element.put("date", row.getLocalDate("date"));
+                        element.put("name", row.getString("name"));
+                        element.put("exchange", row.getString("exchange"));
+                        element.put("number_of_shares", row.getInteger("number_of_shares"));
+                        element.put("price", row.getString("price"));
+                        element.put("status", row.getString("status"));
+                        element.put("total_shares_value", row.getLong("total_shares_value"));
+                        return element;
+                      }
+                    ).toList();
+                    renderingContext.put("elements", elements);
+                    engine
+                      .render(renderingContext, "templates/view-all-ipos.html")
+                      .onFailure(throwable ->
+                        log.error("error rendering '{}' template", name, throwable)
+                      )
                       .onSuccess(buffer -> {
                           context.response()
                             .putHeader(CONTENT_TYPE, HTML)
