@@ -18,26 +18,25 @@ public enum ShellCommandHelper {
 
   private static final String COMMAND_REGISTRATION = "command-registration";
 
-  public static Future<Command> registerCommand
+  public static Future<Command> registerCommandPrintConfig
     (
       Vertx vertx,
       HealthCheckHandler checks,
       JsonObject config
     ) {
+    var printConfig = CommandBuilder
+      .command("print-config")
+      .processHandler(process ->
+        process
+          .write("config: ")
+          .write(config.encodePrettily())
+          .write("\n")
+          .end()
+      )
+      .build(vertx);
     return CommandRegistry
       .getShared(vertx)
-      .registerCommand(
-        CommandBuilder
-          .command("print-config")
-          .processHandler(process ->
-            process
-              .write("config: ")
-              .write(config.encodePrettily())
-              .write("\n")
-              .end()
-          )
-          .build(vertx)
-      )
+      .registerCommand(printConfig)
       .onSuccess(command -> {
           log.info("Registering command succeeded {}", command.name());
           checks.register(COMMAND_REGISTRATION, Promise::succeed);

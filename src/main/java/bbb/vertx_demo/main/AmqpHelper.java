@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import static io.vertx.ext.healthchecks.Status.KO;
 import static java.lang.Integer.MAX_VALUE;
+import static java.time.Duration.ofMinutes;
 
 @Slf4j
 public enum AmqpHelper {
@@ -49,10 +50,10 @@ public enum AmqpHelper {
     var amqp = AmqpClient.create(vertx, options);
     var server = config.getJsonObject("server", new JsonObject());
     var serverQueue = server.getString("queue", "server-queue");
-    var serverDelay = server.getInteger("delay", 1_000);
+    var serverDelay = server.getLong("delay", ofMinutes(10).toMillis());
     var client = config.getJsonObject("client", new JsonObject());
     var clientQueue = client.getString("queue", "client-queue");
-    var clientDelay = client.getInteger("delay", 1_000);
+    var clientDelay = client.getLong("delay", ofMinutes(10).toMillis());
     return
       amqp
         .connect()

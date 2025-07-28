@@ -52,6 +52,8 @@ let prod_qpid_admin_username = "prod_admin"
 
 let prod_qpid_admin_password = "prod_secret"
 
+let amqp_queue_delay = 600000
+
 let service_healthy =
       package.DependsOn.Long
         package.DependsOnLong::{ condition = Some "service_healthy" }
@@ -198,13 +200,13 @@ let config-server =
       \(env : Environment) ->
         if    merge { Dev = True, Prod = False } env
         then  { amqp =
-                { client = { delay = 1000, queue = "client-queue" }
+                { client = { delay = amqp_queue_delay, queue = "client-queue" }
                 , host = "qpid"
                 , password = dev_qpid_admin_password
                 , port = 5672
                 , reconnect-attempts = 2147483647
                 , reconnect-interval = 100
-                , server = { delay = 1000, queue = "server-queue" }
+                , server = { delay = amqp_queue_delay, queue = "server-queue" }
                 , username = dev_qpid_admin_username
                 }
               , config-server =
@@ -231,13 +233,13 @@ let config-server =
               , `telnet.port` = 5001
               }
         else  { amqp =
-                { client = { delay = 1000, queue = "client-queue" }
+                { client = { delay = amqp_queue_delay, queue = "client-queue" }
                 , host = "qpid"
                 , password = prod_qpid_admin_password
                 , port = 5672
                 , reconnect-attempts = 2147483647
                 , reconnect-interval = 100
-                , server = { delay = 1000, queue = "server-queue" }
+                , server = { delay = amqp_queue_delay, queue = "server-queue" }
                 , username = prod_qpid_admin_username
                 }
               , config-server =

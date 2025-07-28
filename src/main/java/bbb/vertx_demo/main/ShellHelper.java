@@ -1,9 +1,6 @@
 package bbb.vertx_demo.main;
 
-import io.vertx.core.DeploymentOptions;
-import io.vertx.core.Future;
-import io.vertx.core.Promise;
-import io.vertx.core.Vertx;
+import io.vertx.core.*;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.shell.ShellVerticle;
 import io.vertx.ext.web.healthchecks.HealthCheckHandler;
@@ -20,35 +17,45 @@ public enum ShellHelper {
     (
       Vertx vertx,
       HealthCheckHandler checks,
-      String host,
-      int port
+      JsonObject config
     ) {
+    var host = config.getString("telnet.host", "0.0.0.0");
+    int port = config.getInteger("telnet.port", 5000);
+    var deploymentOptions = deploymentOptions(host, port);
     return vertx
-      .deployVerticle(
-        ShellVerticle.class,
-        new DeploymentOptions()
-          .setConfig(
-            new JsonObject()
-              .put("telnetOptions",
-                new JsonObject()
-                  .put("host", host)
-                  .put("port", port)
-              )
-          )
-      )
-      .onSuccess(id -> {
-          checks.register("shell-deployment", Promise::succeed);
-          log.info("Deploying shell succeeded {}:{} with id {}", host, port, id);
-        }
-      )
-      .onFailure(throwable -> {
-          checks.register("shell-deployment", promise -> {
-              promise.complete(KO(), throwable);
-            }
-          );
-          log.error("Deploying shell failed {}:{}", host, port, throwable);
+      .deployVerticle(ShellVerticle.class, deploymentOptions)
+      .onSuccess(success(checks, host, port))
+      .onFailure(failure(checks, host, port));
+  }
+
+  private static DeploymentOptions deploymentOptions(String host, int port) {
+    return
+      new DeploymentOptions()
+        .setConfig(
+          new JsonObject()
+            .put("telnetOptions",
+              new JsonObject()
+                .put("host", host)
+                .put("port", port)
+            )
+        );
+  }
+
+  private static Handler<String> success(HealthCheckHandler checks, String host, int port) {
+    return id -> {
+      checks.register("shell-deployment", Promise::succeed);
+      log.info("Deploying shell succeeded {}:{} with id {}", host, port, id);
+    };
+  }
+
+  private static Handler<Throwable> failure(HealthCheckHandler checks, String host, int port) {
+    return throwable -> {
+      checks.register("shell-deployment", promise -> {
+          promise.complete(KO(), throwable);
         }
       );
+      log.error("Deploying shell failed {}:{}", host, port, throwable);
+    };
   }
 
 }

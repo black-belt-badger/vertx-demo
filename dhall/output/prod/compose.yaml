@@ -76,7 +76,7 @@ services:
       -conf='{
         "amqp": {
           "client": {
-            "delay": 1000,
+            "delay": 600000,
             "queue": "client-queue"
           },
           "host": "qpid",
@@ -85,7 +85,7 @@ services:
           "reconnect-attempts": 2147483647,
           "reconnect-interval": 100,
           "server": {
-            "delay": 1000,
+            "delay": 600000,
             "queue": "server-queue"
           },
           "username": "prod_admin"
@@ -131,7 +131,7 @@ services:
         -Dcom.sun.management.jmxremote.port=1099
         -Dcom.sun.management.jmxremote.rmi.port=1099
         -Djava.rmi.server.hostname=ec2-51-21-163-63.eu-north-1.compute.amazonaws.com
-      VERSION: '1.0.28-SNAPSHOT'
+      VERSION: "1.0.28-SNAPSHOT"
     healthcheck:
       interval: 10s
       retries: 10

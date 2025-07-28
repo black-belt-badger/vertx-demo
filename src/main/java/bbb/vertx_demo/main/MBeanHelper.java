@@ -20,7 +20,7 @@ public enum MBeanHelper {
 
   private static final String MBEAN_REGISTRATION = "mbean-registration";
 
-  public static Future<ObjectInstance> registerMBean(HealthCheckHandler checks) {
+  public static Future<ObjectInstance> registerExampleMBean(HealthCheckHandler checks) {
     var name = "bbb.vertx_demo:type=basic,name=vertx-demo";
     log.info("Registering MBean {}", name);
     var mbean = new Controller();

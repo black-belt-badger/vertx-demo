@@ -13,11 +13,11 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import static bbb.vertx_demo.main.AmqpHelper.deployReceiverAndSender;
 import static bbb.vertx_demo.main.ConfigRetrieverHelper.retrieveAndMerge;
-import static bbb.vertx_demo.main.MBeanHelper.registerMBean;
+import static bbb.vertx_demo.main.MBeanHelper.registerExampleMBean;
 import static bbb.vertx_demo.main.PostgresHelper.*;
 import static bbb.vertx_demo.main.RedisHelper.redisConnectionFailure;
 import static bbb.vertx_demo.main.RedisHelper.redisConnectionSuccess;
-import static bbb.vertx_demo.main.ShellCommandHelper.registerCommand;
+import static bbb.vertx_demo.main.ShellCommandHelper.registerCommandPrintConfig;
 import static bbb.vertx_demo.main.ShellHelper.deployShell;
 import static bbb.vertx_demo.main.http_server.HttpServerStarter.startHttpServers;
 
@@ -47,11 +47,9 @@ public final class MainVerticle extends VerticleBase {
                         var amqp = config.getJsonObject("amqp");
                         return deployReceiverAndSender(vertx, checks, amqp)
                           .flatMap(nothing -> {
-                              registerMBean(checks);
-                              var telnetHost = config().getString("telnet.host", "0.0.0.0");
-                              int telnetPort = config().getInteger("telnet.port", 5000);
-                              deployShell(vertx, checks, telnetHost, telnetPort);
-                              registerCommand(vertx, checks, config);
+                              registerExampleMBean(checks);
+                              deployShell(vertx, checks, config);
+                              registerCommandPrintConfig(vertx, checks, config);
                               return startHttpServers(vertx, checks, redisAPI, redisConnection, pgConnection, config);
                             }
                           );
