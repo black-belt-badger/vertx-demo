@@ -30,8 +30,7 @@ public enum ConfigRetrieverCreator {
       JsonObject starting,
       AtomicReference<String> configServerVersion
     ) {
-    var configServer = starting
-      .getJsonObject("config-server", new JsonObject());
+    var configServer = starting.getJsonObject("config-server", new JsonObject());
     var host = configServer.getString("host", "localhost");
     log.info("Config server host: {}", host);
     var port = configServer.getInteger("port", 8887);

@@ -1,6 +1,7 @@
 package bbb.vertx_demo.main;
 
 import io.vertx.core.Future;
+import io.vertx.core.Handler;
 import io.vertx.core.Promise;
 import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonObject;
@@ -17,13 +18,49 @@ import static io.vertx.ext.healthchecks.Status.KO;
 import static io.vertx.pgclient.PgConnectOptions.DEFAULT_SSLMODE;
 
 @Slf4j
-public enum PostgresConnectionStarter {
+public enum PostgresHelper {
 
   ;
 
   private static final String POSTGRES_CONNECTION = "postgres-connection";
+
   private static final String POSTGRES_SELECT_QUERY_EXECUTION = "postgres-select-query-execution";
   private static final String POSTGRES_LISTEN_QUERY_EXECUTION = "postgres-listen-query-execution";
+
+  public static PgConnectOptions pgConnectOptions(JsonObject merged) {
+    var postgres = merged.getJsonObject("postgres", new JsonObject());
+    var host = postgres.getString("host", "localhost");
+    int port = postgres.getInteger("port", 5432);
+    var database = postgres.getString("database", "vertx_demo_database");
+    var user = postgres.getString("user", "vertx_demo_user");
+    var password = postgres.getString("password", "vertx_demo_password");
+    var sslModeString = postgres.getString("ssl-mode", DEFAULT_SSLMODE.toString());
+    var sslMode = SslMode.valueOf(sslModeString.toUpperCase());
+    var trustAll = postgres.getBoolean("trust-all", DEFAULT_TRUST_ALL);
+    var sslOptions = new ClientSSLOptions().setTrustAll(trustAll);
+    return new PgConnectOptions()
+      .setPort(port)
+      .setHost(host)
+      .setSslMode(sslMode)
+      .setSslOptions(sslOptions)
+      .setDatabase(database)
+      .setUser(user)
+      .setPassword(password);
+  }
+
+  public static Handler<PgConnection> postgresConnectionSuccess(HealthCheckHandler checks) {
+    return pgConnection -> {
+      log.info("Connection to Postgres succeeded, process ID {}, secret key {}", pgConnection.processId(), pgConnection.secretKey());
+      checks.register(POSTGRES_CONNECTION, Promise::complete);
+    };
+  }
+
+  public static Handler<Throwable> postgresConnectionFailure(HealthCheckHandler checks) {
+    return throwable -> {
+      log.error("Failed to connect to Postgres server", throwable);
+      checks.register(POSTGRES_CONNECTION, promise -> promise.complete(KO(), throwable));
+    };
+  }
 
   public static Future<PgConnection> connectToPostgres
     (
@@ -31,38 +68,25 @@ public enum PostgresConnectionStarter {
       HealthCheckHandler checks,
       JsonObject postgres
     ) {
-    var host =
-      postgres.getString("host", "localhost");
-    int port =
-      postgres.getInteger("port", 5432);
-    var database =
-      postgres.getString("database", "vertx_demo_database");
-    var user =
-      postgres.getString("user", "vertx_demo_user");
-    var password =
-      postgres.getString("password", "vertx_demo_password");
-    var sslModeString =
-      postgres.getString("ssl-mode", DEFAULT_SSLMODE.toString());
-    var sslMode =
-      SslMode.valueOf(sslModeString.toUpperCase());
-    var trustAll =
-      postgres.getBoolean("trust-all", DEFAULT_TRUST_ALL);
-    var sslOptions =
-      new ClientSSLOptions()
-        .setTrustAll(trustAll);
-    var options =
-      new PgConnectOptions()
-        .setPort(port)
-        .setHost(host)
-        .setSslMode(sslMode)
-        .setSslOptions(sslOptions)
-        .setDatabase(database)
-        .setUser(user)
-        .setPassword(password);
+    var host = postgres.getString("host", "localhost");
+    int port = postgres.getInteger("port", 5432);
+    var database = postgres.getString("database", "vertx_demo_database");
+    var user = postgres.getString("user", "vertx_demo_user");
+    var password = postgres.getString("password", "vertx_demo_password");
+    var sslModeString = postgres.getString("ssl-mode", DEFAULT_SSLMODE.toString());
+    var sslMode = SslMode.valueOf(sslModeString.toUpperCase());
+    var trustAll = postgres.getBoolean("trust-all", DEFAULT_TRUST_ALL);
+    var sslOptions = new ClientSSLOptions().setTrustAll(trustAll);
+    var options = new PgConnectOptions()
+      .setPort(port)
+      .setHost(host)
+      .setSslMode(sslMode)
+      .setSslOptions(sslOptions)
+      .setDatabase(database)
+      .setUser(user)
+      .setPassword(password);
     log.info("Postgres connection options {}", options.toJson());
-    var poolOptions =
-      new PoolOptions()
-        .setMaxSize(5);
+    var poolOptions = new PoolOptions().setMaxSize(5);
     log.info("Postgres pool options {}", poolOptions.toJson());
     return PgConnection
       .connect(vertx, options)

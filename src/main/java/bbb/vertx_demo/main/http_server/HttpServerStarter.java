@@ -12,6 +12,7 @@ import io.vertx.ext.web.client.WebClient;
 import io.vertx.ext.web.handler.StaticHandler;
 import io.vertx.ext.web.healthchecks.HealthCheckHandler;
 import io.vertx.ext.web.templ.thymeleaf.ThymeleafTemplateEngine;
+import io.vertx.pgclient.PgConnection;
 import io.vertx.redis.client.RedisAPI;
 import io.vertx.redis.client.RedisConnection;
 import lombok.extern.slf4j.Slf4j;
@@ -50,25 +51,31 @@ public enum HttpServerStarter {
   private static final String HTTPS_WEB_SERVER_STARTED = "https-web-server-started";
   private static final String HTTPS_WEB_SERVER_ONLINE = "https-web-server-online";
   private static final String HTTP_WEB_SERVER_STARTED = "http-web-server-started";
+
   public static final int FINNHUB_PORT = 80;
+
   public static final String FINNHUB_HOST = "finnhub.io";
   public static final String FINNHUB_HEADER = "X-Finnhub-Token";
   public static final String FINNHUB_API_KEY = "d1uqv0pr01qletnb7080d1uqv0pr01qletnb708g";
 
-  public static Future<HttpServer> startHttpServer
+  public static Future<HttpServer> startHttpServers
     (
       Vertx vertx,
       HealthCheckHandler checks,
-      String keyPath,
-      String certPath,
-      String httpsHost,
-      int httpsPort,
-      String httpHost,
-      int httpPort,
       RedisAPI redisApi,
       RedisConnection redisConnection,
-      JsonObject cache
+      PgConnection pgConnection,
+      JsonObject config
     ) {
+    var keyPath = config.getString("key-path", "security/smooth-all/server.key.pem");
+    var certPath = config.getString("cert-path", "security/smooth-all/server.cert.pem");
+    log.info("Key path: {}", keyPath);
+    log.info("Cert path: {}", certPath);
+    var httpsHost = config.getString("https.host", "0.0.0.0");
+    int httpsPort = config.getInteger("https.port", 8443);
+    var httpHost = config.getString("http.host", "0.0.0.0");
+    int httpPort = config.getInteger("http.port", 8080);
+    var cache = config.getJsonObject("cache", new JsonObject());
     var httpRouter = Router.router(vertx);
     httpRouter.get("/").handler(context -> {
         var request = context.request();
@@ -125,9 +132,9 @@ public enum HttpServerStarter {
     httpsRouter.route("/favicon.png").handler(StaticHandler.create());
     var engine = ThymeleafTemplateEngine.create(vertx);
     httpsRouter.route("/about").handler(about(engine, redisApi, redisConnection, new JsonObject()));
-    httpsRouter.route("/view-all-ipos").handler(viewAllIpos(engine, redisApi, redisConnection, new JsonObject()));
-    httpsRouter.get("/health").handler(checks.register(HTTPS_WEB_SERVER_ONLINE, Promise::succeed));
     var webClient = WebClient.create(vertx);
+    httpsRouter.route("/view-all-ipos").handler(viewAllIpos("View-all-IPOs", webClient, engine, redisApi, redisConnection, new JsonObject()));
+    httpsRouter.get("/health").handler(checks.register(HTTPS_WEB_SERVER_ONLINE, Promise::succeed));
     var home = cache.getJsonObject("home", new JsonObject());
     httpsRouter.get("/").handler(home(engine, redisApi, redisConnection, home));
     var countries = cache.getJsonObject("countries", new JsonObject());
@@ -164,9 +171,13 @@ public enum HttpServerStarter {
     return
       vertx
         .createHttpServer(
-          new HttpServerOptions().setSsl(true).setKeyCertOptions(
-            new PemKeyCertOptions().setKeyPath(keyPath).setCertPath(certPath)
-          )
+          new HttpServerOptions()
+            .setSsl(true)
+            .setKeyCertOptions(
+              new PemKeyCertOptions()
+                .setKeyPath(keyPath)
+                .setCertPath(certPath)
+            )
         )
         .requestHandler(httpsRouter)
         .listen(httpsPort, httpsHost)
