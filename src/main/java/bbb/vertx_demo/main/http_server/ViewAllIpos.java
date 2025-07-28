@@ -91,7 +91,7 @@ public enum ViewAllIpos {
                     ).toList();
                     renderingContext.put("elements", elements);
                     engine
-                      .render(renderingContext, "templates/view-all-ipos.html")
+                      .render(renderingContext, "templates/ipos.html")
                       .onFailure(throwable ->
                         log.error("error rendering '{}' template", name, throwable)
                       )

@@ -16,8 +16,6 @@ import io.vertx.pgclient.PgConnection;
 import io.vertx.redis.client.RedisAPI;
 import io.vertx.redis.client.RedisConnection;
 import lombok.extern.slf4j.Slf4j;
-import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
 import static bbb.vertx_demo.main.http_server.About.about;
 import static bbb.vertx_demo.main.http_server.Countries.countries;
@@ -130,57 +128,18 @@ public enum HttpServerStarter {
           .end("Unauthorized");
       }
     );
+    var engine = ThymeleafTemplateEngine.create(vertx);
+    var webClient = WebClient.create(vertx);
+    httpsRouter.get("/health").handler(checks.register(HTTPS_WEB_SERVER_ONLINE, Promise::succeed));
     httpsRouter.route("/*").handler(StaticHandler.create("webroot"));
     httpsRouter.route("/favicon.png").handler(StaticHandler.create());
-
-    var resolver = new ClassLoaderTemplateResolver();
-    resolver.setTemplateMode("HTML");
-    resolver.setPrefix("templates/");
-    resolver.setSuffix(".html");
-    resolver.setCacheable(false); // For development
-
-    var rawEngine = new TemplateEngine();
-    rawEngine.setTemplateResolver(resolver);
-
-    ThymeleafTemplateEngine engine = ThymeleafTemplateEngine.create(vertx);
-
-    httpsRouter.route("/about").handler(about(engine, redisApi, redisConnection, new JsonObject()));
-    var webClient = WebClient.create(vertx);
-    httpsRouter.route("/view-all-ipos").handler(viewAllIpos("View-all-IPOs", checks, webClient, engine, redisApi, redisConnection, pgConnection, new JsonObject()));
-    httpsRouter.get("/health").handler(checks.register(HTTPS_WEB_SERVER_ONLINE, Promise::succeed));
     var home = cache.getJsonObject("home", new JsonObject());
+    httpsRouter.route("/about").handler(about(engine, redisApi, redisConnection, new JsonObject()));
+    var ipos = new JsonObject();
+    httpsRouter.route("/ipos").handler(viewAllIpos("IPOs", checks, webClient, engine, redisApi, redisConnection, pgConnection, ipos));
     httpsRouter.get("/").handler(home(engine, redisApi, redisConnection, home));
     var countries = cache.getJsonObject("countries", new JsonObject());
-    httpsRouter.get("/countries").handler(countries(webClient, engine, redisApi, redisConnection, countries));
-    var cryptoExchanges = cache.getJsonObject("crypto-exchanges", new JsonObject());
-    httpsRouter.get("/crypto/exchange").handler(cryptoExchange(webClient, engine, redisApi, redisConnection, cryptoExchanges));
-    var cryptoSymbols = cache.getJsonObject("crypto-exchanges", new JsonObject());
-    httpsRouter.get("/crypto/symbol/:exchange").handler(cryptoSymbol(webClient, engine, redisApi, redisConnection, cryptoSymbols));
-    var fdaCalendar = cache.getJsonObject("fda-calendar", new JsonObject());
-    httpsRouter.get("/fda-advisory-committee-calendar").handler(fdaAdvisoryCommitteeCalendar(checks, webClient, engine, redisApi, redisConnection, fdaCalendar));
-    var forexExchanges = cache.getJsonObject("forex-exchanges", new JsonObject());
-    httpsRouter.get("/forex/exchange").handler(forexExchange(webClient, engine, redisApi, redisConnection, forexExchanges));
-    var forexSymbols = cache.getJsonObject("forex-exchanges", new JsonObject());
-    httpsRouter.get("/forex/symbol/:exchange").handler(forexSymbol(webClient, engine, redisApi, redisConnection, forexSymbols));
-    var ipoCalendar = cache.getJsonObject("ipo-calendar", new JsonObject());
-    httpsRouter.get("/ipo-calendar").handler(ipoCalendar(checks, webClient, engine, redisApi, redisConnection, pgConnection, ipoCalendar));
-    var news = cache.getJsonObject("news", new JsonObject());
-    httpsRouter.get("/news/:category").handler(news(webClient, engine, redisApi, redisConnection, news));
-    httpsRouter.get("/stock/earnings/:symbol").handler(stockEarnings(webClient, engine));
-    httpsRouter.get("/stock/filings/:symbol").handler(stockFilings(webClient, engine));
-    httpsRouter.get("/stock/financials-reported/:symbol").handler(stockFinancialsReported(webClient, engine));
-    httpsRouter.get("/stock/insider-sentiment/:symbol").handler(stockInsiderSentiment(webClient, engine));
-    httpsRouter.get("/stock/insider-transactions/:symbol").handler(stockInsiderTransactions(webClient, engine));
-    httpsRouter.get("/stock/market-holiday/:exchange").handler(stockMarketHoliday(webClient, engine));
-    var profile2 = cache.getJsonObject("profile2", new JsonObject());
-    httpsRouter.get("/stock/profile2/:symbol").handler(stockProfile2(webClient, engine, redisApi, redisConnection, profile2));
-    httpsRouter.get("/stock/recommendation/:symbol").handler(stockRecommendation(webClient, engine));
-    deploySymbolVerticle(vertx, webClient);
-    var stockSymbols = cache.getJsonObject("stock-symbols", new JsonObject());
-    httpsRouter.get("/stock/symbol/:exchange").handler(stockSymbol(vertx, engine, redisApi, redisConnection, stockSymbols));
-    httpsRouter.get("/stock/usa-spending/:symbol").handler(stockUsaSpending(webClient, engine));
-    httpsRouter.get("/stock/uspto-patent/:symbol").handler(stockUsptoPatent(webClient, engine));
-    httpsRouter.get("/stock/visa-application/:symbol").handler(stockVisaApplication(webClient, engine));
+    routeHiddenPages(vertx, checks, redisApi, redisConnection, pgConnection, httpsRouter, webClient, engine, countries, cache);
     return
       vertx
         .createHttpServer(
@@ -218,5 +177,38 @@ public enum HttpServerStarter {
             else log.error("HTTP failed {}:{}", httpHost, httpPort, ar.cause());
           }
         );
+  }
+
+  private static void routeHiddenPages(Vertx vertx, HealthCheckHandler checks, RedisAPI redisApi, RedisConnection redisConnection, PgConnection pgConnection, Router httpsRouter, WebClient webClient, ThymeleafTemplateEngine engine, JsonObject countries, JsonObject cache) {
+    httpsRouter.get("/countries").handler(countries(webClient, engine, redisApi, redisConnection, countries));
+    var cryptoExchanges = cache.getJsonObject("crypto-exchanges", new JsonObject());
+    httpsRouter.get("/crypto/exchange").handler(cryptoExchange(webClient, engine, redisApi, redisConnection, cryptoExchanges));
+    var cryptoSymbols = cache.getJsonObject("crypto-exchanges", new JsonObject());
+    httpsRouter.get("/crypto/symbol/:exchange").handler(cryptoSymbol(webClient, engine, redisApi, redisConnection, cryptoSymbols));
+    var fdaCalendar = cache.getJsonObject("fda-calendar", new JsonObject());
+    httpsRouter.get("/fda-advisory-committee-calendar").handler(fdaAdvisoryCommitteeCalendar(checks, webClient, engine, redisApi, redisConnection, fdaCalendar));
+    var forexExchanges = cache.getJsonObject("forex-exchanges", new JsonObject());
+    httpsRouter.get("/forex/exchange").handler(forexExchange(webClient, engine, redisApi, redisConnection, forexExchanges));
+    var forexSymbols = cache.getJsonObject("forex-exchanges", new JsonObject());
+    httpsRouter.get("/forex/symbol/:exchange").handler(forexSymbol(webClient, engine, redisApi, redisConnection, forexSymbols));
+    var ipoCalendar = cache.getJsonObject("ipo-calendar", new JsonObject());
+    httpsRouter.get("/ipo-calendar").handler(ipoCalendar(checks, webClient, engine, redisApi, redisConnection, pgConnection, ipoCalendar));
+    var news = cache.getJsonObject("news", new JsonObject());
+    httpsRouter.get("/news/:category").handler(news(webClient, engine, redisApi, redisConnection, news));
+    httpsRouter.get("/stock/earnings/:symbol").handler(stockEarnings(webClient, engine));
+    httpsRouter.get("/stock/filings/:symbol").handler(stockFilings(webClient, engine));
+    httpsRouter.get("/stock/financials-reported/:symbol").handler(stockFinancialsReported(webClient, engine));
+    httpsRouter.get("/stock/insider-sentiment/:symbol").handler(stockInsiderSentiment(webClient, engine));
+    httpsRouter.get("/stock/insider-transactions/:symbol").handler(stockInsiderTransactions(webClient, engine));
+    httpsRouter.get("/stock/market-holiday/:exchange").handler(stockMarketHoliday(webClient, engine));
+    var profile2 = cache.getJsonObject("profile2", new JsonObject());
+    httpsRouter.get("/stock/profile2/:symbol").handler(stockProfile2(webClient, engine, redisApi, redisConnection, profile2));
+    httpsRouter.get("/stock/recommendation/:symbol").handler(stockRecommendation(webClient, engine));
+    deploySymbolVerticle(vertx, webClient);
+    var stockSymbols = cache.getJsonObject("stock-symbols", new JsonObject());
+    httpsRouter.get("/stock/symbol/:exchange").handler(stockSymbol(vertx, engine, redisApi, redisConnection, stockSymbols));
+    httpsRouter.get("/stock/usa-spending/:symbol").handler(stockUsaSpending(webClient, engine));
+    httpsRouter.get("/stock/uspto-patent/:symbol").handler(stockUsptoPatent(webClient, engine));
+    httpsRouter.get("/stock/visa-application/:symbol").handler(stockVisaApplication(webClient, engine));
   }
 }
