@@ -1,11 +1,11 @@
--- Table: finnhub.news_general
+-- Table: finnhub.news_forex
 
-DROP TABLE IF EXISTS finnhub.news_general;
+DROP TABLE IF EXISTS finnhub.news_forex;
 
-CREATE TABLE IF NOT EXISTS finnhub.news_general
+CREATE TABLE IF NOT EXISTS finnhub.news_forex
 (
   category text COLLATE pg_catalog."default",
-  datetime timestamp with time zone,
+  datetime integer,
   headline text COLLATE pg_catalog."default",
   id integer,
   image text COLLATE pg_catalog."default",
@@ -14,8 +14,7 @@ CREATE TABLE IF NOT EXISTS finnhub.news_general
   summary text COLLATE pg_catalog."default",
   url text COLLATE pg_catalog."default"
 )
-
   TABLESPACE pg_default;
 
-ALTER TABLE IF EXISTS finnhub.news_general
+ALTER TABLE IF EXISTS finnhub.news_forex
   OWNER to vertx_demo_dev_user;

@@ -20,7 +20,8 @@ import lombok.extern.slf4j.Slf4j;
 import static bbb.vertx_demo.main.http_server.About.about;
 import static bbb.vertx_demo.main.http_server.Countries.countries;
 import static bbb.vertx_demo.main.http_server.FdaAdvisoryCommiteeCalendar.fdaAdvisoryCommitteeCalendar;
-import static bbb.vertx_demo.main.http_server.GeneralNews.generalNews;
+import static bbb.vertx_demo.main.http_server.NewsForex.forexNews;
+import static bbb.vertx_demo.main.http_server.NewsGeneral.generalNews;
 import static bbb.vertx_demo.main.http_server.Home.home;
 import static bbb.vertx_demo.main.http_server.IpoCalendar.ipoCalendar;
 import static bbb.vertx_demo.main.http_server.Ipos.viewAllIpos;
@@ -105,6 +106,7 @@ public enum HttpServerStarter {
             path.equals("/about") ||
             path.equals("/ipos") ||
             path.startsWith("/general-news") ||
+            path.startsWith("/forex-news") ||
             path.endsWith(".png") ||
             path.endsWith(".ico") ||
             path.endsWith(".svg") ||
@@ -142,6 +144,9 @@ public enum HttpServerStarter {
     httpsRouter.get("/").handler(home("Home page", checks, engine, redisApi, redisConnection, pgConnection, home));
     var generalNews = cache.getJsonObject("general-news", new JsonObject());
     httpsRouter.get("/general-news").handler(generalNews("General news", checks, webClient, engine, redisApi, redisConnection, pgConnection, generalNews));
+    httpsRouter.route("/*").handler(StaticHandler.create("webroot"));
+    var forexNews = cache.getJsonObject("forex-news", new JsonObject());
+    httpsRouter.get("/forex-news").handler(forexNews("Forex news", checks, webClient, engine, redisApi, redisConnection, pgConnection, forexNews));
     httpsRouter.route("/*").handler(StaticHandler.create("webroot"));
     routeHiddenPages(vertx, checks, redisApi, redisConnection, pgConnection, httpsRouter, webClient, engine, cache);
     return

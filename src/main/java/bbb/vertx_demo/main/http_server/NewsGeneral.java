@@ -27,7 +27,7 @@ import static java.util.Locale.US;
 import static java.util.Objects.nonNull;
 
 @Slf4j
-public enum GeneralNews {
+public enum NewsGeneral {
 
   ;
 
@@ -76,6 +76,7 @@ public enum GeneralNews {
                 .onSuccess(rowSet -> {
                     var renderingContext = new HashMap<String, Object>();
                     renderingContext.put("pageTitle", "General news");
+                    renderingContext.put("tableHeader", "General news");
                     var elements = rowSet.stream().map(row -> {
                         var element = new HashMap<String, Object>();
                         var datetime = row.getLocalDateTime("datetime");
