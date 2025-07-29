@@ -63,7 +63,7 @@ public enum Ipos {
                 .end(buffer);
               log.info("'{}' request handled in {}", name, watch.elapsed());
             } else {
-              var query = "SELECT date, exchange, name, number_of_shares, price, status, symbol, total_shares_value, price_number, price_from, price_to FROM finnhub.calendar_ipo_parsed";
+              var query = "SELECT date, exchange, name, number_of_shares, price, status, symbol, total_shares_value, price_number, price_from, price_to FROM finnhub.calendar_ipo_parsed ORDER BY date DESC, name";
               pgConnection
                 .query(query)
                 .execute()
