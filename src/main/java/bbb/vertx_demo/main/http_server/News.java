@@ -38,7 +38,7 @@ public enum News {
     ) {
     return context -> {
       var category = context.pathParam("category");
-      var maxAgeString = config.getString("max-age", "PT30M");
+      var maxAgeString = config.getString("max-age", "PT1H");
       var maxAge = Duration.parse(maxAgeString).toSeconds();
       log.info("Cache expiry for {} news is {} seconds", category, maxAge);
       var cacheControl = format("public, max-age=%d, immutable", maxAge);
