@@ -94,10 +94,10 @@ renderNews news =
     , toSQLValue (headline news)
     , toSQLInt (nid news)
     , toSQLValue (image news)
-    ,  "'" <> toSQLValue (related news) <> "'"
-    ,  toSQLValue (source news)
-    ,  toSQLValue (summary news)
-    ,  toSQLValue (url news)
+    , toSQLValue (related news)
+    , toSQLValue (source news)
+    , toSQLValue (summary news)
+    , toSQLValue (url news)
     ] <> ")"
 
 main :: IO ()
