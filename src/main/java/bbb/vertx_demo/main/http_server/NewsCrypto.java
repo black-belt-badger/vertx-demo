@@ -77,6 +77,7 @@ public enum NewsCrypto {
                     var renderingContext = new HashMap<String, Object>();
                     renderingContext.put("pageTitle", "Crypto news");
                     renderingContext.put("tableHeader", "Crypto news");
+                    renderingContext.put("tableSubheader", "Insights from the fast-moving world of cryptocurrencies and digital assets. Track regulation updates, market volatility, and emerging blockchain trends.");
                     var elements = rowSet.stream().map(row -> {
                         var element = new HashMap<String, Object>();
                         var datetime = row.getLocalDateTime("datetime");

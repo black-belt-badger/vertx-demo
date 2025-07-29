@@ -77,6 +77,7 @@ public enum NewsForex {
                     var renderingContext = new HashMap<String, Object>();
                     renderingContext.put("pageTitle", "Forex news");
                     renderingContext.put("tableHeader", "Forex news");
+                    renderingContext.put("tableSubheader", "Occasional updates from global currency markets.");
                     var elements = rowSet.stream().map(row -> {
                         var element = new HashMap<String, Object>();
                         var datetime = row.getLocalDateTime("datetime");

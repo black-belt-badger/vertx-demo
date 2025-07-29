@@ -77,6 +77,7 @@ public enum NewsMerger {
                     var renderingContext = new HashMap<String, Object>();
                     renderingContext.put("pageTitle", "Merger news");
                     renderingContext.put("tableHeader", "Merger news");
+                    renderingContext.put("tableSubheader", "News on mergers, acquisitions, and corporate restructuring. Follow strategic deals that reshape industries and signal investor sentiment.");
                     var elements = rowSet.stream().map(row -> {
                         var element = new HashMap<String, Object>();
                         var datetime = row.getLocalDateTime("datetime");
