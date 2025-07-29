@@ -46,7 +46,7 @@ public enum GeneralNews {
       JsonObject config
     ) {
     return context -> {
-      var maxAgeString = config.getString("max-age", "PT1S");
+      var maxAgeString = config.getString("max-age", "PT1H");
       var maxAge = Duration.parse(maxAgeString).toSeconds();
       log.info("Cache expiry for '{}' is {} seconds", name, maxAge);
       var cacheControl = format("public, max-age=%d, immutable", maxAge);

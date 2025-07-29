@@ -229,6 +229,7 @@ let config-server =
                   { home.max-age = dev_default_cache_max_age
                   , about.max-age = dev_default_cache_max_age
                   , ipos.max-age = dev_default_cache_max_age
+                  , general-news.max-age = dev_default_cache_max_age
                   }
                 }
               , postgres =
@@ -269,6 +270,7 @@ let config-server =
                   { home.max-age = prod_default_cache_max_age
                   , about.max-age = prod_default_cache_max_age
                   , ipos.max-age = prod_default_cache_max_age
+                  , general-news.max-age = prod_default_cache_max_age
                   }
                 }
               , postgres =

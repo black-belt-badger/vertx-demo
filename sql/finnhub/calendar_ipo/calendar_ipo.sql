@@ -18,4 +18,4 @@ CREATE TABLE IF NOT EXISTS finnhub.calendar_ipo
   TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS finnhub.calendar_ipo
-  OWNER to vertx_demo_admin;
+  OWNER to vertx_demo_dev_user;

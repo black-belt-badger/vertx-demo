@@ -142,6 +142,7 @@ services:
         "http": {
           "cache": {
             "about": { "max-age": "PT1S" },
+            "general-news": { "max-age": "PT1S" },
             "home": { "max-age": "PT1S" },
             "ipos": { "max-age": "PT1S" }
           },

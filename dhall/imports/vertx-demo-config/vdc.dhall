@@ -39,6 +39,7 @@ let VertxDemoConfig
               { home : { max-age : Text }
               , about : { max-age : Text }
               , ipos : { max-age : Text }
+              , general-news : { max-age : Text }
               }
           }
       , postgres :
@@ -128,6 +129,14 @@ let VertxDemoConfig/ToJSON
                                             { max-age =
                                                 string
                                                   config.http.cache.ipos.max-age
+                                            }
+                                        )
+                                  , general-news =
+                                      object
+                                        ( toMap
+                                            { max-age =
+                                                string
+                                                  config.http.cache.general-news.max-age
                                             }
                                         )
                                   }
