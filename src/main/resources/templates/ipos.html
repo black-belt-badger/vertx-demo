@@ -8,7 +8,8 @@
 <section>
   <header>
     <h1>IPOs</h1>
-    <p class="secondary">Explore upcoming and recent IPOs across all major markets. Curated from trusted financial sources, including Finnhub.</p>
+    <p class="secondary">Explore upcoming and recent IPOs across all major markets. Curated from trusted financial
+      sources, including Finnhub.</p>
   </header>
   <section class="section-highlight">
     <h2><i data-lucide="globe"></i> All exchanges</h2>
@@ -25,14 +26,16 @@
       </tr>
       </thead>
       <tbody>
-      <tr th:each="ipo : ${elements}">
-        <th th:text="${ipo.name}"/>
-        <td th:text="${ipo.date}" class="date wide-column"/>
-        <td th:text="${ipo.exchange}"/>
-        <td th:text="${ipo.number_of_shares}" class="large-number"/>
-        <td th:text="${ipo.price}"/>
-        <td th:text="${ipo.status}"/>
-        <td th:text="${ipo.total_shares_value}" class="large-number"/>
+      <tr th:each="element : ${elements}">
+        <th th:text="${element.name}"/>
+        <td th:text="${element.date}" class="date wide-column"/>
+        <td th:text="${element.exchange}"/>
+        <td th:text="${element.number_of_shares}" class="large-number"/>
+        <td
+          th:text="${element.price_number != null} ? ${element.price_number} : ${element.price_from} + ' - ' + ${element.price_to}"
+          class="price"/>
+        <td th:text="${element.status}"/>
+        <td th:text="${element.total_shares_value}" class="large-number"/>
       </tr>
       </tbody>
     </table>

@@ -23,7 +23,7 @@ import static bbb.vertx_demo.main.http_server.FdaAdvisoryCommiteeCalendar.fdaAdv
 import static bbb.vertx_demo.main.http_server.Home.home;
 import static bbb.vertx_demo.main.http_server.IpoCalendar.ipoCalendar;
 import static bbb.vertx_demo.main.http_server.News.news;
-import static bbb.vertx_demo.main.http_server.ViewAllIpos.viewAllIpos;
+import static bbb.vertx_demo.main.http_server.Ipos.viewAllIpos;
 import static bbb.vertx_demo.main.http_server.crypto.CryptoExchanges.cryptoExchange;
 import static bbb.vertx_demo.main.http_server.crypto.CryptoSymbols.cryptoSymbol;
 import static bbb.vertx_demo.main.http_server.forex.ForexExchanges.forexExchange;
@@ -102,7 +102,7 @@ public enum HttpServerStarter {
           path.equals("/") ||
             path.equals("/robots.txt") ||
             path.equals("/about") ||
-            path.equals("/view-all-ipos") ||
+            path.equals("/ipos") ||
             path.endsWith(".png") ||
             path.endsWith(".ico") ||
             path.endsWith(".svg") ||

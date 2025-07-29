@@ -255,8 +255,7 @@ let config-server =
               , cert-path = "/etc/letsencrypt/live/9rove.com/fullchain.pem"
               , postgres =
                 { database = "postgres"
-                , host =
-                    "vertx-demo-db.chimcku4qngw.eu-north-1.rds.amazonaws.com"
+                , host = "grove-db.chimcku4qngw.eu-north-1.rds.amazonaws.com"
                 , password = "vertx_demo_password"
                 , port = 5432
                 , ssl-mode = "allow"

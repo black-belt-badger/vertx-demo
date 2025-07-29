@@ -25,7 +25,7 @@ import static java.lang.String.format;
 import static java.util.Objects.nonNull;
 
 @Slf4j
-public enum ViewAllIpos {
+public enum Ipos {
 
   ;
 
@@ -63,7 +63,7 @@ public enum ViewAllIpos {
                 .end(buffer);
               log.info("'{}' request handled in {}", name, watch.elapsed());
             } else {
-              var query = "SELECT date, exchange, name, number_of_shares, price, status, symbol, total_shares_value FROM finnhub.calendar_ipo";
+              var query = "SELECT date, exchange, name, number_of_shares, price, status, symbol, total_shares_value, price_number, price_from, price_to FROM finnhub.calendar_ipo_parsed";
               pgConnection
                 .query(query)
                 .execute()
@@ -84,6 +84,9 @@ public enum ViewAllIpos {
                         element.put("exchange", row.getString("exchange"));
                         element.put("number_of_shares", row.getInteger("number_of_shares"));
                         element.put("price", row.getString("price"));
+                        element.put("price_number", row.getBigDecimal("price_number"));
+                        element.put("price_from", row.getBigDecimal("price_from"));
+                        element.put("price_to", row.getBigDecimal("price_to"));
                         element.put("status", row.getString("status"));
                         element.put("total_shares_value", row.getLong("total_shares_value"));
                         return element;
