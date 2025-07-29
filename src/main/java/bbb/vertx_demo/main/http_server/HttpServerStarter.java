@@ -22,8 +22,8 @@ import static bbb.vertx_demo.main.http_server.Countries.countries;
 import static bbb.vertx_demo.main.http_server.FdaAdvisoryCommiteeCalendar.fdaAdvisoryCommitteeCalendar;
 import static bbb.vertx_demo.main.http_server.Home.home;
 import static bbb.vertx_demo.main.http_server.IpoCalendar.ipoCalendar;
-import static bbb.vertx_demo.main.http_server.News.news;
 import static bbb.vertx_demo.main.http_server.Ipos.viewAllIpos;
+import static bbb.vertx_demo.main.http_server.News.news;
 import static bbb.vertx_demo.main.http_server.crypto.CryptoExchanges.cryptoExchange;
 import static bbb.vertx_demo.main.http_server.crypto.CryptoSymbols.cryptoSymbol;
 import static bbb.vertx_demo.main.http_server.forex.ForexExchanges.forexExchange;
@@ -99,8 +99,8 @@ public enum HttpServerStarter {
     httpsRouter.route().handler(ctx -> {
         var path = ctx.normalizedPath();
         if (
-          path.equals("/") ||
-            path.equals("/robots.txt") ||
+          path.equals("/robots.txt") ||
+            path.equals("/") ||
             path.equals("/about") ||
             path.equals("/ipos") ||
             path.endsWith(".png") ||
@@ -131,7 +131,6 @@ public enum HttpServerStarter {
     var engine = ThymeleafTemplateEngine.create(vertx);
     var webClient = WebClient.create(vertx);
     httpsRouter.get("/health").handler(checks.register(HTTPS_WEB_SERVER_ONLINE, Promise::succeed));
-    httpsRouter.route("/*").handler(StaticHandler.create("webroot"));
     httpsRouter.route("/favicon.png").handler(StaticHandler.create());
     var about = cache.getJsonObject("about", new JsonObject());
     httpsRouter.route("/about").handler(about(engine, redisApi, redisConnection, about));
@@ -139,6 +138,7 @@ public enum HttpServerStarter {
     httpsRouter.route("/ipos").handler(viewAllIpos("IPOs", checks, webClient, engine, redisApi, redisConnection, pgConnection, ipos));
     var home = cache.getJsonObject("home", new JsonObject());
     httpsRouter.get("/").handler(home("Home page", checks, engine, redisApi, redisConnection, pgConnection, home));
+    httpsRouter.route("/*").handler(StaticHandler.create("webroot"));
     var countries = cache.getJsonObject("countries", new JsonObject());
     routeHiddenPages(vertx, checks, redisApi, redisConnection, pgConnection, httpsRouter, webClient, engine, countries, cache);
     return
