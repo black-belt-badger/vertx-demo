@@ -6,56 +6,33 @@
 <body>
 <section>
   <header>
-    <h1>Latest U.S. IPO Filings</h1>
-    <p class="secondary">Stay ahead with fresh IPO data from leading U.S. exchanges. Curated from trusted sources, including Finnhub.</p>
+    <h1>IPO Watchlist</h1>
+    <p class="secondary">Stay ahead with fresh IPO data from leading U.S. exchanges. Curated from trusted sources,
+      including Finnhub.</p>
   </header>
   <section class="section-highlight">
     <h2><i data-lucide="trending-up"></i> NASDAQ Capital</h2>
     <table role="grid">
       <thead>
       <tr>
-        <th>Date</th>
-        <th>Company</th>
-        <th>Symbol</th>
+        <th>Name</th>
+        <th class="wide-column">Date</th>
         <th>Shares</th>
         <th>Price</th>
+        <th>Status</th>
+        <th>Total Value</th>
       </tr>
       </thead>
       <tbody>
-      <tr class="recent-ipo">
-        <td class="date">2025-07-24</td>
-        <td>Linkhome Holdings Inc.</td>
-        <td>LHAI</td>
-        <td class="shares">1500000</td>
-        <td class="price">4.00</td>
-      </tr>
-      <tr class="recent-ipo">
-        <td class="date">2025-07-23</td>
-        <td>Cre8 Enterprise Ltd</td>
-        <td>CRE</td>
-        <td class="shares">1450000</td>
-        <td class="price">4.00</td>
-      </tr>
-      <tr class="recent-ipo">
-        <td class="date">2025-07-23</td>
-        <td>Dreamland Ltd</td>
-        <td>TDIC</td>
-        <td class="shares">2000000</td>
-        <td class="price">4.00</td>
-      </tr>
-      <tr>
-        <td class="date">2025-07-18</td>
-        <td>Majestic Ideal Holdings Ltd</td>
-        <td>MJID</td>
-        <td class="shares">2500000</td>
-        <td class="price">6.00</td>
-      </tr>
-      <tr>
-        <td class="date">2025-07-17</td>
-        <td>Robot Consulting Co., Ltd.</td>
-        <td>LAWR</td>
-        <td class="shares">3750000</td>
-        <td class="price">4.00</td>
+      <tr th:each="element : ${elementsByExchange['NASDAQ Capital']}">
+        <th th:text="${element.name}"></th>
+        <td th:text="${element.date}" class="date wide-column"></td>
+        <td th:text="${element.number_of_shares}" class="large-number"></td>
+        <td
+          th:text="${element.price_number != null} ? ${element.price_number} : ${element.price_from} + ' - ' + ${element.price_to}"
+          class="price"></td>
+        <td th:text="${element.status}"></td>
+        <td th:text="${element.total_shares_value}" class="large-number"></td>
       </tr>
       </tbody>
     </table>
@@ -65,48 +42,24 @@
     <table role="grid">
       <thead>
       <tr>
-        <th>Date</th>
-        <th>Company</th>
-        <th>Symbol</th>
+        <th>Name</th>
+        <th class="wide-column">Date</th>
         <th>Shares</th>
         <th>Price</th>
+        <th>Status</th>
+        <th>Total Value</th>
       </tr>
       </thead>
       <tbody>
-      <tr>
-        <td class="date">2025-07-16</td>
-        <td>Solarius Capital Acquisition Corp.</td>
-        <td>SOCAU</td>
-        <td class="shares">15000000</td>
-        <td class="price">10.00</td>
-      </tr>
-      <tr>
-        <td class="date">2025-07-15</td>
-        <td>Silver Pegasus Acquisition Corp.</td>
-        <td>SPEGU</td>
-        <td class="shares">10000000</td>
-        <td class="price">10.00</td>
-      </tr>
-      <tr>
-        <td class="date">2025-07-09</td>
-        <td>Globa Terra Acquisition Corp</td>
-        <td>GTERU</td>
-        <td class="shares">15217000</td>
-        <td class="price">10.00</td>
-      </tr>
-      <tr>
-        <td class="date">2025-07-02</td>
-        <td>Origin Investment Corp I</td>
-        <td>ORIQU</td>
-        <td class="shares">6000000</td>
-        <td class="price">10.00</td>
-      </tr>
-      <tr>
-        <td class="date">2025-07-02</td>
-        <td>Vendome Acquisition Corp I</td>
-        <td>VNMEU</td>
-        <td class="shares">20000000</td>
-        <td class="price">10.00</td>
+      <tr th:each="element : ${elementsByExchange['NASDAQ Global']}">
+        <th th:text="${element.name}"></th>
+        <td th:text="${element.date}" class="date wide-column"></td>
+        <td th:text="${element.number_of_shares}" class="large-number"></td>
+        <td
+          th:text="${element.price_number != null} ? ${element.price_number} : ${element.price_from} + ' - ' + ${element.price_to}"
+          class="price"></td>
+        <td th:text="${element.status}"></td>
+        <td th:text="${element.total_shares_value}" class="large-number"></td>
       </tr>
       </tbody>
     </table>
@@ -116,48 +69,24 @@
     <table role="grid">
       <thead>
       <tr>
-        <th>Date</th>
-        <th>Company</th>
-        <th>Symbol</th>
+        <th>Name</th>
+        <th class="wide-column">Date</th>
         <th>Shares</th>
         <th>Price</th>
+        <th>Status</th>
+        <th>Total Value</th>
       </tr>
       </thead>
       <tbody>
-      <tr class="recent-ipo">
-        <td class="date">2025-07-23</td>
-        <td>CARLSMED, INC.</td>
-        <td>CARL</td>
-        <td class="shares">6700000</td>
-        <td class="price">15.00</td>
-      </tr>
-      <tr>
-        <td class="date">2025-07-16</td>
-        <td>Aura Minerals Inc.</td>
-        <td>AUGO</td>
-        <td class="shares">8100510</td>
-        <td class="price">24.25</td>
-      </tr>
-      <tr>
-        <td class="date">2025-06-26</td>
-        <td>Jefferson Capital, Inc. / DE</td>
-        <td>JCAP</td>
-        <td class="shares">10000000</td>
-        <td class="price">15.00</td>
-      </tr>
-      <tr>
-        <td class="date">2025-06-18</td>
-        <td>Slide Insurance Holdings, Inc.</td>
-        <td>SLDE</td>
-        <td class="shares">24000000</td>
-        <td class="price">17.00</td>
-      </tr>
-      <tr>
-        <td class="date">2025-06-18</td>
-        <td>Caris Life Sciences, Inc.</td>
-        <td>CAI</td>
-        <td class="shares">23529412</td>
-        <td class="price">21.00</td>
+      <tr th:each="element : ${elementsByExchange['NASDAQ Global Select']}">
+        <th th:text="${element.name}"></th>
+        <td th:text="${element.date}" class="date wide-column"></td>
+        <td th:text="${element.number_of_shares}" class="large-number"></td>
+        <td
+          th:text="${element.price_number != null} ? ${element.price_number} : ${element.price_from} + ' - ' + ${element.price_to}"
+          class="price"></td>
+        <td th:text="${element.status}"></td>
+        <td th:text="${element.total_shares_value}" class="large-number"></td>
       </tr>
       </tbody>
     </table>
@@ -167,48 +96,24 @@
     <table role="grid">
       <thead>
       <tr>
-        <th>Date</th>
-        <th>Company</th>
-        <th>Symbol</th>
+        <th>Name</th>
+        <th class="wide-column">Date</th>
         <th>Shares</th>
         <th>Price</th>
+        <th>Status</th>
+        <th>Total Value</th>
       </tr>
       </thead>
       <tbody>
-      <tr class="recent-ipo">
-        <td class="date">2025-07-23</td>
-        <td>CARLSMED, INC.</td>
-        <td>CARL</td>
-        <td class="large-number">6700000</td>
-        <td class="price">15.00</td>
-      </tr>
-      <tr>
-        <td class="date">2025-07-16</td>
-        <td>Aura Minerals Inc.</td>
-        <td>AUGO</td>
-        <td class="large-number">8100510</td>
-        <td class="price">24.25</td>
-      </tr>
-      <tr>
-        <td class="date">2025-06-26</td>
-        <td>Jefferson Capital, Inc. / DE</td>
-        <td>JCAP</td>
-        <td class="large-number">10000000</td>
-        <td class="price">15.00</td>
-      </tr>
-      <tr>
-        <td class="date">2025-06-18</td>
-        <td>Slide Insurance Holdings, Inc.</td>
-        <td>SLDE</td>
-        <td class="large-number">24000000</td>
-        <td class="price">17.00</td>
-      </tr>
-      <tr>
-        <td class="date">2025-06-18</td>
-        <td>Caris Life Sciences, Inc.</td>
-        <td>CAI</td>
-        <td class="large-number">23529412</td>
-        <td class="price">21.00</td>
+      <tr th:each="element : ${elementsByExchange['NYSE']}">
+        <th th:text="${element.name}"></th>
+        <td th:text="${element.date}" class="date wide-column"></td>
+        <td th:text="${element.number_of_shares}" class="large-number"></td>
+        <td
+          th:text="${element.price_number != null} ? ${element.price_number} : ${element.price_from} + ' - ' + ${element.price_to}"
+          class="price"></td>
+        <td th:text="${element.status}"></td>
+        <td th:text="${element.total_shares_value}" class="large-number"></td>
       </tr>
       </tbody>
     </table>
@@ -218,39 +123,56 @@
     <table role="grid">
       <thead>
       <tr>
-        <th>Date</th>
-        <th>Company</th>
-        <th>Symbol</th>
+        <th>Name</th>
+        <th class="wide-column">Date</th>
         <th>Shares</th>
         <th>Price</th>
+        <th>Status</th>
+        <th>Total Value</th>
       </tr>
       </thead>
       <tbody>
-      <tr>
-        <td class="date">2025-06-18</td>
-        <td>ENIGMATIG LTD</td>
-        <td>EGG</td>
-        <td class="large-number">2845200</td>
-        <td class="price">5.00</td>
-      </tr>
-      <tr>
-        <td class="date">2025-06-12</td>
-        <td>Vantage Corp (Singapore)</td>
-        <td>VNTG</td>
-        <td class="large-number">3250000</td>
-        <td class="price">4.00</td>
-      </tr>
-      <tr>
-        <td class="date">2025-05-09</td>
-        <td>Apimeds Pharmaceuticals US, Inc.</td>
-        <td>APUS</td>
-        <td class="large-number">3375000</td>
-        <td class="price">4.00</td>
+      <tr th:each="element : ${elementsByExchange['NYSE MKT']}">
+        <th th:text="${element.name}"></th>
+        <td th:text="${element.date}" class="date wide-column"></td>
+        <td th:text="${element.number_of_shares}" class="large-number"></td>
+        <td
+          th:text="${element.price_number != null} ? ${element.price_number} : ${element.price_from} + ' - ' + ${element.price_to}"
+          class="price"></td>
+        <td th:text="${element.status}"></td>
+        <td th:text="${element.total_shares_value}" class="large-number"></td>
       </tr>
       </tbody>
     </table>
   </section>
-  <script src="/static/beautify-table.js?v=1.0.28-SNAPSHOT"></script>
+  <section class="section-highlight">
+    <h2><i data-lucide="file-question"></i> Exchange unknown</h2>
+    <table role="grid">
+      <thead>
+      <tr>
+        <th>Name</th>
+        <th class="wide-column">Date</th>
+        <th>Shares</th>
+        <th>Price</th>
+        <th>Status</th>
+        <th>Total Value</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="element : ${elementsByExchange['null']}">
+        <th th:text="${element.name}"></th>
+        <td th:text="${element.date}" class="date wide-column"></td>
+        <td th:text="${element.number_of_shares}" class="large-number"></td>
+        <td
+          th:text="${element.price_number != null} ? ${element.price_number} : ${element.price_from} + ' - ' + ${element.price_to}"
+          class="price"></td>
+        <td th:text="${element.status}"></td>
+        <td th:text="${element.total_shares_value}" class="large-number"></td>
+      </tr>
+      </tbody>
+    </table>
+  </section>
+  <script src="/static/beautify-table.js?v=1.0.28"></script>
   <script>lucide.createIcons();</script>
 </section>
 </body>

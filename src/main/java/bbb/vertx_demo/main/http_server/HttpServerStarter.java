@@ -138,7 +138,7 @@ public enum HttpServerStarter {
     var ipos = cache.getJsonObject("ipos", new JsonObject());
     httpsRouter.route("/ipos").handler(viewAllIpos("IPOs", checks, webClient, engine, redisApi, redisConnection, pgConnection, ipos));
     var home = cache.getJsonObject("home", new JsonObject());
-    httpsRouter.get("/").handler(home(engine, redisApi, redisConnection, home));
+    httpsRouter.get("/").handler(home("Home page", checks, engine, redisApi, redisConnection, pgConnection, home));
     var countries = cache.getJsonObject("countries", new JsonObject());
     routeHiddenPages(vertx, checks, redisApi, redisConnection, pgConnection, httpsRouter, webClient, engine, countries, cache);
     return
