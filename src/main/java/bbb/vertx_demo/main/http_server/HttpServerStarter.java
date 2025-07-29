@@ -20,6 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 import static bbb.vertx_demo.main.http_server.About.about;
 import static bbb.vertx_demo.main.http_server.Countries.countries;
 import static bbb.vertx_demo.main.http_server.FdaAdvisoryCommiteeCalendar.fdaAdvisoryCommitteeCalendar;
+import static bbb.vertx_demo.main.http_server.GeneralNews.generalNews;
 import static bbb.vertx_demo.main.http_server.Home.home;
 import static bbb.vertx_demo.main.http_server.IpoCalendar.ipoCalendar;
 import static bbb.vertx_demo.main.http_server.Ipos.viewAllIpos;
@@ -103,6 +104,7 @@ public enum HttpServerStarter {
             path.equals("/") ||
             path.equals("/about") ||
             path.equals("/ipos") ||
+            path.startsWith("/general-news") ||
             path.endsWith(".png") ||
             path.endsWith(".ico") ||
             path.endsWith(".svg") ||
@@ -138,9 +140,10 @@ public enum HttpServerStarter {
     httpsRouter.route("/ipos").handler(viewAllIpos("IPOs", checks, webClient, engine, redisApi, redisConnection, pgConnection, ipos));
     var home = cache.getJsonObject("home", new JsonObject());
     httpsRouter.get("/").handler(home("Home page", checks, engine, redisApi, redisConnection, pgConnection, home));
+    var generalNews = cache.getJsonObject("general-news", new JsonObject());
+    httpsRouter.get("/general-news").handler(generalNews("General news", checks, webClient, engine, redisApi, redisConnection, pgConnection, generalNews));
     httpsRouter.route("/*").handler(StaticHandler.create("webroot"));
-    var countries = cache.getJsonObject("countries", new JsonObject());
-    routeHiddenPages(vertx, checks, redisApi, redisConnection, pgConnection, httpsRouter, webClient, engine, countries, cache);
+    routeHiddenPages(vertx, checks, redisApi, redisConnection, pgConnection, httpsRouter, webClient, engine, cache);
     return
       vertx
         .createHttpServer(
@@ -180,7 +183,8 @@ public enum HttpServerStarter {
         );
   }
 
-  private static void routeHiddenPages(Vertx vertx, HealthCheckHandler checks, RedisAPI redisApi, RedisConnection redisConnection, PgConnection pgConnection, Router httpsRouter, WebClient webClient, ThymeleafTemplateEngine engine, JsonObject countries, JsonObject cache) {
+  private static void routeHiddenPages(Vertx vertx, HealthCheckHandler checks, RedisAPI redisApi, RedisConnection redisConnection, PgConnection pgConnection, Router httpsRouter, WebClient webClient, ThymeleafTemplateEngine engine, JsonObject cache) {
+    var countries = cache.getJsonObject("countries", new JsonObject());
     httpsRouter.get("/countries").handler(countries(webClient, engine, redisApi, redisConnection, countries));
     var cryptoExchanges = cache.getJsonObject("crypto-exchanges", new JsonObject());
     httpsRouter.get("/crypto/exchange").handler(cryptoExchange(webClient, engine, redisApi, redisConnection, cryptoExchanges));

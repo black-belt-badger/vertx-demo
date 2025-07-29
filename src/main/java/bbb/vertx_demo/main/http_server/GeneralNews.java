@@ -12,32 +12,33 @@ import io.vertx.redis.client.RedisConnection;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.Duration;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 
+import static bbb.vertx_demo.main.http_server.Home.HTML;
 import static com.google.common.base.Stopwatch.createStarted;
-import static com.google.common.net.MediaType.HTML_UTF_8;
 import static io.vertx.core.http.HttpHeaders.CACHE_CONTROL;
 import static io.vertx.core.http.HttpHeaders.CONTENT_TYPE;
 import static io.vertx.ext.healthchecks.Status.KO;
 import static io.vertx.redis.client.Command.SETEX;
 import static io.vertx.redis.client.Request.cmd;
 import static java.lang.String.format;
+import static java.util.Locale.US;
 import static java.util.Objects.nonNull;
 
 @Slf4j
-public enum Ipos {
+public enum GeneralNews {
 
   ;
 
-  public static final String HTML = HTML_UTF_8.toString();
+  private static final String REDIS_KEY = "/general-news";
+  private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("EEEE, MMM d',' HH:mm", US);
 
-  private static final String REDIS_KEY = "/about";
-
-  static Handler<RoutingContext> viewAllIpos
+  static Handler<RoutingContext> generalNews
     (
       String name,
       HealthCheckHandler checks,
-      WebClient webClient,
+      WebClient client,
       TemplateEngine engine,
       RedisAPI redisApi,
       RedisConnection redisConnection,
@@ -45,13 +46,12 @@ public enum Ipos {
       JsonObject config
     ) {
     return context -> {
-      var maxAgeString = config.getString("max-age", "PT1H");
+      var maxAgeString = config.getString("max-age", "PT1S");
       var maxAge = Duration.parse(maxAgeString).toSeconds();
       log.info("Cache expiry for '{}' is {} seconds", name, maxAge);
       var cacheControl = format("public, max-age=%d, immutable", maxAge);
       var watch = createStarted();
-      redisApi
-        .get(REDIS_KEY)
+      redisApi.get(REDIS_KEY)
         .onFailure(throwable -> log.error("error getting '{}' from Redis", name, throwable))
         .onSuccess(redisResponse -> {
             if (nonNull(redisResponse)) {
@@ -62,7 +62,7 @@ public enum Ipos {
                 .end(buffer);
               log.info("'{}' request handled in {}", name, watch.elapsed());
             } else {
-              var query = "SELECT date, exchange, name, number_of_shares, price, status, symbol, total_shares_value, price_number, price_from, price_to FROM finnhub.calendar_ipo_parsed ORDER BY date DESC, name";
+              var query = "SELECT category, datetime, headline, image, related, source, summary, url FROM finnhub.news_general_view ORDER BY datetime DESC";
               pgConnection
                 .query(query)
                 .execute()
@@ -75,25 +75,21 @@ public enum Ipos {
                 )
                 .onSuccess(rowSet -> {
                     var renderingContext = new HashMap<String, Object>();
-                    renderingContext.put("pageTitle", "All IPOs");
+                    renderingContext.put("pageTitle", "General news");
                     var elements = rowSet.stream().map(row -> {
                         var element = new HashMap<String, Object>();
-                        element.put("date", row.getLocalDate("date"));
-                        element.put("name", row.getString("name"));
-                        element.put("exchange", row.getString("exchange"));
-                        element.put("number_of_shares", row.getInteger("number_of_shares"));
-                        element.put("price", row.getString("price"));
-                        element.put("price_number", row.getBigDecimal("price_number"));
-                        element.put("price_from", row.getBigDecimal("price_from"));
-                        element.put("price_to", row.getBigDecimal("price_to"));
-                        element.put("status", row.getString("status"));
-                        element.put("total_shares_value", row.getLong("total_shares_value"));
+                        var datetime = row.getLocalDateTime("datetime");
+                        var formatted = datetime.format(DATE_TIME_FORMATTER);
+                        element.put("datetime", formatted);
+                        element.put("headline", row.getString("headline"));
+                        element.put("summary", row.getString("summary"));
+                        element.put("url", row.getString("url"));
                         return element;
                       }
                     ).toList();
                     renderingContext.put("elements", elements);
                     engine
-                      .render(renderingContext, "templates/ipos.html")
+                      .render(renderingContext, "templates/general-news.html")
                       .onFailure(throwable ->
                         log.error("error rendering '{}' template", name, throwable)
                       )
@@ -109,6 +105,7 @@ public enum Ipos {
                           redisConnection.send(request);
                         }
                       );
+
                   }
                 );
             }
