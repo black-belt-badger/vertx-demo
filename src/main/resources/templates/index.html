@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html th:replace="~{'./templates/common/layout.html' :: layout(~{::title}, ~{::section})}" lang="en">
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{'./templates/common/layout.html' :: layout(~{::title}, ~{::section})}" lang="en">
 <head>
-  <title>9rove - Home</title>
+  <title th:text="|9rove - ${pageTitle}|"></title>
 </head>
 <body>
 <section>
@@ -172,8 +173,6 @@
       </tbody>
     </table>
   </section>
-  <script src="/static/beautify-table.js?v=1.0.29"></script>
-  <script>lucide.createIcons();</script>
 </section>
 </body>
 </html>

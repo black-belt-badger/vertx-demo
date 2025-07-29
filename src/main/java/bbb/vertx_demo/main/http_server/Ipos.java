@@ -75,7 +75,7 @@ public enum Ipos {
                 )
                 .onSuccess(rowSet -> {
                     var renderingContext = new HashMap<String, Object>();
-                    renderingContext.put("pageTitle", "All IPOs");
+                    renderingContext.put("pageTitle", "IPOs");
                     var elements = rowSet.stream().map(row -> {
                         var element = new HashMap<String, Object>();
                         element.put("date", row.getLocalDate("date"));

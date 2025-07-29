@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html th:replace="~{'./templates/common/layout.html' :: layout(~{::title}, ~{::section})}" lang="en">
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{'./templates/common/layout.html' :: layout(~{::title}, ~{::section})}" lang="en">
 <head>
-    <title>About - 9rove</title>
+  <title th:text="|9rove - ${pageTitle}|"></title>
 </head>
 <body>
 <section>
