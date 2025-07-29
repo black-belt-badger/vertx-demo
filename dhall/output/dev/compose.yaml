@@ -132,7 +132,6 @@ services:
           },
           "username": "dev_admin"
         },
-        "cert-path": "security/smooth-all/server.cert.pem",
         "config-server": {
           "host": "host.docker.internal",
           "path": "/conf.json",
@@ -140,9 +139,17 @@ services:
           "scan-period": "PT5S",
           "version": "DEV inline"
         },
-        "http.port": 8081,
-        "https.port": 8444,
-        "key-path": "security/smooth-all/server.key.pem",
+        "http": {
+          "cache": {
+            "about": { "max-age": "PT1S" },
+            "home": { "max-age": "PT1S" },
+            "ipos": { "max-age": "PT1S" }
+          },
+          "cert-path": "security/smooth-all/server.cert.pem",
+          "insecure-port": 8081,
+          "key-path": "security/smooth-all/server.key.pem",
+          "secure-port": 8444
+        },
         "postgres": {
           "database": "vertx_demo_dev_database",
           "host": "host.docker.internal",

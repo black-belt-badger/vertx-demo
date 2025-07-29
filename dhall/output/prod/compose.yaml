@@ -90,7 +90,6 @@ services:
           },
           "username": "prod_admin"
         },
-        "cert-path": "/etc/letsencrypt/live/9rove.com/fullchain.pem",
         "config-server": {
           "host": "51.21.163.63",
           "path": "/conf.json",
@@ -98,9 +97,17 @@ services:
           "scan-period": "PT30S",
           "version": "PROD inline"
         },
-        "http.port": 8080,
-        "https.port": 8443,
-        "key-path": "/etc/letsencrypt/live/9rove.com/privkey.pem",
+        "http": {
+          "cache": {
+            "about": { "max-age": "PT6H" },
+            "home": { "max-age": "PT6H" },
+            "ipos": { "max-age": "PT6H" }
+          },
+          "cert-path": "/etc/letsencrypt/live/9rove.com/fullchain.pem",
+          "insecure-port": 8080,
+          "key-path": "/etc/letsencrypt/live/9rove.com/privkey.pem",
+          "secure-port": 8443
+        },
         "postgres": {
           "database": "postgres",
           "host": "grove-db.chimcku4qngw.eu-north-1.rds.amazonaws.com",

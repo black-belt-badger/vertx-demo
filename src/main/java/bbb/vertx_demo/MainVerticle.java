@@ -3,6 +3,7 @@ package bbb.vertx_demo;
 import bbb.vertx_demo.main.RedisHelper;
 import io.vertx.core.Future;
 import io.vertx.core.VerticleBase;
+import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.healthchecks.HealthCheckHandler;
 import io.vertx.pgclient.PgConnection;
 import io.vertx.redis.client.Redis;
@@ -50,7 +51,8 @@ public final class MainVerticle extends VerticleBase {
                               registerExampleMBean(checks);
                               deployShell(vertx, checks, config);
                               registerCommandPrintConfig(vertx, checks, config);
-                              return startHttpServers(vertx, checks, redisAPI, redisConnection, pgConnection, config);
+                            var http = config.getJsonObject("http");
+                            return startHttpServers(vertx, checks, redisAPI, redisConnection, pgConnection, http);
                             }
                           );
                       }

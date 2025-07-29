@@ -30,10 +30,17 @@ let VertxDemoConfig
           , scan-period : Text
           , version : Text
           }
-      , `http.port` : Natural
-      , `https.port` : Natural
-      , key-path : Text
-      , cert-path : Text
+      , http :
+          { secure-port : Natural
+          , insecure-port : Natural
+          , key-path : Text
+          , cert-path : Text
+          , cache :
+              { home : { max-age : Text }
+              , about : { max-age : Text }
+              , ipos : { max-age : Text }
+              }
+          }
       , postgres :
           { database : Text
           , host : Text
@@ -89,10 +96,44 @@ let VertxDemoConfig/ToJSON
                         , version = string config.config-server.version
                         }
                     )
-              , key-path = string config.key-path
-              , cert-path = string config.cert-path
-              , `http.port` = natural config.`http.port`
-              , `https.port` = natural config.`https.port`
+              , http =
+                  object
+                    ( toMap
+                        { secure-port = natural config.http.secure-port
+                        , insecure-port = natural config.http.insecure-port
+                        , key-path = string config.http.key-path
+                        , cert-path = string config.http.cert-path
+                        , cache =
+                            object
+                              ( toMap
+                                  { home =
+                                      object
+                                        ( toMap
+                                            { max-age =
+                                                string
+                                                  config.http.cache.home.max-age
+                                            }
+                                        )
+                                  , about =
+                                      object
+                                        ( toMap
+                                            { max-age =
+                                                string
+                                                  config.http.cache.about.max-age
+                                            }
+                                        )
+                                  , ipos =
+                                      object
+                                        ( toMap
+                                            { max-age =
+                                                string
+                                                  config.http.cache.ipos.max-age
+                                            }
+                                        )
+                                  }
+                              )
+                        }
+                    )
               , postgres =
                   object
                     ( toMap

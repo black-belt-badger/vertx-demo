@@ -71,10 +71,10 @@ public enum HttpServerStarter {
     var certPath = config.getString("cert-path", "security/smooth-all/server.cert.pem");
     log.info("Key path: {}", keyPath);
     log.info("Cert path: {}", certPath);
-    var httpsHost = config.getString("https.host", "0.0.0.0");
-    int httpsPort = config.getInteger("https.port", 8443);
-    var httpHost = config.getString("http.host", "0.0.0.0");
-    int httpPort = config.getInteger("http.port", 8080);
+    var httpsHost = config.getString("host", "0.0.0.0");
+    int httpsPort = config.getInteger("secure-port", 8443);
+    var httpHost = config.getString("host", "0.0.0.0");
+    int httpPort = config.getInteger("insecure-port", 8080);
     var cache = config.getJsonObject("cache", new JsonObject());
     var httpRouter = Router.router(vertx);
     httpRouter.get("/").handler(context -> {
@@ -133,10 +133,11 @@ public enum HttpServerStarter {
     httpsRouter.get("/health").handler(checks.register(HTTPS_WEB_SERVER_ONLINE, Promise::succeed));
     httpsRouter.route("/*").handler(StaticHandler.create("webroot"));
     httpsRouter.route("/favicon.png").handler(StaticHandler.create());
-    var home = cache.getJsonObject("home", new JsonObject());
-    httpsRouter.route("/about").handler(about(engine, redisApi, redisConnection, new JsonObject()));
-    var ipos = new JsonObject();
+    var about = cache.getJsonObject("about", new JsonObject());
+    httpsRouter.route("/about").handler(about(engine, redisApi, redisConnection, about));
+    var ipos = cache.getJsonObject("ipos", new JsonObject());
     httpsRouter.route("/ipos").handler(viewAllIpos("IPOs", checks, webClient, engine, redisApi, redisConnection, pgConnection, ipos));
+    var home = cache.getJsonObject("home", new JsonObject());
     httpsRouter.get("/").handler(home(engine, redisApi, redisConnection, home));
     var countries = cache.getJsonObject("countries", new JsonObject());
     routeHiddenPages(vertx, checks, redisApi, redisConnection, pgConnection, httpsRouter, webClient, engine, countries, cache);

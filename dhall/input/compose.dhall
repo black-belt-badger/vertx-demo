@@ -52,6 +52,10 @@ let prod_qpid_admin_username = "prod_admin"
 
 let prod_qpid_admin_password = "prod_secret"
 
+let dev_default_cache_max_age = "PT1S"
+
+let prod_default_cache_max_age = "PT6H"
+
 let amqp_queue_delay = 600000
 
 let service_healthy =
@@ -216,10 +220,17 @@ let config-server =
                 , scan-period = "PT5S"
                 , version = "DEV inline"
                 }
-              , `http.port` = 8081
-              , `https.port` = 8444
-              , key-path = "security/smooth-all/server.key.pem"
-              , cert-path = "security/smooth-all/server.cert.pem"
+              , http =
+                { secure-port = 8444
+                , insecure-port = 8081
+                , key-path = "security/smooth-all/server.key.pem"
+                , cert-path = "security/smooth-all/server.cert.pem"
+                , cache =
+                  { home.max-age = dev_default_cache_max_age
+                  , about.max-age = dev_default_cache_max_age
+                  , ipos.max-age = dev_default_cache_max_age
+                  }
+                }
               , postgres =
                 { database = dev_db_name
                 , host = "host.docker.internal"
@@ -249,10 +260,17 @@ let config-server =
                 , scan-period = "PT30S"
                 , version = "PROD inline"
                 }
-              , `http.port` = 8080
-              , `https.port` = 8443
-              , key-path = "/etc/letsencrypt/live/9rove.com/privkey.pem"
-              , cert-path = "/etc/letsencrypt/live/9rove.com/fullchain.pem"
+              , http =
+                { secure-port = 8443
+                , insecure-port = 8080
+                , key-path = "/etc/letsencrypt/live/9rove.com/privkey.pem"
+                , cert-path = "/etc/letsencrypt/live/9rove.com/fullchain.pem"
+                , cache =
+                  { home.max-age = prod_default_cache_max_age
+                  , about.max-age = prod_default_cache_max_age
+                  , ipos.max-age = prod_default_cache_max_age
+                  }
+                }
               , postgres =
                 { database = "postgres"
                 , host = "grove-db.chimcku4qngw.eu-north-1.rds.amazonaws.com"
