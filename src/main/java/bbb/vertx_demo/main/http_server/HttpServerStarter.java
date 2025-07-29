@@ -140,6 +140,7 @@ public enum HttpServerStarter {
     var webClient = WebClient.create(vertx);
     httpsRouter.get("/health").handler(checks.register(HTTPS_WEB_SERVER_ONLINE, Promise::succeed));
     httpsRouter.route("/favicon.png").handler(StaticHandler.create());
+    httpsRouter.route("/robots.txt").handler(StaticHandler.create("webroot"));
     var about = cache.getJsonObject("about", new JsonObject());
     httpsRouter.route("/about").handler(about(engine, redisApi, redisConnection, about));
     var ipos = cache.getJsonObject("ipos", new JsonObject());
