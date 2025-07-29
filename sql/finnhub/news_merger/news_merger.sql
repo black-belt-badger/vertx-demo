@@ -1,8 +1,8 @@
--- Table: finnhub.news_general
+-- Table: finnhub.news_merger
 
--- DROP TABLE IF EXISTS finnhub.news_general;
+-- DROP TABLE IF EXISTS finnhub.news_merger;
 
-CREATE TABLE IF NOT EXISTS finnhub.news_general
+CREATE TABLE IF NOT EXISTS finnhub.news_merger
 (
   category text COLLATE pg_catalog."default",
   datetime integer,
@@ -17,5 +17,5 @@ CREATE TABLE IF NOT EXISTS finnhub.news_general
 
   TABLESPACE pg_default;
 
-ALTER TABLE IF EXISTS finnhub.news_general
+ALTER TABLE IF EXISTS finnhub.news_merger
   OWNER to vertx_demo_dev_user;

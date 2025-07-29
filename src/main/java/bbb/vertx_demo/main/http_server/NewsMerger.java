@@ -27,14 +27,14 @@ import static java.util.Locale.US;
 import static java.util.Objects.nonNull;
 
 @Slf4j
-public enum NewsCrypto {
+public enum NewsMerger {
 
   ;
 
-  private static final String REDIS_KEY = "/crypto-news";
+  private static final String REDIS_KEY = "/merger-news";
   private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("EEEE, MMM d',' HH:mm", US);
 
-  static Handler<RoutingContext> cryptoNews
+  static Handler<RoutingContext> mergerNews
     (
       String name,
       HealthCheckHandler checks,
@@ -62,7 +62,7 @@ public enum NewsCrypto {
                 .end(buffer);
               log.info("'{}' request handled in {}", name, watch.elapsed());
             } else {
-              var query = "SELECT category, datetime, headline, image, related, source, summary, url FROM finnhub.news_crypto_view ORDER BY datetime DESC";
+              var query = "SELECT category, datetime, headline, image, related, source, summary, url FROM finnhub.news_merger_view ORDER BY datetime DESC";
               pgConnection
                 .query(query)
                 .execute()
@@ -75,8 +75,8 @@ public enum NewsCrypto {
                 )
                 .onSuccess(rowSet -> {
                     var renderingContext = new HashMap<String, Object>();
-                    renderingContext.put("pageTitle", "Crypto news");
-                    renderingContext.put("tableHeader", "Crypto news");
+                    renderingContext.put("pageTitle", "Merger news");
+                    renderingContext.put("tableHeader", "Merger news");
                     var elements = rowSet.stream().map(row -> {
                         var element = new HashMap<String, Object>();
                         var datetime = row.getLocalDateTime("datetime");

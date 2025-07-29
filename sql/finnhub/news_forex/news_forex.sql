@@ -1,6 +1,6 @@
 -- Table: finnhub.news_forex
 
-DROP TABLE IF EXISTS finnhub.news_forex;
+-- DROP TABLE IF EXISTS finnhub.news_forex;
 
 CREATE TABLE IF NOT EXISTS finnhub.news_forex
 (
