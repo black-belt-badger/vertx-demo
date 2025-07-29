@@ -78,6 +78,7 @@ public enum NewsMerger {
                     renderingContext.put("pageTitle", "Merger news");
                     renderingContext.put("tableHeader", "Merger news");
                     renderingContext.put("tableSubheader", "News on mergers, acquisitions, and corporate restructuring. Follow strategic deals that reshape industries and signal investor sentiment.");
+                    renderingContext.put("category", "merger");
                     var elements = rowSet.stream().map(row -> {
                         var element = new HashMap<String, Object>();
                         var datetime = row.getLocalDateTime("datetime");
@@ -91,7 +92,7 @@ public enum NewsMerger {
                     ).toList();
                     renderingContext.put("elements", elements);
                     engine
-                      .render(renderingContext, "templates/general-news.html")
+                      .render(renderingContext, "templates/news.html")
                       .onFailure(throwable ->
                         log.error("error rendering '{}' template", name, throwable)
                       )

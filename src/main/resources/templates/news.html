@@ -1,41 +1,47 @@
 <!DOCTYPE html>
-<html th:replace="~{'./templates/common/layout.html' :: layout(~{::title}, ~{::section})}" lang="en">
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{'./templates/common/layout.html' :: layout(~{::title}, ~{::section})}" lang="en">
 <head>
-  <title data-th-text="'Vert.x Demo - ' + ${caption}"></title>
+  <title th:text="|9rove - ${pageTitle}|"></title>
 </head>
 <body>
-<main>
-  <section>
-    <article>
-      <table>
-        <caption th:text="${caption}"></caption>
-        <thead>
-        <tr>
-          <th>Headline</th>
-          <th>Summary</th>
-          <th>Source</th>
-          <th>Category</th>
-          <th>Datetime</th>
-          <th>Related</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr data-th-each="new : ${news.list}">
-          <td>
-            <a th:href="@{{url}(url=${new.url})}" th:text="${new.headline}" th:target="_blank"></a>
-          </td>
-          <td data-th-text="${new.summary}"/>
-          <td>
-            <img th:src="@{{image}(image=${new.image})}" th:alt="${new.source}" th:title="${new.source}"/>
-          </td>
-          <td data-th-text="${new.category}"/>
-          <td data-th-text="${new.datetime}"/>
-          <td data-th-text="${new.related}"/>
-        </tr>
-        </tbody>
-      </table>
-    </article>
+<section>
+  <header>
+    <h1 data-th-text="${tableHeader}"></h1>
+    <p data-th-text="${tableSubheader}" class="secondary"></p>
+  </header>
+  <section class="section-highlight">
+    <h2>
+      <i data-th-text="${lucideIcon}" data-lucide="${lucideIcon}"></i>
+      <span th:fragment="newsIcon(category)">
+        <i data-lucide="newspaper" th:if="${category == 'general'}"></i>
+        <i data-lucide="dollar-sign" th:if="${category == 'forex'}"></i>
+        <i data-lucide="shield-check" th:if="${category == 'crypto'}"></i>
+      <i data-lucide="handshake" th:if="${category == 'merger'}"></i>
+      </span>
+      All news
+    </h2>
+    <table role="grid">
+      <thead>
+      <tr>
+        <th>Date</th>
+        <th>Headline</th>
+        <th>Summary</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="element : ${elements}">
+        <td th:text="${element.datetime}" class="nobr"/>
+        <td>
+          <a th:href="@{{url}(url=${element.url})}" th:text="${element.headline}" th:target="_blank"></a>
+        </td>
+        <td th:utext="${element.summary}"></td>
+      </tr>
+      </tbody>
+    </table>
   </section>
-</main>
+  <script src="/static/beautify-table.js?v=1.0.29-SNAPSHOT"></script>
+  <script>lucide.createIcons();</script>
+</section>
 </body>
 </html>

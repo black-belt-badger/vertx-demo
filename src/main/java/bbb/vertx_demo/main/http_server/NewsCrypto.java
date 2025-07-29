@@ -78,6 +78,7 @@ public enum NewsCrypto {
                     renderingContext.put("pageTitle", "Crypto news");
                     renderingContext.put("tableHeader", "Crypto news");
                     renderingContext.put("tableSubheader", "Insights from the fast-moving world of cryptocurrencies and digital assets. Track regulation updates, market volatility, and emerging blockchain trends.");
+                    renderingContext.put("category", "crypto");
                     var elements = rowSet.stream().map(row -> {
                         var element = new HashMap<String, Object>();
                         var datetime = row.getLocalDateTime("datetime");
@@ -91,7 +92,7 @@ public enum NewsCrypto {
                     ).toList();
                     renderingContext.put("elements", elements);
                     engine
-                      .render(renderingContext, "templates/general-news.html")
+                      .render(renderingContext, "templates/news.html")
                       .onFailure(throwable ->
                         log.error("error rendering '{}' template", name, throwable)
                       )

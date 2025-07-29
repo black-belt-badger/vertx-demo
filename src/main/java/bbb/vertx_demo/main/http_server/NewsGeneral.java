@@ -78,6 +78,7 @@ public enum NewsGeneral {
                     renderingContext.put("pageTitle", "General news");
                     renderingContext.put("tableHeader", "General news");
                     renderingContext.put("tableSubheader", "A broad look at the latest financial headlines shaping global markets. This feed highlights economic trends, corporate moves, and policy changes across sectors.");
+                    renderingContext.put("category", "general");
                     var elements = rowSet.stream().map(row -> {
                         var element = new HashMap<String, Object>();
                         var datetime = row.getLocalDateTime("datetime");
@@ -91,7 +92,7 @@ public enum NewsGeneral {
                     ).toList();
                     renderingContext.put("elements", elements);
                     engine
-                      .render(renderingContext, "templates/general-news.html")
+                      .render(renderingContext, "templates/news.html")
                       .onFailure(throwable ->
                         log.error("error rendering '{}' template", name, throwable)
                       )
