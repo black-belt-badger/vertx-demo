@@ -142,9 +142,12 @@ services:
         "http": {
           "cache": {
             "about": { "max-age": "PT1S" },
+            "crypto-news": { "max-age": "PT1S" },
+            "forex-news": { "max-age": "PT1S" },
             "general-news": { "max-age": "PT1S" },
             "home": { "max-age": "PT1S" },
-            "ipos": { "max-age": "PT1S" }
+            "ipos": { "max-age": "PT1S" },
+            "merger-news": { "max-age": "PT1S" }
           },
           "cert-path": "security/smooth-all/server.cert.pem",
           "insecure-port": 8081,

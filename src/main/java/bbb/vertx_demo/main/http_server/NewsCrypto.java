@@ -3,7 +3,6 @@ package bbb.vertx_demo.main.http_server;
 import io.vertx.core.Handler;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.RoutingContext;
-import io.vertx.ext.web.client.WebClient;
 import io.vertx.ext.web.common.template.TemplateEngine;
 import io.vertx.ext.web.healthchecks.HealthCheckHandler;
 import io.vertx.pgclient.PgConnection;
@@ -38,7 +37,6 @@ public enum NewsCrypto {
     (
       String name,
       HealthCheckHandler checks,
-      WebClient client,
       TemplateEngine engine,
       RedisAPI redisApi,
       RedisConnection redisConnection,

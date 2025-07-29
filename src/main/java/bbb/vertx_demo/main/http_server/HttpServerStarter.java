@@ -147,13 +147,13 @@ public enum HttpServerStarter {
     var home = cache.getJsonObject("home", new JsonObject());
     httpsRouter.get("/").handler(home("Home page", checks, engine, redisApi, redisConnection, pgConnection, home));
     var generalNews = cache.getJsonObject("general-news", new JsonObject());
-    httpsRouter.get("/general-news").handler(generalNews("General news", checks, webClient, engine, redisApi, redisConnection, pgConnection, generalNews));
+    httpsRouter.get("/general-news").handler(generalNews("General news", checks, engine, redisApi, redisConnection, pgConnection, generalNews));
     var forexNews = cache.getJsonObject("forex-news", new JsonObject());
-    httpsRouter.get("/forex-news").handler(forexNews("Forex news", checks, webClient, engine, redisApi, redisConnection, pgConnection, forexNews));
+    httpsRouter.get("/forex-news").handler(forexNews("Forex news", checks, engine, redisApi, redisConnection, pgConnection, forexNews));
     var cryptoNews = cache.getJsonObject("crypto-news", new JsonObject());
-    httpsRouter.get("/crypto-news").handler(cryptoNews("Crypto news", checks, webClient, engine, redisApi, redisConnection, pgConnection, cryptoNews));
+    httpsRouter.get("/crypto-news").handler(cryptoNews("Crypto news", checks, engine, redisApi, redisConnection, pgConnection, cryptoNews));
     var mergerNews = cache.getJsonObject("merget-news", new JsonObject());
-    httpsRouter.get("/merger-news").handler(mergerNews("Merger news", checks, webClient, engine, redisApi, redisConnection, pgConnection, mergerNews));
+    httpsRouter.get("/merger-news").handler(mergerNews("Merger news", checks, engine, redisApi, redisConnection, pgConnection, mergerNews));
     httpsRouter.route("/*").handler(StaticHandler.create("webroot"));
     routeHiddenPages(vertx, checks, redisApi, redisConnection, pgConnection, httpsRouter, webClient, engine, cache);
     return

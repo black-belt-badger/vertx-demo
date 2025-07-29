@@ -230,6 +230,9 @@ let config-server =
                   , about.max-age = dev_default_cache_max_age
                   , ipos.max-age = dev_default_cache_max_age
                   , general-news.max-age = dev_default_cache_max_age
+                  , forex-news.max-age = dev_default_cache_max_age
+                  , crypto-news.max-age = dev_default_cache_max_age
+                  , merger-news.max-age = dev_default_cache_max_age
                   }
                 }
               , postgres =
@@ -271,6 +274,9 @@ let config-server =
                   , about.max-age = prod_default_cache_max_age
                   , ipos.max-age = prod_default_cache_max_age
                   , general-news.max-age = prod_default_cache_max_age
+                  , forex-news.max-age = prod_default_cache_max_age
+                  , crypto-news.max-age = prod_default_cache_max_age
+                  , merger-news.max-age = prod_default_cache_max_age
                   }
                 }
               , postgres =

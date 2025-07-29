@@ -40,6 +40,9 @@ let VertxDemoConfig
               , about : { max-age : Text }
               , ipos : { max-age : Text }
               , general-news : { max-age : Text }
+              , forex-news : { max-age : Text }
+              , crypto-news : { max-age : Text }
+              , merger-news : { max-age : Text }
               }
           }
       , postgres :
@@ -137,6 +140,30 @@ let VertxDemoConfig/ToJSON
                                             { max-age =
                                                 string
                                                   config.http.cache.general-news.max-age
+                                            }
+                                        )
+                                  , forex-news =
+                                      object
+                                        ( toMap
+                                            { max-age =
+                                                string
+                                                  config.http.cache.forex-news.max-age
+                                            }
+                                        )
+                                  , crypto-news =
+                                      object
+                                        ( toMap
+                                            { max-age =
+                                                string
+                                                  config.http.cache.crypto-news.max-age
+                                            }
+                                        )
+                                  , merger-news =
+                                      object
+                                        ( toMap
+                                            { max-age =
+                                                string
+                                                  config.http.cache.merger-news.max-age
                                             }
                                         )
                                   }

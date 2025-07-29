@@ -27,15 +27,15 @@
       </thead>
       <tbody>
       <tr th:each="element : ${elements}">
-        <th th:text="${element.name}"/>
-        <td th:text="${element.date}" class="date wide-column"/>
-        <td th:text="${element.exchange}"/>
-        <td th:text="${element.number_of_shares}" class="large-number"/>
+        <th th:text="${element.name}" class="align-top"/>
+        <td th:text="${element.date}" class="date wide-column align-top"/>
+        <td th:text="${element.exchange}" class="align-top"/>
+        <td th:text="${element.number_of_shares}" class="large-number align-top"/>
         <td
           th:text="${element.price_number != null} ? ${element.price_number} : ${element.price_from} + ' - ' + ${element.price_to}"
-          class="price"/>
-        <td th:text="${element.status}"/>
-        <td th:text="${element.total_shares_value}" class="large-number"/>
+          class="price align-top"/>
+        <td th:text="${element.status}" class="align-top"/>
+        <td th:text="${element.total_shares_value}" class="large-number align-top"/>
       </tr>
       </tbody>
     </table>
