@@ -59,7 +59,16 @@ public final class IpoUpdater extends VerticleBase {
                 .execute()
                 .onFailure(throwable -> log.error("Error inserting to finnhub.calendar_ipo ", throwable))
                 .onSuccess(rowSet ->
-                  log.info("IPO updater inserted {} rows", rowSet.rowCount())
+                  {
+                    int count = rowSet.rowCount();
+                    log.info("IPO updater inserted {} rows", count);
+                    if (count > 0)
+                      pgConnection
+                        .preparedQuery("REFRESH MATERIALIZED VIEW finnhub.calendar_ipo_parsed")
+                        .execute()
+                        .onFailure(throwable -> log.error("Error refreshing finnhub.calendar_ipo_parsed", throwable))
+                        .onSuccess(result -> log.info("Refresh finnhub.calendar_ipo_parsed"));
+                  }
                 );
             }
           );
