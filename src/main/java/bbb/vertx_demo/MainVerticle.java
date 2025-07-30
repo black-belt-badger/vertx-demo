@@ -26,7 +26,7 @@ import static bbb.vertx_demo.main.http_server.HttpServerStarter.startHttpServers
 public final class MainVerticle extends VerticleBase {
 
   @Override
-  public Future<?> start() {
+  public Future<?> start() throws ClassNotFoundException {
     var starting = config();
     log.info("Starting config: {}", starting.encodePrettily());
     var configServerVersion = new AtomicReference<String>();
@@ -40,22 +40,29 @@ public final class MainVerticle extends VerticleBase {
               .onFailure(redisConnectionFailure(checks))
               .flatMap(redisConnection -> {
                   var redisAPI = RedisAPI.api(redisConnection);
-                  var pgConnectOptions = pgConnectOptions(config);
+                  var postgres = config.getJsonObject("postgres", new JsonObject());
+                  var pgConnectOptions = pgConnectOptions(postgres);
                   return PgConnection.connect(vertx, pgConnectOptions)
                     .onSuccess(postgresConnectionSuccess(checks))
                     .onFailure(postgresConnectionFailure(checks))
-                    .flatMap(pgConnection -> {
-                        var amqp = config.getJsonObject("amqp");
-                        return deployReceiverAndSender(vertx, checks, amqp)
-                          .flatMap(nothing -> {
-                              registerExampleMBean(checks);
-                              deployShell(vertx, checks, config);
-                              registerCommandPrintConfig(vertx, checks, config);
-                            var http = config.getJsonObject("http");
-                            return startHttpServers(vertx, checks, redisAPI, redisConnection, pgConnection, http);
-                            }
-                          );
-                      }
+                    .flatMap(pgConnection ->
+                      vertx
+                        .executeBlocking(() -> migratePgDatabase(postgres))
+                        .onSuccess(postgresMigrationSuccess(checks))
+                        .onFailure(postgresMigrationFailure(checks))
+                        .flatMap(migrationResult -> {
+                            var amqp = config.getJsonObject("amqp");
+                            return deployReceiverAndSender(vertx, checks, amqp)
+                              .flatMap(nothing -> {
+                                  registerExampleMBean(checks);
+                                  deployShell(vertx, checks, config);
+                                  registerCommandPrintConfig(vertx, checks, config);
+                                  var http = config.getJsonObject("http");
+                                  return startHttpServers(vertx, checks, redisAPI, redisConnection, pgConnection, http);
+                                }
+                              );
+                          }
+                        )
                     );
                 }
               );

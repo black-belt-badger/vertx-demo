@@ -21,7 +21,7 @@ services:
       JAVA_TOOL_OPTIONS: |
         -Dlogback.configurationFile=/logs/logback.xml
         -Djava.net.preferIPv4Stack=true
-    image: "marekdudek/vertx-demo:1.0.29"
+    image: "marekdudek/vertx-demo:1.0.30-SNAPSHOT"
     ports:
     - "18080:18080"
     - "18443:18443"
@@ -188,13 +188,13 @@ services:
         -Dcom.sun.management.jmxremote.port=1099
         -Dcom.sun.management.jmxremote.rmi.port=1099
         -Djava.rmi.server.hostname=0.0.0.0
-      VERSION: '1.0.29'
+      VERSION: '1.0.30-SNAPSHOT'
     healthcheck:
       interval: 10s
       retries: 10
       test: "curl -f http://localhost:8081/health"
       timeout: 1s
-    image: "marekdudek/vertx-demo:1.0.29"
+    image: "marekdudek/vertx-demo:1.0.30-SNAPSHOT"
     ports:
     - "8081:8081"
     - "8444:8444"
