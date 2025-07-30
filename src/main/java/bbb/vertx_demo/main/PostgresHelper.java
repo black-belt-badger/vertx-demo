@@ -171,6 +171,7 @@ public enum PostgresHelper {
                 log.error("Postgres query failed", throwable);
               }
             );
+
           connection.noticeHandler(notice ->
             log.info("Postgres notice {}", notice.toJson())
           );

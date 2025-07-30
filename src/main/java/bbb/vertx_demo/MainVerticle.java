@@ -1,9 +1,12 @@
 package bbb.vertx_demo;
 
 import bbb.vertx_demo.main.RedisHelper;
+import bbb.vertx_demo.main.db.IpoUpdater;
+import io.vertx.core.DeploymentOptions;
 import io.vertx.core.Future;
 import io.vertx.core.VerticleBase;
 import io.vertx.core.json.JsonObject;
+import io.vertx.ext.web.client.WebClient;
 import io.vertx.ext.web.healthchecks.HealthCheckHandler;
 import io.vertx.pgclient.PgConnection;
 import io.vertx.redis.client.Redis;
@@ -21,12 +24,13 @@ import static bbb.vertx_demo.main.RedisHelper.redisConnectionSuccess;
 import static bbb.vertx_demo.main.ShellCommandHelper.registerCommandPrintConfig;
 import static bbb.vertx_demo.main.ShellHelper.deployShell;
 import static bbb.vertx_demo.main.http_server.HttpServerStarter.startHttpServers;
+import static io.vertx.core.ThreadingModel.VIRTUAL_THREAD;
 
 @Slf4j
 public final class MainVerticle extends VerticleBase {
 
   @Override
-  public Future<?> start() throws ClassNotFoundException {
+  public Future<?> start() {
     var starting = config();
     log.info("Starting config: {}", starting.encodePrettily());
     var configServerVersion = new AtomicReference<String>();
@@ -58,7 +62,14 @@ public final class MainVerticle extends VerticleBase {
                                   deployShell(vertx, checks, config);
                                   registerCommandPrintConfig(vertx, checks, config);
                                   var http = config.getJsonObject("http");
-                                  return startHttpServers(vertx, checks, redisAPI, redisConnection, pgConnection, http);
+                                  return startHttpServers(vertx, checks, redisAPI, redisConnection, pgConnection, http)
+                                    .flatMap(httpServer -> {
+                                        var webClient = WebClient.create(vertx);
+                                        var updater = new IpoUpdater(webClient, pgConnection);
+                                        var options = new DeploymentOptions().setThreadingModel(VIRTUAL_THREAD);
+                                        return vertx.deployVerticle(updater, options);
+                                      }
+                                    );
                                 }
                               );
                           }
