@@ -156,6 +156,7 @@ services:
         },
         "postgres": {
           "database": "vertx_demo_dev_database",
+          "default-schema": "finnhub",
           "host": "host.docker.internal",
           "password": "vertx_demo_dev_password",
           "port": 5432,

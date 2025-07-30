@@ -47,6 +47,7 @@ let VertxDemoConfig
           }
       , postgres :
           { database : Text
+          , default-schema : Text
           , host : Text
           , password : Text
           , port : Natural
@@ -174,6 +175,7 @@ let VertxDemoConfig/ToJSON
                   object
                     ( toMap
                         { database = string config.postgres.database
+                        , default-schema = string config.postgres.default-schema
                         , host = string config.postgres.host
                         , password = string config.postgres.password
                         , port = natural config.postgres.port

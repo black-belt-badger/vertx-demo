@@ -237,6 +237,7 @@ let config-server =
                 }
               , postgres =
                 { database = dev_db_name
+                , default-schema = "finnhub"
                 , host = "host.docker.internal"
                 , password = dev_db_password
                 , port = 5432
@@ -281,6 +282,7 @@ let config-server =
                 }
               , postgres =
                 { database = "postgres"
+                , default-schema = "finnhub"
                 , host = "grove-db.chimcku4qngw.eu-north-1.rds.amazonaws.com"
                 , password = "vertx_demo_password"
                 , port = 5432

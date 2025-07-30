@@ -67,10 +67,11 @@ public enum PostgresHelper {
     var url = "jdbc:postgresql://" + host + ":" + port + "/" + database;
     var user = config.getString("user", "vertx_demo_user");
     var password = config.getString("password", "vertx_demo_password");
+    var finnhub = config.getString("default-schema", "finnhub");
     return Flyway
       .configure()
       .dataSource(url, user, password)
-      .defaultSchema("finnhub")
+      .defaultSchema(finnhub)
       .baselineOnMigrate(true)
       .load()
       .migrate();
