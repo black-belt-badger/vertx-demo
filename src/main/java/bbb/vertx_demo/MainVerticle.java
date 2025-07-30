@@ -2,6 +2,7 @@ package bbb.vertx_demo;
 
 import bbb.vertx_demo.main.RedisHelper;
 import bbb.vertx_demo.main.db.IpoUpdater;
+import bbb.vertx_demo.main.db.NewsGeneralUpdater;
 import io.vertx.core.DeploymentOptions;
 import io.vertx.core.Future;
 import io.vertx.core.VerticleBase;
@@ -65,9 +66,14 @@ public final class MainVerticle extends VerticleBase {
                                   return startHttpServers(vertx, checks, redisAPI, redisConnection, pgConnection, http)
                                     .flatMap(httpServer -> {
                                         var webClient = WebClient.create(vertx);
-                                        var updater = new IpoUpdater(webClient, pgConnection);
+                                        var ipoUpdater = new IpoUpdater(webClient, pgConnection);
                                         var options = new DeploymentOptions().setThreadingModel(VIRTUAL_THREAD);
-                                        return vertx.deployVerticle(updater, options);
+                                        return vertx.deployVerticle(ipoUpdater, options)
+                                          .flatMap(ipoUpdaterId -> {
+                                              var newsGeneralUpdater = new NewsGeneralUpdater(webClient, pgConnection);
+                                              return vertx.deployVerticle(newsGeneralUpdater, options);
+                                            }
+                                          );
                                       }
                                     );
                                 }

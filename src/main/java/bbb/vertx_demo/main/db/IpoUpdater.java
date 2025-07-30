@@ -12,6 +12,7 @@ import static bbb.vertx_demo.main.FinnHubApi.CALENDAR_IPO;
 import static bbb.vertx_demo.main.http_server.HttpServerStarter.*;
 import static io.vertx.core.Future.succeededFuture;
 import static java.lang.String.format;
+import static java.time.Duration.ofMinutes;
 import static java.util.stream.Collectors.joining;
 
 @Slf4j
@@ -23,7 +24,7 @@ public final class IpoUpdater extends VerticleBase {
 
   @Override
   public Future<Void> start() throws Exception {
-    vertx.setPeriodic(0, 10_000, id -> {
+    vertx.setPeriodic(ofMinutes(10).toMillis(), ofMinutes(10).toMillis(), id -> {
         log.info("IPO updater started, timer ID {}", id);
         client
           .get(FINNHUB_PORT, FINNHUB_HOST, CALENDAR_IPO)
@@ -44,12 +45,16 @@ public final class IpoUpdater extends VerticleBase {
                     var status = obj.getString("status");
                     var symbol = obj.getString("symbol");
                     var totalSharesValue = obj.getLong("total_shares_value");
-                    return format("('%s', '%s', '%s', %d, '%s', '%s', '%s', %d)", date, exchange, name, numberOfShares, price, status, symbol, totalSharesValue);
+                    return format(
+                      "('%s', '%s', '%s', %d, '%s', '%s', '%s', %d)",
+                      date, exchange, name, numberOfShares, price, status, symbol, totalSharesValue
+                    );
                   }
                 ).collect(joining(", "));
               var insert =
                 format("""
-                    INSERT INTO finnhub.calendar_ipo (date, exchange, name, number_of_shares, price, status, symbol, total_shares_value)
+                    INSERT INTO finnhub.calendar_ipo
+                      (date, exchange, name, number_of_shares, price, status, symbol, total_shares_value)
                     VALUES %s
                     ON CONFLICT ON CONSTRAINT all_fields_unique DO NOTHING"""
                   , values
@@ -67,7 +72,7 @@ public final class IpoUpdater extends VerticleBase {
                         .preparedQuery("REFRESH MATERIALIZED VIEW finnhub.calendar_ipo_parsed")
                         .execute()
                         .onFailure(throwable -> log.error("Error refreshing finnhub.calendar_ipo_parsed", throwable))
-                        .onSuccess(result -> log.info("Refresh finnhub.calendar_ipo_parsed"));
+                        .onSuccess(result -> log.info("Refreshed finnhub.calendar_ipo_parsed"));
                   }
                 );
             }
