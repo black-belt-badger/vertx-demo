@@ -31,7 +31,7 @@ public enum Ipos {
 
   public static final String HTML = HTML_UTF_8.toString();
 
-  private static final String REDIS_KEY = "/about";
+  public static final String REDIS_KEY = "/ipos";
 
   static Handler<RoutingContext> viewAllIpos
     (
@@ -106,7 +106,10 @@ public enum Ipos {
                             .arg(REDIS_KEY)
                             .arg(maxAge)
                             .arg(buffer);
-                          redisConnection.send(request);
+                          redisConnection
+                            .send(request)
+                            .onFailure(throwable -> log.error("Error setting {} max age in Redis", name, throwable))
+                            .onSuccess(response -> log.info("Set {} max age in Redis {}", name, response));
                         }
                       );
                   }

@@ -9,27 +9,34 @@ import io.vertx.sqlclient.Tuple;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import java.time.Duration;
+
 import static bbb.vertx_demo.main.FinnHubApi.NEWS_GENERAL;
 import static bbb.vertx_demo.main.http_server.HttpServerStarter.*;
 import static io.vertx.core.Future.succeededFuture;
+import static java.lang.String.format;
 
 @Slf4j
 @RequiredArgsConstructor
-public final class NewsGeneralUpdater extends VerticleBase {
+public final class NewsUpdater extends VerticleBase {
 
   private final WebClient client;
   private final PgConnection pgConnection;
+  private final String name;
+  private final Duration delay;
+  private final String table;
+  private final String view;
 
   @Override
   public Future<Long> start() throws Exception {
-    long timerId =
-      vertx.setPeriodic(0, 10_000, handler -> {
-          log.info("News general updater started, handler {}", handler);
+    return succeededFuture(
+      vertx.setPeriodic(delay.toMillis(), handler -> {
+          log.info("News/{} updater started, handler {}", name, handler);
           pgConnection
-            .preparedQuery("SELECT max(id) FROM finnhub.news_general")
+            .preparedQuery("SELECT max(id) FROM " + table)
             .execute()
             .onFailure(error ->
-              log.error("Error selecting max ID from finnhub.news_general ", error)
+              log.error("Error selecting max ID from {}", table, error)
             )
             .map(rowSet -> {
                 var row = rowSet.iterator().next();
@@ -37,7 +44,7 @@ public final class NewsGeneralUpdater extends VerticleBase {
               }
             )
             .flatMap(maxId -> {
-                log.info("Max ID in finnhub.news_general is {}", maxId);
+                log.info("Max ID in {} is {}", table, maxId);
                 var uri = NEWS_GENERAL + "&minId=" + maxId;
                 return client
                   .get(FINNHUB_PORT, FINNHUB_HOST, uri)
@@ -48,7 +55,7 @@ public final class NewsGeneralUpdater extends VerticleBase {
                   )
                   .onSuccess(response -> {
                       var array = response.bodyAsJsonArray();
-                      log.info("News general got array with {} elements", array.size());
+                      log.info("News/{} got array with {} elements", name, array.size());
                       if (array.isEmpty())
                         return;
                       var values = array.stream()
@@ -66,29 +73,30 @@ public final class NewsGeneralUpdater extends VerticleBase {
                             return Tuple.of(category, datetime, headline, id, image, related, source, summary, url);
                           }
                         ).toList();
-                      var insert = """
-                        INSERT INTO finnhub.news_general
-                          (category, datetime, headline, id, image, related, source, summary, url)
-                        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
-                        ON CONFLICT ON CONSTRAINT unique_id DO NOTHING
-                        """;
+                      var insert =
+                        format("""
+                            INSERT INTO %s (category, datetime, headline, id, image, related, source, summary, url)
+                            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+                            """,
+                          table
+                        );
                       pgConnection
                         .preparedQuery(insert)
                         .executeBatch(values)
-                        .onFailure(throwable -> log.error("Error inserting to finnhub.news_general ", throwable))
+                        .onFailure(throwable -> log.error("Error inserting to {}", table, throwable))
                         .onSuccess(rowSet ->
                           pgConnection
-                            .preparedQuery("REFRESH MATERIALIZED VIEW finnhub.news_general_view")
+                            .preparedQuery("REFRESH MATERIALIZED VIEW " + view)
                             .execute()
-                            .onFailure(throwable -> log.error("Error refreshing finnhub.news_general_view", throwable))
-                            .onSuccess(result -> log.info("Refreshed finnhub.news_general_view"))
+                            .onFailure(throwable -> log.error("Error refreshing {}", view, throwable))
+                            .onSuccess(result -> log.info("Refreshed {}", view))
                         );
                     }
                   );
               }
             );
         }
-      );
-    return succeededFuture(timerId);
+      )
+    );
   }
 }

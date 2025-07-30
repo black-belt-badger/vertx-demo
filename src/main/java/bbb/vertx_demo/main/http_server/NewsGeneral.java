@@ -106,7 +106,6 @@ public enum NewsGeneral {
                           redisConnection.send(request);
                         }
                       );
-
                   }
                 );
             }

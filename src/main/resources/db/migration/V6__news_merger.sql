@@ -12,7 +12,8 @@ CREATE TABLE IF NOT EXISTS finnhub.news_merger
   related  text COLLATE pg_catalog."default",
   source   text COLLATE pg_catalog."default",
   summary  text COLLATE pg_catalog."default",
-  url      text COLLATE pg_catalog."default"
+  url      text COLLATE pg_catalog."default",
+  CONSTRAINT news_merger_unique_id UNIQUE (id)
 ) TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS finnhub.news_merger

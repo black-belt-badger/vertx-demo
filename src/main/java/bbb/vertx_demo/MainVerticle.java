@@ -2,7 +2,7 @@ package bbb.vertx_demo;
 
 import bbb.vertx_demo.main.RedisHelper;
 import bbb.vertx_demo.main.db.IpoUpdater;
-import bbb.vertx_demo.main.db.NewsGeneralUpdater;
+import bbb.vertx_demo.main.db.NewsUpdater;
 import io.vertx.core.DeploymentOptions;
 import io.vertx.core.Future;
 import io.vertx.core.VerticleBase;
@@ -25,7 +25,9 @@ import static bbb.vertx_demo.main.RedisHelper.redisConnectionSuccess;
 import static bbb.vertx_demo.main.ShellCommandHelper.registerCommandPrintConfig;
 import static bbb.vertx_demo.main.ShellHelper.deployShell;
 import static bbb.vertx_demo.main.http_server.HttpServerStarter.startHttpServers;
+import static io.vertx.core.Future.all;
 import static io.vertx.core.ThreadingModel.VIRTUAL_THREAD;
+import static java.time.Duration.parse;
 
 @Slf4j
 public final class MainVerticle extends VerticleBase {
@@ -50,36 +52,60 @@ public final class MainVerticle extends VerticleBase {
                   return PgConnection.connect(vertx, pgConnectOptions)
                     .onSuccess(postgresConnectionSuccess(checks))
                     .onFailure(postgresConnectionFailure(checks))
-                    .flatMap(pgConnection ->
-                      vertx
-                        .executeBlocking(() -> migratePgDatabase(postgres))
-                        .onSuccess(postgresMigrationSuccess(checks))
-                        .onFailure(postgresMigrationFailure(checks))
-                        .flatMap(migrationResult -> {
-                            var amqp = config.getJsonObject("amqp");
-                            return deployReceiverAndSender(vertx, checks, amqp)
-                              .flatMap(nothing -> {
-                                  registerExampleMBean(checks);
-                                  deployShell(vertx, checks, config);
-                                  registerCommandPrintConfig(vertx, checks, config);
-                                  var http = config.getJsonObject("http");
-                                  return startHttpServers(vertx, checks, redisAPI, redisConnection, pgConnection, http)
-                                    .flatMap(httpServer -> {
-                                        var webClient = WebClient.create(vertx);
-                                        var ipoUpdater = new IpoUpdater(webClient, pgConnection);
-                                        var options = new DeploymentOptions().setThreadingModel(VIRTUAL_THREAD);
-                                        return vertx.deployVerticle(ipoUpdater, options)
-                                          .flatMap(ipoUpdaterId -> {
-                                              var newsGeneralUpdater = new NewsGeneralUpdater(webClient, pgConnection);
-                                              return vertx.deployVerticle(newsGeneralUpdater, options);
-                                            }
-                                          );
-                                      }
-                                    );
-                                }
-                              );
-                          }
-                        )
+                    .flatMap(pgConnection -> {
+                        return vertx
+                          .executeBlocking(() -> migratePgDatabase(postgres))
+                          .onSuccess(postgresMigrationSuccess(checks))
+                          .onFailure(postgresMigrationFailure(checks))
+                          .flatMap(migrationResult -> {
+                              var amqp = config.getJsonObject("amqp");
+                              return deployReceiverAndSender(vertx, checks, amqp)
+                                .flatMap(nothing -> {
+                                    registerExampleMBean(checks);
+                                    deployShell(vertx, checks, config);
+                                    registerCommandPrintConfig(vertx, checks, config);
+                                    var http = config.getJsonObject("http");
+                                    return startHttpServers(vertx, checks, redisAPI, redisConnection, pgConnection, http)
+                                      .flatMap(httpServer -> {
+                                          var webClient = WebClient.create(vertx);
+                                          var updater = config.getJsonObject("updater", new JsonObject());
+                                          var ipoDelayString = updater.getString("ipo-updater-delay", "PT1H");
+                                          var ipoDelay = parse(ipoDelayString);
+                                          var ipoUpdater = new IpoUpdater(webClient, pgConnection, redisAPI, ipoDelay);
+                                          var options = new DeploymentOptions().setThreadingModel(VIRTUAL_THREAD);
+                                          return vertx.deployVerticle(ipoUpdater, options)
+                                            .onFailure(throwable -> log.error("Failed to deploy IPO updater", throwable))
+                                            .onSuccess(ipoUpdaterId -> log.info("Deployed IPO updater {}", ipoUpdaterId))
+                                            .flatMap(ipoUpdaterId -> {
+                                                var generalDelayString = updater.getString("news-general-updater-delay", "PT1M");
+                                                var generalDelay = parse(generalDelayString);
+                                                var general = new NewsUpdater(webClient, pgConnection, "General", generalDelay, "finnhub.news_general", "finnhub.news_general_view");
+                                                var generalId = vertx.deployVerticle(general, options);
+                                                var forexDelayString = updater.getString("news-forex-updater-delay", "PT1M");
+                                                var forexDelay = parse(forexDelayString);
+                                                var forex = new NewsUpdater(webClient, pgConnection, "Forex", forexDelay, "finnhub.news_forex", "finnhub.news_forex_view");
+                                                var forexId = vertx.deployVerticle(forex, options);
+                                                var cryptoDelayString = updater.getString("news-crypto-updater-delay", "PT1M");
+                                                var cryptoDelay = parse(cryptoDelayString);
+                                                var crypto = new NewsUpdater(webClient, pgConnection, "Crypto", cryptoDelay, "finnhub.news_crypto", "finnhub.news_crypto_view");
+                                                var cryptoId = vertx.deployVerticle(crypto, options);
+                                                var mergerDelayString = updater.getString("news-general-updater-delay", "PT1M");
+                                                var mergerDelay = parse(mergerDelayString);
+                                                var merger = new NewsUpdater(webClient, pgConnection, "Merger", mergerDelay, "finnhub.news_merger", "finnhub.news_merger_view");
+                                                var mergerId = vertx.deployVerticle(merger, options);
+                                                return all(generalId, forexId, cryptoId, mergerId);
+                                              }
+                                            )
+                                            .onFailure(throwable -> log.error("Failed to deploy NewsGeneralUpdater", throwable))
+                                            .onSuccess(future -> log.info("Deployed News updater {}", future)
+                                            );
+                                        }
+                                      );
+                                  }
+                                );
+                            }
+                          );
+                      }
                     );
                 }
               );

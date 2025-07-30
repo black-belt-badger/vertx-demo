@@ -165,7 +165,14 @@ services:
           "user": "vertx_demo_dev_user"
         },
         "redis.host": "redis",
-        "telnet.port": 5001
+        "telnet.port": 5001,
+        "updater": {
+          "ipo-updater-delay": "PT1H",
+          "news-crypto-updater-delay": "PT1M",
+          "news-forex-updater-delay": "PT1M",
+          "news-general-updater-delay": "PT1M",
+          "news-merger-updater-delay": "PT1M"
+        }
       }
       '
     container_name: "vertx-demo"

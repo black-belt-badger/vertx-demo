@@ -247,6 +247,13 @@ let config-server =
                 }
               , `redis.host` = "redis"
               , `telnet.port` = 5001
+              , updater =
+                { ipo-updater-delay = "PT1H"
+                , news-general-updater-delay = "PT1M"
+                , news-forex-updater-delay = "PT1M"
+                , news-crypto-updater-delay = "PT1M"
+                , news-merger-updater-delay = "PT1M"
+                }
               }
         else  { amqp =
                 { client = { delay = amqp_queue_delay, queue = "client-queue" }
@@ -292,6 +299,13 @@ let config-server =
                 }
               , `redis.host` = "redis"
               , `telnet.port` = 5000
+              , updater =
+                { ipo-updater-delay = "PT1H"
+                , news-general-updater-delay = "PT1M"
+                , news-forex-updater-delay = "PT1M"
+                , news-crypto-updater-delay = "PT1M"
+                , news-merger-updater-delay = "PT1M"
+                }
               }
 
 let network-test =

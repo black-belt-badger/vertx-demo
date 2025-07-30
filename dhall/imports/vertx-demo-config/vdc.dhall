@@ -57,6 +57,13 @@ let VertxDemoConfig
           }
       , `redis.host` : Text
       , `telnet.port` : Natural
+      , updater :
+          { ipo-updater-delay : Text
+          , news-general-updater-delay : Text
+          , news-forex-updater-delay : Text
+          , news-crypto-updater-delay : Text
+          , news-merger-updater-delay : Text
+          }
       }
 
 let VertxDemoConfig/ToJSON
@@ -186,6 +193,21 @@ let VertxDemoConfig/ToJSON
                     )
               , `redis.host` = string config.`redis.host`
               , `telnet.port` = natural config.`telnet.port`
+              , updater =
+                  object
+                    ( toMap
+                        { ipo-updater-delay =
+                            string config.updater.ipo-updater-delay
+                        , news-general-updater-delay =
+                            string config.updater.news-general-updater-delay
+                        , news-forex-updater-delay =
+                            string config.updater.news-forex-updater-delay
+                        , news-crypto-updater-delay =
+                            string config.updater.news-crypto-updater-delay
+                        , news-merger-updater-delay =
+                            string config.updater.news-merger-updater-delay
+                        }
+                    )
               }
           )
 
