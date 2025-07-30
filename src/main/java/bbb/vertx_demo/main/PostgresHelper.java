@@ -70,6 +70,8 @@ public enum PostgresHelper {
     return Flyway
       .configure()
       .dataSource(url, user, password)
+      .defaultSchema("finnhub")
+      .baselineOnMigrate(true)
       .load()
       .migrate();
   }
