@@ -1,17 +1,21 @@
 package bbb.vertx_demo.main.db;
 
+import bbb.vertx_demo.main.NewsCategory;
 import io.vertx.core.Future;
 import io.vertx.core.VerticleBase;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.client.WebClient;
 import io.vertx.pgclient.PgConnection;
+import io.vertx.redis.client.RedisAPI;
 import io.vertx.sqlclient.Tuple;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.Duration;
+import java.time.Instant;
+import java.util.List;
 
-import static bbb.vertx_demo.main.FinnHubApi.NEWS_GENERAL;
+import static bbb.vertx_demo.main.FinnHubApi.NEWS;
 import static bbb.vertx_demo.main.http_server.HttpServerStarter.*;
 import static io.vertx.core.Future.succeededFuture;
 import static java.lang.String.format;
@@ -20,12 +24,16 @@ import static java.lang.String.format;
 @RequiredArgsConstructor
 public final class NewsUpdater extends VerticleBase {
 
+  public static final String EPOCH_MILLIS = "epoch-millis";
+
   private final WebClient client;
   private final PgConnection pgConnection;
+  private final RedisAPI redisAPI;
   private final String name;
   private final Duration delay;
   private final String table;
   private final String view;
+  private final NewsCategory newsCategory;
 
   @Override
   public Future<Long> start() throws Exception {
@@ -45,7 +53,7 @@ public final class NewsUpdater extends VerticleBase {
             )
             .flatMap(maxId -> {
                 log.info("Max ID in {} is {}", table, maxId);
-                var uri = NEWS_GENERAL + "&minId=" + maxId;
+                var uri = NEWS + "?category=" + newsCategory.value + "&minId=" + maxId;
                 return client
                   .get(FINNHUB_PORT, FINNHUB_HOST, uri)
                   .putHeader(FINNHUB_HEADER, FINNHUB_API_KEY)
@@ -56,8 +64,13 @@ public final class NewsUpdater extends VerticleBase {
                   .onSuccess(response -> {
                       var array = response.bodyAsJsonArray();
                       log.info("News/{} got array with {} elements", name, array.size());
-                      if (array.isEmpty())
+                      if (array.isEmpty()) {
+                        long epochMillis = Instant.now().toEpochMilli();
+                        var value = Long.toString(epochMillis);
+                        var args = List.of(EPOCH_MILLIS, newsCategory.value, value);
+                        redisAPI.hset(args);
                         return;
+                      }
                       var values = array.stream()
                         .map(element -> (JsonObject) element)
                         .map(obj -> {
@@ -90,6 +103,13 @@ public final class NewsUpdater extends VerticleBase {
                             .execute()
                             .onFailure(throwable -> log.error("Error refreshing {}", view, throwable))
                             .onSuccess(result -> log.info("Refreshed {}", view))
+                        ).flatMap(rowset -> {
+                            long epochMillis = Instant.now().toEpochMilli();
+                            var value = Long.toString(epochMillis);
+                            var args = List.of(EPOCH_MILLIS, newsCategory.value, value);
+                            redisAPI.hset(args);
+                            return Future.succeededFuture();
+                          }
                         );
                     }
                   );

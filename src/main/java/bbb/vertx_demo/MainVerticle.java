@@ -19,6 +19,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import static bbb.vertx_demo.main.AmqpHelper.deployReceiverAndSender;
 import static bbb.vertx_demo.main.ConfigRetrieverHelper.retrieveAndMerge;
 import static bbb.vertx_demo.main.MBeanHelper.registerExampleMBean;
+import static bbb.vertx_demo.main.NewsCategory.*;
 import static bbb.vertx_demo.main.PostgresHelper.*;
 import static bbb.vertx_demo.main.RedisHelper.redisConnectionFailure;
 import static bbb.vertx_demo.main.RedisHelper.redisConnectionSuccess;
@@ -79,19 +80,19 @@ public final class MainVerticle extends VerticleBase {
                                             .flatMap(ipoUpdaterId -> {
                                                 var generalDelayString = updater.getString("news-general-updater-delay", "PT1M");
                                                 var generalDelay = parse(generalDelayString);
-                                                var general = new NewsUpdater(webClient, pgConnection, "General", generalDelay, "finnhub.news_general", "finnhub.news_general_view");
+                                                var general = new NewsUpdater(webClient, pgConnection, redisAPI, "General", generalDelay, "finnhub.news_general", "finnhub.news_general_view", GENERAL);
                                                 var generalId = vertx.deployVerticle(general, options);
                                                 var forexDelayString = updater.getString("news-forex-updater-delay", "PT1M");
                                                 var forexDelay = parse(forexDelayString);
-                                                var forex = new NewsUpdater(webClient, pgConnection, "Forex", forexDelay, "finnhub.news_forex", "finnhub.news_forex_view");
+                                                var forex = new NewsUpdater(webClient, pgConnection, redisAPI, "Forex", forexDelay, "finnhub.news_forex", "finnhub.news_forex_view", FOREX);
                                                 var forexId = vertx.deployVerticle(forex, options);
                                                 var cryptoDelayString = updater.getString("news-crypto-updater-delay", "PT1M");
                                                 var cryptoDelay = parse(cryptoDelayString);
-                                                var crypto = new NewsUpdater(webClient, pgConnection, "Crypto", cryptoDelay, "finnhub.news_crypto", "finnhub.news_crypto_view");
+                                                var crypto = new NewsUpdater(webClient, pgConnection, redisAPI, "Crypto", cryptoDelay, "finnhub.news_crypto", "finnhub.news_crypto_view", CRYPTO);
                                                 var cryptoId = vertx.deployVerticle(crypto, options);
                                                 var mergerDelayString = updater.getString("news-general-updater-delay", "PT1M");
                                                 var mergerDelay = parse(mergerDelayString);
-                                                var merger = new NewsUpdater(webClient, pgConnection, "Merger", mergerDelay, "finnhub.news_merger", "finnhub.news_merger_view");
+                                                var merger = new NewsUpdater(webClient, pgConnection, redisAPI, "Merger", mergerDelay, "finnhub.news_merger", "finnhub.news_merger_view", MERGER);
                                                 var mergerId = vertx.deployVerticle(merger, options);
                                                 return all(generalId, forexId, cryptoId, mergerId);
                                               }

@@ -152,7 +152,7 @@ public enum HttpServerStarter {
     httpsRouter.get("/forex-news").handler(forexNews("Forex news", checks, engine, redisApi, redisConnection, pgConnection, forexNews));
     var cryptoNews = cache.getJsonObject("crypto-news", new JsonObject());
     httpsRouter.get("/crypto-news").handler(cryptoNews("Crypto news", checks, engine, redisApi, redisConnection, pgConnection, cryptoNews));
-    var mergerNews = cache.getJsonObject("merget-news", new JsonObject());
+    var mergerNews = cache.getJsonObject("merger-news", new JsonObject());
     httpsRouter.get("/merger-news").handler(mergerNews("Merger news", checks, engine, redisApi, redisConnection, pgConnection, mergerNews));
     httpsRouter.route("/*").handler(StaticHandler.create("webroot"));
     routeHiddenPages(vertx, checks, redisApi, redisConnection, pgConnection, httpsRouter, webClient, engine, cache);

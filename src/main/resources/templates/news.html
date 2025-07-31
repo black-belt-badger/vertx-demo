@@ -6,8 +6,40 @@
 </head>
 <body>
 <section>
+  <script>
+    /*<![CDATA[*/
+    const epochMillis = [[${epochMillis}]];
+    /*]]>*/
+    /*<![CDATA[*/
+    const lastNewsEpochMilli = [[${lastNewsEpochMilli}]];
+    /*]]>*/
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const lastUpdated = new Date(epochMillis);
+        const lastMessage = new Date(lastNewsEpochMilli);
+        console.log(lastNewsEpochMilli);
+
+        function update() {
+          const now = new Date().getTime();
+          const delta = Math.floor((now - lastUpdated) / 1000);
+          const updated = document.getElementById("updated");
+          if (updated && updated.dataset.original === undefined) {
+            updated.dataset.original = updated.textContent;
+          }
+          if (updated) {
+            const lastMessageDelta = Math.floor((now - lastMessage) / 1000 / 60);
+            updated.textContent = `${updated.dataset.original} Last synced ${delta} seconds ago. Syncs every minute. Last message was ${lastMessageDelta} minutes ago.`;
+          }
+        }
+
+        update();
+        setInterval(update, 1000);
+      }
+    );
+  </script>
   <header>
     <h1 data-th-text="${tableHeader}"></h1>
+    <p id="updated" style="color: grey"></p>
     <p data-th-text="${tableSubheader}" class="secondary"></p>
   </header>
   <section class="section-highlight">
@@ -31,7 +63,7 @@
       </thead>
       <tbody>
       <tr th:each="element : ${elements}">
-        <td th:text="${element.datetime}" class="nobr align-top" />
+        <td th:text="${element.datetime}" class="nobr align-top"/>
         <td class="align-top">
           <a th:href="@{{url}(url=${element.url})}" th:text="${element.headline}" th:target="_blank"></a>
         </td>
