@@ -70,7 +70,7 @@ public final class MainVerticle extends VerticleBase {
                                     .flatMap(httpServer -> {
                                         var webClient = WebClient.create(vertx);
                                         var updater = config.getJsonObject("updater", new JsonObject());
-                                        var ipoDelayString = updater.getString("ipo-updater-delay", "PT1H");
+                                        var ipoDelayString = updater.getString("ipo-updater-delay", "PT10S");
                                         var ipoDelay = parse(ipoDelayString);
                                         var ipoUpdater = new IpoUpdater(webClient, pgConnection, redisAPI, ipoDelay);
                                         var options = new DeploymentOptions().setThreadingModel(VIRTUAL_THREAD);

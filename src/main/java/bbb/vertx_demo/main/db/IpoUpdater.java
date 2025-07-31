@@ -75,7 +75,16 @@ public final class IpoUpdater extends VerticleBase {
                       .preparedQuery("REFRESH MATERIALIZED VIEW finnhub.calendar_ipo_parsed")
                       .execute()
                       .onFailure(throwable -> log.error("Error refreshing finnhub.calendar_ipo_parsed", throwable))
-                      .onSuccess(result -> log.info("Refreshed finnhub.calendar_ipo_parsed"))
+                      .onSuccess(result -> {
+                          log.info("Refreshed finnhub.calendar_ipo_parsed");
+                          long epochMillis = Instant.now().toEpochMilli();
+                          var value = Long.toString(epochMillis);
+                          var args = List.of(EPOCH_MILLIS, IPOS_EPOCH_MILLIS, value);
+                          redisAPI.hset(args)
+                            .onFailure(throwable -> log.error("error setting epoch millis {}", IPOS_EPOCH_MILLIS, throwable))
+                            .onSuccess(result2 -> log.info("epoch millis {} updated", IPOS_EPOCH_MILLIS));
+                        }
+                      )
                   ).flatMap(rowSet -> {
                       var keys = List.of(REDIS_KEY);
                       return redisAPI

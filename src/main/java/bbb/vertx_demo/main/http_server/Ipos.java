@@ -101,7 +101,7 @@ public enum Ipos {
                       .hget(EPOCH_MILLIS, IPOS_EPOCH_MILLIS)
                       .onFailure(throwable -> log.error("error getting last updated", throwable))
                       .onSuccess(response -> {
-                          var epochMillis = ofNullable(response).map(Response::toString).orElse("1753975599077");
+                          var epochMillis = ofNullable(response).map(Response::toString).orElse("unknown");
                           renderingContext.put("epochMillis", epochMillis);
                           var lastNews = rowSet.iterator().next();
                           var lastNewsDate = lastNews.getLocalDate("date");
