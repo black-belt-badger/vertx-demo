@@ -15,7 +15,7 @@ END;
 $BODY$;
 
 ALTER FUNCTION finnhub.notify_calendar_ipo_change()
-  OWNER TO vertx_demo_dev_user;
+  OWNER TO vertx_demo_admin;
 
 -- Trigger: calendar_ipo_change
 
