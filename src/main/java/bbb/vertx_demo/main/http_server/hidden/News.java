@@ -1,7 +1,6 @@
-package bbb.vertx_demo.main.http_server;
+package bbb.vertx_demo.main.http_server.hidden;
 
 import io.vertx.core.Handler;
-import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.client.WebClient;
@@ -20,35 +19,33 @@ import static io.vertx.core.http.HttpHeaders.CONTENT_TYPE;
 import static io.vertx.redis.client.Command.SETEX;
 import static io.vertx.redis.client.Request.cmd;
 import static java.lang.String.format;
-import static java.util.Comparator.comparing;
 import static java.util.Objects.nonNull;
 
 @Slf4j
-public enum Countries {
+public enum News {
 
   ;
 
-  private static final String FINNHUB_URL = "/api/v1/country";
-  private static final String REDIS_KEY = "/api/v1/country";
-  private static final String TEMPLATE_KEY = "countries";
+  private static final String REDIS_KEY_PREFIX = "/api/v1/news?category=";
 
-  static Handler<RoutingContext> countries
+  public static Handler<RoutingContext> news
     (
-      WebClient webClient,
+      WebClient client,
       TemplateEngine engine,
-      RedisAPI redisAPI,
+      RedisAPI redisApi,
       RedisConnection redisConnection,
       JsonObject config
     ) {
     return context -> {
-      var maxAgeString = config.getString("max-age", "PT1H");
+      var category = context.pathParam("category");
+      var maxAgeString = config.getString("max-age", "PT1S");
       var maxAge = Duration.parse(maxAgeString).toSeconds();
-      log.info("Cache expiry for countries is {} seconds", maxAge);
+      log.info("Cache expiry for {} news is {} seconds", category, maxAge);
       var cacheControl = format("public, max-age=%d, immutable", maxAge);
       var watch = createStarted();
-      redisAPI
-        .get(REDIS_KEY)
-        .onFailure(throwable -> log.error("error getting countries from Redis", throwable))
+      var redisKey = REDIS_KEY_PREFIX + category;
+      redisApi.get(redisKey)
+        .onFailure(throwable -> log.error("error getting {} news from Redis", category, throwable))
         .onSuccess(redisResponse -> {
             if (nonNull(redisResponse)) {
               var buffer = redisResponse.toBuffer();
@@ -56,38 +53,26 @@ public enum Countries {
                 .putHeader(CONTENT_TYPE, HTML)
                 .putHeader(CACHE_CONTROL, cacheControl)
                 .end(buffer);
-              log.info("Countries request handled in {}", watch.elapsed());
+              log.info("{} news request handled in {}", category, watch.elapsed());
             } else {
-              webClient
-                .get(FINNHUB_PORT, FINNHUB_HOST, FINNHUB_URL)
+              client
+                .get(FINNHUB_PORT, FINNHUB_HOST, "/api/v1/news?category=" + category)
                 .putHeader(FINNHUB_HEADER, FINNHUB_API_KEY)
                 .send()
-                .onFailure(throwable -> log.error("error sending countries request", throwable))
+                .onFailure(throwable -> log.error("error {} news template", category, throwable))
                 .onSuccess(response -> {
                     var array = response.bodyAsJsonArray();
-                    var list =
-                      array.stream()
-                        .map(o -> (JsonObject) o)
-                        .sorted(
-                          comparing(obj -> obj.getString("country").toLowerCase())
-                        )
-                        .toList();
-                    var map =
-                      new JsonArray(list).stream().map(o ->
-                          ((JsonObject) o).getMap()
-                        )
-                        .toList();
+                    var renderingContext = new JsonObject().put("news", array).put("caption", category + " news");
                     engine
-                      .render(new JsonObject().put(TEMPLATE_KEY, map), "templates/countries.html")
-                      .onFailure(throwable -> log.error("error rendering countries template", throwable))
+                      .render(renderingContext, "templates/news.html")
+                      .onFailure(throwable -> log.error("error {} news rendering template", category, throwable))
                       .onSuccess(buffer -> {
                           context.response()
                             .putHeader(CONTENT_TYPE, HTML)
                             .putHeader(CACHE_CONTROL, cacheControl)
                             .end(buffer);
-                          log.info("Countries request handled in {}", watch.elapsed());
                           var request = cmd(SETEX)
-                            .arg(REDIS_KEY)
+                            .arg(redisKey)
                             .arg(maxAge)
                             .arg(buffer);
                           redisConnection.send(request);

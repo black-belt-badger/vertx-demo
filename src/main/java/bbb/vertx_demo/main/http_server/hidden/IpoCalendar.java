@@ -1,4 +1,4 @@
-package bbb.vertx_demo.main.http_server;
+package bbb.vertx_demo.main.http_server.hidden;
 
 import io.vertx.core.Handler;
 import io.vertx.core.json.JsonObject;
@@ -33,7 +33,7 @@ public enum IpoCalendar {
   private static final String REDIS_KEY = "/api/v1/calendar/ipo";
   private static final String TEMPLATE_KEY = "object";
 
-  static Handler<RoutingContext> ipoCalendar
+  public static Handler<RoutingContext> ipoCalendar
     (
       HealthCheckHandler checks,
       WebClient webClient,

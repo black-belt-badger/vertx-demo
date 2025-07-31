@@ -1,4 +1,4 @@
-package bbb.vertx_demo.main.http_server.stock;
+package bbb.vertx_demo.main.http_server.hidden.stock;
 
 import io.vertx.core.Handler;
 import io.vertx.core.json.JsonObject;
@@ -11,23 +11,21 @@ import static bbb.vertx_demo.main.http_server.HttpServerStarter.*;
 import static bbb.vertx_demo.main.http_server.HttpServerStarter.FINNHUB_API_KEY;
 
 @Slf4j
-public enum StockInsiderTransactions {
+public enum StockInsiderSentiment {
 
   ;
-
-
-  public static Handler<RoutingContext> stockInsiderTransactions(WebClient client, ThymeleafTemplateEngine engine) {
+  public static Handler<RoutingContext> stockInsiderSentiment(WebClient client, ThymeleafTemplateEngine engine) {
     return context -> {
       var symbol = context.pathParam("symbol");
       client
-        .get(FINNHUB_PORT, FINNHUB_HOST, "/api/v1/stock/insider-transactions?symbol=" + symbol)
+        .get(FINNHUB_PORT, FINNHUB_HOST, "/api/v1/stock/insider-sentiment?symbol=" + symbol)
         .putHeader(FINNHUB_HEADER, FINNHUB_API_KEY)
         .send()
         .onFailure(throwable -> log.error("error sending request", throwable))
         .onSuccess(response -> {
             var object = response.bodyAsJsonObject();
             engine
-              .render(new JsonObject().put("object", object).put("symbol", symbol), "templates/stock/insider-transactions.html")
+              .render(new JsonObject().put("object", object).put("symbol", symbol), "templates/stock/insider-sentiment.html")
               .onFailure(throwable -> log.error("error rendering template", throwable))
               .onSuccess(buffer ->
                 context.response().putHeader("content-type", "text/html").end(buffer)

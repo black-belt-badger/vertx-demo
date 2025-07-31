@@ -1,4 +1,4 @@
-package bbb.vertx_demo.main.http_server.crypto;
+package bbb.vertx_demo.main.http_server.hidden;
 
 import io.vertx.core.Handler;
 import io.vertx.core.json.JsonArray;
@@ -24,29 +24,31 @@ import static java.util.Comparator.comparing;
 import static java.util.Objects.nonNull;
 
 @Slf4j
-public enum CryptoSymbols {
+public enum Countries {
 
   ;
 
-  public static Handler<RoutingContext> cryptoSymbol
+  private static final String FINNHUB_URL = "/api/v1/country";
+  private static final String REDIS_KEY = "/api/v1/country";
+  private static final String TEMPLATE_KEY = "countries";
+
+  public static Handler<RoutingContext> countries
     (
       WebClient webClient,
       TemplateEngine engine,
-      RedisAPI redisApi,
+      RedisAPI redisAPI,
       RedisConnection redisConnection,
       JsonObject config
     ) {
     return context -> {
       var maxAgeString = config.getString("max-age", "PT1H");
       var maxAge = Duration.parse(maxAgeString).toSeconds();
-      log.info("Cache expiry for crypto symbols is {} seconds", maxAge);
+      log.info("Cache expiry for countries is {} seconds", maxAge);
       var cacheControl = format("public, max-age=%d, immutable", maxAge);
       var watch = createStarted();
-      var exchange = context.pathParam("exchange");
-      var redisKey = "/api/v1/crypto/symbol?exchange=" + exchange;
-      redisApi
-        .get(redisKey)
-        .onFailure(throwable -> log.error("error getting crypto symbols from Redis", throwable))
+      redisAPI
+        .get(REDIS_KEY)
+        .onFailure(throwable -> log.error("error getting countries from Redis", throwable))
         .onSuccess(redisResponse -> {
             if (nonNull(redisResponse)) {
               var buffer = redisResponse.toBuffer();
@@ -54,20 +56,21 @@ public enum CryptoSymbols {
                 .putHeader(CONTENT_TYPE, HTML)
                 .putHeader(CACHE_CONTROL, cacheControl)
                 .end(buffer);
-              log.info("Crypto symbols request handled in {}", watch.elapsed());
+              log.info("Countries request handled in {}", watch.elapsed());
             } else {
-              var finnhubUrl = "/api/v1/crypto/symbol?exchange=" + exchange;
               webClient
-                .get(FINNHUB_PORT, FINNHUB_HOST, finnhubUrl)
+                .get(FINNHUB_PORT, FINNHUB_HOST, FINNHUB_URL)
                 .putHeader(FINNHUB_HEADER, FINNHUB_API_KEY)
                 .send()
-                .onFailure(throwable -> log.error("error sending request", throwable))
+                .onFailure(throwable -> log.error("error sending countries request", throwable))
                 .onSuccess(response -> {
                     var array = response.bodyAsJsonArray();
                     var list =
                       array.stream()
                         .map(o -> (JsonObject) o)
-                        .sorted(comparing(obj -> obj.getString("displaySymbol")))
+                        .sorted(
+                          comparing(obj -> obj.getString("country").toLowerCase())
+                        )
                         .toList();
                     var map =
                       new JsonArray(list).stream().map(o ->
@@ -75,16 +78,16 @@ public enum CryptoSymbols {
                         )
                         .toList();
                     engine
-                      .render(new JsonObject().put("symbols", map), "templates/crypto/symbol.html")
-                      .onFailure(throwable -> log.error("error rendering crypto symbols template", throwable))
+                      .render(new JsonObject().put(TEMPLATE_KEY, map), "templates/countries.html")
+                      .onFailure(throwable -> log.error("error rendering countries template", throwable))
                       .onSuccess(buffer -> {
                           context.response()
                             .putHeader(CONTENT_TYPE, HTML)
                             .putHeader(CACHE_CONTROL, cacheControl)
                             .end(buffer);
-                          log.info("Crypto symbols request handled in {}", watch.elapsed());
+                          log.info("Countries request handled in {}", watch.elapsed());
                           var request = cmd(SETEX)
-                            .arg(redisKey)
+                            .arg(REDIS_KEY)
                             .arg(maxAge)
                             .arg(buffer);
                           redisConnection.send(request);

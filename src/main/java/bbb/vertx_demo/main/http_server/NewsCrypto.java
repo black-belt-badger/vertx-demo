@@ -12,7 +12,6 @@ import io.vertx.redis.client.Response;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.Duration;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 
@@ -26,6 +25,7 @@ import static io.vertx.ext.healthchecks.Status.KO;
 import static io.vertx.redis.client.Command.SETEX;
 import static io.vertx.redis.client.Request.cmd;
 import static java.lang.String.format;
+import static java.time.ZoneId.systemDefault;
 import static java.util.Locale.US;
 import static java.util.Objects.nonNull;
 import static java.util.Optional.ofNullable;
@@ -102,7 +102,7 @@ public enum NewsCrypto {
                           renderingContext.put("epochMillis", epochMillis);
                           var lastNews = rowSet.iterator().next();
                           var lastNewsDateTime = lastNews.getLocalDateTime("datetime");
-                          long lastNewsEpochMilli = lastNewsDateTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
+                          long lastNewsEpochMilli = lastNewsDateTime.atZone(systemDefault()).toInstant().toEpochMilli();
                           renderingContext.put("lastNewsEpochMilli", lastNewsEpochMilli);
                           engine
                             .render(renderingContext, "templates/news.html")

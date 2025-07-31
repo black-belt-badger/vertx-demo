@@ -1,4 +1,4 @@
-package bbb.vertx_demo.main.http_server.stock;
+package bbb.vertx_demo.main.http_server.hidden.stock;
 
 import io.vertx.core.Handler;
 import io.vertx.core.json.JsonObject;
@@ -8,25 +8,24 @@ import io.vertx.ext.web.templ.thymeleaf.ThymeleafTemplateEngine;
 import lombok.extern.slf4j.Slf4j;
 
 import static bbb.vertx_demo.main.http_server.HttpServerStarter.*;
-import static bbb.vertx_demo.main.http_server.HttpServerStarter.FINNHUB_API_KEY;
 
 @Slf4j
-public enum StockUsaSpending {
+public enum StockVisaApplications {
 
   ;
 
-  public static Handler<RoutingContext> stockUsaSpending(WebClient client, ThymeleafTemplateEngine engine) {
+  public static Handler<RoutingContext> stockVisaApplication(WebClient client, ThymeleafTemplateEngine engine) {
     return context -> {
       var symbol = context.pathParam("symbol");
       client
-        .get(FINNHUB_PORT, FINNHUB_HOST, "/api/v1/stock/usa-spending?symbol=" + symbol + "&from=2020-01-01&to=2025-06-01")
+        .get(FINNHUB_PORT, FINNHUB_HOST, "/api/v1/stock/visa-application?symbol=" + symbol)
         .putHeader(FINNHUB_HEADER, FINNHUB_API_KEY)
         .send()
         .onFailure(throwable -> log.error("error sending request", throwable))
         .onSuccess(response -> {
             var object = response.bodyAsJsonObject();
             engine
-              .render(new JsonObject().put("object", object).put("symbol", symbol), "templates/stock/usa-spending.html")
+              .render(new JsonObject().put("object", object).put("symbol", symbol), "templates/stock/visa-application.html")
               .onFailure(throwable -> log.error("error rendering template", throwable))
               .onSuccess(buffer ->
                 context.response().putHeader("content-type", "text/html").end(buffer)

@@ -1,4 +1,4 @@
-package bbb.vertx_demo.main.http_server.crypto;
+package bbb.vertx_demo.main.http_server.hidden.stock;
 
 import io.vertx.core.Handler;
 import io.vertx.core.json.JsonObject;
@@ -19,21 +19,17 @@ import static io.vertx.core.http.HttpHeaders.CONTENT_TYPE;
 import static io.vertx.redis.client.Command.SETEX;
 import static io.vertx.redis.client.Request.cmd;
 import static java.lang.String.format;
-import static java.net.URLEncoder.encode;
-import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.Objects.nonNull;
 
 @Slf4j
-public enum CryptoExchanges {
+public enum StockProfile2 {
 
   ;
 
-  // TODO: add summary information: symbol count by exchange
+  private static final String FINNHUB_URL_PREFIX = "/api/v1/stock/profile2?symbol=";
+  private static final String REDIS_KEY_PREFIX = "/api/v1/stock/profile2?symbol=";
 
-  private static final String REDIS_KEY = "/api/v1/forex/exchange";
-  private static final String FINNHUB_URL = "/api/v1/forex/exchange";
-
-  public static Handler<RoutingContext> cryptoExchange
+  public static Handler<RoutingContext> stockProfile2
     (
       WebClient webClient,
       TemplateEngine engine,
@@ -44,12 +40,14 @@ public enum CryptoExchanges {
     return context -> {
       var maxAgeString = config.getString("max-age", "PT1H");
       var maxAge = Duration.parse(maxAgeString).toSeconds();
-      log.info("Cache expiry for crypto exchanges is {} seconds", maxAge);
+      log.info("Cache expiry for stock profile 2 is {} seconds", maxAge);
       var cacheControl = format("public, max-age=%d, immutable", maxAge);
       var watch = createStarted();
+      var symbol = context.pathParam("symbol");
+      var redisKey = REDIS_KEY_PREFIX + symbol;
       redisApi
-        .get(REDIS_KEY)
-        .onFailure(throwable -> log.error("error getting crypto exchanges from Redis", throwable))
+        .get(redisKey)
+        .onFailure(throwable -> log.error("error getting stock profile 2 from Redis", throwable))
         .onSuccess(redisResponse -> {
             if (nonNull(redisResponse)) {
               var buffer = redisResponse.toBuffer();
@@ -57,38 +55,27 @@ public enum CryptoExchanges {
                 .putHeader(CONTENT_TYPE, HTML)
                 .putHeader(CACHE_CONTROL, cacheControl)
                 .end(buffer);
-              log.info("Forex exchanges request handled in {}", watch.elapsed());
+              log.info("Stock profile 2 request handled in {}", watch.elapsed());
             } else {
+              var finnhubUrl = FINNHUB_URL_PREFIX + symbol;
               webClient
-                .get(FINNHUB_PORT, FINNHUB_HOST, FINNHUB_URL)
+                .get(FINNHUB_PORT, FINNHUB_HOST, finnhubUrl)
                 .putHeader(FINNHUB_HEADER, FINNHUB_API_KEY)
                 .send()
-                .onFailure(throwable -> log.error("error sending request", throwable))
+                .onFailure(throwable -> log.error("error sending stock profile 2 request", throwable))
                 .onSuccess(response -> {
-                    var array = response.bodyAsJsonArray();
-                    var sorted =
-                      array
-                        .stream()
-                        .sorted()
-                        .map(object -> {
-                            var string = (String) object;
-                            return new JsonObject()
-                              .put("name", string)
-                              .put("encoded", encode(string, UTF_8));
-                          }
-                        )
-                        .toList();
+                    var object = response.bodyAsJsonObject();
                     engine
-                      .render(new JsonObject().put("exchanges", sorted), "templates/crypto/exchange.html")
-                      .onFailure(throwable -> log.error("error rendering template", throwable))
+                      .render(new JsonObject().put("profile", object), "templates/stock/profile2.html")
+                      .onFailure(throwable -> log.error("error rendering stock profile 2 template", throwable))
                       .onSuccess(buffer -> {
                           context.response()
                             .putHeader(CONTENT_TYPE, HTML)
                             .putHeader(CACHE_CONTROL, cacheControl)
                             .end(buffer);
-                          log.info("Crypto exchanges request handled in {}", watch.elapsed());
+                          log.info("Stock profile 2 request handled in {}", watch.elapsed());
                           var request = cmd(SETEX)
-                            .arg(REDIS_KEY)
+                            .arg(redisKey)
                             .arg(maxAge)
                             .arg(buffer);
                           redisConnection.send(request);

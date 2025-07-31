@@ -1,6 +1,7 @@
-package bbb.vertx_demo.main.http_server;
+package bbb.vertx_demo.main.http_server.hidden.crypto;
 
 import io.vertx.core.Handler;
+import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.client.WebClient;
@@ -19,33 +20,33 @@ import static io.vertx.core.http.HttpHeaders.CONTENT_TYPE;
 import static io.vertx.redis.client.Command.SETEX;
 import static io.vertx.redis.client.Request.cmd;
 import static java.lang.String.format;
+import static java.util.Comparator.comparing;
 import static java.util.Objects.nonNull;
 
 @Slf4j
-public enum News {
+public enum CryptoSymbols {
 
   ;
 
-  private static final String REDIS_KEY_PREFIX = "/api/v1/news?category=";
-
-  static Handler<RoutingContext> news
+  public static Handler<RoutingContext> cryptoSymbol
     (
-      WebClient client,
+      WebClient webClient,
       TemplateEngine engine,
       RedisAPI redisApi,
       RedisConnection redisConnection,
       JsonObject config
     ) {
     return context -> {
-      var category = context.pathParam("category");
-      var maxAgeString = config.getString("max-age", "PT1S");
+      var maxAgeString = config.getString("max-age", "PT1H");
       var maxAge = Duration.parse(maxAgeString).toSeconds();
-      log.info("Cache expiry for {} news is {} seconds", category, maxAge);
+      log.info("Cache expiry for crypto symbols is {} seconds", maxAge);
       var cacheControl = format("public, max-age=%d, immutable", maxAge);
       var watch = createStarted();
-      var redisKey = REDIS_KEY_PREFIX + category;
-      redisApi.get(redisKey)
-        .onFailure(throwable -> log.error("error getting {} news from Redis", category, throwable))
+      var exchange = context.pathParam("exchange");
+      var redisKey = "/api/v1/crypto/symbol?exchange=" + exchange;
+      redisApi
+        .get(redisKey)
+        .onFailure(throwable -> log.error("error getting crypto symbols from Redis", throwable))
         .onSuccess(redisResponse -> {
             if (nonNull(redisResponse)) {
               var buffer = redisResponse.toBuffer();
@@ -53,24 +54,35 @@ public enum News {
                 .putHeader(CONTENT_TYPE, HTML)
                 .putHeader(CACHE_CONTROL, cacheControl)
                 .end(buffer);
-              log.info("{} news request handled in {}", category, watch.elapsed());
+              log.info("Crypto symbols request handled in {}", watch.elapsed());
             } else {
-              client
-                .get(FINNHUB_PORT, FINNHUB_HOST, "/api/v1/news?category=" + category)
+              var finnhubUrl = "/api/v1/crypto/symbol?exchange=" + exchange;
+              webClient
+                .get(FINNHUB_PORT, FINNHUB_HOST, finnhubUrl)
                 .putHeader(FINNHUB_HEADER, FINNHUB_API_KEY)
                 .send()
-                .onFailure(throwable -> log.error("error {} news template", category, throwable))
+                .onFailure(throwable -> log.error("error sending request", throwable))
                 .onSuccess(response -> {
                     var array = response.bodyAsJsonArray();
-                    var renderingContext = new JsonObject().put("news", array).put("caption", category + " news");
+                    var list =
+                      array.stream()
+                        .map(o -> (JsonObject) o)
+                        .sorted(comparing(obj -> obj.getString("displaySymbol")))
+                        .toList();
+                    var map =
+                      new JsonArray(list).stream().map(o ->
+                          ((JsonObject) o).getMap()
+                        )
+                        .toList();
                     engine
-                      .render(renderingContext, "templates/news.html")
-                      .onFailure(throwable -> log.error("error {} news rendering template", category, throwable))
+                      .render(new JsonObject().put("symbols", map), "templates/crypto/symbol.html")
+                      .onFailure(throwable -> log.error("error rendering crypto symbols template", throwable))
                       .onSuccess(buffer -> {
                           context.response()
                             .putHeader(CONTENT_TYPE, HTML)
                             .putHeader(CACHE_CONTROL, cacheControl)
                             .end(buffer);
+                          log.info("Crypto symbols request handled in {}", watch.elapsed());
                           var request = cmd(SETEX)
                             .arg(redisKey)
                             .arg(maxAge)

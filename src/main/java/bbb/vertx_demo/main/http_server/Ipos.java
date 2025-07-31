@@ -9,11 +9,14 @@ import io.vertx.ext.web.healthchecks.HealthCheckHandler;
 import io.vertx.pgclient.PgConnection;
 import io.vertx.redis.client.RedisAPI;
 import io.vertx.redis.client.RedisConnection;
+import io.vertx.redis.client.Response;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.Duration;
 import java.util.HashMap;
 
+import static bbb.vertx_demo.main.db.IpoUpdater.IPOS_EPOCH_MILLIS;
+import static bbb.vertx_demo.main.db.NewsUpdater.EPOCH_MILLIS;
 import static com.google.common.base.Stopwatch.createStarted;
 import static com.google.common.net.MediaType.HTML_UTF_8;
 import static io.vertx.core.http.HttpHeaders.CACHE_CONTROL;
@@ -22,7 +25,9 @@ import static io.vertx.ext.healthchecks.Status.KO;
 import static io.vertx.redis.client.Command.SETEX;
 import static io.vertx.redis.client.Request.cmd;
 import static java.lang.String.format;
+import static java.time.ZoneId.systemDefault;
 import static java.util.Objects.nonNull;
+import static java.util.Optional.ofNullable;
 
 @Slf4j
 public enum Ipos {
@@ -92,24 +97,37 @@ public enum Ipos {
                       }
                     ).toList();
                     renderingContext.put("elements", elements);
-                    engine
-                      .render(renderingContext, "templates/ipos.html")
-                      .onFailure(throwable ->
-                        log.error("error rendering '{}' template", name, throwable)
-                      )
-                      .onSuccess(buffer -> {
-                          context.response()
-                            .putHeader(CONTENT_TYPE, HTML)
-                            .putHeader(CACHE_CONTROL, cacheControl)
-                            .end(buffer);
-                          var request = cmd(SETEX)
-                            .arg(REDIS_KEY)
-                            .arg(maxAge)
-                            .arg(buffer);
-                          redisConnection
-                            .send(request)
-                            .onFailure(throwable -> log.error("Error setting {} max age in Redis", name, throwable))
-                            .onSuccess(response -> log.info("Set {} max age in Redis {}", name, response));
+                    redisApi
+                      .hget(EPOCH_MILLIS, IPOS_EPOCH_MILLIS)
+                      .onFailure(throwable -> log.error("error getting last updated", throwable))
+                      .onSuccess(response -> {
+                          var epochMillis = ofNullable(response).map(Response::toString).orElse("1753975599077");
+                          renderingContext.put("epochMillis", epochMillis);
+                          var lastNews = rowSet.iterator().next();
+                          var lastNewsDate = lastNews.getLocalDate("date");
+                          var lastNewsDateTime = lastNewsDate.atStartOfDay();
+                          long lastNewsEpochMilli = lastNewsDateTime.atZone(systemDefault()).toInstant().toEpochMilli();
+                          renderingContext.put("lastNewsEpochMilli", lastNewsEpochMilli);
+                          engine
+                            .render(renderingContext, "templates/ipos.html")
+                            .onFailure(throwable ->
+                              log.error("error rendering '{}' template", name, throwable)
+                            )
+                            .onSuccess(buffer -> {
+                                context.response()
+                                  .putHeader(CONTENT_TYPE, HTML)
+                                  .putHeader(CACHE_CONTROL, cacheControl)
+                                  .end(buffer);
+                                var request = cmd(SETEX)
+                                  .arg(REDIS_KEY)
+                                  .arg(maxAge)
+                                  .arg(buffer);
+                                redisConnection
+                                  .send(request)
+                                  .onFailure(throwable -> log.error("Error setting {} max age in Redis", name, throwable))
+                                  .onSuccess(ack -> log.info("Set {} max age in Redis {}", name, ack));
+                              }
+                            );
                         }
                       );
                   }

@@ -11,17 +11,21 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.Duration;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.util.List;
 
 import static bbb.vertx_demo.main.FinnHubApi.CALENDAR_IPO;
+import static bbb.vertx_demo.main.db.NewsUpdater.EPOCH_MILLIS;
 import static bbb.vertx_demo.main.http_server.HttpServerStarter.*;
-import static bbb.vertx_demo.main.http_server.Ipos.REDIS_KEY;
 import static io.vertx.core.Future.succeededFuture;
 
 @Slf4j
 @RequiredArgsConstructor
 public final class IpoUpdater extends VerticleBase {
+
+  public static final String REDIS_KEY = "ipos";
+  public static final String IPOS_EPOCH_MILLIS = "ipos-epoch-millis";
 
   private final WebClient client;
   private final PgConnection pgConnection;
@@ -29,9 +33,9 @@ public final class IpoUpdater extends VerticleBase {
   private final Duration delay;
 
   @Override
-  public Future<Long> start() throws Exception {
-    return succeededFuture(
-      vertx.setPeriodic(delay.toMillis(), handler -> {
+  public Future<?> start() throws Exception {
+    return succeededFuture(vertx
+      .setPeriodic(delay.toMillis(), handler -> {
           log.info("IPO updater started, handler {}", handler);
           client
             .get(FINNHUB_PORT, FINNHUB_HOST, CALENDAR_IPO)
@@ -84,6 +88,30 @@ public final class IpoUpdater extends VerticleBase {
             );
         }
       )
+    ).flatMap(timerId ->
+      pgConnection
+        .notificationHandler(notification -> {
+            log.info("Inserted to finnhub.calendar_ipo inserts");
+            pgConnection
+              .preparedQuery("REFRESH MATERIALIZED VIEW finnhub.calendar_ipo_parsed")
+              .execute()
+              .onFailure(throwable -> log.error("Error refreshing finnhub.calendar_ipo_parsed", throwable))
+              .onSuccess(result -> log.info("Refreshed finnhub.calendar_ipo_parsed"))
+              .flatMap(rowSet -> {
+                  long epochMillis = Instant.now().toEpochMilli();
+                  var value = Long.toString(epochMillis);
+                  var args = List.of(EPOCH_MILLIS, IPOS_EPOCH_MILLIS, value);
+                  return redisAPI.hset(args)
+                    .onFailure(throwable -> log.error("error setting epoch millis {}", REDIS_KEY, throwable))
+                    .onSuccess(result -> log.info("epoch millis {} updated", REDIS_KEY));
+                }
+              );
+          }
+        )
+        .query("LISTEN calendar_ipo_change_channel")
+        .execute()
+        .onFailure(throwable -> log.error("Error listening on calendar_ipo_change_channel", throwable))
+        .onSuccess(rows -> log.info("Created listener for finnhub.calendar_ipo inserts"))
     );
   }
 }

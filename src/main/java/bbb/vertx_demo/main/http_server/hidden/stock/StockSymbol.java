@@ -1,4 +1,4 @@
-package bbb.vertx_demo.main.http_server.stock;
+package bbb.vertx_demo.main.http_server.hidden.stock;
 
 import io.vertx.core.DeploymentOptions;
 import io.vertx.core.Handler;
