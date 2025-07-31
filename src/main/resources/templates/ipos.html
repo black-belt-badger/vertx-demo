@@ -11,18 +11,35 @@
     const epochMillis = [[${epochMillis}]];
     /*]]>*/
 
+    function formatElapsedTime(ms) {
+      const seconds = Math.floor(ms / 1000);
+      if (seconds < 60) return `${seconds} second${seconds !== 1 ? 's' : ''} ago`;
+
+      const minutes = Math.floor(seconds / 60);
+      if (minutes < 60) return `${minutes} minute${minutes !== 1 ? 's' : ''} ago`;
+
+      const hours = Math.floor(minutes / 60);
+      if (hours < 24) return `${hours} hour${hours !== 1 ? 's' : ''} ago`;
+
+      const days = Math.floor(hours / 24);
+      if (days < 30) return `${days} day${days !== 1 ? 's' : ''} ago`;
+
+      const months = Math.floor(days / 30);
+      return `${months} month${months !== 1 ? 's' : ''} ago`;
+    }
+
     document.addEventListener("DOMContentLoaded", () => {
         const lastUpdated = new Date(epochMillis);
 
         function update() {
           const now = new Date().getTime();
-          const delta = Math.floor((now - lastUpdated) / 1000);
           const updated = document.getElementById("updated");
           if (updated && updated.dataset.original === undefined) {
             updated.dataset.original = updated.textContent;
           }
           if (updated) {
-            updated.textContent = `${updated.dataset.original} Last synced ${delta} seconds ago.`;
+            const delta = Math.floor((now - lastUpdated) );
+            updated.textContent = `${updated.dataset.original} Last synced ${formatElapsedTime(delta)}.`;
           }
         }
 
@@ -66,7 +83,7 @@
       </tbody>
     </table>
   </section>
-  <script src="/static/beautify-table.js?v=1.0.31"></script>
+  <script src="/static/beautify-table.js?v=1.0.31.1"></script>
   <script>lucide.createIcons();</script>
 </section>
 </body>
