@@ -7,7 +7,7 @@
 
   <groupId>bbb</groupId>
   <artifactId>vertx-demo</artifactId>
-  <version>1.0.29</version>
+  <version>1.0.30</version>
 
   <properties>
     <maven.compiler.target>21</maven.compiler.target>
@@ -21,6 +21,7 @@
     <logback.version>1.5.18</logback.version>
     <junit-jupiter.version>6.0.0-M2</junit-jupiter.version>
     <jackson.version>2.19.1</jackson.version>
+    <flyway.version>11.10.4</flyway.version>
   </properties>
 
   <dependencies>
@@ -98,6 +99,14 @@
     <dependency>
       <groupId>org.postgresql</groupId>
       <artifactId>postgresql</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.flywaydb</groupId>
+      <artifactId>flyway-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.flywaydb</groupId>
+      <artifactId>flyway-database-postgresql</artifactId>
     </dependency>
     <dependency>
       <groupId>io.vertx</groupId>
@@ -236,6 +245,7 @@
                 <exclude>org.apache.sshd:*</exclude>
                 <exclude>org.postgresql:*</exclude>
                 <exclude>com.google.guava:*</exclude>
+                <exclude>org.flywaydb:*</exclude>
               </excludes>
             </banTransitiveDependencies>
             <dependencyConvergence>true</dependencyConvergence>
@@ -394,6 +404,16 @@
         <groupId>org.postgresql</groupId>
         <artifactId>postgresql</artifactId>
         <version>42.7.7</version>
+      </dependency>
+      <dependency>
+        <groupId>org.flywaydb</groupId>
+        <artifactId>flyway-core</artifactId>
+        <version>${flyway.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.flywaydb</groupId>
+        <artifactId>flyway-database-postgresql</artifactId>
+        <version>${flyway.version}</version>
       </dependency>
       <dependency>
         <groupId>org.assertj</groupId>

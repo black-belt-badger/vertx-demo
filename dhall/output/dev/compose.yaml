@@ -21,7 +21,7 @@ services:
       JAVA_TOOL_OPTIONS: |
         -Dlogback.configurationFile=/logs/logback.xml
         -Djava.net.preferIPv4Stack=true
-    image: "marekdudek/vertx-demo:1.0.29"
+    image: "marekdudek/vertx-demo:1.0.30"
     ports:
     - "18080:18080"
     - "18443:18443"
@@ -156,6 +156,8 @@ services:
         },
         "postgres": {
           "database": "vertx_demo_dev_database",
+          "default-schema": "finnhub",
+          "environment": "dev",
           "host": "host.docker.internal",
           "password": "vertx_demo_dev_password",
           "port": 5432,
@@ -164,7 +166,14 @@ services:
           "user": "vertx_demo_dev_user"
         },
         "redis.host": "redis",
-        "telnet.port": 5001
+        "telnet.port": 5001,
+        "updater": {
+          "ipo-updater-delay": "PT1H",
+          "news-crypto-updater-delay": "PT1M",
+          "news-forex-updater-delay": "PT1M",
+          "news-general-updater-delay": "PT1M",
+          "news-merger-updater-delay": "PT1M"
+        }
       }
       '
     container_name: "vertx-demo"
@@ -188,13 +197,13 @@ services:
         -Dcom.sun.management.jmxremote.port=1099
         -Dcom.sun.management.jmxremote.rmi.port=1099
         -Djava.rmi.server.hostname=0.0.0.0
-      VERSION: '1.0.29'
+      VERSION: "1.0.30"
     healthcheck:
       interval: 10s
       retries: 10
       test: "curl -f http://localhost:8081/health"
       timeout: 1s
-    image: "marekdudek/vertx-demo:1.0.29"
+    image: "marekdudek/vertx-demo:1.0.30"
     ports:
     - "8081:8081"
     - "8444:8444"

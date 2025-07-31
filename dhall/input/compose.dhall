@@ -24,7 +24,7 @@ let type = https://prelude.dhall-lang.org/v23.1.0/JSON/Type.dhall
 
 let vdc = ../imports/vertx-demo-config/vdc.dhall
 
-let version = "1.0.29"
+let version = "1.0.30"
 
 let Environment = < Dev | Prod >
 
@@ -237,6 +237,8 @@ let config-server =
                 }
               , postgres =
                 { database = dev_db_name
+                , default-schema = "finnhub"
+                , environment = "dev"
                 , host = "host.docker.internal"
                 , password = dev_db_password
                 , port = 5432
@@ -246,6 +248,13 @@ let config-server =
                 }
               , `redis.host` = "redis"
               , `telnet.port` = 5001
+              , updater =
+                { ipo-updater-delay = "PT1H"
+                , news-general-updater-delay = "PT1M"
+                , news-forex-updater-delay = "PT1M"
+                , news-crypto-updater-delay = "PT1M"
+                , news-merger-updater-delay = "PT1M"
+                }
               }
         else  { amqp =
                 { client = { delay = amqp_queue_delay, queue = "client-queue" }
@@ -281,6 +290,8 @@ let config-server =
                 }
               , postgres =
                 { database = "postgres"
+                , default-schema = "finnhub"
+                , environment = "prod"
                 , host = "grove-db.chimcku4qngw.eu-north-1.rds.amazonaws.com"
                 , password = "vertx_demo_password"
                 , port = 5432
@@ -290,6 +301,13 @@ let config-server =
                 }
               , `redis.host` = "redis"
               , `telnet.port` = 5000
+              , updater =
+                { ipo-updater-delay = "PT1H"
+                , news-general-updater-delay = "PT1M"
+                , news-forex-updater-delay = "PT1M"
+                , news-crypto-updater-delay = "PT1M"
+                , news-merger-updater-delay = "PT1M"
+                }
               }
 
 let network-test =

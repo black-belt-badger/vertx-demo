@@ -47,6 +47,8 @@ let VertxDemoConfig
           }
       , postgres :
           { database : Text
+          , default-schema : Text
+          , environment : Text
           , host : Text
           , password : Text
           , port : Natural
@@ -56,6 +58,13 @@ let VertxDemoConfig
           }
       , `redis.host` : Text
       , `telnet.port` : Natural
+      , updater :
+          { ipo-updater-delay : Text
+          , news-general-updater-delay : Text
+          , news-forex-updater-delay : Text
+          , news-crypto-updater-delay : Text
+          , news-merger-updater-delay : Text
+          }
       }
 
 let VertxDemoConfig/ToJSON
@@ -174,6 +183,8 @@ let VertxDemoConfig/ToJSON
                   object
                     ( toMap
                         { database = string config.postgres.database
+                        , default-schema = string config.postgres.default-schema
+                        , environment = string config.postgres.environment
                         , host = string config.postgres.host
                         , password = string config.postgres.password
                         , port = natural config.postgres.port
@@ -184,6 +195,21 @@ let VertxDemoConfig/ToJSON
                     )
               , `redis.host` = string config.`redis.host`
               , `telnet.port` = natural config.`telnet.port`
+              , updater =
+                  object
+                    ( toMap
+                        { ipo-updater-delay =
+                            string config.updater.ipo-updater-delay
+                        , news-general-updater-delay =
+                            string config.updater.news-general-updater-delay
+                        , news-forex-updater-delay =
+                            string config.updater.news-forex-updater-delay
+                        , news-crypto-updater-delay =
+                            string config.updater.news-crypto-updater-delay
+                        , news-merger-updater-delay =
+                            string config.updater.news-merger-updater-delay
+                        }
+                    )
               }
           )
 

@@ -8,12 +8,16 @@ import io.vertx.ext.web.healthchecks.HealthCheckHandler;
 import io.vertx.pgclient.PgConnection;
 import io.vertx.redis.client.RedisAPI;
 import io.vertx.redis.client.RedisConnection;
+import io.vertx.redis.client.Response;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.Duration;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 
+import static bbb.vertx_demo.main.NewsCategory.FOREX;
+import static bbb.vertx_demo.main.db.NewsUpdater.EPOCH_MILLIS;
 import static bbb.vertx_demo.main.http_server.Home.HTML;
 import static com.google.common.base.Stopwatch.createStarted;
 import static io.vertx.core.http.HttpHeaders.CACHE_CONTROL;
@@ -24,13 +28,14 @@ import static io.vertx.redis.client.Request.cmd;
 import static java.lang.String.format;
 import static java.util.Locale.US;
 import static java.util.Objects.nonNull;
+import static java.util.Optional.ofNullable;
 
 @Slf4j
 public enum NewsForex {
 
   ;
 
-  private static final String REDIS_KEY = "/forex-news";
+  private static final String FOREX_NEWS_CACHED_CONTENT = "/forex-news";
   private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("EEEE, MMM d',' HH:mm", US);
 
   static Handler<RoutingContext> forexNews
@@ -49,7 +54,7 @@ public enum NewsForex {
       log.info("Cache expiry for '{}' is {} seconds", name, maxAge);
       var cacheControl = format("public, max-age=%d, immutable", maxAge);
       var watch = createStarted();
-      redisApi.get(REDIS_KEY)
+      redisApi.get(FOREX_NEWS_CACHED_CONTENT)
         .onFailure(throwable -> log.error("error getting '{}' from Redis", name, throwable))
         .onSuccess(redisResponse -> {
             if (nonNull(redisResponse)) {
@@ -76,7 +81,7 @@ public enum NewsForex {
                     renderingContext.put("pageTitle", "Forex news");
                     renderingContext.put("tableHeader", "Forex news");
                     renderingContext.put("tableSubheader", "Occasional updates from global currency markets.");
-                    renderingContext.put("category", "forex");
+                    renderingContext.put("category", FOREX.value);
                     var elements = rowSet.stream().map(row -> {
                         var element = new HashMap<String, Object>();
                         var datetime = row.getLocalDateTime("datetime");
@@ -89,24 +94,33 @@ public enum NewsForex {
                       }
                     ).toList();
                     renderingContext.put("elements", elements);
-                    engine
-                      .render(renderingContext, "templates/news.html")
-                      .onFailure(throwable ->
-                        log.error("error rendering '{}' template", name, throwable)
-                      )
-                      .onSuccess(buffer -> {
-                          context.response()
-                            .putHeader(CONTENT_TYPE, HTML)
-                            .putHeader(CACHE_CONTROL, cacheControl)
-                            .end(buffer);
-                          var request = cmd(SETEX)
-                            .arg(REDIS_KEY)
-                            .arg(maxAge)
-                            .arg(buffer);
-                          redisConnection.send(request);
+                    redisApi
+                      .hget(EPOCH_MILLIS, FOREX.value)
+                      .onFailure(throwable -> log.error("error getting last updated", throwable))
+                      .onSuccess(response -> {
+                          var epochMillis = ofNullable(response).map(Response::toString).orElse("unknown");
+                          renderingContext.put("epochMillis", epochMillis);
+                          var lastNews = rowSet.iterator().next();
+                          var lastNewsDateTime = lastNews.getLocalDateTime("datetime");
+                          long lastNewsEpochMilli = lastNewsDateTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
+                          renderingContext.put("lastNewsEpochMilli", lastNewsEpochMilli);
+                          engine
+                            .render(renderingContext, "templates/news.html")
+                            .onFailure(throwable -> log.error("error rendering '{}' template", name, throwable))
+                            .onSuccess(buffer -> {
+                                context.response()
+                                  .putHeader(CONTENT_TYPE, HTML)
+                                  .putHeader(CACHE_CONTROL, cacheControl)
+                                  .end(buffer);
+                                var request = cmd(SETEX)
+                                  .arg(FOREX_NEWS_CACHED_CONTENT)
+                                  .arg(maxAge)
+                                  .arg(buffer);
+                                redisConnection.send(request);
+                              }
+                            );
                         }
                       );
-
                   }
                 );
             }
