@@ -68,7 +68,9 @@ public final class NewsUpdater extends VerticleBase {
                         long epochMillis = Instant.now().toEpochMilli();
                         var value = Long.toString(epochMillis);
                         var args = List.of(EPOCH_MILLIS, newsCategory.value, value);
-                        redisAPI.hset(args);
+                        redisAPI.hset(args)
+                          .onFailure(throwable -> log.error("error setting epoch millis {}", newsCategory, throwable))
+                          .onSuccess(result -> log.info("epoch millis {} updated", newsCategory));
                         return;
                       }
                       var values = array.stream()
@@ -107,8 +109,9 @@ public final class NewsUpdater extends VerticleBase {
                             long epochMillis = Instant.now().toEpochMilli();
                             var value = Long.toString(epochMillis);
                             var args = List.of(EPOCH_MILLIS, newsCategory.value, value);
-                            redisAPI.hset(args);
-                            return Future.succeededFuture();
+                            return redisAPI.hset(args)
+                              .onFailure(throwable -> log.error("error setting epoch millis {}", newsCategory, throwable))
+                              .onSuccess(result -> log.info("epoch millis {} updated", newsCategory));
                           }
                         );
                     }
