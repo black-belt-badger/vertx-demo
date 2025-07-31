@@ -115,6 +115,7 @@ services:
         "postgres": {
           "database": "postgres",
           "default-schema": "finnhub",
+          "environment": "prod",
           "host": "grove-db.chimcku4qngw.eu-north-1.rds.amazonaws.com",
           "password": "vertx_demo_password",
           "port": 5432,
