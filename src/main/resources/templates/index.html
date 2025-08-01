@@ -6,13 +6,12 @@
 </head>
 <body>
 <section>
-  <header>
-    <h1>IPO Watchlist</h1>
-    <p class="secondary">Stay ahead with fresh IPO data from leading U.S. exchanges. Curated from trusted sources,
-      including Finnhub.</p>
+  <header class="container">
+    <h1>Market Pulse</h1>
+    <p>Stay informed with today’s IPO announcements and the latest financial news across general, crypto, and merger markets — updated live.</p>
   </header>
   <section class="section-highlight">
-    <h2><i data-lucide="trending-up"></i> NASDAQ Capital</h2>
+    <h2><i data-lucide="trending-up"></i> Upcoming IPOs</h2>
     <table role="grid">
       <thead>
       <tr>
@@ -39,136 +38,22 @@
     </table>
   </section>
   <section class="section-highlight">
-    <h2><i data-lucide="bar-chart-3"></i> NASDAQ Global</h2>
+    <h2><i data-lucide="trending-up"></i> Today's news</h2>
     <table role="grid">
       <thead>
       <tr>
-        <th>Name</th>
-        <th class="wide-column">Date</th>
-        <th>Shares</th>
-        <th>Price</th>
-        <th>Status</th>
-        <th>Total Value</th>
+        <th>Time</th>
+        <th>Headline</th>
+        <th>Summary</th>
       </tr>
       </thead>
       <tbody>
-      <tr th:each="element : ${elementsByExchange['NASDAQ Global']}">
-        <th th:text="${element.name}"></th>
-        <td th:text="${element.date}" class="date wide-column"></td>
-        <td th:text="${element.number_of_shares}" class="large-number"></td>
-        <td
-          th:text="${element.price_number != null} ? ${element.price_number} : ${element.price_from} + ' - ' + ${element.price_to}"
-          class="price"></td>
-        <td th:text="${element.status}"></td>
-        <td th:text="${element.total_shares_value}" class="large-number"></td>
-      </tr>
-      </tbody>
-    </table>
-  </section>
-  <section class="section-highlight">
-    <h2><i data-lucide="line-chart"></i> NASDAQ Global Select</h2>
-    <table role="grid">
-      <thead>
-      <tr>
-        <th>Name</th>
-        <th class="wide-column">Date</th>
-        <th>Shares</th>
-        <th>Price</th>
-        <th>Status</th>
-        <th>Total Value</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr th:each="element : ${elementsByExchange['NASDAQ Global Select']}">
-        <th th:text="${element.name}"></th>
-        <td th:text="${element.date}" class="date wide-column"></td>
-        <td th:text="${element.number_of_shares}" class="large-number"></td>
-        <td
-          th:text="${element.price_number != null} ? ${element.price_number} : ${element.price_from} + ' - ' + ${element.price_to}"
-          class="price"></td>
-        <td th:text="${element.status}"></td>
-        <td th:text="${element.total_shares_value}" class="large-number"></td>
-      </tr>
-      </tbody>
-    </table>
-  </section>
-  <section class="section-highlight">
-    <h2><i data-lucide="banknote"></i> NYSE</h2>
-    <table role="grid">
-      <thead>
-      <tr>
-        <th>Name</th>
-        <th class="wide-column">Date</th>
-        <th>Shares</th>
-        <th>Price</th>
-        <th>Status</th>
-        <th>Total Value</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr th:each="element : ${elementsByExchange['NYSE']}">
-        <th th:text="${element.name}"></th>
-        <td th:text="${element.date}" class="date wide-column"></td>
-        <td th:text="${element.number_of_shares}" class="large-number"></td>
-        <td
-          th:text="${element.price_number != null} ? ${element.price_number} : ${element.price_from} + ' - ' + ${element.price_to}"
-          class="price"></td>
-        <td th:text="${element.status}"></td>
-        <td th:text="${element.total_shares_value}" class="large-number"></td>
-      </tr>
-      </tbody>
-    </table>
-  </section>
-  <section class="section-highlight">
-    <h2><i data-lucide="arrow-up-right"></i> NYSE MKT</h2>
-    <table role="grid">
-      <thead>
-      <tr>
-        <th>Name</th>
-        <th class="wide-column">Date</th>
-        <th>Shares</th>
-        <th>Price</th>
-        <th>Status</th>
-        <th>Total Value</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr th:each="element : ${elementsByExchange['NYSE MKT']}">
-        <th th:text="${element.name}"></th>
-        <td th:text="${element.date}" class="date wide-column"></td>
-        <td th:text="${element.number_of_shares}" class="large-number"></td>
-        <td
-          th:text="${element.price_number != null} ? ${element.price_number} : ${element.price_from} + ' - ' + ${element.price_to}"
-          class="price"></td>
-        <td th:text="${element.status}"></td>
-        <td th:text="${element.total_shares_value}" class="large-number"></td>
-      </tr>
-      </tbody>
-    </table>
-  </section>
-  <section class="section-highlight">
-    <h2><i data-lucide="file-question"></i> Exchange unknown</h2>
-    <table role="grid">
-      <thead>
-      <tr>
-        <th>Name</th>
-        <th class="wide-column">Date</th>
-        <th>Shares</th>
-        <th>Price</th>
-        <th>Status</th>
-        <th>Total Value</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr th:each="element : ${elementsByExchange['null']}">
-        <th th:text="${element.name}"></th>
-        <td th:text="${element.date}" class="date wide-column"></td>
-        <td th:text="${element.number_of_shares}" class="large-number"></td>
-        <td
-          th:text="${element.price_number != null} ? ${element.price_number} : ${element.price_from} + ' - ' + ${element.price_to}"
-          class="price"></td>
-        <td th:text="${element.status}"></td>
-        <td th:text="${element.total_shares_value}" class="large-number"></td>
+      <tr th:each="element : ${news}">
+        <td th:text="${element.time}" class="nobr align-top"/>
+        <td class="align-top">
+          <a th:href="@{{url}(url=${element.url})}" th:text="${element.headline}" th:target="_blank"></a>
+        </td>
+        <td th:utext="${element.summary}"></td>
       </tr>
       </tbody>
     </table>
