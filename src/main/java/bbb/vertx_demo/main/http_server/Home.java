@@ -105,18 +105,18 @@ public enum Home {
                         var priceToFormatted = bigDecimalCompactPrice(priceTo);
                         element.put("price_to", priceToFormatted);
                         element.put("status", row.getString("status"));
-                        String status;
+                        String priceFormat;
                         if (price == null || price.isBlank()) {
-                          status = "unknown";
+                          priceFormat = "unknown";
                         } else if (price.contains("-")) {
-                          status = "range";
+                          priceFormat = "range";
                         } else {
-                          status = "single";
+                          priceFormat = "single";
                         }
                         String priceFormatted;
                         if (price == null || price.isBlank())
                           priceFormatted = "N/A";
-                        else if (status.equals("single"))
+                        else if (priceFormat.equals("single"))
                           priceFormatted = priceNumberFormatted;
                         else
                           priceFormatted = priceFromFormatted + " - " + priceToFormatted;

@@ -92,15 +92,6 @@ public enum Ipos {
                         element.put("number_of_shares", numberOfSharesFormatted);
                         var price = row.getString("price");
                         element.put("price", price);
-                        String status;
-                        if (price == null || price.isBlank()) {
-                          status = "unknown";
-                        } else if (price.contains("-")) {
-                          status = "range";
-                        } else {
-                          status = "single";
-                        }
-                        element.put("status", status);
                         var priceNumber = row.getBigDecimal("price_number");
                         var priceNumberFormatted = bigDecimalCompactPrice(priceNumber);
                         element.put("price_number", priceNumberFormatted);
@@ -111,10 +102,18 @@ public enum Ipos {
                         var priceToFormatted = bigDecimalCompactPrice(priceTo);
                         element.put("price_to", priceToFormatted);
                         element.put("status", row.getString("status"));
+                        String priceFormat;
+                        if (price == null || price.isBlank()) {
+                          priceFormat = "unknown";
+                        } else if (price.contains("-")) {
+                          priceFormat = "range";
+                        } else {
+                          priceFormat = "single";
+                        }
                         String priceFormatted;
                         if (price == null || price.isBlank())
                           priceFormatted = "N/A";
-                        else if (status.equals("single"))
+                        else if (priceFormat.equals("single"))
                           priceFormatted = priceNumberFormatted;
                         else
                           priceFormatted = priceFromFormatted + " - " + priceToFormatted;
