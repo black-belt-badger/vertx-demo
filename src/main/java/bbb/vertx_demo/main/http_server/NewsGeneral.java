@@ -80,7 +80,7 @@ public enum NewsGeneral {
                     var renderingContext = new HashMap<String, Object>();
                     renderingContext.put("pageTitle", "General news");
                     renderingContext.put("tableHeader", "General news");
-                    renderingContext.put("tableSubheader", "A broad look at the latest financial headlines shaping global markets. This feed highlights economic trends, corporate moves, and policy changes across sectors.");
+                    renderingContext.put("tableSubheader", "A broad look at the latest financial headlines. This feed highlights economic trends and policy changes across sectors.");
                     renderingContext.put("category", GENERAL.value);
                     var elements = rowSet.stream().map(row -> {
                         var element = new HashMap<String, Object>();
