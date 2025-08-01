@@ -17,7 +17,7 @@ import java.util.HashMap;
 
 import static bbb.vertx_demo.main.db.IpoUpdater.IPOS_EPOCH_MILLIS;
 import static bbb.vertx_demo.main.db.NewsUpdater.EPOCH_MILLIS;
-import static bbb.vertx_demo.main.http_server.FormattingHelper.longWithCommas;
+import static bbb.vertx_demo.main.http_server.FormattingHelper.*;
 import static com.google.common.base.Stopwatch.createStarted;
 import static com.google.common.net.MediaType.HTML_UTF_8;
 import static io.vertx.core.http.HttpHeaders.CACHE_CONTROL;
@@ -90,11 +90,35 @@ public enum Ipos {
                         var numberOfShares = row.getLong("number_of_shares");
                         var numberOfSharesFormatted = longWithCommas(numberOfShares);
                         element.put("number_of_shares", numberOfSharesFormatted);
-                        element.put("price", row.getString("price"));
-                        element.put("price_number", row.getBigDecimal("price_number"));
-                        element.put("price_from", row.getBigDecimal("price_from"));
-                        element.put("price_to", row.getBigDecimal("price_to"));
+                        var price = row.getString("price");
+                        element.put("price", price);
+                        String status;
+                        if (price == null || price.isBlank()) {
+                          status = "unknown";
+                        } else if (price.contains("-")) {
+                          status = "range";
+                        } else {
+                          status = "single";
+                        }
+                        element.put("status", status);
+                        var priceNumber = row.getBigDecimal("price_number");
+                        var priceNumberFormatted = bigDecimalCompactPrice(priceNumber);
+                        element.put("price_number", priceNumberFormatted);
+                        var priceFrom = row.getBigDecimal("price_from");
+                        var priceFromFormatted = bigDecimalCompactPrice(priceFrom);
+                        element.put("price_from", priceFromFormatted);
+                        var priceTo = row.getBigDecimal("price_to");
+                        var priceToFormatted = bigDecimalCompactPrice(priceTo);
+                        element.put("price_to", priceToFormatted);
                         element.put("status", row.getString("status"));
+                        String priceFormatted;
+                        if (price == null || price.isBlank())
+                          priceFormatted = "N/A";
+                        else if (status.equals("single"))
+                          priceFormatted = priceNumberFormatted;
+                        else
+                          priceFormatted = priceFromFormatted + " - " + priceToFormatted;
+                        element.put("price_formatted", priceFormatted);
                         var totalSharesValue = row.getLong("total_shares_value");
                         var totalSharesValueFormatted = longWithCommas(totalSharesValue);
                         element.put("total_shares_value", totalSharesValueFormatted);
