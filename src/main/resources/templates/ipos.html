@@ -72,7 +72,7 @@
       <tbody>
       <tr th:each="element : ${elements}">
         <th th:text="${element.name}" class="align-top"/>
-        <td th:text="${element.date}" class="date wide-column align-top"/>
+        <td th:text="${element.date}" class="date wide-column align-top" style="white-space: nowrap"/>
         <td th:text="${element.exchange}" class="align-top"/>
         <td th:text="${element.number_of_shares}" style="text-align: right; vertical-align: top"/>
         <td

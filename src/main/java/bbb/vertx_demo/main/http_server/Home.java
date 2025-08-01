@@ -14,7 +14,6 @@ import java.time.Duration;
 import java.util.HashMap;
 
 import static bbb.vertx_demo.main.http_server.FormattingHelper.longCompact;
-import static bbb.vertx_demo.main.http_server.FormattingHelper.longWithCommas;
 import static com.google.common.base.Stopwatch.createStarted;
 import static com.google.common.net.MediaType.HTML_UTF_8;
 import static io.vertx.core.http.HttpHeaders.CACHE_CONTROL;
@@ -145,7 +144,7 @@ public enum Home {
                           ).toList();
                           renderingContext.put("news", newsElements);
                           engine
-                            .render(renderingContext, "templates/index.html")
+                            .render(renderingContext, "templates/home.html")
                             .onFailure(throwable ->
                               log.error("error rendering '{}' template", name, throwable)
                             )
