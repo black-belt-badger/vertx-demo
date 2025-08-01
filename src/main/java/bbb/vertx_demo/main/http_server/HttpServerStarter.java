@@ -103,19 +103,7 @@ public enum HttpServerStarter {
     httpsRouter.route().handler(ctx -> {
         var path = ctx.normalizedPath();
         if (
-          path.equals("/robots.txt") ||
-            path.equals("/") ||
-            path.equals("/about") ||
-            path.equals("/ipos") ||
-            path.startsWith("/general-news") ||
-            path.startsWith("/forex-news") ||
-            path.startsWith("/crypto-news") ||
-            path.startsWith("/merger-news") ||
-            path.endsWith(".png") ||
-            path.endsWith(".ico") ||
-            path.endsWith(".svg") ||
-            path.endsWith(".css") ||
-            path.endsWith(".js")
+          path.equals("/robots.txt")
         ) {
           ctx.next();
           return;
