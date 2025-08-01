@@ -85,5 +85,27 @@ nav a:hover {
 
 .menu li a {
   text-decoration: none;
-  color: inherit;
+  color: #6b4e16;
+}
+
+.status {
+  padding: 0.1rem 0.4rem;
+  border-radius: 0.25rem;
+  white-space: nowrap;
+}
+
+.status--expected {
+  color: #b34242 !important;
+}
+
+.status--filed {
+  color: #0c5460 !important;
+}
+
+.status--priced {
+  color: #155724 !important;
+}
+
+.status--withdrawn {
+  color: #721c24 !important;
 }

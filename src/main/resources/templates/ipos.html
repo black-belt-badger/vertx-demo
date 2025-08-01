@@ -4,7 +4,6 @@
 <head>
   <title th:text="|9rove - ${pageTitle}|"></title>
 </head>
-<body>
 <section>
   <script>
     /*<![CDATA[*/
@@ -55,6 +54,12 @@
     <p class="secondary">Explore upcoming and recent IPOs across all major markets. Curated from trusted financial
       sources.</p>
   </header>
+  <style th:inline="none">
+    table td,
+    table th {
+      padding: 0.5rem 0.5rem !important;
+    }
+  </style>
   <section class="section-highlight">
     <h2><i data-lucide="bell"></i> All exchanges</h2>
     <table role="grid">
@@ -65,7 +70,7 @@
         <th>Exchange</th>
         <th>Shares</th>
         <th>Price $</th>
-        <th>Status</th>
+        <th style="text-align: center">Status</th>
         <th style="white-space: nowrap">Total Value $</th>
       </tr>
       </thead>
@@ -76,7 +81,7 @@
         <td th:text="${element.exchange}" class="align-top" style="white-space: nowrap"/>
         <td th:text="${element.number_of_shares}" style="text-align: right; vertical-align: top"/>
         <td th:text="${element.price_formatted}" style="text-align: right; vertical-align: top; white-space: nowrap"/>
-        <td th:text="${element.status}" class="align-top"/>
+        <td th:text="${element.status}" th:class="'status status--' + ${element.status}" style="vertical-align: center; text-align: center"></td>
         <td th:text="${element.total_shares_value}" style="text-align: right; vertical-align: top"/>
       </tr>
       </tbody>
@@ -85,5 +90,4 @@
   <script src="/static/beautify-table.js?v=1.0.32"></script>
   <script>lucide.createIcons();</script>
 </section>
-</body>
 </html>
