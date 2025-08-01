@@ -65,7 +65,7 @@ public enum NewsForex {
                 .end(buffer);
               log.info("'{}' request handled in {}", name, watch.elapsed());
             } else {
-              var query = "SELECT category, datetime, headline, image, related, source, summary, url FROM finnhub.news_forex_view ORDER BY datetime DESC";
+              var query = "SELECT category, datetime, headline, image, related, source, summary, url FROM finnhub.news_forex_view WHERE datetime >= NOW() - INTERVAL '3 days' ORDER BY datetime DESC";
               pgConnection
                 .query(query)
                 .execute()
