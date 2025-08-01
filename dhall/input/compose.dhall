@@ -54,7 +54,7 @@ let prod_qpid_admin_password = "prod_secret"
 
 let dev_default_cache_max_age = "PT1S"
 
-let prod_default_cache_max_age = "PT6H"
+let prod_default_cache_max_age = "PT1M"
 
 let amqp_queue_delay = 600000
 

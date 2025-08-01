@@ -99,13 +99,13 @@ services:
         },
         "http": {
           "cache": {
-            "about": { "max-age": "PT6H" },
-            "crypto-news": { "max-age": "PT6H" },
-            "forex-news": { "max-age": "PT6H" },
-            "general-news": { "max-age": "PT6H" },
-            "home": { "max-age": "PT6H" },
-            "ipos": { "max-age": "PT6H" },
-            "merger-news": { "max-age": "PT6H" }
+            "about": { "max-age": "PT1M" },
+            "crypto-news": { "max-age": "PT1M" },
+            "forex-news": { "max-age": "PT1M" },
+            "general-news": { "max-age": "PT1M" },
+            "home": { "max-age": "PT1M" },
+            "ipos": { "max-age": "PT1M" },
+            "merger-news": { "max-age": "PT1M" }
           },
           "cert-path": "/etc/letsencrypt/live/9rove.com/fullchain.pem",
           "insecure-port": 8080,
