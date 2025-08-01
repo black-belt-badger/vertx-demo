@@ -17,7 +17,7 @@ import java.util.HashMap;
 
 import static bbb.vertx_demo.main.db.IpoUpdater.IPOS_EPOCH_MILLIS;
 import static bbb.vertx_demo.main.db.NewsUpdater.EPOCH_MILLIS;
-import static bbb.vertx_demo.main.http_server.FormattingHelper.formatWithCommas;
+import static bbb.vertx_demo.main.http_server.FormattingHelper.longWithCommas;
 import static com.google.common.base.Stopwatch.createStarted;
 import static com.google.common.net.MediaType.HTML_UTF_8;
 import static io.vertx.core.http.HttpHeaders.CACHE_CONTROL;
@@ -88,14 +88,16 @@ public enum Ipos {
                         element.put("name", row.getString("name"));
                         element.put("exchange", row.getString("exchange"));
                         var numberOfShares = row.getLong("number_of_shares");
-                        var numberOfSharesFormatted = formatWithCommas(numberOfShares);
+                        var numberOfSharesFormatted = longWithCommas(numberOfShares);
                         element.put("number_of_shares", numberOfSharesFormatted);
                         element.put("price", row.getString("price"));
                         element.put("price_number", row.getBigDecimal("price_number"));
                         element.put("price_from", row.getBigDecimal("price_from"));
                         element.put("price_to", row.getBigDecimal("price_to"));
                         element.put("status", row.getString("status"));
-                        element.put("total_shares_value", row.getLong("total_shares_value"));
+                        var totalSharesValue = row.getLong("total_shares_value");
+                        var totalSharesValueFormatted = longWithCommas(totalSharesValue);
+                        element.put("total_shares_value", totalSharesValueFormatted);
                         return element;
                       }
                     ).toList();

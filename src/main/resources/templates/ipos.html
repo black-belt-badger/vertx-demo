@@ -9,6 +9,7 @@
   <script>
     /*<![CDATA[*/
     const epochMillis = [[${epochMillis}]];
+
     /*]]>*/
 
     function formatElapsedTime(ms) {
@@ -38,7 +39,7 @@
             updated.dataset.original = updated.textContent;
           }
           if (updated) {
-            const delta = Math.floor((now - lastUpdated) );
+            const delta = Math.floor((now - lastUpdated));
             updated.textContent = `${updated.dataset.original} Last synced ${formatElapsedTime(delta)}.`;
           }
         }
@@ -73,12 +74,12 @@
         <th th:text="${element.name}" class="align-top"/>
         <td th:text="${element.date}" class="date wide-column align-top"/>
         <td th:text="${element.exchange}" class="align-top"/>
-        <td th:text="${element.number_of_shares}" class="align-top" style="text-align: right"/>
+        <td th:text="${element.number_of_shares}" style="text-align: right; vertical-align: top"/>
         <td
           th:text="${element.price_number != null} ? ${element.price_number} : ${element.price_from} + ' - ' + ${element.price_to}"
-          class="price align-top"/>
+          style="text-align: right; vertical-align: top"/>
         <td th:text="${element.status}" class="align-top"/>
-        <td th:text="${element.total_shares_value}" class="large-number align-top"/>
+        <td th:text="${element.total_shares_value}" style="text-align: right; vertical-align: top"/>
       </tr>
       </tbody>
     </table>

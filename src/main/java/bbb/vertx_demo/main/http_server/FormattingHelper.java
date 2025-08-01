@@ -8,7 +8,9 @@ public enum FormattingHelper {
 
   ;
 
-  public static String formatCompact(Long number) {
+  public static String longCompact(Long number) {
+    if (isNull(number))
+      return "N/A";
     if (number >= 1_000_000_000)
       return String.format("%.1fB", number / 1_000_000_000.0);
     if (number >= 1_000_000)
@@ -18,7 +20,7 @@ public enum FormattingHelper {
     return Long.toString(number);
   }
 
-  public static String formatWithCommas(Long number) {
+  public static String longWithCommas(Long number) {
     if (isNull(number))
       return "N/A";
     var formatter = getIntegerInstance(US);

@@ -28,12 +28,11 @@
       <tr th:each="element : ${elementsByExchange['NASDAQ Capital']}">
         <th th:text="${element.name}"></th>
         <td th:text="${element.date}" class="date wide-column"></td>
-        <td th:text="${element.number_of_shares}" style="text-align: right"></td>
+        <td th:text="${element.number_of_shares}" style="text-align: right; vertical-align: top"></td>
         <td
-          th:text="${element.price_number != null} ? ${element.price_number} : ${element.price_from} + ' - ' + ${element.price_to}"
-          class="price"></td>
+          th:text="${element.price_number != null} ? ${element.price_number} : ${element.price_from} + ' - ' + ${element.price_to}" style="text-align: right; vertical-align: top"></td>
         <td th:text="${element.status}"></td>
-        <td th:text="${element.total_shares_value}" class="large-number"></td>
+        <td th:text="${element.total_shares_value}" style="text-align: right; vertical-align: top"></td>
       </tr>
       </tbody>
     </table>
