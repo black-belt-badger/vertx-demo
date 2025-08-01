@@ -13,8 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.time.Duration;
 import java.util.HashMap;
 
-import static bbb.vertx_demo.main.http_server.FormattingHelper.bigDecimalCompactPrice;
-import static bbb.vertx_demo.main.http_server.FormattingHelper.longCompact;
+import static bbb.vertx_demo.main.http_server.FormattingHelper.*;
 import static com.google.common.base.Stopwatch.createStarted;
 import static com.google.common.net.MediaType.HTML_UTF_8;
 import static io.vertx.core.http.HttpHeaders.CACHE_CONTROL;
@@ -122,7 +121,7 @@ public enum Home {
                           priceFormatted = priceFromFormatted + " - " + priceToFormatted;
                         element.put("price_formatted", priceFormatted);
                         var totalSharesValue = row.getLong("total_shares_value");
-                        var totalSharesValueFormatted = longCompact(totalSharesValue);
+                      var totalSharesValueFormatted = longCompact(totalSharesValue);
                         element.put("total_shares_value", totalSharesValueFormatted);
                         return element;
                       }
