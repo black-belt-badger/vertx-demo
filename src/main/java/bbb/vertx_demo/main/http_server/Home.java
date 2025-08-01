@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.time.Duration;
 import java.util.HashMap;
 
+import static bbb.vertx_demo.main.http_server.FormattingHelper.formatCompact;
 import static com.google.common.base.Stopwatch.createStarted;
 import static com.google.common.net.MediaType.HTML_UTF_8;
 import static io.vertx.core.http.HttpHeaders.CACHE_CONTROL;
@@ -88,7 +89,9 @@ public enum Home {
                         element.put("date", row.getLocalDate("date"));
                         element.put("name", row.getString("name"));
                         element.put("exchange", String.valueOf(row.getString("exchange")));
-                        element.put("number_of_shares", row.getInteger("number_of_shares"));
+                        var numberOfShares = row.getLong("number_of_shares");
+                        var numberOfSharesFormatted = formatCompact(numberOfShares);
+                        element.put("number_of_shares", numberOfSharesFormatted);
                         element.put("price", row.getString("price"));
                         element.put("price_number", row.getBigDecimal("price_number"));
                         element.put("price_from", row.getBigDecimal("price_from"));

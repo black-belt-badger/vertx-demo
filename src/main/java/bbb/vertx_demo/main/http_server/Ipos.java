@@ -17,6 +17,7 @@ import java.util.HashMap;
 
 import static bbb.vertx_demo.main.db.IpoUpdater.IPOS_EPOCH_MILLIS;
 import static bbb.vertx_demo.main.db.NewsUpdater.EPOCH_MILLIS;
+import static bbb.vertx_demo.main.http_server.FormattingHelper.formatWithCommas;
 import static com.google.common.base.Stopwatch.createStarted;
 import static com.google.common.net.MediaType.HTML_UTF_8;
 import static io.vertx.core.http.HttpHeaders.CACHE_CONTROL;
@@ -86,7 +87,9 @@ public enum Ipos {
                         element.put("date", row.getLocalDate("date"));
                         element.put("name", row.getString("name"));
                         element.put("exchange", row.getString("exchange"));
-                        element.put("number_of_shares", row.getInteger("number_of_shares"));
+                        var numberOfShares = row.getLong("number_of_shares");
+                        var numberOfSharesFormatted = formatWithCommas(numberOfShares);
+                        element.put("number_of_shares", numberOfSharesFormatted);
                         element.put("price", row.getString("price"));
                         element.put("price_number", row.getBigDecimal("price_number"));
                         element.put("price_from", row.getBigDecimal("price_from"));

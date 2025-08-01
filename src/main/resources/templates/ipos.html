@@ -73,7 +73,7 @@
         <th th:text="${element.name}" class="align-top"/>
         <td th:text="${element.date}" class="date wide-column align-top"/>
         <td th:text="${element.exchange}" class="align-top"/>
-        <td th:text="${element.number_of_shares}" class="large-number align-top"/>
+        <td th:text="${element.number_of_shares}" class="align-top" style="text-align: right"/>
         <td
           th:text="${element.price_number != null} ? ${element.price_number} : ${element.price_from} + ' - ' + ${element.price_to}"
           class="price align-top"/>
